@@ -53,13 +53,16 @@
     <span class="sd">&quot;&quot;&quot;derived type for prior and posterior uncertainty and data-worth</span>
 <span class="sd">    analysis using Schur compliment</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        **kwargs : (varies)</span>
-<span class="sd">            keyword arguments to pass to the LinearAnalysis constructor.  See</span>
-<span class="sd">            LinearAnalysis definition for argument types</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        keyword arguments to pass to the LinearAnalysis constructor.  See</span>
+<span class="sd">        LinearAnalysis definition for argument types</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        Same call signature as the base LinearAnalysis class</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    Same call signature as the base LinearAnalysis class</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">jco</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_prediction</span> <span class="o">=</span> <span class="kc">None</span>
@@ -96,12 +99,14 @@
 <span class="sd">        is None, the posterior parameter covariance matrix is calculated via</span>
 <span class="sd">        Schur compliment before returning</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            posterior_parameter : pyemu.Cov</span>
-<span class="sd">                the posterior parameter covariance matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        posterior_parameter : pyemu.Cov</span>
+<span class="sd">            the posterior parameter covariance matrix</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a reference</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a reference</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_parameter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -133,9 +138,11 @@
         <span class="sd">&quot;&quot;&quot; get the posterior expectation for parameters using Bayes linear</span>
 <span class="sd">        estimation</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            post_expt : pandas.DataFrame</span>
-<span class="sd">                a dataframe with prior and posterior parameter expectations</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        post_expt : pandas.DataFrame</span>
+<span class="sd">            a dataframe with prior and posterior parameter expectations</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">res</span>
         <span class="k">assert</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -172,11 +179,11 @@
     <span class="k">def</span> <span class="nf">map_forecast_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the prior and posterior forecast (prediction) expectations.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                dataframe with prior and posterior forecast expected values</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            dataframe with prior and posterior forecast expected values</span>
 
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">forecasts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">islog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
@@ -204,9 +211,10 @@
     <span class="k">def</span> <span class="nf">posterior_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get posterior forecast (prediction) variances</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict : dict</span>
-<span class="sd">                a dictionary of forecast names, posterior variance pairs</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict : dict</span>
+<span class="sd">            a dictionary of forecast names, posterior variance pairs</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_prediction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -229,18 +237,21 @@
         <span class="sd">&quot;&quot;&quot;get a summary of the parameter uncertainty</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">            include_map : (boolean)</span>
-<span class="sd">                if True, add the prior and posterior expectations</span>
-<span class="sd">                and report standard deviation instead of variance</span>
+<span class="sd">        ----------</span>
+<span class="sd">        include_map : bool</span>
+<span class="sd">            if True, add the prior and posterior expectations</span>
+<span class="sd">            and report standard deviation instead of variance</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                dataframe of prior,posterior variances and percent</span>
-<span class="sd">                uncertainty reduction of each parameter</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            dataframe of prior,posterior variances and percent</span>
+<span class="sd">            uncertainty reduction of each parameter</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this is the primary method for accessing parameter uncertainty</span>
-<span class="sd">            estimates - use this!</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this is the primary method for accessing parameter uncertainty</span>
+<span class="sd">        estimates - use this!</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prior_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posterior_parameter</span><span class="o">.</span><span class="n">col_names</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">prior_mat</span><span class="o">.</span><span class="n">isdiagonal</span><span class="p">:</span>
@@ -268,19 +279,23 @@
 <div class="viewcode-block" id="Schur.get_forecast_summary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.get_forecast_summary">[docs]</a>    <span class="k">def</span> <span class="nf">get_forecast_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_map</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get a summary of the forecast uncertainty</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            include_map : (boolean)</span>
-<span class="sd">                if True, add the prior and posterior expectations</span>
-<span class="sd">                and report standard deviation instead of variance</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        include_map : bool</span>
+<span class="sd">            if True, add the prior and posterior expectations</span>
+<span class="sd">            and report standard deviation instead of variance</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                    dataframe of prior,posterior variances and percent</span>
-<span class="sd">                    uncertainty reduction of each parameter</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">                dataframe of prior,posterior variances and percent</span>
+<span class="sd">                uncertainty reduction of each parameter</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this is the primary method for accessing forecast uncertainty</span>
-<span class="sd">            estimates - use this!</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this is the primary method for accessing forecast uncertainty</span>
+<span class="sd">        estimates - use this!</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">sum</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prior_var&quot;</span><span class="p">:[],</span> <span class="s2">&quot;post_var&quot;</span><span class="p">:[],</span> <span class="s2">&quot;percent_reduction&quot;</span><span class="p">:[]}</span>
         <span class="k">for</span> <span class="n">forecast</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_forecast</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -306,18 +321,22 @@
         <span class="sd">&quot;&quot;&quot;private method get the prior and posterior uncertainty reduction as a result of</span>
 <span class="sd">        some parameter becoming perfectly known</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            parameter_names : (list)</span>
-<span class="sd">                parameter that are perfectly known</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameter_names : list</span>
+<span class="sd">            parameter that are perfectly known</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict : dict</span>
-<span class="sd">                dictionary of forecast name,  [prior uncertainty w/o parameter_names,</span>
-<span class="sd">                    % posterior uncertainty w/o parameter names]</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict : dict</span>
+<span class="sd">            dictionary of forecast name,  [prior uncertainty w/o parameter_names,</span>
+<span class="sd">                % posterior uncertainty w/o parameter names]</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this method is used by get_parameter_contribution() method - don&#39;t</span>
-<span class="sd">            call this method directly</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this method is used by get_parameter_contribution() method - don&#39;t</span>
+<span class="sd">        call this method directly</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
 
@@ -332,19 +351,22 @@
         <span class="sd">&quot;&quot;&quot; get a new Schur instance that includes conditional update from</span>
 <span class="sd">        some parameters becoming known perfectly</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            parameter_names : list</span>
-<span class="sd">                parameters that are to be treated as notionally perfectly</span>
-<span class="sd">                known</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameter_names : list</span>
+<span class="sd">            parameters that are to be treated as notionally perfectly</span>
+<span class="sd">            known</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            la_cond : Schur</span>
-<span class="sd">                a new Schur instance conditional on perfect knowledge</span>
-<span class="sd">                of some parameters</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        la_cond : Schur</span>
+<span class="sd">            a new Schur instance conditional on perfect knowledge</span>
+<span class="sd">            of some parameters</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this method is used by the get_parameter_contribution() method -</span>
-<span class="sd">            don&#39;t call this method directly</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this method is used by the get_parameter_contribution() method -</span>
+<span class="sd">        don&#39;t call this method directly</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameter_names</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -379,21 +401,24 @@
         <span class="sd">&quot;&quot;&quot;get a dataframe the prior and posterior uncertainty</span>
 <span class="sd">        reduction as a result of some parameter becoming perfectly known</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            parlist_dict : (dict)</span>
-<span class="sd">                a nested dictionary-list of groups of parameters</span>
-<span class="sd">                that are to be treated as perfectly known.  key values become</span>
-<span class="sd">                row labels in returned dataframe.  If None, each adjustable parameter</span>
-<span class="sd">                is sequentially treated as known and the returned dataframe</span>
-<span class="sd">                has row labels for each adjustable parameter</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parlist_dict : dict</span>
+<span class="sd">            a nested dictionary-list of groups of parameters</span>
+<span class="sd">            that are to be treated as perfectly known.  key values become</span>
+<span class="sd">            row labels in returned dataframe.  If None, each adjustable parameter</span>
+<span class="sd">            is sequentially treated as known and the returned dataframe</span>
+<span class="sd">            has row labels for each adjustable parameter</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                a dataframe that summarizes the parameter contribution analysis.</span>
-<span class="sd">                The dataframe has index (row labels) of the keys in parlist_dict</span>
-<span class="sd">                and a column labels of forecast names.  The values in the dataframe</span>
-<span class="sd">                are the posterior variance of the forecast conditional on perfect</span>
-<span class="sd">                knowledge of the parameters in the values of parlist_dict</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            a dataframe that summarizes the parameter contribution analysis.</span>
+<span class="sd">            The dataframe has index (row labels) of the keys in parlist_dict</span>
+<span class="sd">            and a column labels of forecast names.  The values in the dataframe</span>
+<span class="sd">            are the posterior variance of the forecast conditional on perfect</span>
+<span class="sd">            knowledge of the parameters in the values of parlist_dict</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from parameters&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parlist_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -443,13 +468,14 @@
 <span class="sd">        automatically constructs the parlist_dict argument where the keys are the</span>
 <span class="sd">        group names and the values are the adjustable parameters in the groups</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                a dataframe that summarizes the parameter contribution analysis.</span>
-<span class="sd">                The dataframe has index (row labels) that are the parameter groups</span>
-<span class="sd">                and a column labels of forecast names.  The values in the dataframe</span>
-<span class="sd">                are the posterior variance of the forecast conditional on perfect</span>
-<span class="sd">                knowledge of the adjustable parameters in each parameter groups</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            a dataframe that summarizes the parameter contribution analysis.</span>
+<span class="sd">            The dataframe has index (row labels) that are the parameter groups</span>
+<span class="sd">            and a column labels of forecast names.  The values in the dataframe</span>
+<span class="sd">            are the posterior variance of the forecast conditional on perfect</span>
+<span class="sd">            knowledge of the adjustable parameters in each parameter groups</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pargrp_dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -466,37 +492,41 @@
         <span class="sd">&quot;&quot;&quot;get a dataframe fo the posterior uncertainty</span>
 <span class="sd">        as a results of added some observations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            obslist_dict : (dict)</span>
-<span class="sd">                a nested dictionary-list of groups of observations</span>
-<span class="sd">                that are to be treated as gained.  key values become</span>
-<span class="sd">                row labels in returned dataframe. If None, then every zero-weighted</span>
-<span class="sd">                observation is tested sequentially. Default is None</span>
-<span class="sd">            base_obslist : (list)</span>
-<span class="sd">                observation names to treat as the &quot;existing&quot; observations.</span>
-<span class="sd">                The values of obslist_dict will be added to this list during</span>
-<span class="sd">                each test.  If None, then the values in obslist_dict will</span>
-<span class="sd">                be treated as the entire calibration dataset.  That is, there</span>
-<span class="sd">                are no existing data. Default is None.  Standard practice would</span>
-<span class="sd">                be to pass this argument as Schur.pst.nnz_obs_names.</span>
-<span class="sd">            reset_zero_weight : (boolean or float)</span>
-<span class="sd">                a flag to reset observations with zero weight in either</span>
-<span class="sd">                obslist_dict or base_obslist. The value of reset_zero_weights</span>
-<span class="sd">                can be cast to a float,then that value will be assigned to</span>
-<span class="sd">                zero weight obs.  Otherwise, zero weight obs will be given a</span>
-<span class="sd">                weight of 1.0.  Default is False.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obslist_dict : dict</span>
+<span class="sd">            a nested dictionary-list of groups of observations</span>
+<span class="sd">            that are to be treated as gained.  key values become</span>
+<span class="sd">            row labels in returned dataframe. If None, then every zero-weighted</span>
+<span class="sd">            observation is tested sequentially. Default is None</span>
+<span class="sd">        base_obslist : list</span>
+<span class="sd">            observation names to treat as the &quot;existing&quot; observations.</span>
+<span class="sd">            The values of obslist_dict will be added to this list during</span>
+<span class="sd">            each test.  If None, then the values in obslist_dict will</span>
+<span class="sd">            be treated as the entire calibration dataset.  That is, there</span>
+<span class="sd">            are no existing data. Default is None.  Standard practice would</span>
+<span class="sd">            be to pass this argument as Schur.pst.nnz_obs_names.</span>
+<span class="sd">        reset_zero_weight : (boolean or float)</span>
+<span class="sd">            a flag to reset observations with zero weight in either</span>
+<span class="sd">            obslist_dict or base_obslist. The value of reset_zero_weights</span>
+<span class="sd">            can be cast to a float,then that value will be assigned to</span>
+<span class="sd">            zero weight obs.  Otherwise, zero weight obs will be given a</span>
+<span class="sd">            weight of 1.0.  Default is False.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                dataframe with row labels (index) of obslist_dict.keys() and</span>
-<span class="sd">                columns of forecast_name.  The values in the dataframe are the</span>
-<span class="sd">                posterior variance of the forecasts resulting from notional inversion</span>
-<span class="sd">                using the observations in obslist_dict[key value] plus the observations</span>
-<span class="sd">                in base_obslist (if any)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            dataframe with row labels (index) of obslist_dict.keys() and</span>
+<span class="sd">            columns of forecast_name.  The values in the dataframe are the</span>
+<span class="sd">            posterior variance of the forecasts resulting from notional inversion</span>
+<span class="sd">            using the observations in obslist_dict[key value] plus the observations</span>
+<span class="sd">            in base_obslist (if any)</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            all observations listed in obslist_dict and base_obslist with zero</span>
-<span class="sd">            weights will be dropped unless reset_zero_weight is set</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        all observations listed in obslist_dict and base_obslist with zero</span>
+<span class="sd">        weights will be dropped unless reset_zero_weight is set</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">obslist_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -616,29 +646,32 @@
         <span class="sd">&quot;&quot;&quot;get a dataframe the posterior uncertainty</span>
 <span class="sd">        as a result of losing some observations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            obslist_dict : (dict)</span>
-<span class="sd">                dictionary of groups of observations</span>
-<span class="sd">                that are to be treated as lost.  key values become</span>
-<span class="sd">                row labels in returned dataframe. If None, then test every</span>
-<span class="sd">                (nonzero weight - see reset_zero_weight) observation</span>
-<span class="sd">            reset_zero_weight : (boolean or float)</span>
-<span class="sd">                a flag to reset observations with zero weight in obslist_dict.</span>
-<span class="sd">                If the value of reset_zero_weights can be cast to a float,</span>
-<span class="sd">                then that value will be assigned to zero weight obs.  Otherwise,</span>
-<span class="sd">                zero weight obs will be given a weight of 1.0</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obslist_dict : dict</span>
+<span class="sd">            dictionary of groups of observations</span>
+<span class="sd">            that are to be treated as lost.  key values become</span>
+<span class="sd">            row labels in returned dataframe. If None, then test every</span>
+<span class="sd">            (nonzero weight - see reset_zero_weight) observation</span>
+<span class="sd">        reset_zero_weight : bool or float</span>
+<span class="sd">            a flag to reset observations with zero weight in obslist_dict.</span>
+<span class="sd">            If the value of reset_zero_weights can be cast to a float,</span>
+<span class="sd">            then that value will be assigned to zero weight obs.  Otherwise,</span>
+<span class="sd">            zero weight obs will be given a weight of 1.0</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                a dataframe with index of obslist_dict.keys() and columns</span>
-<span class="sd">                of forecast names.  The values in the dataframe are the posterior</span>
-<span class="sd">                variances of the forecasts resulting from losing the information</span>
-<span class="sd">                containted in obslist_dict[key value]</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            a dataframe with index of obslist_dict.keys() and columns</span>
+<span class="sd">            of forecast names.  The values in the dataframe are the posterior</span>
+<span class="sd">            variances of the forecasts resulting from losing the information</span>
+<span class="sd">            contained in obslist_dict[key value]</span>
 
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        all observations listed in obslist_dict with zero</span>
+<span class="sd">        weights will be dropped unless reset_zero_weight is set</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            all observations listed in obslist_dict with zero</span>
-<span class="sd">            weights will be dropped unless reset_zero_weight is set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
 
@@ -733,12 +766,13 @@
 <div class="viewcode-block" id="Schur.get_removed_obs_group_importance"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.get_removed_obs_group_importance">[docs]</a>    <span class="k">def</span> <span class="nf">get_removed_obs_group_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; some sugar to test the importance of observations by group</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.Dataframe : pandas.Dataframe</span>
-<span class="sd">                a dataframe that has index (row labels) that are the observation groups</span>
-<span class="sd">                and a column labels of forecast names.  The values in the dataframe</span>
-<span class="sd">                are the posterior variance of the forecast resulting from</span>
-<span class="sd">                losing non-zero weight observations in each observation group</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.Dataframe : pandas.Dataframe</span>
+<span class="sd">            a dataframe that has index (row labels) that are the observation groups</span>
+<span class="sd">            and a column labels of forecast names.  The values in the dataframe</span>
+<span class="sd">            are the posterior variance of the forecast resulting from</span>
+<span class="sd">            losing non-zero weight observations in each observation group</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obsgrp_dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -760,32 +794,36 @@
 <span class="sd">        next iteration.  In this way, the added observation importance values include</span>
 <span class="sd">        the conditional information from the last iteration.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            forecast : (str)</span>
-<span class="sd">                name of the forecast to use in the ranking process.  If</span>
-<span class="sd">                more than one forecast has been listed, this argument is required</span>
-<span class="sd">            niter : (int)</span>
-<span class="sd">                number of sequential iterations</span>
-<span class="sd">            obslist_dict (dict):</span>
-<span class="sd">                nested dictionary-list of  groups of observations</span>
-<span class="sd">                that are to be treated as gained.  key values become</span>
-<span class="sd">                row labels in result dataframe. If None, then test every observation</span>
-<span class="sd">                individually</span>
-<span class="sd">            base_obslist : (list)</span>
-<span class="sd">                observation names to treat as the &quot;existing&quot; observations.</span>
-<span class="sd">                The values of obslist_dict will be added to this list during testing.</span>
-<span class="sd">                If None, then each list in the values of obslist_dict will be</span>
-<span class="sd">                treated as an individual calibration dataset.</span>
-<span class="sd">            reset_zero_weight : (boolean or float)</span>
-<span class="sd">                a flag to reset observations with zero weight in either</span>
-<span class="sd">                obslist_dict or base_obslist. If the value of reset_zero_weights</span>
-<span class="sd">                can be cast to a float,then that value will be assigned to</span>
-<span class="sd">                zero weight obs.  Otherwise, zero weight obs will be given a weight of 1.0</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                DataFrame with columns of best obslist_dict key for each iteration.</span>
-<span class="sd">                Columns of forecast variance percent reduction for this iteration,</span>
-<span class="sd">                (percent reduction compared to initial base case)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        forecast : str</span>
+<span class="sd">            name of the forecast to use in the ranking process.  If</span>
+<span class="sd">            more than one forecast has been listed, this argument is required</span>
+<span class="sd">        niter : int</span>
+<span class="sd">            number of sequential iterations</span>
+<span class="sd">        obslist_dict dict:</span>
+<span class="sd">            nested dictionary-list of  groups of observations</span>
+<span class="sd">            that are to be treated as gained.  key values become</span>
+<span class="sd">            row labels in result dataframe. If None, then test every observation</span>
+<span class="sd">            individually</span>
+<span class="sd">        base_obslist : list</span>
+<span class="sd">            observation names to treat as the &quot;existing&quot; observations.</span>
+<span class="sd">            The values of obslist_dict will be added to this list during testing.</span>
+<span class="sd">            If None, then each list in the values of obslist_dict will be</span>
+<span class="sd">            treated as an individual calibration dataset.</span>
+<span class="sd">        reset_zero_weight : (boolean or float)</span>
+<span class="sd">            a flag to reset observations with zero weight in either</span>
+<span class="sd">            obslist_dict or base_obslist. If the value of reset_zero_weights</span>
+<span class="sd">            can be cast to a float,then that value will be assigned to</span>
+<span class="sd">            zero weight obs.  Otherwise, zero weight obs will be given a weight of 1.0</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            DataFrame with columns of best obslist_dict key for each iteration.</span>
+<span class="sd">            Columns of forecast variance percent reduction for this iteration,</span>
+<span class="sd">            (percent reduction compared to initial base case)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">forecast</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -860,20 +898,23 @@
 <span class="sd">        treated as known perfectly for the remaining iterations.  In this way, the</span>
 <span class="sd">        next iteration seeks the next most influential group of parameters.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            forecast : (str)</span>
-<span class="sd">                name of the forecast to use in the ranking process.  If</span>
-<span class="sd">                more than one forecast has been listed, this argument is required</span>
-<span class="sd">            parlist_dict : (dict)</span>
-<span class="sd">                a nested dictionary-list of groups of parameters</span>
-<span class="sd">                that are to be treated as perfectly known.  key values become</span>
-<span class="sd">                row labels in dataframe</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        forecast : str</span>
+<span class="sd">            name of the forecast to use in the ranking process.  If</span>
+<span class="sd">            more than one forecast has been listed, this argument is required</span>
+<span class="sd">        parlist_dict : dict</span>
+<span class="sd">            a nested dictionary-list of groups of parameters</span>
+<span class="sd">            that are to be treated as perfectly known.  key values become</span>
+<span class="sd">            row labels in dataframe</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">                a dataframe with index of iteration number and columns</span>
-<span class="sd">                of parlist_dict keys.  The values are the results of the knowing</span>
-<span class="sd">                each parlist_dict entry expressed as posterior variance reduction</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">            a dataframe with index of iteration number and columns</span>
+<span class="sd">            of parlist_dict keys.  The values are the results of the knowing</span>
+<span class="sd">            each parlist_dict entry expressed as posterior variance reduction</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">forecast</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forecasts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;forecast arg list one and only one&quot;</span> <span class="o">+</span>\

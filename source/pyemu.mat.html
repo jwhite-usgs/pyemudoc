@@ -45,6 +45,7 @@
 </div>
 <div class="section" id="module-pyemu.mat.mat_handler">
 <span id="pyemu-mat-mat-handler-module"></span><h2>pyemu.mat.mat_handler module<a class="headerlink" href="#module-pyemu.mat.mat_handler" title="Permalink to this headline">¶</a></h2>
+<p>Matrix, Jco and Cov classes for easy linear algebra</p>
 <dl class="class">
 <dt id="pyemu.mat.mat_handler.Cov">
 <em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">Cov</code><span class="sig-paren">(</span><em>x=None</em>, <em>names=[]</em>, <em>row_names=[]</em>, <em>col_names=[]</em>, <em>isdiagonal=False</em>, <em>autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov" title="Permalink to this definition">¶</a></dt>
@@ -63,15 +64,14 @@ propagation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>conditioning_elements</strong> – (enumerable)
-names of elements to condition on</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>conditioning_elements</strong> (<em>iterable</em>) – names of elements to condition on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd>Cov : Cov</dd>
-</dl>
 </dd></dl>
 
 <dl class="method">
@@ -83,21 +83,16 @@ or with specified mean vector</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mean</strong> – (scalar of enumerable of length self.shape[0])
-mean values. either a scalar applied to to the entire
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mean</strong> (<em>scalar of enumerable of length self.shape</em><em>[</em><em>0</em><em>]</em>) – mean values. either a scalar applied to to the entire
 vector of length N or an N-length vector</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>numpy.nparray</strong> – A vector of conditioned values, sampled
+using the covariance matrix (self) and applied to the mean</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd><dl class="first last docutils">
-<dt>numpy.nparray <span class="classifier-delimiter">:</span> <span class="classifier">numpy.ndarray</span></dt>
-<dd>A vector of conditioned values, sampled
-using the covariance matrix (self) and applied to the mean</dd>
-</dl>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="classmethod">
@@ -111,9 +106,9 @@ using the covariance matrix (self) and applied to the mean</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> – pyemu.Pst</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> (<em>pyemu.Pst</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
@@ -130,10 +125,9 @@ a PEST control file.  Calls Cov.from_observation_data()</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst_file</strong> – (str)
-pest control file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst_file</strong> (<em>str</em>) – pest control file name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
@@ -151,9 +145,8 @@ pyemu.Pst.parameter_data</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pst</strong> – (pyemu.Pst)</li>
-<li><strong>sigma_range</strong> – <p>float
-defines range of upper bound - lower bound in terms of standard
+<li><strong>pst</strong> (<em>(</em><em>pyemu.Pst</em><em>)</em>) – </li>
+<li><strong>sigma_range</strong> (<em>float</em>) – <p>defines range of upper bound - lower bound in terms of standard
 deviation (sigma). For example, if sigma_range = 4, the bounds</p>
 <blockquote>
 <div>represent 4 * sigma.  Default is 4.0, representing approximately
@@ -162,7 +155,7 @@ deviation (sigma). For example, if sigma_range = 4, the bounds</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Cov</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Cov</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></p>
@@ -182,10 +175,8 @@ Calls Cov.from_parameter_data()</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pst_file</strong> – (str)
-pest control file name</li>
-<li><strong>sigma_range</strong> – <p>float
-defines range of upper bound - lower bound in terms of standard
+<li><strong>pst_file</strong> (<em>str</em>) – pest control file name</li>
+<li><strong>sigma_range</strong> (<em>float</em>) – <p>defines range of upper bound - lower bound in terms of standard
 deviation (sigma). For example, if sigma_range = 4, the bounds</p>
 <blockquote>
 <div>represent 4 * sigma.  Default is 4.0, representing approximately
@@ -194,7 +185,7 @@ deviation (sigma). For example, if sigma_range = 4, the bounds</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Cov</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Cov</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></p>
@@ -212,10 +203,9 @@ deviation (sigma). For example, if sigma_range = 4, the bounds</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – (str)
-uncertainty file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – uncertainty file name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
@@ -231,16 +221,11 @@ uncertainty file name</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – (str)
-uncertainty filename</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – uncertainty filename</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>(int)</dt>
-<dd>number of elements in file</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>nentries</strong> – number of elements in file</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">nentries</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -254,7 +239,7 @@ uncertainty filename</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
@@ -266,21 +251,15 @@ uncertainty filename</td>
 <dt id="pyemu.mat.mat_handler.Cov.identity_like">
 <em class="property">classmethod </em><code class="descname">identity_like</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.identity_like"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov.identity_like" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an identity matrix Cov instance like other</p>
-<dl class="docutils">
-<dt>Parameter:</dt>
-<dd><dl class="first last docutils">
-<dt>other <span class="classifier-delimiter">:</span> <span class="classifier">(Matrix or derived type)</span></dt>
-<dd>must be square</dd>
-</dl>
-</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><em>Matrix</em></a>) – must be square</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
 </tbody>
 </table>
@@ -294,11 +273,7 @@ uncertainty filename</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -315,10 +290,7 @@ if other is not diagonal, then self becomes non diagonal</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – (Cov)
-the Cov to replace elements in self with</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov"><em>Cov</em></a>) – the Cov to replace elements in self with</td>
 </tr>
 </tbody>
 </table>
@@ -337,12 +309,8 @@ matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Matrix</dt>
-<dd>this is on purpose so that it is clear the returned
-instance is not a Cov</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong> – this is on purpose so that it is clear the returned
+instance is not a Cov</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -358,19 +326,14 @@ instance is not a Cov</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>unc_file</strong> – (str)
-filename of the uncertainty file</li>
-<li><strong>covmat_file</strong> – (str) Covariance Matrix filename. Default is</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>unc_file</strong> (<em>str</em>) – filename of the uncertainty file</li>
+<li><strong>covmat_file</strong> (<em>str Covariance Matrix filename. Default is</em>) – </li>
 <li><strong>If None</strong><strong>, </strong><strong>and Cov.isdiaonal</strong><strong>, </strong><strong>then a standard deviation</strong> (<em>&quot;Cov.mat&quot;.</em>) – </li>
 <li><strong>of the uncertainty file is written.  Exception raised if None</strong> (<em>form</em>) – </li>
 <li><strong>not Cov.isdiagonal</strong> (<em>and</em>) – </li>
-<li><strong>var_mult</strong> – (float)
-variance multiplier for the covmat_file entry</li>
+<li><strong>var_mult</strong> (<em>float</em>) – variance multiplier for the covmat_file entry</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -385,7 +348,7 @@ variance multiplier for the covmat_file entry</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Cov</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Cov</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Cov" title="pyemu.mat.mat_handler.Cov">Cov</a></td>
 </tr>
@@ -409,11 +372,7 @@ exactly like Matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>number of observations (rows)</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>int</strong> – number of observations (rows)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -429,11 +388,7 @@ exactly like Matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>number of parameters (columns)</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>int</strong> – number of parameters (columns)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -449,11 +404,7 @@ exactly like Matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>observation names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – observation names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -469,11 +420,7 @@ exactly like Matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>parameter names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – parameter names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -491,20 +438,14 @@ Intended for Jacobian matrices replacing parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>other</strong> – Matrix
-Matrix to use for replacing columns in self</li>
-<li><strong>parnames</strong> – list
-parameter (column) names to use in other.  If None, all
+<li><strong>other</strong> (<a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><em>Matrix</em></a>) – Matrix to use for replacing columns in self</li>
+<li><strong>parnames</strong> (<em>list</em>) – parameter (column) names to use in other.  If None, all
 columns in other are used</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd>None</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -518,36 +459,46 @@ columns in other are used</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>x</strong> – (numpy.ndarray)
-Matrix entries</li>
-<li><strong>row_names</strong> – (list)
-list of row names</li>
-<li><strong>col_names</strong> – (list)
-list of column names</li>
-<li><strong>isdigonal</strong> – (boolean)
-to determine if the Matrix is diagonal</li>
-<li><strong>autoalign</strong> – <dl class="docutils">
-<dt>(boolean)</dt>
-<dd>used to control the autoalignment of Matrix objects
-during linear algebra operations</dd>
-<dt>Returns</dt>
-<dd>Matrix : Matrix</dd>
-<dt>Attributes:</dt>
-<dd><dl class="first last docutils">
-<dt>binary_header_dt <span class="classifier-delimiter">:</span> <span class="classifier">numpy.dtype</span></dt>
-<dd>the header info in the PEST binary file type</dd>
-<dt>binary_rec_dt <span class="classifier-delimiter">:</span> <span class="classifier">numpy.dtype</span></dt>
-<dd>the record info in the PEST binary file type</dd>
-</dl>
-</dd>
-</dl>
-</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>numpy.ndarray</em>) – Matrix entries</li>
+<li><strong>row_names</strong> (<em>list</em>) – list of row names</li>
+<li><strong>col_names</strong> (<em>list</em>) – list of column names</li>
+<li><strong>isdigonal</strong> (<em>bool</em>) – to determine if the Matrix is diagonal</li>
+<li><strong>autoalign</strong> (<em>bool</em>) – used to control the autoalignment of Matrix objects
+during linear algebra operations</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Matrix</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></p>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="pyemu.mat.mat_handler.Matrix.binary_header_dt">
+<code class="descname">binary_header_dt</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.binary_header_dt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.dtype</em> – the header info in the PEST binary file type</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.mat.mat_handler.Matrix.binary_rec_dt">
+<code class="descname">binary_rec_dt</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.binary_rec_dt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.dtype</em> – the record info in the PEST binary file type</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">to_ascii : write a PEST-style ASCII matrix format file</code></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">to_binary : write a PEST-stle compressed binary format file</code></dt>
+<dd></dd></dl>
+
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">this class makes heavy use of property decorators to encapsulate
@@ -567,15 +518,10 @@ private attributes</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>names</strong> – (enumerable)
-names in rowS andor columnS</li>
-<li><strong>axis</strong> – (int)
-the axis to reorder. if None, reorder both axes</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>names</strong> (<em>iterable</em>) – names in rowS andor columnS</li>
+<li><strong>axis</strong> (<em>(</em><em>int</em><em>)</em>) – the axis to reorder. if None, reorder both axes</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -592,7 +538,7 @@ a 2D, diagonal ndarray</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>numpy.ndarray</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
@@ -601,13 +547,13 @@ a 2D, diagonal ndarray</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyemu.mat.mat_handler.Matrix.binary_header_dt">
-<code class="descname">binary_header_dt</code><em class="property"> = dtype([('itemp1', '&lt;i4'), ('itemp2', '&lt;i4'), ('icount', '&lt;i4')])</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.binary_header_dt" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">binary_header_dt</code><em class="property"> = dtype([('itemp1', '&lt;i4'), ('itemp2', '&lt;i4'), ('icount', '&lt;i4')])</em></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="pyemu.mat.mat_handler.Matrix.binary_rec_dt">
-<code class="descname">binary_rec_dt</code><em class="property"> = dtype([('j', '&lt;i4'), ('dtemp', '&lt;f8')])</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.binary_rec_dt" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">binary_rec_dt</code><em class="property"> = dtype([('j', '&lt;i4'), ('dtemp', '&lt;f8')])</em></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -636,15 +582,10 @@ a 2D, diagonal ndarray</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>names</strong> – (enumerable)
-names to drop</li>
-<li><strong>axis</strong> – (int)
-the axis to drop from. must be in [0,1]</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>names</strong> (<em>iterable</em>) – names to drop</li>
+<li><strong>axis</strong> (<em>(</em><em>int</em><em>)</em>) – the axis to drop from. must be in [0,1]</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -659,15 +600,11 @@ the axis to drop from. must be in [0,1]</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – (Matrix)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><em>Matrix</em></a>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>boolean</dt>
-<dd>True if aligned, False if not aligned</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>bool</strong> – True if aligned, False if not aligned</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -682,19 +619,12 @@ the axis to drop from. must be in [0,1]</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>other</strong> – (Matrix)
-the Matrix to extend self by</li>
-<li><strong>inplace</strong> – (boolean)
-inplace = True not implemented</li>
+<li><strong>other</strong> (<em>(</em><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><em>Matrix</em></a><em>)</em>) – the Matrix to extend self by</li>
+<li><strong>inplace</strong> (<em>bool</em>) – inplace = True not implemented</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Matrix</dt>
-<dd><p class="first last">if not inplace</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Matrix</strong> – if not inplace</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></p>
@@ -714,14 +644,12 @@ one of row_names or col_names must be not None.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>row_names</strong> – (enumerable)
-row names to extract</li>
-<li><strong>col_names</strong> – (enumerate)
-col_names to extract</li>
+<li><strong>row_names</strong> (<em>iterable</em>) – row names to extract</li>
+<li><strong>col_names</strong> (<em>(</em><em>enumerate</em><em>)</em>) – col_names to extract</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Matrix</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Matrix</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></p>
@@ -740,10 +668,7 @@ Matrix instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – str
-name of the file to read</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – name of the file to read</td>
 </tr>
 </tbody>
 </table>
@@ -758,10 +683,9 @@ Matrix instance</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – (str)
-filename to read</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – filename to read</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -780,9 +704,9 @@ filename to read</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> – pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>df</strong> (<em>pandas.DataFrame</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -801,10 +725,9 @@ filename to read</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – str
-name of the binary matrix file</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – name of the binary matrix file</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -820,7 +743,7 @@ name of the binary matrix file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -837,16 +760,13 @@ name of the binary matrix file</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>row_names</strong> – (enumerable)
-row_names for new Matrix</li>
-<li><strong>col_names</strong> – (enumerable)
-col_names for new Matrix</li>
-<li><strong>drop</strong> – (boolean)
-flag to remove row_names and/or col_names</li>
+<li><strong>row_names</strong> (<em>iterable</em>) – row_names for new Matrix</li>
+<li><strong>col_names</strong> (<em>iterable</em>) – col_names for new Matrix</li>
+<li><strong>drop</strong> (<em>bool</em>) – flag to remove row_names and/or col_names</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Matrix</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Matrix</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></p>
@@ -865,7 +785,7 @@ shape of the new matrix is (self.shape[0],1).  Self must be square</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>col_name</strong> – (str)
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>col_name</strong> – str
 the name of the column in the new Matrix</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
@@ -885,14 +805,9 @@ value ratio greater than or equal to eigthresh</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eigthresh</strong> – float
-the ratio of the largest to smallest singular value</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eigthresh</strong> (<em>float</em>) – the ratio of the largest to smallest singular value</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>number of singular components</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>int</strong> – number of singular components</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -910,10 +825,9 @@ either side of operator</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – (scalar,numpy.ndarray,Matrix object):
-the thing for element-wise multiplication</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<em>scalar</em><em>,</em><em>numpy.ndarray</em><em>,</em><em>Matrix object</em>) – the thing for element-wise multiplication</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -933,19 +847,12 @@ the thing for element-wise multiplication</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>names</strong> – (enumerable)
-column and/or row names</li>
-<li><strong>axis</strong> – (int) (optional)
-the axis to search.</li>
+<li><strong>names</strong> (<em>iterable</em>) – column and/or row names</li>
+<li><strong>axis</strong> (<em>(</em><em>int</em><em>) </em><em>(</em><em>optional</em><em>)</em>) – the axis to search.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>numpy.ndarray</dt>
-<dd><p class="first last">indices of names.</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>numpy.ndarray</strong> – indices of names.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
@@ -965,14 +872,16 @@ the axis to search.</li>
 <dt id="pyemu.mat.mat_handler.Matrix.inv">
 <code class="descname">inv</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.inv" title="Permalink to this definition">¶</a></dt>
 <dd><p>inversion operation of self</p>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd><dl class="first last docutils">
-<dt>Matrix <span class="classifier-delimiter">:</span> <span class="classifier">Matrix</span></dt>
-<dd>inverse of self</dd>
-</dl>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong> – inverse of self</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -983,15 +892,11 @@ the axis to search.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – (Matrix)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> (<em>(</em><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><em>Matrix</em></a><em>)</em>) – </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>boolean</dt>
-<dd>True if aligned, False if not aligned</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>bool</strong> – True if aligned, False if not aligned</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -1005,11 +910,7 @@ the axis to search.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>number of columns</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>int</strong> – number of columns</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -1025,7 +926,7 @@ the axis to search.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>numpy.ndarray</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
@@ -1041,11 +942,7 @@ the axis to search.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>number of rows</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>int</strong> – number of rows</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -1073,16 +970,14 @@ value decomposition and Matrix.pseudo_inv_components</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>maxsing</strong> – int
-the number of singular components to use.  If None,
+<li><strong>maxsing</strong> (<em>int</em>) – the number of singular components to use.  If None,
 maxsing is calculated using Matrix.get_maxsing() and eigthresh</li>
-<li><strong>eigthresh</strong> – float
-the ratio of largest to smallest singular components to use
+<li><strong>eigthresh</strong> (<em>float</em>) – the ratio of largest to smallest singular components to use
 for truncation.  Ignored if maxsing is not None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Matrix</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Matrix</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></p>
@@ -1101,30 +996,19 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>maxsing</strong> – int
-the number of singular components to use.  If None,
+<li><strong>maxsing</strong> (<em>int</em>) – the number of singular components to use.  If None,
 maxsing is calculated using Matrix.get_maxsing() and eigthresh</li>
-<li><strong>eigthresh</strong> – float
-the ratio of largest to smallest singular components to use
+<li><strong>eigthresh</strong> (<em>float</em>) – the ratio of largest to smallest singular components to use
 for truncation.  Ignored if maxsing is not None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Matrix</dt>
-<dd><p class="first last">truncated left singular vectors</p>
-</dd>
-<dt>s <span class="classifier-delimiter">:</span> <span class="classifier">Matrix</span></dt>
-<dd><p class="first last">truncated singular value matrix</p>
-</dd>
-<dt>v <span class="classifier-delimiter">:</span> <span class="classifier">Matrix</span></dt>
-<dd><p class="first last">truncated right singular vectors</p>
-</dd>
-</dl>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>u</strong> (<em>Matrix</em>) – truncated left singular vectors</li>
+<li><strong>s</strong> (<em>Matrix</em>) – truncated singular value matrix</li>
+<li><strong>v</strong> (<em>Matrix</em>) – truncated right singular vectors</li>
+</ul>
 </p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix.u" title="pyemu.mat.mat_handler.Matrix.u">u</a></p>
 </td>
 </tr>
 </tbody>
@@ -1139,9 +1023,7 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> – (numpy.ndarray)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>numpy.ndarray</em>) – </td>
 </tr>
 </tbody>
 </table>
@@ -1159,7 +1041,7 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1175,11 +1057,7 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>tuple</dt>
-<dd>length 2 tuple of ints</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>tuple</strong> – length 2 tuple of ints</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
 </tr>
@@ -1195,11 +1073,7 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Matrix</dt>
-<dd>square root of self</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong> – square root of self</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1215,15 +1089,10 @@ for truncation.  Ignored if maxsing is not None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>out_filename</strong> – (str)
-output filename</li>
-<li><strong>icode</strong> – (int)
-PEST-style info code for Matrix style</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_filename</strong> (<em>str</em>) – output filename</li>
+<li><strong>icode</strong> (<em>(</em><em>int</em><em>)</em>) – PEST-style info code for Matrix style</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -1239,10 +1108,7 @@ as the format used to storage a PEST Jacobian matrix</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – (str)
-filename to save binary file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – filename to save binary file</td>
 </tr>
 </tbody>
 </table>
@@ -1256,7 +1122,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -1272,7 +1138,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">scipy.sparse.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>scipy.sparse.Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">scipy.sparse.Matrix</td>
 </tr>
@@ -1288,11 +1154,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Matrix</dt>
-<dd>transpose of self</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong> – transpose of self</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1308,7 +1170,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1324,7 +1186,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1340,7 +1202,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">numpy.ndarray</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>numpy.ndarray</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
 </tr>
@@ -1356,7 +1218,7 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1374,10 +1236,9 @@ filename to save binary file</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mats</strong> – (list)
-list of Matrix objects</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mats</strong> (<em>list</em>) – list of Matrix objects</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Matrix</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix">Matrix</a></td>
 </tr>
@@ -1397,19 +1258,12 @@ list of Matrix objects</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>list1</strong> – (list)
-a list of objects</li>
-<li><strong>list2</strong> – (list)
-a list of objects</li>
+<li><strong>list1</strong> (<em>list</em>) – a list of objects</li>
+<li><strong>list2</strong> (<em>list</em>) – a list of objects</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>list</dt>
-<dd><p class="first last">list of common objects shared by list1 and list2</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>list</strong> – list of common objects shared by list1 and list2</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>

@@ -61,34 +61,36 @@
 <span class="sd">    names unless predict_dict is passed.  write template files and a</span>
 <span class="sd">    shapefile as well...hopefully this is useful to someone...</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        ml : (flopy.mbase)</span>
-<span class="sd">            a flopy mbase dervied type.  If None, sr must not be None.</span>
-<span class="sd">        sr : (flopy.utils.reference.SpatialReference)</span>
-<span class="sd">            a spatial reference use to locate the model grid in space.  If None,</span>
-<span class="sd">            ml must not be None.  Default is None</span>
-<span class="sd">        ibound : (numpy.ndarray)</span>
-<span class="sd">            the modflow ibound integer array.  Used to set pilot points only in active areas.</span>
-<span class="sd">            If None and ml is None, then pilot points are set in all rows and columns according to</span>
-<span class="sd">            every_n_cell.  Default is None.</span>
-<span class="sd">        prefix_dict : (dict)</span>
-<span class="sd">            a dictionary of pilot point parameter prefix, layer pairs.  example : {&quot;hk&quot;:[0,1,2,3]} would</span>
-<span class="sd">            setup pilot points with the prefix &quot;hk&quot; for model layers 1 - 4 (zero based). If None, a generic set</span>
-<span class="sd">            of pilot points with the &quot;pp&quot; prefix are setup for a generic nrowXncol grid. Default is None</span>
-<span class="sd">        use_ibound_zones : (boolean)</span>
-<span class="sd">            a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound</span>
-<span class="sd">            values greater than zero are treated as a single zone.  Default is False.</span>
-<span class="sd">        pp_dir : (str)</span>
-<span class="sd">            directory to write pilot point files to.  Default is &#39;.&#39;</span>
-<span class="sd">        tpl_dir : (str)</span>
-<span class="sd">            directory to write pilot point template file to.  Default is &#39;.&#39;</span>
-<span class="sd">        shapename : (str)</span>
-<span class="sd">            name of shapefile to write that containts pilot point information. Default is &quot;pp.shp&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ml : flopy.mbase</span>
+<span class="sd">        a flopy mbase dervied type.  If None, sr must not be None.</span>
+<span class="sd">    sr : flopy.utils.reference.SpatialReference</span>
+<span class="sd">        a spatial reference use to locate the model grid in space.  If None,</span>
+<span class="sd">        ml must not be None.  Default is None</span>
+<span class="sd">    ibound : numpy.ndarray</span>
+<span class="sd">        the modflow ibound integer array.  Used to set pilot points only in active areas.</span>
+<span class="sd">        If None and ml is None, then pilot points are set in all rows and columns according to</span>
+<span class="sd">        every_n_cell.  Default is None.</span>
+<span class="sd">    prefix_dict : dict</span>
+<span class="sd">        a dictionary of pilot point parameter prefix, layer pairs.  example : {&quot;hk&quot;:[0,1,2,3]} would</span>
+<span class="sd">        setup pilot points with the prefix &quot;hk&quot; for model layers 1 - 4 (zero based). If None, a generic set</span>
+<span class="sd">        of pilot points with the &quot;pp&quot; prefix are setup for a generic nrowXncol grid. Default is None</span>
+<span class="sd">    use_ibound_zones : bool</span>
+<span class="sd">        a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound</span>
+<span class="sd">        values greater than zero are treated as a single zone.  Default is False.</span>
+<span class="sd">    pp_dir : str</span>
+<span class="sd">        directory to write pilot point files to.  Default is &#39;.&#39;</span>
+<span class="sd">    tpl_dir : str</span>
+<span class="sd">        directory to write pilot point template file to.  Default is &#39;.&#39;</span>
+<span class="sd">    shapename : str</span>
+<span class="sd">        name of shapefile to write that containts pilot point information. Default is &quot;pp.shp&quot;</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        pp_df : pandas.DataFrame</span>
-<span class="sd">            a dataframe summarizing pilot point information (same information</span>
-<span class="sd">            written to shapename</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pp_df : pandas.DataFrame</span>
+<span class="sd">        a dataframe summarizing pilot point information (same information</span>
+<span class="sd">        written to shapename</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -224,13 +226,15 @@
 
     <span class="sd">&quot;&quot;&quot; read a pilot point file to a pandas Dataframe</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pp_filename : (str)</span>
-<span class="sd">            pilot point file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pp_filename : str</span>
+<span class="sd">        pilot point file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            a dataframe with pp_utils.PP_NAMES for columns</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        a dataframe with pp_utils.PP_NAMES for columns</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -242,16 +246,16 @@
 <div class="viewcode-block" id="pp_tpl_to_dataframe"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.pp_utils.pp_tpl_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">pp_tpl_to_dataframe</span><span class="p">(</span><span class="n">tpl_filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; read a pilot points template file to a pandas dataframe</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        tpl_filename : (str)</span>
-<span class="sd">            pilot points template file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tpl_filename : str</span>
+<span class="sd">        pilot points template file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            a dataframe with &quot;parnme&quot; included</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        a dataframe with &quot;parnme&quot; included</span>
 
-<span class="sd">    :param tpl_filename:</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tpl_filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">header</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
@@ -273,15 +277,17 @@
 <div class="viewcode-block" id="write_pp_shapfile"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.pp_utils.write_pp_shapfile">[docs]</a><span class="k">def</span> <span class="nf">write_pp_shapfile</span><span class="p">(</span><span class="n">pp_df</span><span class="p">,</span><span class="n">shapename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write pilot points dataframe to a shapefile</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pp_df : (pandas.DataFrame or str)</span>
-<span class="sd">            pilot dataframe or a pilot point filename.  Dataframe</span>
-<span class="sd">            must include &quot;x&quot; and &quot;y&quot;</span>
-<span class="sd">        shapename : (str)</span>
-<span class="sd">            shapefile name.  If None, pp_df must be str and shapefile</span>
-<span class="sd">            is saved as &lt;pp_df&gt;.shp</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pp_df : pandas.DataFrame or str</span>
+<span class="sd">        pilot point dataframe or a pilot point filename.  Dataframe</span>
+<span class="sd">        must include &quot;x&quot; and &quot;y&quot;</span>
+<span class="sd">    shapename : str</span>
+<span class="sd">        shapefile name.  If None, pp_df must be str and shapefile</span>
+<span class="sd">        is saved as &lt;pp_df&gt;.shp</span>
 
-<span class="sd">    Note:</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
 <span class="sd">        requires pyshp</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -328,11 +334,12 @@
 <div class="viewcode-block" id="write_pp_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.pp_utils.write_pp_file">[docs]</a><span class="k">def</span> <span class="nf">write_pp_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">pp_df</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write a pilot points dataframe to a pilot points file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            pilot points file to write</span>
-<span class="sd">        pp_df : (pandas.DataFrame)</span>
-<span class="sd">            a dataframe that has columns &quot;x&quot;,&quot;y&quot;,&quot;zone&quot;, and &quot;value&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        pilot points file to write</span>
+<span class="sd">    pp_df : pandas.DataFrame</span>
+<span class="sd">        a dataframe that has columns &quot;x&quot;,&quot;y&quot;,&quot;zone&quot;, and &quot;value&quot;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -347,19 +354,21 @@
 <div class="viewcode-block" id="pilot_points_to_tpl"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.pp_utils.pilot_points_to_tpl">[docs]</a><span class="k">def</span> <span class="nf">pilot_points_to_tpl</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span><span class="n">tpl_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">name_prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write a template file for a pilot points file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pp_file : (str)</span>
-<span class="sd">            pilot points file</span>
-<span class="sd">        tpl_file : (str)</span>
-<span class="sd">            template file name to write.  If None, append &quot;.tpl&quot; to</span>
-<span class="sd">            the pp_file arg. Default is None</span>
-<span class="sd">        name_prefix : (str)</span>
-<span class="sd">            name to prepend to parameter names for each pilot point.  For example,</span>
-<span class="sd">            if name_prefix = &quot;hk_&quot;, then each pilot point parameter will be named</span>
-<span class="sd">            &quot;hk_0001&quot;,&quot;hk_0002&quot;, etc.  If None, parameter names from pp_df.name</span>
-<span class="sd">            are used.  Default is None.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pp_file : str</span>
+<span class="sd">        pilot points file</span>
+<span class="sd">    tpl_file : str</span>
+<span class="sd">        template file name to write.  If None, append &quot;.tpl&quot; to</span>
+<span class="sd">        the pp_file arg. Default is None</span>
+<span class="sd">    name_prefix : str</span>
+<span class="sd">        name to prepend to parameter names for each pilot point.  For example,</span>
+<span class="sd">        if name_prefix = &quot;hk_&quot;, then each pilot point parameter will be named</span>
+<span class="sd">        &quot;hk_0001&quot;,&quot;hk_0002&quot;, etc.  If None, parameter names from pp_df.name</span>
+<span class="sd">        are used.  Default is None.</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
 <span class="sd">        pp_df : pandas.DataFrame</span>
 <span class="sd">            a dataframe with pilot point information (name,x,y,zone,parval1)</span>
 <span class="sd">             with the parameter information (parnme,tpl_str)</span>

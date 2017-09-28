@@ -160,12 +160,15 @@
 <div class="viewcode-block" id="read_resfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.read_resfile">[docs]</a><span class="k">def</span> <span class="nf">read_resfile</span><span class="p">(</span><span class="n">resfile</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;load a residual file into a pandas.DataFrame</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            resfile : (str)</span>
-<span class="sd">                residual file name</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        resfile : str</span>
+<span class="sd">            residual file name</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">resfile</span><span class="p">),</span><span class="s2">&quot;read_resfile() error: resfile &quot;</span> <span class="o">+</span>\
                                        <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resfile</span><span class="p">)</span>
@@ -189,12 +192,15 @@
 <div class="viewcode-block" id="read_parfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.read_parfile">[docs]</a><span class="k">def</span> <span class="nf">read_parfile</span><span class="p">(</span><span class="n">parfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;load a pest-compatible .par file into a pandas.DataFrame</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        parfile : (str)</span>
-<span class="sd">            pest parameter file name</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parfile : str</span>
+<span class="sd">        pest parameter file name</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pandas.DataFrame : pandas.DataFrame</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">parfile</span><span class="p">),</span> <span class="s2">&quot;Pst.parrep(): parfile not found: &quot;</span> <span class="o">+</span>\
                                     <span class="nb">str</span><span class="p">(</span><span class="n">parfile</span><span class="p">)</span>
@@ -209,15 +215,13 @@
 <div class="viewcode-block" id="write_parfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.write_parfile">[docs]</a><span class="k">def</span> <span class="nf">write_parfile</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">parfile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; write a pest parameter file from a dataframe</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        df : (pandas.DataFrame)</span>
-<span class="sd">            dataframe with column names that correspond to the entries</span>
-<span class="sd">            in the parameter data section of a pest control file</span>
-<span class="sd">        parfile : (str)</span>
-<span class="sd">            name of the parameter file to write</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : (pandas.DataFrame)</span>
+<span class="sd">        dataframe with column names that correspond to the entries</span>
+<span class="sd">        in the parameter data section of a pest control file</span>
+<span class="sd">    parfile : str</span>
+<span class="sd">        name of the parameter file to write</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parnme&quot;</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">,</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span>
@@ -242,12 +246,16 @@
 <div class="viewcode-block" id="parse_tpl_file"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.parse_tpl_file">[docs]</a><span class="k">def</span> <span class="nf">parse_tpl_file</span><span class="p">(</span><span class="n">tpl_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; parse a pest template file to get the parameter names</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        tpl_file : (str)</span>
-<span class="sd">            template file name</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tpl_file : str</span>
+<span class="sd">        template file name</span>
+
 <span class="sd">    Returns</span>
-<span class="sd">        par_names : list</span>
-<span class="sd">            list of parameter names</span>
+<span class="sd">    -------</span>
+<span class="sd">    par_names : list</span>
+<span class="sd">        list of parameter names</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">par_names</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tpl_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -282,18 +290,28 @@
 <span class="sd">    This is a simple implementation of what PEST does.  It does not</span>
 <span class="sd">    handle all the special cases, just a basic function...user beware</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pst : (pyemu.Pst)</span>
-<span class="sd">            a Pst instance</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : (pyemu.Pst)</span>
+<span class="sd">        a Pst instance</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">template_files</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">input_files</span><span class="p">):</span>
         <span class="n">write_to_template</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="write_to_template"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.write_to_template">[docs]</a><span class="k">def</span> <span class="nf">write_to_template</span><span class="p">(</span><span class="n">parvals</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; write parameter values to model input files using template files</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parvals : dict or pandas.Series</span>
+<span class="sd">        a way to look up parameter values using parameter names</span>
+<span class="sd">    tpl_file : str</span>
+<span class="sd">        template file</span>
+<span class="sd">    in_file : str</span>
+<span class="sd">        input file</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">f_in</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">f_tpl</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">tpl_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">header</span> <span class="o">=</span> <span class="n">f_tpl</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -339,17 +357,20 @@
 
 <div class="viewcode-block" id="get_marker_indices"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.get_marker_indices">[docs]</a><span class="k">def</span> <span class="nf">get_marker_indices</span><span class="p">(</span><span class="n">marker</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; method to find the start and end parameter markers</span>
-<span class="sd">    on a template file line</span>
+<span class="sd">    on a template file line.  Used by write_to_template()</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        marker : (str)</span>
-<span class="sd">            template file marker char</span>
-<span class="sd">        line : (str)</span>
-<span class="sd">            template file line</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    marker : str</span>
+<span class="sd">        template file marker char</span>
+<span class="sd">    line : str</span>
+<span class="sd">        template file line</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        indices : list</span>
-<span class="sd">            list of start and end indices (zero based)</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    indices : list</span>
+<span class="sd">        list of start and end indices (zero based)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ltr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">if</span> <span class="n">ltr</span> <span class="o">==</span> <span class="n">marker</span><span class="p">]</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
@@ -362,11 +383,14 @@
     <span class="sd">&quot;&quot;&quot;parse a pest instruction file to get observation names</span>
 
 <span class="sd">    Parameters</span>
-<span class="sd">        ins_file : (str)</span>
-<span class="sd">            instruction file name</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ins_file : str</span>
+<span class="sd">        instruction file name</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        list of observation names</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of observation names</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">obs_names</span> <span class="o">=</span> <span class="p">[]</span>
@@ -393,13 +417,16 @@
 <div class="viewcode-block" id="parse_ins_string"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.parse_ins_string">[docs]</a><span class="k">def</span> <span class="nf">parse_ins_string</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; split up an instruction file line to get the observation names</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        string : (str)</span>
-<span class="sd">            instruction file line</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    string : str</span>
+<span class="sd">        instruction file line</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        obs_names : list</span>
-<span class="sd">            list of observation names</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    obs_names : list</span>
+<span class="sd">        list of observation names</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">istart_markers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;[&quot;</span><span class="p">,</span><span class="s2">&quot;(&quot;</span><span class="p">,</span><span class="s2">&quot;!&quot;</span><span class="p">]</span>
     <span class="n">iend_markers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;]&quot;</span><span class="p">,</span><span class="s2">&quot;)&quot;</span><span class="p">,</span><span class="s2">&quot;!&quot;</span><span class="p">]</span>
@@ -432,18 +459,21 @@
     <span class="sd">&quot;&quot;&quot; helper function to populate a generic Pst dataframe attribute.  This</span>
 <span class="sd">    function is called as part of constructing a generic Pst instance</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        index : (varies)</span>
-<span class="sd">            something to use as the dataframe index</span>
-<span class="sd">        columns: (varies)</span>
-<span class="sd">            something to use as the dataframe columns</span>
-<span class="sd">        default_dict : (dict)</span>
-<span class="sd">            dictionary of default values for columns</span>
-<span class="sd">        dtype : numpy.dtype</span>
-<span class="sd">            dtype used to cast dataframe columns</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    index : (varies)</span>
+<span class="sd">        something to use as the dataframe index</span>
+<span class="sd">    columns: (varies)</span>
+<span class="sd">        something to use as the dataframe columns</span>
+<span class="sd">    default_dict : (dict)</span>
+<span class="sd">        dictionary of default values for columns</span>
+<span class="sd">    dtype : numpy.dtype</span>
+<span class="sd">        dtype used to cast dataframe columns</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        new_df : pandas.DataFrame</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    new_df : pandas.DataFrame</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">new_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">fieldname</span><span class="p">,</span><span class="n">dt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span><span class="n">dtype</span><span class="o">.</span><span class="n">descr</span><span class="p">):</span>
@@ -457,14 +487,16 @@
     <span class="sd">&quot;&quot;&quot;generate a generic pst instance.  This can used to later fill in</span>
 <span class="sd">    the Pst parts programatically.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        par_names : (list)</span>
-<span class="sd">            parameter names to setup</span>
-<span class="sd">        obs_names : (list)</span>
-<span class="sd">            observation names to setup</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    par_names : (list)</span>
+<span class="sd">        parameter names to setup</span>
+<span class="sd">    obs_names : (list)</span>
+<span class="sd">        observation names to setup</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        new_pst : pyemu.Pst</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    new_pst : pyemu.Pst</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">par_names</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
@@ -508,21 +540,23 @@
     <span class="sd">&quot;&quot;&quot; generate a new pyemu.Pst instance from model interface files.  This</span>
 <span class="sd">    function is emulated in the Pst.from_io_files() class method.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        tpl_files : (list)</span>
-<span class="sd">            template file names</span>
-<span class="sd">        in_files : (list)</span>
-<span class="sd">            model input file names</span>
-<span class="sd">        ins_files : (list)</span>
-<span class="sd">            instruction file names</span>
-<span class="sd">        out_files : (list)</span>
-<span class="sd">            model output file names</span>
-<span class="sd">        pst_filename : (str)</span>
-<span class="sd">            filename to save new pyemu.Pst.  If None, Pst is not written.</span>
-<span class="sd">            default is None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tpl_files : (list)</span>
+<span class="sd">        template file names</span>
+<span class="sd">    in_files : (list)</span>
+<span class="sd">        model input file names</span>
+<span class="sd">    ins_files : (list)</span>
+<span class="sd">        instruction file names</span>
+<span class="sd">    out_files : (list)</span>
+<span class="sd">        model output file names</span>
+<span class="sd">    pst_filename : str</span>
+<span class="sd">        filename to save new pyemu.Pst.  If None, Pst is not written.</span>
+<span class="sd">        default is None</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">      new_pst : pyemu.Pst</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    new_pst : pyemu.Pst</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">warnings</span>
@@ -539,11 +573,9 @@
 <span class="sd">    file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written</span>
 <span class="sd">    .obf file is used to populate the pst.observation_data.obsval attribute</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pst : (pyemu.Pst)</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : (pyemu.Pst)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">instruction_files</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">output_files</span><span class="p">):</span>
@@ -563,63 +595,71 @@
 
 
 <div class="viewcode-block" id="get_phi_comps_from_recfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.get_phi_comps_from_recfile">[docs]</a><span class="k">def</span> <span class="nf">get_phi_comps_from_recfile</span><span class="p">(</span><span class="n">recfile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;read the phi components from a record file by iteration</span>
+    <span class="sd">&quot;&quot;&quot;read the phi components from a record file by iteration</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            recfile : (str)</span>
-<span class="sd">                pest record file name</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            iters : dict</span>
-<span class="sd">                nested dictionary of iteration number, {group,contribution}</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">iiter</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">iters</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">recfile</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="k">if</span> <span class="s2">&quot;starting phi for this iteration&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> \
-                <span class="s2">&quot;final phi&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-                <span class="n">contributions</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                        <span class="k">break</span>
-                    <span class="k">if</span> <span class="s2">&quot;contribution to phi&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-                        <span class="n">iters</span><span class="p">[</span><span class="n">iiter</span><span class="p">]</span> <span class="o">=</span> <span class="n">contributions</span>
-                        <span class="n">iiter</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="k">break</span>
-                    <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                    <span class="n">val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="n">group</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                    <span class="n">contributions</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-        <span class="k">return</span> <span class="n">iters</span></div>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    recfile : str</span>
+<span class="sd">        pest record file name</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    iters : dict</span>
+<span class="sd">        nested dictionary of iteration number, {group,contribution}</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iiter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">iters</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">recfile</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="s2">&quot;starting phi for this iteration&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> \
+            <span class="s2">&quot;final phi&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="s2">&quot;contribution to phi&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">iters</span><span class="p">[</span><span class="n">iiter</span><span class="p">]</span> <span class="o">=</span> <span class="n">contributions</span>
+                    <span class="n">iiter</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+                <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">contributions</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">iters</span></div>
 
 <div class="viewcode-block" id="smp_to_ins"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.smp_to_ins">[docs]</a><span class="k">def</span> <span class="nf">smp_to_ins</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">ins_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">use_generic_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                <span class="n">gwutils_compliant</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; create an instruction file for an smp file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        smp_filename : (str)</span>
-<span class="sd">            existing smp file</span>
-<span class="sd">        ins_filename: (str)</span>
-<span class="sd">            instruction file to create.  If None, create</span>
-<span class="sd">            an instruction file using the smp filename</span>
-<span class="sd">            with the &quot;.ins&quot; suffix</span>
-<span class="sd">        use_generic_names : (boolean)</span>
-<span class="sd">            flag to force observations names to use a generic</span>
-<span class="sd">            int counter instead of trying to use a datetime str</span>
-<span class="sd">        gwutils_compliant : (boolean)</span>
-<span class="sd">            flag to use instruction set that is compliant with the</span>
-<span class="sd">            pest gw utils (fixed format instructions).  If false,</span>
-<span class="sd">            use free format (with whitespace) instruction set</span>
-<span class="sd">        datetime_format : (str)</span>
-<span class="sd">            str to pass to datetime.strptime in the smp_to_dataframe() function</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    smp_filename : str</span>
+<span class="sd">        existing smp file</span>
+<span class="sd">    ins_filename: str</span>
+<span class="sd">        instruction file to create.  If None, create</span>
+<span class="sd">        an instruction file using the smp filename</span>
+<span class="sd">        with the &quot;.ins&quot; suffix</span>
+<span class="sd">    use_generic_names : bool</span>
+<span class="sd">        flag to force observations names to use a generic</span>
+<span class="sd">        int counter instead of trying to use a datetime str</span>
+<span class="sd">    gwutils_compliant : bool</span>
+<span class="sd">        flag to use instruction set that is compliant with the</span>
+<span class="sd">        pest gw utils (fixed format instructions).  If false,</span>
+<span class="sd">        use free format (with whitespace) instruction set</span>
+<span class="sd">    datetime_format : str</span>
+<span class="sd">        str to pass to datetime.strptime in the smp_to_dataframe() function</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
 <span class="sd">        dataframe instance of the smp file with the observation names and</span>
 <span class="sd">        instruction lines as additional columns</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ins_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ins_filename</span> <span class="o">=</span> <span class="n">smp_filename</span><span class="o">+</span><span class="s2">&quot;.ins&quot;</span>
@@ -661,23 +701,22 @@
                      <span class="n">max_name_len</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; write a dataframe as an smp file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        dataframe : (pandas.DataFrame)</span>
-<span class="sd">        smp_filename : (str)</span>
-<span class="sd">            smp file to write</span>
-<span class="sd">        name_col: (str)</span>
-<span class="sd">            the column in the dataframe the marks the site namne</span>
-<span class="sd">        datetime_col: (str)</span>
-<span class="sd">            the column in the dataframe that is a datetime instance</span>
-<span class="sd">        value_col: (str)</span>
-<span class="sd">            the column in the dataframe that is the values</span>
-<span class="sd">        datetime_format: (str)</span>
-<span class="sd">            either &#39;dd/mm/yyyy&#39; or &#39;mm/dd/yyy&#39;</span>
-<span class="sd">        value_format: (str)</span>
-<span class="sd">            a python float-compatible format</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataframe : pandas.DataFrame</span>
+<span class="sd">    smp_filename : str</span>
+<span class="sd">        smp file to write</span>
+<span class="sd">    name_col: str</span>
+<span class="sd">        the column in the dataframe the marks the site namne</span>
+<span class="sd">    datetime_col: str</span>
+<span class="sd">        the column in the dataframe that is a datetime instance</span>
+<span class="sd">    value_col: str</span>
+<span class="sd">        the column in the dataframe that is the values</span>
+<span class="sd">    datetime_format: str</span>
+<span class="sd">        either &#39;dd/mm/yyyy&#39; or &#39;mm/dd/yyy&#39;</span>
+<span class="sd">    value_format: str</span>
+<span class="sd">        a python float-compatible format</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">formatters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;</span><span class="si">{0:&lt;20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="n">max_name_len</span><span class="p">]),</span>
                   <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">value_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)}</span>
@@ -711,13 +750,15 @@
 <div class="viewcode-block" id="date_parser"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.date_parser">[docs]</a><span class="k">def</span> <span class="nf">date_parser</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; datetime parser to help load smp files</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        items : (varies)</span>
-<span class="sd">            something or somethings to try to parse into datetimes</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    items : iterable</span>
+<span class="sd">        something or somethings to try to parse into datetimes</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        dt : (varies)</span>
-<span class="sd">            the cast datetime things</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dt : iterable</span>
+<span class="sd">        the cast datetime things</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">items</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y %H:%M:%S&quot;</span><span class="p">)</span>
@@ -733,16 +774,19 @@
 <div class="viewcode-block" id="smp_to_dataframe"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.smp_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">smp_to_dataframe</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">datetime_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; load an smp file into a pandas dataframe (stacked in wide format)</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        smp_filename : (str)</span>
-<span class="sd">            smp filename to load</span>
-<span class="sd">        datetime_format : (str)</span>
-<span class="sd">            should be either &quot;%m/%d/%Y %H:%M:%S&quot; or &quot;%d/%m/%Y %H:%M:%S&quot;</span>
-<span class="sd">            If None, then we will try to deduce the format for you, which</span>
-<span class="sd">            always dangerous</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    smp_filename : str</span>
+<span class="sd">        smp filename to load</span>
+<span class="sd">    datetime_format : str</span>
+<span class="sd">        should be either &quot;%m/%d/%Y %H:%M:%S&quot; or &quot;%d/%m/%Y %H:%M:%S&quot;</span>
+<span class="sd">        If None, then we will try to deduce the format for you, which</span>
+<span class="sd">        always dangerous</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">datetime_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -774,12 +818,15 @@
     <span class="sd">&quot;&quot;&quot;create a generic residual dataframe filled with np.NaN for</span>
 <span class="sd">    missing information</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        observation_data : (pandas.DataFrame)</span>
-<span class="sd">            pyemu.Pst.observation_data</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    observation_data : pandas.DataFrame</span>
+<span class="sd">        pyemu.Pst.observation_data</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        res_df : pandas.DataFrame</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    res_df : pandas.DataFrame</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">res_df</span> <span class="o">=</span> <span class="n">observation_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">res_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">res_df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;obsnme&quot;</span><span class="p">)</span>

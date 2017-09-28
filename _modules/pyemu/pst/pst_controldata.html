@@ -102,7 +102,16 @@
                 <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
                 <span class="nb">super</span><span class="p">(</span><span class="n">RegData</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">optional_dict</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+
 <div class="viewcode-block" id="RegData.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_controldata.RegData.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; write the regularization section to an open</span>
+<span class="sd">        file handle</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : file handle</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* regularization</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">vline</span> <span class="ow">in</span> <span class="n">REG_VARIABLE_LINES</span><span class="p">:</span>
             <span class="n">vraw</span> <span class="o">=</span> <span class="n">vline</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -125,12 +134,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">eigwrite</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;eigwrite&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SvdData.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_controldata.SvdData.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">f</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; write an SVD section to a file handle</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : file handle</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* singular value decomposition</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IFMT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">svdmode</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IFMT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maxsing</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="n">FFMT</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigthresh</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eigwrite</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="SvdData.parse_values_from_lines"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_controldata.SvdData.parse_values_from_lines">[docs]</a>    <span class="k">def</span> <span class="nf">parse_values_from_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lines</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; parse values from lines of the SVD section</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span><span class="s2">&quot;SvdData.parse_values_from_lines: expected &quot;</span> <span class="o">+</span> \
                                <span class="s2">&quot;3 lines, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
@@ -194,8 +217,10 @@
     <span class="k">def</span> <span class="nf">get_dataframe</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot; get a generic (default) control section dataframe</span>
 <span class="sd">        </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">CONTROL_VARIABLE_LINES</span><span class="p">]</span>
@@ -239,11 +264,11 @@
 <div class="viewcode-block" id="ControlData.parse_values_from_lines"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData.parse_values_from_lines">[docs]</a>    <span class="k">def</span> <span class="nf">parse_values_from_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lines</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; cast the string lines for a pest control file into actual inputs</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            lines : list</span>
-<span class="sd">                strings from pest control file</span>
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lines : list</span>
+<span class="sd">            strings from pest control file</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">CONTROL_VARIABLE_LINES</span><span class="p">),</span>\
         <span class="s2">&quot;ControlData error: len of lines not equal to &quot;</span> <span class="o">+</span>\
@@ -296,8 +321,10 @@
     <span class="k">def</span> <span class="nf">formatted_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; list the entries and current values in the control data section</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            formatted_values : pandas.Series</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        formatted_values : pandas.Series</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatters</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]](</span><span class="n">x</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -306,10 +333,8 @@
 <span class="sd">        </span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">            f: file handle or string filename</span>
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">            None</span>
+<span class="sd">        f: file handle or string filename</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>

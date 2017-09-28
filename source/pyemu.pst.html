@@ -68,9 +68,9 @@ of the PEST control file</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>formatted_values</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_controldata.ControlData.formatted_values" title="pyemu.pst.pst_controldata.ControlData.formatted_values">formatted_values</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
 </tbody>
 </table>
@@ -84,7 +84,7 @@ of the PEST control file</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -100,10 +100,7 @@ of the PEST control file</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> – list
-strings from pest control file</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) – strings from pest control file</td>
 </tr>
 </tbody>
 </table>
@@ -118,10 +115,6 @@ strings from pest control file</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>file handle</em><em> or </em><em>string filename</em>) – </td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -148,7 +141,17 @@ of the PEST control file</p>
 <dl class="method">
 <dt id="pyemu.pst.pst_controldata.RegData.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#RegData.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.RegData.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>write the regularization section to an open
+file handle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>file handle</em>) – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -171,12 +174,30 @@ section of the PEST control file</p>
 <dl class="method">
 <dt id="pyemu.pst.pst_controldata.SvdData.parse_values_from_lines">
 <code class="descname">parse_values_from_lines</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#SvdData.parse_values_from_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.SvdData.parse_values_from_lines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>parse values from lines of the SVD section</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_controldata.SvdData.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#SvdData.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.SvdData.write" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>write an SVD section to a file handle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>f</strong> (<em>file handle</em>) – </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -196,22 +217,14 @@ as well as replicate some of the functionality of the pest utilities</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filename</strong> – (str)
-the name of the control file</li>
-<li><strong>load</strong> – (boolean)
-flag to load the control file. Default is True</li>
-<li><strong>resfile</strong> – str
-corresponding residual file.  If None, a residual file
+<li><strong>filename</strong> (<em>str</em>) – the name of the control file</li>
+<li><strong>load</strong> (<em>(</em><em>boolean</em><em>)</em>) – flag to load the control file. Default is True</li>
+<li><strong>resfile</strong> (<em>str</em>) – corresponding residual file.  If None, a residual file
 with the control file base name is sought.  Default is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Pst</dt>
-<dd><p class="first last">a control file object</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Pst</strong> – a control file object</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst" title="pyemu.pst.pst_handler.Pst">Pst</a></p>
@@ -227,27 +240,18 @@ with the control file base name is sought.  Default is None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>par_names</strong> – (list)
-parameter names in the equation</li>
-<li><strong>pilbl</strong> – (str)
-name to assign the prior information equation.  If None,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>par_names</strong> (<em>list</em>) – parameter names in the equation</li>
+<li><strong>pilbl</strong> (<em>str</em>) – name to assign the prior information equation.  If None,
 a generic equation name is formed. Default is None</li>
-<li><strong>rhs</strong> – (float)
-the right-hand side of the equation</li>
-<li><strong>weight</strong> – (float)
-the weight of the equation</li>
-<li><strong>obs_group</strong> – (str)
-the observation group for the equation. Default is ‘pi_obgnme’</li>
-<li><strong>coef_dict</strong> – (dict)
-a dictionary of parameter name, coefficient pairs to assign
+<li><strong>rhs</strong> (<em>(</em><em>float</em><em>)</em>) – the right-hand side of the equation</li>
+<li><strong>weight</strong> (<em>(</em><em>float</em><em>)</em>) – the weight of the equation</li>
+<li><strong>obs_group</strong> (<em>str</em>) – the observation group for the equation. Default is ‘pi_obgnme’</li>
+<li><strong>coef_dict</strong> (<em>dict</em>) – a dictionary of parameter name, coefficient pairs to assign
 leading coefficients for one or more parameters in the equation.
 If a parameter is not listed, 1.0 is used for its coefficients.
 Default is {}</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -268,13 +272,9 @@ Default is {}</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>list of adjustable (not fixed or tied) parameter names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>adj_par_names</strong> – list of adjustable (not fixed or tied) parameter names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.adj_par_names" title="pyemu.pst.pst_handler.Pst.adj_par_names">adj_par_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -289,15 +289,10 @@ amount to the composite objective function</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obs_dict</strong> – (dict)
-dictionary of obs name,new contribution pairs</li>
-<li><strong>obsgrp_dict</strong> – (dict)
-dictionary of obs group name,contribution pairs</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obs_dict</strong> (<em>dict</em>) – dictionary of obs name,new contribution pairs</li>
+<li><strong>obsgrp_dict</strong> (<em>dict</em>) – dictionary of obs group name,contribution pairs</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -320,15 +315,10 @@ data worth analyses in pyemu.Schur class</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obslist</strong> – (list)
-list of observation names</li>
-<li><strong>weight</strong> – (float)
-new weight to assign</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obslist</strong> (<em>list</em>) – list of observation names</li>
+<li><strong>weight</strong> (<em>(</em><em>float</em><em>)</em>) – new weight to assign</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -345,11 +335,8 @@ non-zero weighted observations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recfile</strong> – (str)
-record file name.  If None, try to use a record file
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recfile</strong> (<em>str</em>) – record file name.  If None, try to use a record file
 with the Pst case name.  Default is None</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -365,11 +352,8 @@ non-zero weighted observations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> – (str)
-residual file name.  If None, try to use a residual file
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> (<em>str</em>) – residual file name.  If None, try to use a residual file
 with the Pst case name.  Default is None</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -413,15 +397,9 @@ parameter pertubation calculations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>boolean</dt>
-<dd>True if pestmode is estmation, False otherwise</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>estimation</strong> – True if pestmode is estmation, False otherwise</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.estimation" title="pyemu.pst.pst_handler.Pst.estimation">estimation</a></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -436,13 +414,9 @@ Returns None if no forecasts are named</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of forecast names.</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>forecast_names</strong> – a list of forecast names.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.html#pyemu.la.LinearAnalysis.forecast_names" title="pyemu.la.LinearAnalysis.forecast_names">forecast_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -459,21 +433,16 @@ values</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tpl_files</strong> – (list)
-list of template file names</li>
-<li><strong>in_files</strong> – (list)
-list of model input file names (pairs with template files)</li>
-<li><strong>ins_files</strong> – (list)
-list of instruction file names</li>
-<li><strong>out_files</strong> – (list)
-list of model output file names (pairs with instruction files)</li>
-<li><strong>pst_filename</strong> – (str)
-name of control file to write.  If None, no file is written.
+<li><strong>tpl_files</strong> (<em>list</em>) – list of template file names</li>
+<li><strong>in_files</strong> (<em>list</em>) – list of model input file names (pairs with template files)</li>
+<li><strong>ins_files</strong> (<em>list</em>) – list of instruction file names</li>
+<li><strong>out_files</strong> (<em>list</em>) – list of model output file names (pairs with instruction files)</li>
+<li><strong>pst_filename</strong> (<em>str</em>) – name of control file to write.  If None, no file is written.
 Default is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pst</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Pst</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst" title="pyemu.pst.pst_handler.Pst">Pst</a></p>
@@ -481,6 +450,10 @@ Default is None</li>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">calls pyemu.helpers.pst_from_io_files()</p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -492,23 +465,16 @@ Default is None</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>par_names</strong> – (list)
-a list of parameter names to have in the new Pst instance.
+<li><strong>par_names</strong> (<em>list</em>) – a list of parameter names to have in the new Pst instance.
 If None, all parameters are in the new Pst instance. Default
 is None</li>
-<li><strong>obs_names</strong> – (list)
-a list of observation names to have in the new Pst instance.
+<li><strong>obs_names</strong> (<em>list</em>) – a list of observation names to have in the new Pst instance.
 If None, all observations are in teh new Pst instance. Default
 is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Pst</dt>
-<dd><p class="first last">a new Pst instance</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Pst</strong> – a new Pst instance</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst" title="pyemu.pst.pst_handler.Pst">Pst</a></p>
@@ -526,12 +492,9 @@ is None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> – (str)
-pst filename</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – pst filename</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">lots of exceptions for incorrect format</td>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">lots of exceptions for incorrect format</td>
 </tr>
 </tbody>
 </table>
@@ -545,13 +508,9 @@ pst filename</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>the number of non-zeros weighted observations</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nnz_obs</strong> – the number of non-zeros weighted observations</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.nnz_obs" title="pyemu.pst.pst_handler.Pst.nnz_obs">nnz_obs</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -568,14 +527,10 @@ pst filename</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of observation groups that contain at
-least one non-zero weighted observation</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nnz_obs_groups</strong> – a list of observation groups that contain at
+least one non-zero weighted observation</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.nnz_obs_groups" title="pyemu.pst.pst_handler.Pst.nnz_obs_groups">nnz_obs_groups</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -589,13 +544,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of non-zero weighted observation names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nnz_obs_names</strong> – a list of non-zero weighted observation names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.html#pyemu.la.LinearAnalysis.nnz_obs_names" title="pyemu.la.LinearAnalysis.nnz_obs_names">nnz_obs_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -609,13 +560,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>the number of observations</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nobs</strong> – the number of observations</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Jco.nobs" title="pyemu.mat.mat_handler.Jco.nobs">nobs</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -629,13 +576,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>the number of parameters</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>npar</strong> – the number of parameters</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.npar" title="pyemu.pst.pst_handler.Pst.npar">npar</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -649,13 +592,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>the number of adjustable parameters</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>npar_adj</strong> – the number of adjustable parameters</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.npar_adj" title="pyemu.pst.pst_handler.Pst.npar_adj">npar_adj</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -669,13 +608,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>int</dt>
-<dd>the number of prior info equations</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nprior</strong> – the number of prior info equations</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.nprior" title="pyemu.pst.pst_handler.Pst.nprior">nprior</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -689,13 +624,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of unique observation groups</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>obs_groups</strong> – a list of unique observation groups</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.obs_groups" title="pyemu.pst.pst_handler.Pst.obs_groups">obs_groups</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -709,13 +640,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of observation names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>obs_names</strong> – a list of observation names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Jco.obs_names" title="pyemu.mat.mat_handler.Jco.obs_names">obs_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -729,13 +656,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of parameter groups</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>par_groups</strong> – a list of parameter groups</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.par_groups" title="pyemu.pst.pst_handler.Pst.par_groups">par_groups</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -749,13 +672,9 @@ least one non-zero weighted observation</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of parameter names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>par_names</strong> – a list of parameter names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Jco.par_names" title="pyemu.mat.mat_handler.Jco.par_names">par_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -767,20 +686,14 @@ least one non-zero weighted observation</dd>
 <dd><dl class="docutils">
 <dt>replicates the pest parrep util. replaces the parval1 field in the</dt>
 <dd>parameter data section dataframe</dd>
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>parfile <span class="classifier-delimiter">:</span> <span class="classifier">(str)</span></dt>
-<dd>parameter file to use.  If None, try to use
-a parameter file that corresponds to the case name.
-Default is None</dd>
-</dl>
-</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parfile</strong> (<em>str</em>) – parameter file to use.  If None, try to use
+a parameter file that corresponds to the case name.
+Default is None</td>
 </tr>
 </tbody>
 </table>
@@ -794,13 +707,9 @@ Default is None</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>float</dt>
-<dd>sum of squared residuals</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>phi</strong> – sum of squared residuals</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.phi" title="pyemu.pst.pst_handler.Pst.phi">phi</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
 </tr>
 </tbody>
 </table>
@@ -814,12 +723,7 @@ Default is None</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>dict</dt>
-<dd><p class="first last">dictionary of observation group, contribution to total phi</p>
-</dd>
-</dl>
-</p>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dict</strong> – dictionary of observation group, contribution to total phi</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
@@ -846,21 +750,20 @@ Default is None</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>dictionary of observation group, normalized contribution to total phi</dd>
-</dl>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>dict</strong> – dictionary of observation group, normalized contribution to total phi</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">dict</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li>Assertion error if self.observation_data groups don’t match</li>
+<li>self.res groups</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Raises</dt>
-<dd>Assertion error if self.observation_data groups don’t match
-self.res groups</dd>
-</dl>
 </dd></dl>
 
 <dl class="attribute">
@@ -871,13 +774,9 @@ self.res groups</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of prior information groups</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>prior_groups</strong> – a list of prior information groups</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.prior_groups" title="pyemu.pst.pst_handler.Pst.prior_groups">prior_groups</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -891,13 +790,9 @@ self.res groups</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of prior information names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>prior_names</strong> – a list of prior information names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.prior_names" title="pyemu.pst.pst_handler.Pst.prior_names">prior_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -911,19 +806,13 @@ self.res groups</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fraction_stdev</strong> – (float)
-the fraction portion of the observation
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fraction_stdev</strong> (<em>float</em>) – the fraction portion of the observation
 val to treat as the standard deviation.  set to 1.0 for
 inversely proportional</li>
-<li><strong>wmax</strong> – (float)
-maximum weight to allow</li>
-<li><strong>leave_zero</strong> – (boolean)
-flag to leave existing zero weights</li>
+<li><strong>wmax</strong> (<em>float</em>) – maximum weight to allow</li>
+<li><strong>leave_zero</strong> (<em>bool</em>) – flag to leave existing zero weights</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -936,14 +825,6 @@ flag to leave existing zero weights</li>
 <dd><p>rectify the prior information equation with the current state of the
 parameter_data dataframe.  Equations that list fixed, tied or missing parameters
 are removed. This method is called during Pst.write()</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -954,9 +835,9 @@ are removed. This method is called during Pst.write()</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>res</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.res" title="pyemu.pst.pst_handler.Pst.res">res</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -975,10 +856,7 @@ this call loads the res dataframe from a file</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>res</strong> – (varies)
-something to use as Pst.res attribute</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>res</strong> (<em>(</em><em>varies</em><em>)</em>) – something to use as Pst.res attribute</td>
 </tr>
 </tbody>
 </table>
@@ -992,16 +870,11 @@ something to use as Pst.res attribute</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>new_filename</strong> – (str)
-name of the new pest control file</li>
-<li><strong>update_regul</strong> – (boolean)
-flag to update zero-order Tikhonov prior information
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>new_filename</strong> (<em>str</em>) – name of the new pest control file</li>
+<li><strong>update_regul</strong> (<em>(</em><em>boolean</em><em>)</em>) – flag to update zero-order Tikhonov prior information
 equations to prefer the current parameter values</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -1021,13 +894,9 @@ equations to prefer the current parameter values</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>a list of zero-weighted observation names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>zero_weight_obs_names</strong> – a list of zero-weighted observation names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.pst.pst_handler.Pst.zero_weight_obs_names" title="pyemu.pst.pst_handler.Pst.zero_weight_obs_names">zero_weight_obs_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -1068,24 +937,15 @@ the pyemu.Pst object.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataframe</strong> – (pandas.DataFrame)</li>
-<li><strong>smp_filename</strong> – (str)
-smp file to write</li>
-<li><strong>name_col</strong> – (str)
-the column in the dataframe the marks the site namne</li>
-<li><strong>datetime_col</strong> – (str)
-the column in the dataframe that is a datetime instance</li>
-<li><strong>value_col</strong> – (str)
-the column in the dataframe that is the values</li>
-<li><strong>datetime_format</strong> – (str)
-either ‘dd/mm/yyyy’ or ‘mm/dd/yyy’</li>
-<li><strong>value_format</strong> – (str)
-a python float-compatible format</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dataframe</strong> (<em>pandas.DataFrame</em>) – </li>
+<li><strong>smp_filename</strong> (<em>str</em>) – smp file to write</li>
+<li><strong>name_col</strong> (<em>str</em>) – the column in the dataframe the marks the site namne</li>
+<li><strong>datetime_col</strong> (<em>str</em>) – the column in the dataframe that is a datetime instance</li>
+<li><strong>value_col</strong> (<em>str</em>) – the column in the dataframe that is the values</li>
+<li><strong>datetime_format</strong> (<em>str</em>) – either ‘dd/mm/yyyy’ or ‘mm/dd/yyy’</li>
+<li><strong>value_format</strong> (<em>str</em>) – a python float-compatible format</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -1100,16 +960,11 @@ a python float-compatible format</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> – (varies)
-something or somethings to try to parse into datetimes</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> (<em>iterable</em>) – something or somethings to try to parse into datetimes</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>(varies)</dt>
-<dd>the cast datetime things</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dt</strong> – the cast datetime things</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dt</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterable</td>
 </tr>
 </tbody>
 </table>
@@ -1130,17 +985,15 @@ the Pst parts programatically.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>par_names</strong> – (list)
-parameter names to setup</li>
-<li><strong>obs_names</strong> – (list)
-observation names to setup</li>
+<li><strong>par_names</strong> (<em>(</em><em>list</em><em>)</em>) – parameter names to setup</li>
+<li><strong>obs_names</strong> (<em>(</em><em>list</em><em>)</em>) – observation names to setup</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pyemu.Pst</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>new_pst</strong></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">new_pst</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pyemu.Pst</p>
 </td>
 </tr>
 </tbody>
@@ -1151,28 +1004,21 @@ observation names to setup</li>
 <dt id="pyemu.pst.pst_utils.get_marker_indices">
 <code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">get_marker_indices</code><span class="sig-paren">(</span><em>marker</em>, <em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#get_marker_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.get_marker_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to find the start and end parameter markers
-on a template file line</p>
+on a template file line.  Used by write_to_template()</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>marker</strong> – (str)
-template file marker char</li>
-<li><strong>line</strong> – (str)
-template file line</li>
+<li><strong>marker</strong> (<em>str</em>) – template file marker char</li>
+<li><strong>line</strong> (<em>str</em>) – template file line</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>list</dt>
-<dd><p class="first last">list of start and end indices (zero based)</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>indices</strong> – list of start and end indices (zero based)</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Matrix.indices" title="pyemu.mat.mat_handler.Matrix.indices">indices</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
 </tr>
 </tbody>
@@ -1187,16 +1033,11 @@ template file line</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recfile</strong> – (str)
-pest record file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recfile</strong> (<em>str</em>) – pest record file name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>nested dictionary of iteration number, {group,contribution}</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>iters</strong> – nested dictionary of iteration number, {group,contribution}</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iters</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
@@ -1206,19 +1047,15 @@ pest record file name</td>
 <dt id="pyemu.pst.pst_utils.parse_ins_file">
 <code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">parse_ins_file</code><span class="sig-paren">(</span><em>ins_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#parse_ins_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.parse_ins_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>parse a pest instruction file to get observation names</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>ins_file <span class="classifier-delimiter">:</span> <span class="classifier">(str)</span></dt>
-<dd>instruction file name</dd>
-</dl>
-</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of observation names</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ins_file</strong> (<em>str</em>) – instruction file name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of observation names</td>
 </tr>
 </tbody>
 </table>
@@ -1232,16 +1069,11 @@ pest record file name</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> – (str)
-instruction file line</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>str</em>) – instruction file line</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>list of observation names</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>obs_names</strong> – list of observation names</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Jco.obs_names" title="pyemu.mat.mat_handler.Jco.obs_names">obs_names</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -1255,19 +1087,14 @@ instruction file line</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tpl_file</strong> – (str)
-template file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tpl_file</strong> (<em>str</em>) – template file name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>par_names</strong> – list of parameter names</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>Returns</dt>
-<dd><dl class="first last docutils">
-<dt>par_names <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>list of parameter names</dd>
-</dl>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="function">
@@ -1280,21 +1107,17 @@ function is called as part of constructing a generic Pst instance</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>index</strong> – (varies)
-something to use as the dataframe index</li>
-<li><strong>columns</strong> – (varies)
-something to use as the dataframe columns</li>
-<li><strong>default_dict</strong> – (dict)
-dictionary of default values for columns</li>
-<li><strong>dtype</strong> – numpy.dtype
-dtype used to cast dataframe columns</li>
+<li><strong>index</strong> (<em>(</em><em>varies</em><em>)</em>) – something to use as the dataframe index</li>
+<li><strong>columns</strong> (<em>(</em><em>varies</em><em>)</em>) – something to use as the dataframe columns</li>
+<li><strong>default_dict</strong> (<em>(</em><em>dict</em><em>)</em>) – dictionary of default values for columns</li>
+<li><strong>dtype</strong> (<em>numpy.dtype</em>) – dtype used to cast dataframe columns</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pandas.DataFrame</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>new_df</strong></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">new_df</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -1311,24 +1134,19 @@ function is emulated in the Pst.from_io_files() class method.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tpl_files</strong> – (list)
-template file names</li>
-<li><strong>in_files</strong> – (list)
-model input file names</li>
-<li><strong>ins_files</strong> – (list)
-instruction file names</li>
-<li><strong>out_files</strong> – (list)
-model output file names</li>
-<li><strong>pst_filename</strong> – (str)
-filename to save new pyemu.Pst.  If None, Pst is not written.
+<li><strong>tpl_files</strong> (<em>(</em><em>list</em><em>)</em>) – template file names</li>
+<li><strong>in_files</strong> (<em>(</em><em>list</em><em>)</em>) – model input file names</li>
+<li><strong>ins_files</strong> (<em>(</em><em>list</em><em>)</em>) – instruction file names</li>
+<li><strong>out_files</strong> (<em>(</em><em>list</em><em>)</em>) – model output file names</li>
+<li><strong>pst_filename</strong> (<em>str</em>) – filename to save new pyemu.Pst.  If None, Pst is not written.
 default is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pyemu.Pst</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>new_pst</strong></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">new_pst</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pyemu.Pst</p>
 </td>
 </tr>
 </tbody>
@@ -1343,10 +1161,9 @@ default is None</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parfile</strong> – (str)
-pest parameter file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parfile</strong> (<em>str</em>) – pest parameter file name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -1362,10 +1179,9 @@ pest parameter file name</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> – (str)
-residual file name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> (<em>str</em>) – residual file name</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -1382,12 +1198,11 @@ missing information</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation_data</strong> – (pandas.DataFrame)
-pyemu.Pst.observation_data</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>observation_data</strong> (<em>pandas.DataFrame</em>) – pyemu.Pst.observation_data</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>res_df</strong></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">res_df</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -1402,19 +1217,17 @@ pyemu.Pst.observation_data</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>smp_filename</strong> – (str)
-smp filename to load</li>
-<li><strong>datetime_format</strong> – (str)
-should be either “%m/%d/%Y %H:%M:%S” or “%d/%m/%Y %H:%M:%S”
+<li><strong>smp_filename</strong> (<em>str</em>) – smp filename to load</li>
+<li><strong>datetime_format</strong> (<em>str</em>) – should be either “%m/%d/%Y %H:%M:%S” or “%d/%m/%Y %H:%M:%S”
 If None, then we will try to deduce the format for you, which
 always dangerous</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pandas.DataFrame</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="pyemu.mat.html#pyemu.mat.mat_handler.Matrix.df" title="pyemu.mat.mat_handler.Matrix.df">df</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -1430,26 +1243,24 @@ always dangerous</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>smp_filename</strong> – (str)
-existing smp file</li>
-<li><strong>ins_filename</strong> – (str)
-instruction file to create.  If None, create
+<li><strong>smp_filename</strong> (<em>str</em>) – existing smp file</li>
+<li><strong>ins_filename</strong> (<em>str</em>) – instruction file to create.  If None, create
 an instruction file using the smp filename
 with the “.ins” suffix</li>
-<li><strong>use_generic_names</strong> – (boolean)
-flag to force observations names to use a generic
+<li><strong>use_generic_names</strong> (<em>bool</em>) – flag to force observations names to use a generic
 int counter instead of trying to use a datetime str</li>
-<li><strong>gwutils_compliant</strong> – (boolean)
-flag to use instruction set that is compliant with the
+<li><strong>gwutils_compliant</strong> (<em>bool</em>) – flag to use instruction set that is compliant with the
 pest gw utils (fixed format instructions).  If false,
 use free format (with whitespace) instruction set</li>
-<li><strong>datetime_format</strong> – (str)
-str to pass to datetime.strptime in the smp_to_dataframe() function</li>
+<li><strong>datetime_format</strong> (<em>str</em>) – str to pass to datetime.strptime in the smp_to_dataframe() function</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dataframe instance of the smp file with the observation names and
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – dataframe instance of the smp file with the observation names and
 instruction lines as additional columns</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -1476,9 +1287,7 @@ file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> – (pyemu.Pst)</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> (<em>(</em><em>pyemu.Pst</em><em>)</em>) – </td>
 </tr>
 </tbody>
 </table>
@@ -1492,16 +1301,11 @@ file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> – (pandas.DataFrame)
-dataframe with column names that correspond to the entries
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df</strong> (<em>(</em><em>pandas.DataFrame</em><em>)</em>) – dataframe with column names that correspond to the entries
 in the parameter data section of a pest control file</li>
-<li><strong>parfile</strong> – (str)
-name of the parameter file to write</li>
+<li><strong>parfile</strong> (<em>str</em>) – name of the parameter file to write</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -1519,10 +1323,7 @@ handle all the special cases, just a basic function…user beware</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> – (pyemu.Pst)
-a Pst instance</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pst</strong> (<em>(</em><em>pyemu.Pst</em><em>)</em>) – a Pst instance</td>
 </tr>
 </tbody>
 </table>
@@ -1531,7 +1332,21 @@ a Pst instance</td>
 <dl class="function">
 <dt id="pyemu.pst.pst_utils.write_to_template">
 <code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">write_to_template</code><span class="sig-paren">(</span><em>parvals</em>, <em>tpl_file</em>, <em>in_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#write_to_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.write_to_template" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>write parameter values to model input files using template files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parvals</strong> (<em>dict</em><em> or </em><em>pandas.Series</em>) – a way to look up parameter values using parameter names</li>
+<li><strong>tpl_file</strong> (<em>str</em>) – template file</li>
+<li><strong>in_file</strong> (<em>str</em>) – input file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <div class="section" id="module-pyemu.pst">

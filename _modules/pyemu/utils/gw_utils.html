@@ -58,16 +58,18 @@
     <span class="sd">&quot;&quot;&quot;write a template file for a modflow parameter value file.</span>
 <span class="sd">    Uses names in the first column in the pval file as par names.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pval_file : (str)</span>
-<span class="sd">            parameter value file</span>
-<span class="sd">        tpl_file : str</span>
-<span class="sd">            template file to write.  If None, use &lt;pval_file&gt;.tpl.</span>
-<span class="sd">            Default is None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pval_file : str</span>
+<span class="sd">        parameter value file</span>
+<span class="sd">    tpl_file : str, optional</span>
+<span class="sd">        template file to write.  If None, use &lt;pval_file&gt;.tpl.</span>
+<span class="sd">        Default is None</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            pandas DataFrame with control file parameter information</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        pandas DataFrame with control file parameter information</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">tpl_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -90,13 +92,15 @@
 <div class="viewcode-block" id="modflow_hob_to_instruction_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.modflow_hob_to_instruction_file">[docs]</a><span class="k">def</span> <span class="nf">modflow_hob_to_instruction_file</span><span class="p">(</span><span class="n">hob_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write an instruction file for a modflow head observation file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hob_file : (str)</span>
-<span class="sd">            modflow hob file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hob_file : str</span>
+<span class="sd">        modflow hob file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            pandas DataFrame with control file observation information</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        pandas DataFrame with control file observation information</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hob_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">hob_file</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -121,16 +125,19 @@
 <div class="viewcode-block" id="modflow_hydmod_to_instruction_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.modflow_hydmod_to_instruction_file">[docs]</a><span class="k">def</span> <span class="nf">modflow_hydmod_to_instruction_file</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write an instruction file for a modflow hydmod file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hydmod_file : (str)</span>
-<span class="sd">            modflow hydmod file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hydmod_file : str</span>
+<span class="sd">        modflow hydmod file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            pandas DataFrame with control file observation information</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        pandas DataFrame with control file observation information</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        calls modflow_read_hydmod_file()</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    calls modflow_read_hydmod_file()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hydmod_df</span><span class="p">,</span> <span class="n">hydmod_outfile</span> <span class="o">=</span> <span class="n">modflow_read_hydmod_file</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">)</span>
@@ -169,19 +176,22 @@
 <div class="viewcode-block" id="modflow_read_hydmod_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.modflow_read_hydmod_file">[docs]</a><span class="k">def</span> <span class="nf">modflow_read_hydmod_file</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">,</span> <span class="n">hydmod_outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; read in a binary hydmod file and return a dataframe of the results</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hydmod_file : (str)</span>
-<span class="sd">            modflow hydmod binary file</span>
-<span class="sd">        hydmod_outfile :str</span>
-<span class="sd">            output file to write.  If None, use &lt;hydmod_file&gt;.dat.</span>
-<span class="sd">            Default is None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hydmod_file : str</span>
+<span class="sd">        modflow hydmod binary file</span>
+<span class="sd">    hydmod_outfile : str</span>
+<span class="sd">        output file to write.  If None, use &lt;hydmod_file&gt;.dat.</span>
+<span class="sd">        Default is None</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            pandas DataFrame with hymod_file values</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        pandas DataFrame with hymod_file values</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires flopy</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires flopy</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">flopy.utils</span> <span class="k">as</span> <span class="nn">fu</span>
@@ -220,31 +230,33 @@
                            <span class="n">shapename</span><span class="o">=</span><span class="s2">&quot;pp.shp&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; setup regularly-spaced (gridded) pilot point parameterization</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        ml : (flopy.mbase)</span>
-<span class="sd">            a flopy mbase dervied type.  If None, sr must not be None.</span>
-<span class="sd">        sr : (flopy.utils.reference.SpatialReference)</span>
-<span class="sd">            a spatial reference use to locate the model grid in space.  If None,</span>
-<span class="sd">            ml must not be None.  Default is None</span>
-<span class="sd">        ibound : (numpy.ndarray)</span>
-<span class="sd">            the modflow ibound integer array.  Used to set pilot points only in active areas.</span>
-<span class="sd">            If None and ml is None, then pilot points are set in all rows and columns according to</span>
-<span class="sd">            every_n_cell.  Default is None.</span>
-<span class="sd">        prefix_dict : (dict)</span>
-<span class="sd">            a dictionary of pilot point parameter prefix, layer pairs.  example : {&quot;hk&quot;:[0,1,2,3]} would</span>
-<span class="sd">            setup pilot points with the prefix &quot;hk&quot; for model layers 1 - 4 (zero based). If None, a generic set</span>
-<span class="sd">            of pilot points with the &quot;pp&quot; prefix are setup for a generic nrowXncol grid. Default is None</span>
-<span class="sd">        use_ibound_zones : (boolean)</span>
-<span class="sd">            a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound</span>
-<span class="sd">            values greater than zero are treated as a single zone.  Default is False.</span>
-<span class="sd">        pp_dir : (str)</span>
-<span class="sd">            directory to write pilot point files to.  Default is &#39;.&#39;</span>
-<span class="sd">        tpl_dir : (str)</span>
-<span class="sd">            directory to write pilot point template file to.  Default is &#39;.&#39;</span>
-<span class="sd">        shapename : (str)</span>
-<span class="sd">            name of shapefile to write that containts pilot point information. Default is &quot;pp.shp&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ml : flopy.mbase</span>
+<span class="sd">        a flopy mbase dervied type.  If None, sr must not be None.</span>
+<span class="sd">    sr : flopy.utils.reference.SpatialReference</span>
+<span class="sd">        a spatial reference use to locate the model grid in space.  If None,</span>
+<span class="sd">        ml must not be None.  Default is None</span>
+<span class="sd">    ibound : numpy.ndarray</span>
+<span class="sd">        the modflow ibound integer array.  Used to set pilot points only in active areas.</span>
+<span class="sd">        If None and ml is None, then pilot points are set in all rows and columns according to</span>
+<span class="sd">        every_n_cell.  Default is None.</span>
+<span class="sd">    prefix_dict : dict</span>
+<span class="sd">        a dictionary of pilot point parameter prefix, layer pairs.  example : {&quot;hk&quot;:[0,1,2,3]} would</span>
+<span class="sd">        setup pilot points with the prefix &quot;hk&quot; for model layers 1 - 4 (zero based). If None, a generic set</span>
+<span class="sd">        of pilot points with the &quot;pp&quot; prefix are setup for a generic nrowXncol grid. Default is None</span>
+<span class="sd">    use_ibound_zones : bool</span>
+<span class="sd">        a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound</span>
+<span class="sd">        values greater than zero are treated as a single zone.  Default is False.</span>
+<span class="sd">    pp_dir : str</span>
+<span class="sd">        directory to write pilot point files to.  Default is &#39;.&#39;</span>
+<span class="sd">    tpl_dir : str</span>
+<span class="sd">        directory to write pilot point template file to.  Default is &#39;.&#39;</span>
+<span class="sd">    shapename : str</span>
+<span class="sd">        name of shapefile to write that containts pilot point information. Default is &quot;pp.shp&quot;</span>
 
-<span class="sd">    Returns:</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
 <span class="sd">        pp_df : pandas.DataFrame</span>
 <span class="sd">            a dataframe summarizing pilot point information (same information</span>
 <span class="sd">            written to shapename</span>
@@ -262,6 +274,7 @@
 
 
 <div class="viewcode-block" id="pp_file_to_dataframe"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.pp_file_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">pp_file_to_dataframe</span><span class="p">(</span><span class="n">pp_filename</span><span class="p">):</span>
+
     <span class="kn">import</span> <span class="nn">warnings</span>
     <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">pp_utils</span>
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;pp_file_to_dataframe has moved to pp_utils&quot;</span><span class="p">)</span>
@@ -310,38 +323,41 @@
 <span class="sd">    an instruction file and also a _setup_.csv to use when constructing a pest</span>
 <span class="sd">    control file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        list_filename : (str)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list_filename : str</span>
 <span class="sd">            modflow list file</span>
-<span class="sd">        flx_filename : (str)</span>
-<span class="sd">            output filename that will contain the budget flux observations. Default is</span>
-<span class="sd">            &quot;flux.dat&quot;</span>
-<span class="sd">        vol_filename : (str)</span>
-<span class="sd">            output filename that will contain the budget volume observations.  Default</span>
-<span class="sd">            is &quot;vol.dat&quot;</span>
-<span class="sd">        start_datetime : (str)</span>
-<span class="sd">            an str that can be parsed into a pandas.TimeStamp.  used to give budget</span>
-<span class="sd">            observations meaningful names</span>
-<span class="sd">        prefix : (str)</span>
-<span class="sd">            a prefix to add to the water budget observations.  Useful if processing</span>
-<span class="sd">            more than one list file as part of the forward run process. Default is &#39;&#39;.</span>
-<span class="sd">        save_setup_file : (boolean)</span>
-<span class="sd">            a flag to save _setup_&lt;list_filename&gt;.csv file that contains useful</span>
-<span class="sd">            control file information</span>
+<span class="sd">    flx_filename : str</span>
+<span class="sd">        output filename that will contain the budget flux observations. Default is</span>
+<span class="sd">        &quot;flux.dat&quot;</span>
+<span class="sd">    vol_filename : str)</span>
+<span class="sd">        output filename that will contain the budget volume observations.  Default</span>
+<span class="sd">        is &quot;vol.dat&quot;</span>
+<span class="sd">    start_datetime : str</span>
+<span class="sd">        an str that can be parsed into a pandas.TimeStamp.  used to give budget</span>
+<span class="sd">        observations meaningful names</span>
+<span class="sd">    prefix : str</span>
+<span class="sd">        a prefix to add to the water budget observations.  Useful if processing</span>
+<span class="sd">        more than one list file as part of the forward run process. Default is &#39;&#39;.</span>
+<span class="sd">    save_setup_file : (boolean)</span>
+<span class="sd">        a flag to save _setup_&lt;list_filename&gt;.csv file that contains useful</span>
+<span class="sd">        control file information</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">         df : pandas.DataFrame</span>
-<span class="sd">            a dataframe with information for constructing a control file.  If INSCHEK fails</span>
-<span class="sd">            to run, reutrns None</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        a dataframe with information for constructing a control file.  If INSCHEK fails</span>
+<span class="sd">        to run, reutrns None</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        This function uses INSCHEK to get observation values; the observation values are</span>
-<span class="sd">        the values of the list file list_filename.  If INSCHEK fails to run, the obseravtion</span>
-<span class="sd">        values are set to 1.0E+10</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function uses INSCHEK to get observation values; the observation values are</span>
+<span class="sd">    the values of the list file list_filename.  If INSCHEK fails to run, the obseravtion</span>
+<span class="sd">    values are set to 1.0E+10</span>
 
-<span class="sd">        the instruction files are named &lt;flux_file&gt;.ins and &lt;vol_file&gt;.ins, respectively</span>
+<span class="sd">    the instruction files are named &lt;flux_file&gt;.ins and &lt;vol_file&gt;.ins, respectively</span>
 
-<span class="sd">        It is recommended to use the default values for flux_file and vol_file.</span>
+<span class="sd">    It is recommended to use the default values for flux_file and vol_file.</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -382,27 +398,30 @@
                             <span class="n">start_datetime</span><span class="o">=</span><span class="s2">&quot;1-1-1970&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; process a MODFLOW list file to extract flux and volume water budget entries.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        list_filename : (str)</span>
-<span class="sd">            the modflow list file</span>
-<span class="sd">        flx_filename : (str)</span>
-<span class="sd">            the name of the output file with water budget flux information.</span>
-<span class="sd">            Default is &quot;flux.dat&quot;</span>
-<span class="sd">        vol_filename : (str)</span>
-<span class="sd">            the name of the output file with water budget volume information.</span>
-<span class="sd">            Default is &quot;vol.dat&quot;</span>
-<span class="sd">        start_datatime : (str)</span>
-<span class="sd">            an str that can be cast to a pandas.TimeStamp.  Used to give</span>
-<span class="sd">            observations a meaningful name</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    list_filename : str</span>
+<span class="sd">        the modflow list file</span>
+<span class="sd">    flx_filename : str</span>
+<span class="sd">        the name of the output file with water budget flux information.</span>
+<span class="sd">        Default is &quot;flux.dat&quot;</span>
+<span class="sd">    vol_filename : str</span>
+<span class="sd">        the name of the output file with water budget volume information.</span>
+<span class="sd">        Default is &quot;vol.dat&quot;</span>
+<span class="sd">    start_datatime : str</span>
+<span class="sd">        an str that can be cast to a pandas.TimeStamp.  Used to give</span>
+<span class="sd">        observations a meaningful name</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        flx : pandas.DataFrame</span>
-<span class="sd">            the flux dataframe</span>
-<span class="sd">        vol : pandas.DataFrame</span>
-<span class="sd">            the volume dataframe</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flx : pandas.DataFrame</span>
+<span class="sd">        the flux dataframe</span>
+<span class="sd">    vol : pandas.DataFrame</span>
+<span class="sd">        the volume dataframe</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires flopy</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires flopy</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -417,6 +436,20 @@
 
 
 <span class="k">def</span> <span class="nf">_write_mflist_ins</span><span class="p">(</span><span class="n">ins_filename</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">prefix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; write an instruction file for a MODFLOW list file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ins_filename : str</span>
+<span class="sd">        name of the instruction file to write</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        the dataframe of list file entries</span>
+<span class="sd">    prefix : str</span>
+<span class="sd">        the prefix to add to the column names to form</span>
+<span class="sd">        obseravtions names</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">dt_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
     <span class="n">name_len</span> <span class="o">=</span> <span class="mi">11</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -435,33 +468,36 @@
 <span class="sd">    an instruction file and a _setup_ csv used</span>
 <span class="sd">    construct a control file.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hds_file : (str)</span>
-<span class="sd">            a MODFLOW head-save file</span>
-<span class="sd">        kperk_pairs: (iterable)</span>
-<span class="sd">            an iterable of pairs of kper (zero-based stress</span>
-<span class="sd">            period index) and k (zero-based layer index) to</span>
-<span class="sd">            setup observations for.  If None, then a shit-ton</span>
-<span class="sd">            of observations may be produced!</span>
-<span class="sd">        skip : (variable)</span>
-<span class="sd">            a value or function used to determine which values</span>
-<span class="sd">            to skip when setting up observations.  If np.scalar(skip)</span>
-<span class="sd">            is True, then values equal to skip will not be used.  If not</span>
-<span class="sd">            np.scalar(skip), then skip will be treated as a lambda function that</span>
-<span class="sd">            returns np.NaN if the value should be skipped.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hds_file : str</span>
+<span class="sd">        a MODFLOW head-save file</span>
+<span class="sd">    kperk_pairs : iterable</span>
+<span class="sd">        an iterable of pairs of kper (zero-based stress</span>
+<span class="sd">        period index) and k (zero-based layer index) to</span>
+<span class="sd">        setup observations for.  If None, then a shit-ton</span>
+<span class="sd">        of observations may be produced!</span>
+<span class="sd">    skip : variable</span>
+<span class="sd">        a value or function used to determine which values</span>
+<span class="sd">        to skip when setting up observations.  If np.scalar(skip)</span>
+<span class="sd">        is True, then values equal to skip will not be used.  If not</span>
+<span class="sd">        np.scalar(skip), then skip will be treated as a lambda function that</span>
+<span class="sd">        returns np.NaN if the value should be skipped.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        forward_run_line : str</span>
-<span class="sd">            a python code str to add to the forward run script</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    forward_run_line : str</span>
+<span class="sd">        a python code str to add to the forward run script</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires flopy</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires flopy</span>
 
-<span class="sd">        writes &lt;hds_file&gt;.dat.ins instruction file</span>
+<span class="sd">    writes &lt;hds_file&gt;.dat.ins instruction file</span>
 
-<span class="sd">        writes _setup_&lt;hds_file&gt;.csv which contains much</span>
+<span class="sd">    writes _setup_&lt;hds_file&gt;.csv which contains much</span>
 
-<span class="sd">        useful information for construction a control file</span>
+<span class="sd">    useful information for construction a control file</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -565,16 +601,18 @@
 <span class="sd">    give stress period (kper) in a modflow head save file.</span>
 
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hds : (flopy.utils.HeadFile)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hds : flopy.utils.HeadFile</span>
 
-<span class="sd">        kper : (int)</span>
-<span class="sd">            the zero-index stress period number</span>
+<span class="sd">    kper : int</span>
+<span class="sd">        the zero-index stress period number</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        kstp : int</span>
-<span class="sd">            the zero-based last time step during stress period</span>
-<span class="sd">            kper in the head save file</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    kstp : int</span>
+<span class="sd">        the zero-based last time step during stress period</span>
+<span class="sd">        kper in the head save file</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -592,25 +630,24 @@
     <span class="sd">&quot;&quot;&quot; process a modflow head save file.  A companion function to</span>
 <span class="sd">    setup_hds_obs that is called during the forward run process</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        hds_file : (str)</span>
-<span class="sd">            a modflow head save filename</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hds_file : str</span>
+<span class="sd">        a modflow head save filename</span>
 
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires flopy</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires flopy</span>
 
-<span class="sd">        writes &lt;hds_file&gt;.dat</span>
+<span class="sd">    writes &lt;hds_file&gt;.dat</span>
 
-<span class="sd">        expects &lt;hds_file&gt;.dat.ins to exist</span>
+<span class="sd">    expects &lt;hds_file&gt;.dat.ins to exist</span>
 
-<span class="sd">        uses pyemu.pst_utils.parse_ins_file to get observation names</span>
+<span class="sd">    uses pyemu.pst_utils.parse_ins_file to get observation names</span>
 
-
-
-<span class="sd">    :param hds_file:</span>
-<span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">flopy</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>

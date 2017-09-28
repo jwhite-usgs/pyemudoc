@@ -39,7 +39,7 @@
           <div class="body" role="main">
             
   <h1>Source code for pyemu.utils.helpers</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; modeul with high-level functions to help</span>
+<span></span><span class="sd">&quot;&quot;&quot; module with high-level functions to help</span>
 <span class="sd">perform complex tasks</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -69,17 +69,19 @@
 <div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">cmd_str</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; an OS agnostic function to execute command</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        cmd_str : (str)</span>
-<span class="sd">            the str to execute with os.system()</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmd_str : str</span>
+<span class="sd">        the str to execute with os.system()</span>
 
-<span class="sd">        cwd : (str)</span>
-<span class="sd">            the directory to execute the command in</span>
+<span class="sd">    cwd : str</span>
+<span class="sd">        the directory to execute the command in</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        uses platform to detect OS and adds .exe or ./ as appropriate</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    uses platform to detect OS and adds .exe or ./ as appropriate</span>
 
-<span class="sd">        for Windows, if os.system returns non-zero, raises exception</span>
+<span class="sd">    for Windows, if os.system returns non-zero, raises exception</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
@@ -131,27 +133,30 @@
 <span class="sd">    pyemu.Cov, then the entire pyemu.Cov is scaled by the uncertainty implied by the bounds and</span>
 <span class="sd">    sigma_range. Sounds complicated...</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pst : (pyemu.Pst)</span>
-<span class="sd">            a control file (or the name of control file)</span>
-<span class="sd">        struct_dict : (dict)</span>
-<span class="sd">            a python dict of GeoStruct (or structure file), and list of pp tpl files pairs</span>
-<span class="sd">            If the values in the dict are pd.DataFrames, then they must have an</span>
-<span class="sd">            &#39;x&#39;,&#39;y&#39;, and &#39;parnme&#39; column.  If the filename ends in &#39;.csv&#39;,</span>
-<span class="sd">            then a pd.DataFrame is loaded, otherwise a pilot points file is loaded.</span>
-<span class="sd">        sigma_range : (float)</span>
-<span class="sd">            a float representing the number of standard deviations implied by parameter bounds.</span>
-<span class="sd">            Default is 4.0, which implies 95% confidence parameter bounds.</span>
-<span class="sd">        par_knowledge_dict : dictionary of {parnme:variance}</span>
-<span class="sd">            used to condition on existing knowledge about parameters.  This functionality is</span>
-<span class="sd">            currently in dev - don&#39;t use it.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : pyemu.Pst</span>
+<span class="sd">        a control file (or the name of control file)</span>
+<span class="sd">    struct_dict : dict</span>
+<span class="sd">        a python dict of GeoStruct (or structure file), and list of pp tpl files pairs</span>
+<span class="sd">        If the values in the dict are pd.DataFrames, then they must have an</span>
+<span class="sd">        &#39;x&#39;,&#39;y&#39;, and &#39;parnme&#39; column.  If the filename ends in &#39;.csv&#39;,</span>
+<span class="sd">        then a pd.DataFrame is loaded, otherwise a pilot points file is loaded.</span>
+<span class="sd">    sigma_range : float</span>
+<span class="sd">        a float representing the number of standard deviations implied by parameter bounds.</span>
+<span class="sd">        Default is 4.0, which implies 95% confidence parameter bounds.</span>
+<span class="sd">    par_knowledge_dict : dict</span>
+<span class="sd">        used to condition on existing knowledge about parameters.  This functionality is</span>
+<span class="sd">        currently in dev - don&#39;t use it.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Cov : pyemu.Cov</span>
-<span class="sd">            a covariance matrix that includes all adjustable parameters in the control</span>
-<span class="sd">            file.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Cov : pyemu.Cov</span>
+<span class="sd">        a covariance matrix that includes all adjustable parameters in the control</span>
+<span class="sd">        file.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
         <span class="n">pst</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">),</span><span class="s2">&quot;pst arg must be a Pst instance, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
@@ -265,34 +270,42 @@
     <span class="sd">&quot;&quot;&quot;setup a karhuenen-Loeve based parameterization for a given</span>
 <span class="sd">    geostatistical structure.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        num_eig : (int)</span>
-<span class="sd">            number of basis vectors to retain in the reduced basis</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_eig : int</span>
+<span class="sd">        number of basis vectors to retain in the reduced basis</span>
 
-<span class="sd">        struct_file : (str)</span>
-<span class="sd">            a pest-style geostatistical structure file</span>
+<span class="sd">    struct_file : str</span>
+<span class="sd">        a pest-style geostatistical structure file</span>
 
-<span class="sd">        array_dict : (dict)</span>
-<span class="sd">            a dict of arrays to setup as KL-based parameters.  The key becomes the</span>
-<span class="sd">            parameter name prefix. The total number of parameters is</span>
-<span class="sd">            len(array_dict) * num_eig</span>
+<span class="sd">    array_dict : dict</span>
+<span class="sd">        a dict of arrays to setup as KL-based parameters.  The key becomes the</span>
+<span class="sd">        parameter name prefix. The total number of parameters is</span>
+<span class="sd">        len(array_dict) * num_eig</span>
 
-<span class="sd">        basis_file : (str)</span>
-<span class="sd">            the name of the binary file where the reduced basis will be saved</span>
+<span class="sd">    basis_file : str</span>
+<span class="sd">        the name of the binary file where the reduced basis will be saved</span>
 
-<span class="sd">        tpl_file :(str)</span>
-<span class="sd">            the name of the template file to make.  The template</span>
-<span class="sd">            file is a csv file with the parameter names, the</span>
-<span class="sd">            original factor values,and the template entries.</span>
-<span class="sd">            The original values can be used to set the parval1</span>
-<span class="sd">            entries in the control file</span>
+<span class="sd">    tpl_file : str</span>
+<span class="sd">        the name of the template file to make.  The template</span>
+<span class="sd">        file is a csv file with the parameter names, the</span>
+<span class="sd">        original factor values,and the template entries.</span>
+<span class="sd">        The original values can be used to set the parval1</span>
+<span class="sd">        entries in the control file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        back_array_dict : dict</span>
-<span class="sd">            a dictionary of back transformed arrays.  This is useful to see</span>
-<span class="sd">            how much &quot;smoothing&quot; is taking place compared to the original</span>
-<span class="sd">            arrays.</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    back_array_dict : dict</span>
+<span class="sd">        a dictionary of back transformed arrays.  This is useful to see</span>
+<span class="sd">        how much &quot;smoothing&quot; is taking place compared to the original</span>
+<span class="sd">        arrays.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires flopy</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">flopy</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -347,18 +360,17 @@
     <span class="sd">&quot;&quot;&quot; Applies a KL parameterization transform from basis factors to model</span>
 <span class="sd">     input arrays.  Companion function to kl_setup()</span>
 
-<span class="sd">     Parameters:</span>
-<span class="sd">        par_file :(str)</span>
-<span class="sd">            the csv file to get factor values from.  Must contain</span>
-<span class="sd">            the following columns: name, new_val, org_val</span>
-<span class="sd">        basis_file :(str)</span>
-<span class="sd">            the binary file that contains the reduced basis</span>
+<span class="sd">     Parameters</span>
+<span class="sd">     ----------</span>
+<span class="sd">    par_file : str</span>
+<span class="sd">        the csv file to get factor values from.  Must contain</span>
+<span class="sd">        the following columns: name, new_val, org_val</span>
+<span class="sd">    basis_file : str</span>
+<span class="sd">        the binary file that contains the reduced basis</span>
 
-<span class="sd">        par_to_file_dict : (dict)</span>
-<span class="sd">            a mapping from KL parameter prefixes to array file names.</span>
+<span class="sd">    par_to_file_dict : dict</span>
+<span class="sd">        a mapping from KL parameter prefixes to array file names.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        None</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">par_file</span><span class="p">)</span>
@@ -389,55 +401,54 @@
 
 
 <div class="viewcode-block" id="zero_order_tikhonov"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.zero_order_tikhonov">[docs]</a><span class="k">def</span> <span class="nf">zero_order_tikhonov</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span> <span class="n">parbounds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">par_groups</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;setup preferred-value regularization</span>
+    <span class="sd">&quot;&quot;&quot;setup preferred-value regularization</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            pst : (pyemu.Pst)</span>
-<span class="sd">                the control file instance</span>
-<span class="sd">            parbounds : (bool)</span>
-<span class="sd">                flag to weight the prior information equations according</span>
-<span class="sd">                to parameter bound width - approx the KL transform. Default</span>
-<span class="sd">                is True</span>
-<span class="sd">            par_groups : (list)</span>
-<span class="sd">                parameter groups to build PI equations for.  If None, all</span>
-<span class="sd">                adjustable parameters are used. Default is None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : pyemu.Pst</span>
+<span class="sd">        the control file instance</span>
+<span class="sd">    parbounds : bool</span>
+<span class="sd">        flag to weight the prior information equations according</span>
+<span class="sd">        to parameter bound width - approx the KL transform. Default</span>
+<span class="sd">        is True</span>
+<span class="sd">    par_groups : list</span>
+<span class="sd">        parameter groups to build PI equations for.  If None, all</span>
+<span class="sd">        adjustable parameters are used. Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="n">par_groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">par_groups</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">par_groups</span>
+    <span class="k">if</span> <span class="n">par_groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">par_groups</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">par_groups</span>
 
-        <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-            <span class="n">pt</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="k">pass</span>
-            <span class="k">if</span> <span class="n">pt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;tied&quot;</span><span class="p">,</span> <span class="s2">&quot;fixed&quot;</span><span class="p">]</span> <span class="ow">and</span>\
-                <span class="n">row</span><span class="p">[</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">par_groups</span><span class="p">:</span>
-                <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;parnme&quot;</span><span class="p">])</span>
-                <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-                <span class="n">ogp_name</span> <span class="o">=</span> <span class="s2">&quot;regul&quot;</span><span class="o">+</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span>
-                <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ogp_name</span><span class="p">[:</span><span class="mi">12</span><span class="p">])</span>
-                <span class="n">parnme</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
-                <span class="n">parval1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">pt</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
-                    <span class="n">parnme</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span> <span class="o">+</span> <span class="n">parnme</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
-                    <span class="n">parval1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">parval1</span><span class="p">)</span>
-                <span class="n">eq</span> <span class="o">=</span> <span class="s2">&quot;1.0 * &quot;</span> <span class="o">+</span> <span class="n">parnme</span> <span class="o">+</span> <span class="s2">&quot; =</span><span class="si">{0:15.6E}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parval1</span><span class="p">)</span>
-                <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
+    <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pt</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">pt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;tied&quot;</span><span class="p">,</span> <span class="s2">&quot;fixed&quot;</span><span class="p">]</span> <span class="ow">and</span>\
+            <span class="n">row</span><span class="p">[</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">par_groups</span><span class="p">:</span>
+            <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;parnme&quot;</span><span class="p">])</span>
+            <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="n">ogp_name</span> <span class="o">=</span> <span class="s2">&quot;regul&quot;</span><span class="o">+</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span>
+            <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ogp_name</span><span class="p">[:</span><span class="mi">12</span><span class="p">])</span>
+            <span class="n">parnme</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+            <span class="n">parval1</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pt</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">parnme</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span> <span class="o">+</span> <span class="n">parnme</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+                <span class="n">parval1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">parval1</span><span class="p">)</span>
+            <span class="n">eq</span> <span class="o">=</span> <span class="s2">&quot;1.0 * &quot;</span> <span class="o">+</span> <span class="n">parnme</span> <span class="o">+</span> <span class="s2">&quot; =</span><span class="si">{0:15.6E}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parval1</span><span class="p">)</span>
+            <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
 
-        <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span>
-                                               <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
-                                               <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">,</span>
-                                               <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">parbounds</span><span class="p">:</span>
-            <span class="n">regweight_from_parbound</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
-            <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">=</span> <span class="s2">&quot;regularization&quot;</span></div>
+    <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span>
+                                           <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
+                                           <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">,</span>
+                                           <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">parbounds</span><span class="p">:</span>
+        <span class="n">regweight_from_parbound</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
+        <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">=</span> <span class="s2">&quot;regularization&quot;</span></div>
 
 
 <div class="viewcode-block" id="regweight_from_parbound"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.regweight_from_parbound">[docs]</a><span class="k">def</span> <span class="nf">regweight_from_parbound</span><span class="p">(</span><span class="n">pst</span><span class="p">):</span>
@@ -445,10 +456,13 @@
 <span class="sd">    which approximates the KL expansion.  Called by</span>
 <span class="sd">    zero_order_tikhonov().</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pst (pyemu.Pst)</span>
-<span class="sd">            a control file instance</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : pyemu.Pst</span>
+<span class="sd">        a control file instance</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
     <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">pilbl</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">parnme</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">pilbl</span><span class="p">):</span>
@@ -466,65 +480,66 @@
 
 
 <div class="viewcode-block" id="first_order_pearson_tikhonov"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.first_order_pearson_tikhonov">[docs]</a><span class="k">def</span> <span class="nf">first_order_pearson_tikhonov</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">reset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">abs_drop_tol</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;setup preferred-difference regularization from a covariance matrix.</span>
-<span class="sd">        The weights on the prior information equations are the Pearson</span>
-<span class="sd">        correlation coefficients implied by covariance matrix.</span>
+    <span class="sd">&quot;&quot;&quot;setup preferred-difference regularization from a covariance matrix.</span>
+<span class="sd">    The weights on the prior information equations are the Pearson</span>
+<span class="sd">    correlation coefficients implied by covariance matrix.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            pst :(pyemu.Pst)</span>
-<span class="sd">                pst instance</span>
-<span class="sd">            cov : (pyemu.Cov)</span>
-<span class="sd">                covariance matrix instance</span>
-<span class="sd">            reset : (bool)</span>
-<span class="sd">                drop all other pi equations.  If False, append to</span>
-<span class="sd">                existing pi equations</span>
-<span class="sd">            abs_drop_tol :(float)</span>
-<span class="sd">                tolerance to control how many pi equations are written.</span>
-<span class="sd">                If the Pearson C is less than abs_drop_tol, the prior information</span>
-<span class="sd">                equation will not be included in the control file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : pyemu.Pst</span>
+<span class="sd">        pst instance</span>
+<span class="sd">    cov : pyemu.Cov</span>
+<span class="sd">        covariance matrix instance</span>
+<span class="sd">    reset : bool</span>
+<span class="sd">        drop all other pi equations.  If False, append to</span>
+<span class="sd">        existing pi equations</span>
+<span class="sd">    abs_drop_tol : float</span>
+<span class="sd">        tolerance to control how many pi equations are written.</span>
+<span class="sd">        If the Pearson C is less than abs_drop_tol, the prior information</span>
+<span class="sd">        equation will not be included in the control file</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">pyemu</span><span class="o">.</span><span class="n">Cov</span><span class="p">)</span>
-        <span class="n">cc_mat</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">to_pearson</span><span class="p">()</span>
-        <span class="c1">#print(pst.parameter_data.dtypes)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">ptrans</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">ptrans</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-        <span class="n">pi_num</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">iname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc_mat</span><span class="o">.</span><span class="n">row_names</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">iname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">pyemu</span><span class="o">.</span><span class="n">Cov</span><span class="p">)</span>
+    <span class="n">cc_mat</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">to_pearson</span><span class="p">()</span>
+    <span class="c1">#print(pst.parameter_data.dtypes)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ptrans</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ptrans</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+    <span class="n">pi_num</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">iname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc_mat</span><span class="o">.</span><span class="n">row_names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">iname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">jname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc_mat</span><span class="o">.</span><span class="n">row_names</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]):</span>
+            <span class="k">if</span> <span class="n">jname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">jname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cc_mat</span><span class="o">.</span><span class="n">row_names</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]):</span>
-                <span class="k">if</span> <span class="n">jname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="c1">#print(i,iname,i+j+1,jname)</span>
-                <span class="n">cc</span> <span class="o">=</span> <span class="n">cc_mat</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">cc</span> <span class="o">&lt;</span> <span class="n">abs_drop_tol</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;pcc_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pi_num</span><span class="p">))</span>
-                <span class="n">iiname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iname</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ptrans</span><span class="p">[</span><span class="n">iname</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
-                    <span class="n">iiname</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span><span class="o">+</span><span class="n">iname</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
-                <span class="n">jjname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jname</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ptrans</span><span class="p">[</span><span class="n">jname</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
-                    <span class="n">jjname</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span><span class="o">+</span><span class="n">jname</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
-                <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;1.0 * </span><span class="si">{0}</span><span class="s2"> - 1.0 * </span><span class="si">{1}</span><span class="s2"> = 0.0&quot;</span><span class="o">.</span>\
-                                <span class="nb">format</span><span class="p">(</span><span class="n">iiname</span><span class="p">,</span><span class="n">jjname</span><span class="p">))</span>
-                <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
-                <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;regul_cc&quot;</span><span class="p">)</span>
-                <span class="n">pi_num</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span><span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
-                           <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pilbl</span>
-        <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
-            <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">df</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="c1">#print(i,iname,i+j+1,jname)</span>
+            <span class="n">cc</span> <span class="o">=</span> <span class="n">cc_mat</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">cc</span> <span class="o">&lt;</span> <span class="n">abs_drop_tol</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;pcc_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pi_num</span><span class="p">))</span>
+            <span class="n">iiname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">iname</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ptrans</span><span class="p">[</span><span class="n">iname</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">iiname</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span><span class="o">+</span><span class="n">iname</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
+            <span class="n">jjname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">jname</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ptrans</span><span class="p">[</span><span class="n">jname</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
+                <span class="n">jjname</span> <span class="o">=</span> <span class="s2">&quot;log(&quot;</span><span class="o">+</span><span class="n">jname</span><span class="o">+</span><span class="s2">&quot;)&quot;</span>
+            <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;1.0 * </span><span class="si">{0}</span><span class="s2"> - 1.0 * </span><span class="si">{1}</span><span class="s2"> = 0.0&quot;</span><span class="o">.</span>\
+                            <span class="nb">format</span><span class="p">(</span><span class="n">iiname</span><span class="p">,</span><span class="n">jjname</span><span class="p">))</span>
+            <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">)</span>
+            <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;regul_cc&quot;</span><span class="p">)</span>
+            <span class="n">pi_num</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span><span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
+                       <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">})</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pilbl</span>
+    <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+        <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">df</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
-            <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">=</span> <span class="s2">&quot;regularization&quot;</span></div>
+    <span class="k">if</span> <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
+        <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">=</span> <span class="s2">&quot;regularization&quot;</span></div>
 
 
 
@@ -532,30 +547,29 @@
                  <span class="n">port</span><span class="o">=</span><span class="mi">4004</span><span class="p">,</span><span class="n">rel_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">local</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">master_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; start a group of pest(++) slaves on the local machine</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        slave_dir : (str)</span>
-<span class="sd">            the path to a complete set of input files</span>
-
-<span class="sd">        exe_rel_path : (str)</span>
-<span class="sd">            the relative path to the pest(++) executable from within the slave_dir</span>
-<span class="sd">        pst_rel_path : (str)</span>
-<span class="sd">            the relative path to the pst file from within the slave_dir</span>
-<span class="sd">        num_slaves : (int)</span>
-<span class="sd">            number of slaves to start. defaults to number of cores</span>
-<span class="sd">        slave_root : (str)</span>
-<span class="sd">            the root to make the new slave directories in</span>
-
-<span class="sd">        rel_path: (str)</span>
-<span class="sd">            the relative path to where pest(++) should be run from within the</span>
-<span class="sd">            slave_dir, defaults to the uppermost level of the slave dir</span>
-<span class="sd">        local: (boolean)</span>
-<span class="sd">            flag for using &quot;localhost&quot; instead of hostname on slave command line</span>
-<span class="sd">        cleanup: (boolean)</span>
-<span class="sd">            flag to remove slave directories once processes exit</span>
-<span class="sd">        master_dir: (str)</span>
-<span class="sd">            name of directory for master instance.  If master_dir</span>
-<span class="sd">            exists, then it will be removed.  If master_dir is None,</span>
-<span class="sd">            no master instance will be started</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slave_dir :  str</span>
+<span class="sd">        the path to a complete set of input files</span>
+<span class="sd">    exe_rel_path : str</span>
+<span class="sd">        the relative path to the pest(++) executable from within the slave_dir</span>
+<span class="sd">    pst_rel_path : str</span>
+<span class="sd">        the relative path to the pst file from within the slave_dir</span>
+<span class="sd">    num_slaves : int</span>
+<span class="sd">        number of slaves to start. defaults to number of cores</span>
+<span class="sd">    slave_root : str</span>
+<span class="sd">        the root to make the new slave directories in</span>
+<span class="sd">    rel_path: str</span>
+<span class="sd">        the relative path to where pest(++) should be run from within the</span>
+<span class="sd">        slave_dir, defaults to the uppermost level of the slave dir</span>
+<span class="sd">    local: bool</span>
+<span class="sd">        flag for using &quot;localhost&quot; instead of hostname on slave command line</span>
+<span class="sd">    cleanup: bool</span>
+<span class="sd">        flag to remove slave directories once processes exit</span>
+<span class="sd">    master_dir: str</span>
+<span class="sd">        name of directory for master instance.  If master_dir</span>
+<span class="sd">        exists, then it will be removed.  If master_dir is None,</span>
+<span class="sd">        no master instance will be started</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">)</span>
@@ -693,32 +707,38 @@
     <span class="sd">&quot;&quot;&quot; helper function to plot gaussian distrbutions from prior and posterior</span>
 <span class="sd">    means and standard deviations</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        df : (pandas.DataFrame)</span>
-<span class="sd">            a dataframe and csv file.  Must have columns named:</span>
-<span class="sd">            &#39;prior_mean&#39;,&#39;prior_stdev&#39;,&#39;post_mean&#39;,&#39;post_stdev&#39;.  If loaded</span>
-<span class="sd">            from a csv file, column 0 is assumed to tbe the index</span>
-<span class="sd">        ax: (matplotlib.pyplot.axis)</span>
-<span class="sd">            If None, and not subplots, then one is created</span>
-<span class="sd">            and all distributions are plotted on a single plot</span>
-<span class="sd">        label_post: (boolean)</span>
-<span class="sd">            flag to add text labels to the peak of the posterior</span>
-<span class="sd">        label_prior: (boolean)</span>
-<span class="sd">            flag to add text labels to the peak of the prior</span>
-<span class="sd">        subplots: (boolean)</span>
-<span class="sd">            flag to use subplots.  If True, then 6 axes per page</span>
-<span class="sd">            are used and a single prior and posterior is plotted on each</span>
-<span class="sd">        figsize: (tuple)</span>
-<span class="sd">            matplotlib figure size</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        a dataframe and csv file.  Must have columns named:</span>
+<span class="sd">        &#39;prior_mean&#39;,&#39;prior_stdev&#39;,&#39;post_mean&#39;,&#39;post_stdev&#39;.  If loaded</span>
+<span class="sd">        from a csv file, column 0 is assumed to tbe the index</span>
+<span class="sd">    ax: matplotlib.pyplot.axis</span>
+<span class="sd">        If None, and not subplots, then one is created</span>
+<span class="sd">        and all distributions are plotted on a single plot</span>
+<span class="sd">    label_post: bool</span>
+<span class="sd">        flag to add text labels to the peak of the posterior</span>
+<span class="sd">    label_prior: bool</span>
+<span class="sd">        flag to add text labels to the peak of the prior</span>
+<span class="sd">    subplots: (boolean)</span>
+<span class="sd">        flag to use subplots.  If True, then 6 axes per page</span>
+<span class="sd">        are used and a single prior and posterior is plotted on each</span>
+<span class="sd">    figsize: tuple</span>
+<span class="sd">        matplotlib figure size</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        figs : list</span>
-<span class="sd">            list of figures</span>
-<span class="sd">        axes : list</span>
-<span class="sd">            list of axes</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    figs : list</span>
+<span class="sd">        list of figures</span>
+<span class="sd">    axes : list</span>
+<span class="sd">        list of axes</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        if subplots is False, a single axis is returned</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This is useful for demystifying FOSM results</span>
+
+<span class="sd">    if subplots is False, a single axis is returned</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
@@ -793,20 +813,22 @@
 <span class="sd">    standard deviation range of a gaussian distribution with</span>
 <span class="sd">    a given mean and standard deviation. useful for plotting</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        mean : (float)</span>
-<span class="sd">            the mean of the distribution</span>
-<span class="sd">        stdev : (float)</span>
-<span class="sd">            the standard deviation of the distribution</span>
-<span class="sd">        num_pts : (int)</span>
-<span class="sd">            the number of points in the returned ndarrays.</span>
-<span class="sd">            Default is 50</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mean : float</span>
+<span class="sd">        the mean of the distribution</span>
+<span class="sd">    stdev : float</span>
+<span class="sd">        the standard deviation of the distribution</span>
+<span class="sd">    num_pts : int</span>
+<span class="sd">        the number of points in the returned ndarrays.</span>
+<span class="sd">        Default is 50</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        x : numpy.ndarray</span>
-<span class="sd">            the x-values of the distribution</span>
-<span class="sd">        y : numpy.ndarray</span>
-<span class="sd">            the y-values of the distribution</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    x : numpy.ndarray</span>
+<span class="sd">        the x-values of the distribution</span>
+<span class="sd">    y : numpy.ndarray</span>
+<span class="sd">        the y-values of the distribution</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">xstart</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">-</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">stdev</span><span class="p">)</span>
@@ -820,19 +842,22 @@
     <span class="sd">&quot;&quot;&quot;read pars and obs from a specific run in a pest++ serialized run storage file into</span>
 <span class="sd">    pandas.DataFrame(s)</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            the name of the run storage file</span>
-<span class="sd">        irun : (int)</span>
-<span class="sd">            the run id to process.  Default is 0</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        the name of the run storage file</span>
+<span class="sd">    irun : int</span>
+<span class="sd">        the run id to process.  Default is 0</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        par_df : pandas.DataFrame</span>
-<span class="sd">            parameter information</span>
-<span class="sd">        obs_df : pandas.DataFrame</span>
-<span class="sd">            observation information</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    par_df : pandas.DataFrame</span>
+<span class="sd">        parameter information</span>
+<span class="sd">    obs_df : pandas.DataFrame</span>
+<span class="sd">        observation information</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">header_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s2">&quot;n_runs&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),(</span><span class="s2">&quot;run_size&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),(</span><span class="s2">&quot;p_name_size&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
                       <span class="p">(</span><span class="s2">&quot;o_name_size&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)])</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -865,19 +890,21 @@
 <span class="sd">    constructor. Assumes the template file names are &lt;input_file&gt;.tpl and</span>
 <span class="sd">    instruction file names are &lt;output_file&gt;.ins.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        d : (str)</span>
-<span class="sd">            directory to search for interface files</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    d : str</span>
+<span class="sd">        directory to search for interface files</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        tpl_files : list</span>
-<span class="sd">            list of template files in d</span>
-<span class="sd">        in_files : list</span>
-<span class="sd">            list of input files in d</span>
-<span class="sd">        ins_files : list</span>
-<span class="sd">            list of instruction files in d</span>
-<span class="sd">        out_files : list</span>
-<span class="sd">            lsit of output files in d</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tpl_files : list</span>
+<span class="sd">        list of template files in d</span>
+<span class="sd">    in_files : list</span>
+<span class="sd">        list of input files in d</span>
+<span class="sd">    ins_files : list</span>
+<span class="sd">        list of instruction files in d</span>
+<span class="sd">    out_files : list</span>
+<span class="sd">        list of output files in d</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -899,20 +926,21 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        tpl_files : (list)</span>
-<span class="sd">            list of pest template files</span>
-<span class="sd">        in_files : (list)</span>
-<span class="sd">            list of corresponding model input files</span>
-<span class="sd">        ins_files : (list)</span>
-<span class="sd">            list of pest instruction files</span>
-<span class="sd">        out_files: (list)</span>
-<span class="sd">            list of corresponding model output files</span>
-<span class="sd">        pst_filename : (str)</span>
-<span class="sd">            name of file to write the control file to.  If None,</span>
-<span class="sd">            control file is not written.  Default is None</span>
+<span class="sd">    tpl_files : list</span>
+<span class="sd">        list of pest template files</span>
+<span class="sd">    in_files : list</span>
+<span class="sd">        list of corresponding model input files</span>
+<span class="sd">    ins_files : list</span>
+<span class="sd">        list of pest instruction files</span>
+<span class="sd">    out_files: list</span>
+<span class="sd">        list of corresponding model output files</span>
+<span class="sd">    pst_filename : str</span>
+<span class="sd">        name of file to write the control file to.  If None,</span>
+<span class="sd">        control file is not written.  Default is None</span>
 
 <span class="sd">    Returns</span>
-<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">    -------</span>
+<span class="sd">    pst : pyemu.Pst</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">par_names</span> <span class="o">=</span> <span class="p">[]</span>
@@ -967,136 +995,139 @@
 <span class="sd">        bounds, writes a forward_run.py script with all the calls need to</span>
 <span class="sd">        implement multiplier parameters, run MODFLOW and post-process.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        model : (flopy.mbase)</span>
-<span class="sd">            a loaded flopy model instance. If model is an str, it is treated as a</span>
-<span class="sd">            MODFLOW nam file (requires org_model_ws)</span>
-<span class="sd">        new_model_ws : (str)</span>
-<span class="sd">            a directory where the new version of MODFLOW input files and PEST(++)</span>
-<span class="sd">            files will be written</span>
-<span class="sd">        org_model_ws : (str)</span>
-<span class="sd">            directory to existing MODFLOW model files.  Required if model argument</span>
-<span class="sd">            is an str.  Default is None</span>
-<span class="sd">        pp_props : (list)</span>
-<span class="sd">            pilot point multiplier parameters for grid-based properties.</span>
-<span class="sd">            A nested list of grid-scale model properties to parameterize using</span>
-<span class="sd">            name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
-<span class="sd">            layer indices.  For example, [&quot;lpf.hk&quot;,[0,1,2,]] would setup pilot point multiplier</span>
-<span class="sd">            parameters for layer property file horizontal hydraulic conductivity for model</span>
-<span class="sd">            layers 1,2, and 3.  For time-varying properties (e.g. recharge), the</span>
-<span class="sd">            iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
-<span class="sd">            would setup pilot point multiplier parameters for recharge for stress</span>
-<span class="sd">            period 1,5,11,and 16.</span>
-<span class="sd">        const_props : (list)</span>
-<span class="sd">            constant (uniform) multiplier parameters for grid-based properties.</span>
-<span class="sd">            A nested list of grid-scale model properties to parameterize using</span>
-<span class="sd">            name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
-<span class="sd">            layer indices.  For example, [&quot;lpf.hk&quot;,[0,1,2,]] would setup constant (uniform) multiplier</span>
-<span class="sd">            parameters for layer property file horizontal hydraulic conductivity for model</span>
-<span class="sd">            layers 1,2, and 3.  For time-varying properties (e.g. recharge), the</span>
-<span class="sd">            iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
-<span class="sd">            would setup constant (uniform) multiplier parameters for recharge for stress</span>
-<span class="sd">            period 1,5,11,and 16.</span>
-<span class="sd">        bc_props : (list)</span>
-<span class="sd">            boundary condition stress-period level multiplier parameters.</span>
-<span class="sd">            A nested list of boundary condition elements to parameterize using</span>
-<span class="sd">            name, iterable pairs.  The iterable is zero-based stress-period indices.</span>
-<span class="sd">            For example, to setup multipliers for WEL flux and for RIV conductance,</span>
-<span class="sd">            bc_props = [[&quot;wel.flux&quot;,[0,1,2]],[&quot;riv.cond&quot;,None]] would setup</span>
-<span class="sd">            multiplier parameters for well flux for stress periods 1,2 and 3 and</span>
-<span class="sd">            would setup one single river conductance multipler parameter that is applied</span>
-<span class="sd">            to all stress periods</span>
-<span class="sd">        grid_props : (list)</span>
-<span class="sd">            grid-based (every active model cell) multiplier parameters.</span>
-<span class="sd">            A nested list of grid-scale model properties to parameterize using</span>
-<span class="sd">            name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
-<span class="sd">            layer indices (e.g., [&quot;lpf.hk&quot;,[0,1,2,]] would setup a multiplier</span>
-<span class="sd">            parameter for layer property file horizontal hydraulic conductivity for model</span>
-<span class="sd">            layers 1,2, and 3 in every active model cell).  For time-varying properties (e.g. recharge), the</span>
-<span class="sd">            iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
-<span class="sd">            would setup grid-based multiplier parameters in every active model cell</span>
-<span class="sd">            for recharge for stress period 1,5,11,and 16.</span>
-<span class="sd">        grid_geostruct : (pyemu.geostats.GeoStruct)</span>
-<span class="sd">            the geostatistical structure to build the prior parameter covariance matrix</span>
-<span class="sd">            elements for grid-based parameters.  If None, a generic GeoStruct is created</span>
-<span class="sd">            using the grid-spacing information.  Default is None</span>
-<span class="sd">        pp_space : (int)</span>
-<span class="sd">            number of grid cells between pilot points.  If None, use the default</span>
-<span class="sd">            in pyemu.pp_utils.setup_pilot_points_grid.  Default is None</span>
-<span class="sd">        zone_props : (list)</span>
-<span class="sd">            zone-based multiplier parameters.</span>
-<span class="sd">            A nested list of grid-scale model properties to parameterize using</span>
-<span class="sd">            name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
-<span class="sd">            layer indices (e.g., [&quot;lpf.hk&quot;,[0,1,2,]] would setup a multiplier</span>
-<span class="sd">            parameter for layer property file horizontal hydraulic conductivity for model</span>
-<span class="sd">            layers 1,2, and 3 for unique zone values in the ibound array.</span>
-<span class="sd">            For time-varying properties (e.g. recharge), the iterable is for</span>
-<span class="sd">            zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
-<span class="sd">            would setup zone-based multiplier parameters for recharge for stress</span>
-<span class="sd">            period 1,5,11,and 16.</span>
-<span class="sd">        pp_geostruct : (pyemu.geostats.GeoStruct)</span>
-<span class="sd">            the geostatistical structure to use for building the prior parameter</span>
-<span class="sd">            covariance matrix for pilot point parameters.  If None, a generic</span>
-<span class="sd">            GeoStruct is created using pp_space and grid-spacing information.</span>
-<span class="sd">            Default is None</span>
-<span class="sd">        par_bounds_dict : (dict)</span>
-<span class="sd">            a dictionary of model property/boundary condition name, upper-lower bound pairs.</span>
-<span class="sd">            For example, par_bounds_dict = {&quot;lpf.hk&quot;:[0.01,100.0],&quot;wel.flux&quot;:[0.5,2.0]} would</span>
-<span class="sd">            set the bounds for layer property file horizontal hydraulic conductivity to</span>
-<span class="sd">            0.001 and 100.0 and set the bounds for well package flux parameters to 0.5 and</span>
-<span class="sd">            2.0.  If None, then the pyemu.helpers.wildass_guess_par_bounds_dict is</span>
-<span class="sd">            used to set somewhat meaningful bounds.  Default is None</span>
-<span class="sd">        bc_geostruct : (pyemu.geostats.GeoStruct)</span>
-<span class="sd">            the geostastical struture to build the prior parameter covariance matrix</span>
-<span class="sd">            for time-varying boundary condition multiplier parameters.  This GeoStruct</span>
-<span class="sd">            express the time correlation so that the &#39;a&#39; parameter is the length of</span>
-<span class="sd">            time that boundary condition multipler parameters are correlated across.</span>
-<span class="sd">            If None, then a generic GeoStruct is created that uses an &#39;a&#39; parameter</span>
-<span class="sd">            of 3 stress periods.  Default is None</span>
-<span class="sd">        remove_existing : (boolean)</span>
-<span class="sd">            a flag to remove an existing new_model_ws directory.  If False and</span>
-<span class="sd">            new_model_ws exists, an exception is raised.  If True and new_model_ws</span>
-<span class="sd">            exists, the directory is destroyed - user beware! Default is False.</span>
-<span class="sd">        k_zone_dict : (dict)</span>
-<span class="sd">            a dictionary of zero-based layer index, zone array pairs.  Used to</span>
-<span class="sd">            override using ibound zones for zone-based parameterization.  If None,</span>
-<span class="sd">            use ibound values greater than zero as zones.</span>
-<span class="sd">        use_pp_zones : (boolean)</span>
-<span class="sd">             a flag to use ibound zones (or k_zone_dict, see above) as pilot</span>
-<span class="sd">             point zones.  If False, ibound values greater than zero are treated as</span>
-<span class="sd">             a single zone for pilot points.  Default is False</span>
-<span class="sd">         obssim_smp_pairs: (list)</span>
-<span class="sd">            a list of observed-simulated PEST-type SMP file pairs to get observations</span>
-<span class="sd">            from and include in the control file.  Default is []</span>
-<span class="sd">        external_tpl_in_pairs : (list)</span>
-<span class="sd">            a list of existing template file, model input file pairs to parse parameters</span>
-<span class="sd">            from and include in the control file.  Default is []</span>
-<span class="sd">        external_ins_out_pairs : (list)</span>
-<span class="sd">            a list of existing instruction file, model output file pairs to parse</span>
-<span class="sd">            observations from and include in the control file.  Default is []</span>
-<span class="sd">        extra_pre_cmds : (list)</span>
-<span class="sd">            a list of preprocessing commands to add to the forward_run.py script</span>
-<span class="sd">            commands are executed with os.system() within forward_run.py. Default</span>
-<span class="sd">            is [].</span>
-<span class="sd">        extra_post_cmds : (list)</span>
-<span class="sd">            a list of post-processing commands to add to the forward_run.py script.</span>
-<span class="sd">            Commands are executed with os.system() within forward_run.py.</span>
-<span class="sd">            Default is [].</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : flopy.mbase</span>
+<span class="sd">        a loaded flopy model instance. If model is an str, it is treated as a</span>
+<span class="sd">        MODFLOW nam file (requires org_model_ws)</span>
+<span class="sd">    new_model_ws : str</span>
+<span class="sd">        a directory where the new version of MODFLOW input files and PEST(++)</span>
+<span class="sd">        files will be written</span>
+<span class="sd">    org_model_ws : str</span>
+<span class="sd">        directory to existing MODFLOW model files.  Required if model argument</span>
+<span class="sd">        is an str.  Default is None</span>
+<span class="sd">    pp_props : list</span>
+<span class="sd">        pilot point multiplier parameters for grid-based properties.</span>
+<span class="sd">        A nested list of grid-scale model properties to parameterize using</span>
+<span class="sd">        name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
+<span class="sd">        layer indices.  For example, [&quot;lpf.hk&quot;,[0,1,2,]] would setup pilot point multiplier</span>
+<span class="sd">        parameters for layer property file horizontal hydraulic conductivity for model</span>
+<span class="sd">        layers 1,2, and 3.  For time-varying properties (e.g. recharge), the</span>
+<span class="sd">        iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
+<span class="sd">        would setup pilot point multiplier parameters for recharge for stress</span>
+<span class="sd">        period 1,5,11,and 16.</span>
+<span class="sd">    const_props : list</span>
+<span class="sd">        constant (uniform) multiplier parameters for grid-based properties.</span>
+<span class="sd">        A nested list of grid-scale model properties to parameterize using</span>
+<span class="sd">        name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
+<span class="sd">        layer indices.  For example, [&quot;lpf.hk&quot;,[0,1,2,]] would setup constant (uniform) multiplier</span>
+<span class="sd">        parameters for layer property file horizontal hydraulic conductivity for model</span>
+<span class="sd">        layers 1,2, and 3.  For time-varying properties (e.g. recharge), the</span>
+<span class="sd">        iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
+<span class="sd">        would setup constant (uniform) multiplier parameters for recharge for stress</span>
+<span class="sd">        period 1,5,11,and 16.</span>
+<span class="sd">    bc_props : list</span>
+<span class="sd">        boundary condition stress-period level multiplier parameters.</span>
+<span class="sd">        A nested list of boundary condition elements to parameterize using</span>
+<span class="sd">        name, iterable pairs.  The iterable is zero-based stress-period indices.</span>
+<span class="sd">        For example, to setup multipliers for WEL flux and for RIV conductance,</span>
+<span class="sd">        bc_props = [[&quot;wel.flux&quot;,[0,1,2]],[&quot;riv.cond&quot;,None]] would setup</span>
+<span class="sd">        multiplier parameters for well flux for stress periods 1,2 and 3 and</span>
+<span class="sd">        would setup one single river conductance multipler parameter that is applied</span>
+<span class="sd">        to all stress periods</span>
+<span class="sd">    grid_props : list</span>
+<span class="sd">        grid-based (every active model cell) multiplier parameters.</span>
+<span class="sd">        A nested list of grid-scale model properties to parameterize using</span>
+<span class="sd">        name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
+<span class="sd">        layer indices (e.g., [&quot;lpf.hk&quot;,[0,1,2,]] would setup a multiplier</span>
+<span class="sd">        parameter for layer property file horizontal hydraulic conductivity for model</span>
+<span class="sd">        layers 1,2, and 3 in every active model cell).  For time-varying properties (e.g. recharge), the</span>
+<span class="sd">        iterable is for zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
+<span class="sd">        would setup grid-based multiplier parameters in every active model cell</span>
+<span class="sd">        for recharge for stress period 1,5,11,and 16.</span>
+<span class="sd">    grid_geostruct : pyemu.geostats.GeoStruct</span>
+<span class="sd">        the geostatistical structure to build the prior parameter covariance matrix</span>
+<span class="sd">        elements for grid-based parameters.  If None, a generic GeoStruct is created</span>
+<span class="sd">        using the grid-spacing information.  Default is None</span>
+<span class="sd">    pp_space : int</span>
+<span class="sd">        number of grid cells between pilot points.  If None, use the default</span>
+<span class="sd">        in pyemu.pp_utils.setup_pilot_points_grid.  Default is None</span>
+<span class="sd">    zone_props : list</span>
+<span class="sd">        zone-based multiplier parameters.</span>
+<span class="sd">        A nested list of grid-scale model properties to parameterize using</span>
+<span class="sd">        name, iterable pairs.  For 3D properties, the iterable is zero-based</span>
+<span class="sd">        layer indices (e.g., [&quot;lpf.hk&quot;,[0,1,2,]] would setup a multiplier</span>
+<span class="sd">        parameter for layer property file horizontal hydraulic conductivity for model</span>
+<span class="sd">        layers 1,2, and 3 for unique zone values in the ibound array.</span>
+<span class="sd">        For time-varying properties (e.g. recharge), the iterable is for</span>
+<span class="sd">        zero-based stress period indices.  For example, [&quot;rch.rech&quot;,[0,4,10,15]]</span>
+<span class="sd">        would setup zone-based multiplier parameters for recharge for stress</span>
+<span class="sd">        period 1,5,11,and 16.</span>
+<span class="sd">    pp_geostruct : pyemu.geostats.GeoStruct</span>
+<span class="sd">        the geostatistical structure to use for building the prior parameter</span>
+<span class="sd">        covariance matrix for pilot point parameters.  If None, a generic</span>
+<span class="sd">        GeoStruct is created using pp_space and grid-spacing information.</span>
+<span class="sd">        Default is None</span>
+<span class="sd">    par_bounds_dict : dict</span>
+<span class="sd">        a dictionary of model property/boundary condition name, upper-lower bound pairs.</span>
+<span class="sd">        For example, par_bounds_dict = {&quot;lpf.hk&quot;:[0.01,100.0],&quot;wel.flux&quot;:[0.5,2.0]} would</span>
+<span class="sd">        set the bounds for layer property file horizontal hydraulic conductivity to</span>
+<span class="sd">        0.001 and 100.0 and set the bounds for well package flux parameters to 0.5 and</span>
+<span class="sd">        2.0.  If None, then the pyemu.helpers.wildass_guess_par_bounds_dict is</span>
+<span class="sd">        used to set somewhat meaningful bounds.  Default is None</span>
+<span class="sd">    bc_geostruct : pyemu.geostats.GeoStruct</span>
+<span class="sd">        the geostastical struture to build the prior parameter covariance matrix</span>
+<span class="sd">        for time-varying boundary condition multiplier parameters.  This GeoStruct</span>
+<span class="sd">        express the time correlation so that the &#39;a&#39; parameter is the length of</span>
+<span class="sd">        time that boundary condition multiplier parameters are correlated across.</span>
+<span class="sd">        If None, then a generic GeoStruct is created that uses an &#39;a&#39; parameter</span>
+<span class="sd">        of 3 stress periods.  Default is None</span>
+<span class="sd">    remove_existing : bool</span>
+<span class="sd">        a flag to remove an existing new_model_ws directory.  If False and</span>
+<span class="sd">        new_model_ws exists, an exception is raised.  If True and new_model_ws</span>
+<span class="sd">        exists, the directory is destroyed - user beware! Default is False.</span>
+<span class="sd">    k_zone_dict : dict</span>
+<span class="sd">        a dictionary of zero-based layer index, zone array pairs.  Used to</span>
+<span class="sd">        override using ibound zones for zone-based parameterization.  If None,</span>
+<span class="sd">        use ibound values greater than zero as zones.</span>
+<span class="sd">    use_pp_zones : bool</span>
+<span class="sd">         a flag to use ibound zones (or k_zone_dict, see above) as pilot</span>
+<span class="sd">         point zones.  If False, ibound values greater than zero are treated as</span>
+<span class="sd">         a single zone for pilot points.  Default is False</span>
+<span class="sd">     obssim_smp_pairs: list</span>
+<span class="sd">        a list of observed-simulated PEST-type SMP file pairs to get observations</span>
+<span class="sd">        from and include in the control file.  Default is []</span>
+<span class="sd">    external_tpl_in_pairs : list</span>
+<span class="sd">        a list of existing template file, model input file pairs to parse parameters</span>
+<span class="sd">        from and include in the control file.  Default is []</span>
+<span class="sd">    external_ins_out_pairs : list</span>
+<span class="sd">        a list of existing instruction file, model output file pairs to parse</span>
+<span class="sd">        observations from and include in the control file.  Default is []</span>
+<span class="sd">    extra_pre_cmds : list</span>
+<span class="sd">        a list of preprocessing commands to add to the forward_run.py script</span>
+<span class="sd">        commands are executed with os.system() within forward_run.py. Default</span>
+<span class="sd">        is [].</span>
+<span class="sd">    extra_post_cmds : list</span>
+<span class="sd">        a list of post-processing commands to add to the forward_run.py script.</span>
+<span class="sd">        Commands are executed with os.system() within forward_run.py.</span>
+<span class="sd">        Default is [].</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        PstFromFlopyModel : PstFromFlopyModel</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    PstFromFlopyModel : PstFromFlopyModel</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        works a lot better of TEMPCHEK, INSCHEK and PESTCHEK are available in the</span>
-<span class="sd">        system path variable</span>
-
-
-
-
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pst : pyemu.Pst</span>
 
 
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    works a lot better of TEMPCHEK, INSCHEK and PESTCHEK are available in the</span>
+<span class="sd">    system path variable</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">model</span><span class="p">,</span><span class="n">new_model_ws</span><span class="p">,</span><span class="n">org_model_ws</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pp_props</span><span class="o">=</span><span class="p">[],</span><span class="n">const_props</span><span class="o">=</span><span class="p">[],</span>
                  <span class="n">bc_props</span><span class="o">=</span><span class="p">[],</span><span class="n">grid_props</span><span class="o">=</span><span class="p">[],</span><span class="n">grid_geostruct</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pp_space</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">zone_props</span><span class="o">=</span><span class="p">[],</span><span class="n">pp_geostruct</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">par_bounds_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1243,16 +1274,14 @@
 <span class="sd">        Changes model_ws, sets external_path and writes new MODFLOW input</span>
 <span class="sd">        files</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            model : (flopy.mbase)</span>
-<span class="sd">                flopy model instance</span>
-<span class="sd">            org_model_ws : (str)</span>
-<span class="sd">                the orginal model working space</span>
-<span class="sd">            new_model_ws : (str)</span>
-<span class="sd">                the new model working space</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        model : flopy.mbase</span>
+<span class="sd">            flopy model instance</span>
+<span class="sd">        org_model_ws : str</span>
+<span class="sd">            the orginal model working space</span>
+<span class="sd">        new_model_ws : str</span>
+<span class="sd">            the new model working space</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">split_new_mws</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">new_model_ws</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
@@ -1297,17 +1326,21 @@
 <div class="viewcode-block" id="PstFromFlopyModel.get_count"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.get_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the latest counter for a certain parameter type.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            name : (str)</span>
-<span class="sd">                the parameter type</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            the parameter type</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            count : int</span>
-<span class="sd">                the latest count for a parameter type</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        count : int</span>
+<span class="sd">            the latest count for a parameter type</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            calling this function increments the counter for the passed</span>
-<span class="sd">            parameter type</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        calling this function increments the counter for the passed</span>
+<span class="sd">        parameter type</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlt_counter</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mlt_counter</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
@@ -1388,12 +1421,14 @@
         <span class="sd">&quot;&quot;&quot; write a flopy.utils.Util2D instance to an ASCII text file using the</span>
 <span class="sd">        Util2D filename</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            u2d : (flopy.utils.Util2D)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        u2d : flopy.utils.Util2D</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            filename : str</span>
-<span class="sd">                the name of the file written (without path)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the name of the file written (without path)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">u2d</span><span class="o">.</span><span class="n">filename</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -1404,17 +1439,19 @@
 <div class="viewcode-block" id="PstFromFlopyModel.write_const_tpl"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_const_tpl">[docs]</a>    <span class="k">def</span> <span class="nf">write_const_tpl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">zn_array</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; write a template file a for a constant (uniform) multiplier parameter</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            name : (str)</span>
-<span class="sd">                the base parameter name</span>
-<span class="sd">            tpl_file : (str)</span>
-<span class="sd">                the template file to write</span>
-<span class="sd">            zn_array : (numpy.ndarray)</span>
-<span class="sd">                an array used to skip inactive cells</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            the base parameter name</span>
+<span class="sd">        tpl_file : str</span>
+<span class="sd">            the template file to write</span>
+<span class="sd">        zn_array : numpy.ndarray</span>
+<span class="sd">            an array used to skip inactive cells</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            df : pandas.DataFrame</span>
-<span class="sd">                a dataframe with parameter information</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with parameter information</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parnme</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1442,17 +1479,19 @@
 <div class="viewcode-block" id="PstFromFlopyModel.write_grid_tpl"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_grid_tpl">[docs]</a>    <span class="k">def</span> <span class="nf">write_grid_tpl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">zn_array</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; write a template file a for grid-based multiplier parameters</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            name : (str)</span>
-<span class="sd">                the base parameter name</span>
-<span class="sd">            tpl_file : (str)</span>
-<span class="sd">                the template file to write</span>
-<span class="sd">            zn_array : (numpy.ndarray)</span>
-<span class="sd">                an array used to skip inactive cells</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            the base parameter name</span>
+<span class="sd">        tpl_file : str</span>
+<span class="sd">            the template file to write</span>
+<span class="sd">        zn_array : numpy.ndarray</span>
+<span class="sd">            an array used to skip inactive cells</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            df : pandas.DataFrame</span>
-<span class="sd">                a dataframe with parameter information</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with parameter information</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parnme</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="p">[],[],[]</span>
@@ -1481,17 +1520,19 @@
 <div class="viewcode-block" id="PstFromFlopyModel.write_zone_tpl"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_zone_tpl">[docs]</a>    <span class="k">def</span> <span class="nf">write_zone_tpl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">zn_array</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; write a template file a for zone-based multiplier parameters</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            name : (str)</span>
-<span class="sd">                the base parameter name</span>
-<span class="sd">            tpl_file : (str)</span>
-<span class="sd">                the template file to write</span>
-<span class="sd">            zn_array : (numpy.ndarray)</span>
-<span class="sd">                an array used to skip inactive cells</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            the base parameter name</span>
+<span class="sd">        tpl_file : str</span>
+<span class="sd">            the template file to write</span>
+<span class="sd">        zn_array : numpy.ndarray</span>
+<span class="sd">            an array used to skip inactive cells</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            df : pandas.DataFrame</span>
-<span class="sd">                a dataframe with parameter information</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with parameter information</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parnme</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1531,12 +1572,14 @@
 <div class="viewcode-block" id="PstFromFlopyModel.pp_prep"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.pp_prep">[docs]</a>    <span class="k">def</span> <span class="nf">pp_prep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">mlt_df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; prepare pilot point based parameterizations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            mlt_df : (pandas.DataFrame)</span>
-<span class="sd">                a dataframe with multipler array information</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mlt_df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with multiplier array information</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            calls pyemu.pp_utils.setup_pilot_points_grid</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        calls pyemu.pp_utils.setup_pilot_points_grid()</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1757,9 +1800,10 @@
 <div class="viewcode-block" id="PstFromFlopyModel.build_prior"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.build_prior">[docs]</a>    <span class="k">def</span> <span class="nf">build_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; build a prior parameter covariance matrix.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : pyemu.Cov</span>
-<span class="sd">                a full covariance matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : pyemu.Cov</span>
+<span class="sd">            a full covariance matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;building prior covariance matrix&quot;</span><span class="p">)</span>
@@ -1808,10 +1852,11 @@
         <span class="sd">&quot;&quot;&quot; build the pest control file using the parameterizations and</span>
 <span class="sd">        observations.</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            calls pyemu.Pst.from_io_files</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        calls pyemu.Pst.from_io_files</span>
 
-<span class="sd">            calls PESTCHEK</span>
+<span class="sd">        calls PESTCHEK</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;changing dir in to </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">model_ws</span><span class="p">))</span>
@@ -1948,15 +1993,17 @@
 <div class="viewcode-block" id="PstFromFlopyModel.parse_k"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.parse_k">[docs]</a>    <span class="k">def</span> <span class="nf">parse_k</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">vals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; parse the iterable from a property or boundary condition argument</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            k : (int or iterable int)</span>
-<span class="sd">                the iterable</span>
-<span class="sd">            vals : (iterable of ints)</span>
-<span class="sd">                the acceptable values that k may contain</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        k : int or iterable int</span>
+<span class="sd">            the iterable</span>
+<span class="sd">        vals : iterable of ints</span>
+<span class="sd">            the acceptable values that k may contain</span>
 
-<span class="sd">        Return</span>
-<span class="sd">            k_vals : (iterable of int)</span>
-<span class="sd">                parsed k values</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        k_vals : iterable of int</span>
+<span class="sd">            parsed k values</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1980,22 +2027,25 @@
         <span class="sd">&quot;&quot;&quot; parse package-iterable pairs from a property or boundary condition</span>
 <span class="sd">        argument</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            pakattr : (iterable len 2)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pakattr : iterable len 2</span>
 
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pak : flopy.PakBase</span>
-<span class="sd">                the flopy package from the model instance</span>
-<span class="sd">            attr : (varies)</span>
-<span class="sd">                the flopy attribute from pak.  Could be Util2D, Util3D,</span>
-<span class="sd">                Transient2D, or MfList</span>
-<span class="sd">            attrname : (str)</span>
-<span class="sd">                the name of the attribute for MfList type.  Only returned if</span>
-<span class="sd">                attr is MfList.  For example, if attr is MfList and pak is</span>
-<span class="sd">                flopy.modflow.ModflowWel, then attrname can only be &quot;flux&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pak : flopy.PakBase</span>
+<span class="sd">            the flopy package from the model instance</span>
+<span class="sd">        attr : (varies)</span>
+<span class="sd">            the flopy attribute from pak.  Could be Util2D, Util3D,</span>
+<span class="sd">            Transient2D, or MfList</span>
+<span class="sd">        attrname : (str)</span>
+<span class="sd">            the name of the attribute for MfList type.  Only returned if</span>
+<span class="sd">            attr is MfList.  For example, if attr is MfList and pak is</span>
+<span class="sd">            flopy.modflow.ModflowWel, then attrname can only be &quot;flux&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">raw</span> <span class="o">=</span> <span class="n">pakattr</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">lraise</span><span class="p">(</span><span class="s2">&quot;pakattr is wrong:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pakattr</span><span class="p">))</span>
@@ -2096,15 +2146,16 @@
         <span class="sd">&quot;&quot;&quot; helper to setup boundary condition multiplier parameters for a given</span>
 <span class="sd">        k, pak, attr set.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            k : (int or iterable of int)</span>
-<span class="sd">                the zero-based stress period indices</span>
-<span class="sd">            pak : (flopy.PakBase)</span>
-<span class="sd">                the MODFLOW package</span>
-<span class="sd">            attr : (MfList)</span>
-<span class="sd">                the MfList instance</span>
-<span class="sd">            col : (str)</span>
-<span class="sd">                the column name in the MfList recarray to parameterize</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        k : int or iterable of int</span>
+<span class="sd">            the zero-based stress period indices</span>
+<span class="sd">        pak : flopy.PakBase=</span>
+<span class="sd">            the MODFLOW package</span>
+<span class="sd">        attr : MfList</span>
+<span class="sd">            the MfList instance</span>
+<span class="sd">        col : str</span>
+<span class="sd">            the column name in the MfList recarray to parameterize</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
@@ -2119,7 +2170,8 @@
 <span class="sd">        stress period index) and k (zero-based layer index) pairs using the</span>
 <span class="sd">        kperk argument.</span>
 
-<span class="sd">        Note:</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
 <span class="sd">            this can setup a shit-ton of observations</span>
 
 <span class="sd">            this is useful for dataworth analyses or for monitoring</span>
@@ -2202,7 +2254,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">obs_dfs</span><span class="p">[</span><span class="s2">&quot;hob&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hob_df</span></div>
 
 <div class="viewcode-block" id="PstFromFlopyModel.setup_hyd"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_hyd">[docs]</a>    <span class="k">def</span> <span class="nf">setup_hyd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; setup obseravtions from the MODFLOW HYDMOD package</span>
+        <span class="sd">&quot;&quot;&quot; setup observations from the MODFLOW HYDMOD package</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2261,10 +2313,11 @@
     <span class="sd">&quot;&quot;&quot; a function to apply array-based multipler parameters.  Used to implement</span>
 <span class="sd">    the parameterization constructed by PstFromFlopyModel during a forward run</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires &quot;arr_pars.csv&quot;</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires &quot;arr_pars.csv&quot;</span>
 
-<span class="sd">        should be added to the forward_run.py script</span>
+<span class="sd">    should be added to the forward_run.py script</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;arr_pars.csv&quot;</span><span class="p">)</span>
@@ -2299,10 +2352,11 @@
     <span class="sd">&quot;&quot;&quot; a function to apply boundary condition multiplier parameters.  Used to implement</span>
 <span class="sd">    the parameterization constructed by PstFromFlopyModel during a forward run</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        requires &quot;bc_pars.csv&quot;</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    requires &quot;bc_pars.csv&quot;</span>
 
-<span class="sd">        should be added to the forward_run.py script</span>
+<span class="sd">    should be added to the forward_run.py script</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;bc_pars.dat&quot;</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

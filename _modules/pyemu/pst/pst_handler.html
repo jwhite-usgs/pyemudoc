@@ -58,18 +58,20 @@
     <span class="sd">&quot;&quot;&quot;basic class for handling pest control files to support linear analysis</span>
 <span class="sd">    as well as replicate some of the functionality of the pest utilities</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            the name of the control file</span>
-<span class="sd">        load : (boolean)</span>
-<span class="sd">            flag to load the control file. Default is True</span>
-<span class="sd">        resfile : str</span>
-<span class="sd">            corresponding residual file.  If None, a residual file</span>
-<span class="sd">            with the control file base name is sought.  Default is None</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        the name of the control file</span>
+<span class="sd">    load : (boolean)</span>
+<span class="sd">        flag to load the control file. Default is True</span>
+<span class="sd">    resfile : str</span>
+<span class="sd">        corresponding residual file.  If None, a residual file</span>
+<span class="sd">        with the control file base name is sought.  Default is None</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Pst : Pst</span>
-<span class="sd">            a control file object</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Pst : Pst</span>
+<span class="sd">        a control file object</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -94,9 +96,10 @@
     <span class="k">def</span> <span class="nf">phi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the weighted total objective function</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            phi : float</span>
-<span class="sd">                sum of squared residuals</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            sum of squared residuals</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">sum</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -108,13 +111,16 @@
     <span class="k">def</span> <span class="nf">phi_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the individual components of the total objective function</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict : dict</span>
-<span class="sd">                dictionary of observation group, contribution to total phi</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict : dict</span>
+<span class="sd">            dictionary of observation group, contribution to total phi</span>
 
-<span class="sd">        Raises:</span>
-<span class="sd">            Assertion error if Pst.observation_data groups don&#39;t match</span>
-<span class="sd">            Pst.res groups</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Assertion error if Pst.observation_data groups don&#39;t match</span>
+<span class="sd">        Pst.res groups</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># calculate phi components for each obs group</span>
@@ -160,12 +166,15 @@
         <span class="sd">&quot;&quot;&quot; get the individual components of the total objective function</span>
 <span class="sd">            normalized to the total PHI being 1.0</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            dict : dict</span>
-<span class="sd">                dictionary of observation group, normalized contribution to total phi</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict : dict</span>
+<span class="sd">            dictionary of observation group, normalized contribution to total phi</span>
+
 <span class="sd">        Raises</span>
-<span class="sd">            Assertion error if self.observation_data groups don&#39;t match</span>
-<span class="sd">            self.res groups</span>
+<span class="sd">        ------</span>
+<span class="sd">        Assertion error if self.observation_data groups don&#39;t match</span>
+<span class="sd">        self.res groups</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># use a dictionary comprehension to go through and normalize each component of phi to the total</span>
@@ -175,12 +184,11 @@
 <div class="viewcode-block" id="Pst.set_res"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.set_res">[docs]</a>    <span class="k">def</span> <span class="nf">set_res</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">res</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; reset the private Pst.res attribute</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            res : (varies)</span>
-<span class="sd">                something to use as Pst.res attribute</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        res : (varies)</span>
+<span class="sd">            something to use as Pst.res attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="n">res</span></div>
 
@@ -188,12 +196,15 @@
     <span class="k">def</span> <span class="nf">res</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the residuals dataframe attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            res : pandas.DataFrame</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        res : pandas.DataFrame</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            if the Pst.__res attribute has not been loaded,</span>
-<span class="sd">            this call loads the res dataframe from a file</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        if the Pst.__res attribute has not been loaded,</span>
+<span class="sd">        this call loads the res dataframe from a file</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__res</span>
@@ -225,9 +236,11 @@
     <span class="k">def</span> <span class="nf">nprior</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;number of prior information equations</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nprior : int</span>
-<span class="sd">                the number of prior info equations</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nprior : int</span>
+<span class="sd">            the number of prior info equations</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nprior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nprior</span>
@@ -236,9 +249,11 @@
     <span class="k">def</span> <span class="nf">nnz_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the number of non-zero weighted observations</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nnz_obs : int</span>
-<span class="sd">                the number of non-zeros weighted observations</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nnz_obs : int</span>
+<span class="sd">            the number of non-zeros weighted observations</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nnz</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">weight</span><span class="p">:</span>
@@ -251,9 +266,11 @@
     <span class="k">def</span> <span class="nf">nobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the number of observations</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nobs : int</span>
-<span class="sd">                the number of observations</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nobs : int</span>
+<span class="sd">            the number of observations</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span>
@@ -263,9 +280,11 @@
     <span class="k">def</span> <span class="nf">npar_adj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the number of adjustable parameters (not fixed or tied)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            npar_adj : int</span>
-<span class="sd">                the number of adjustable parameters</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        npar_adj : int</span>
+<span class="sd">            the number of adjustable parameters</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
         <span class="n">np</span> <span class="o">=</span> <span class="mi">0</span>
@@ -279,9 +298,11 @@
     <span class="k">def</span> <span class="nf">npar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get number of parameters</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            npar : int</span>
-<span class="sd">                the number of parameters</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        npar : int</span>
+<span class="sd">            the number of parameters</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npar</span>
@@ -292,9 +313,11 @@
         <span class="sd">&quot;&quot;&quot;get the forecast names from the pestpp options (if any).</span>
 <span class="sd">        Returns None if no forecasts are named</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            forecast_names : list</span>
-<span class="sd">                a list of forecast names.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        forecast_names : list</span>
+<span class="sd">            a list of forecast names.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;forecasts&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="p">[</span><span class="s2">&quot;forecasts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
@@ -307,9 +330,11 @@
     <span class="k">def</span> <span class="nf">obs_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the observation groups</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            obs_groups : list</span>
-<span class="sd">                a list of unique observation groups</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs_groups : list</span>
+<span class="sd">            a list of unique observation groups</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">og</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;obgnme&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="c1">#og = list(map(pst_utils.SFMT, og))</span>
@@ -320,10 +345,12 @@
         <span class="sd">&quot;&quot;&quot; get the observation groups that contain at least one non-zero weighted</span>
 <span class="sd">         observation</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nnz_obs_groups : list</span>
-<span class="sd">                a list of observation groups that contain at</span>
-<span class="sd">                least one non-zero weighted observation</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nnz_obs_groups : list</span>
+<span class="sd">            a list of observation groups that contain at</span>
+<span class="sd">            least one non-zero weighted observation</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">og</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
@@ -337,9 +364,11 @@
     <span class="k">def</span> <span class="nf">par_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the parameter groups</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            par_groups : list</span>
-<span class="sd">                a list of parameter groups</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        par_groups : list</span>
+<span class="sd">            a list of parameter groups</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;pargp&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -349,9 +378,10 @@
     <span class="k">def</span> <span class="nf">prior_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the prior info groups</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            prior_groups : list</span>
-<span class="sd">                a list of prior information groups</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prior_groups : list</span>
+<span class="sd">            a list of prior information groups</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">og</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;obgnme&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -362,9 +392,11 @@
     <span class="k">def</span> <span class="nf">prior_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the prior information names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            prior_names : list</span>
-<span class="sd">                a list of prior information names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prior_names : list</span>
+<span class="sd">            a list of prior information names</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -373,9 +405,10 @@
     <span class="k">def</span> <span class="nf">par_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the parameter names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            par_names : list</span>
-<span class="sd">                a list of parameter names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        par_names : list</span>
+<span class="sd">            a list of parameter names</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
@@ -383,9 +416,11 @@
     <span class="k">def</span> <span class="nf">adj_par_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the adjustable (not fixed or tied) parameter names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            adj_par_names : list</span>
-<span class="sd">                list of adjustable (not fixed or tied) parameter names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adj_par_names : list</span>
+<span class="sd">            list of adjustable (not fixed or tied) parameter names</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">adj_names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">t</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="p">,</span>
@@ -398,9 +433,11 @@
     <span class="k">def</span> <span class="nf">obs_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the observation names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            obs_names : list</span>
-<span class="sd">                a list of observation names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs_names : list</span>
+<span class="sd">            a list of observation names</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -409,9 +446,11 @@
     <span class="k">def</span> <span class="nf">nnz_obs_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the non-zero weight observation names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nnz_obs_names : list</span>
-<span class="sd">                a list of non-zero weighted observation names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nnz_obs_names : list</span>
+<span class="sd">            a list of non-zero weighted observation names</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">nz_names</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">w</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span>
@@ -424,7 +463,8 @@
     <span class="k">def</span> <span class="nf">zero_weight_obs_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the zero-weighted observation names</span>
 
-<span class="sd">        Returns:</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
 <span class="sd">         zero_weight_obs_names : list</span>
 <span class="sd">             a list of zero-weighted observation names</span>
 
@@ -450,10 +490,11 @@
     <span class="k">def</span> <span class="nf">estimation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; check if the control_data.pestmode is set to estimation</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            estimation : boolean</span>
-<span class="sd">                True if pestmode is estmation, False otherwise</span>
-<span class="sd">        :return:</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        estimation : bool</span>
+<span class="sd">            True if pestmode is estmation, False otherwise</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -463,21 +504,23 @@
     <span class="k">def</span> <span class="nf">_read_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">nrows</span><span class="p">,</span><span class="n">names</span><span class="p">,</span><span class="n">converters</span><span class="p">,</span><span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; a private method to read part of an open file into a pandas.DataFrame.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            f : (file object)</span>
-<span class="sd">            nrows : (int)</span>
-<span class="sd">                number of rows to read</span>
-<span class="sd">            names : (list)</span>
-<span class="sd">                names to set the columns of the dataframe with</span>
-<span class="sd">            converters : (dict)</span>
-<span class="sd">                dictionary of lambda functions to convert strings</span>
-<span class="sd">                to numerical format</span>
-<span class="sd">            defaults : (dict)</span>
-<span class="sd">                dictionary of default values to assign columns.</span>
-<span class="sd">                Default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : file object</span>
+<span class="sd">        nrows : int</span>
+<span class="sd">            number of rows to read</span>
+<span class="sd">        names : list</span>
+<span class="sd">            names to set the columns of the dataframe with</span>
+<span class="sd">        converters : dict</span>
+<span class="sd">            dictionary of lambda functions to convert strings</span>
+<span class="sd">            to numerical format</span>
+<span class="sd">        defaults : dict</span>
+<span class="sd">            dictionary of default values to assign columns.</span>
+<span class="sd">            Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pandas.DataFrame : pandas.DataFrame</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">seek_point</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
@@ -502,15 +545,15 @@
 <div class="viewcode-block" id="Pst.load"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;load the pest control file information</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            filename : (str)</span>
-<span class="sd">                pst filename</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            pst filename</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
-
-<span class="sd">        Raises:</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
 <span class="sd">            lots of exceptions for incorrect format</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -700,9 +743,6 @@
 <span class="sd">        various parts of the control file.  This is usually called during the</span>
 <span class="sd">        Pst.write() method.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">npar</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nobs</span>
@@ -719,8 +759,7 @@
         <span class="sd">&quot;&quot;&quot; private method to synchronize parameter groups section with</span>
 <span class="sd">        the parameter data section</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># add any parameters groups</span>
         <span class="n">pdata_groups</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span><span class="o">.</span>\
@@ -752,8 +791,6 @@
 <span class="sd">        equations.  Sets a &#39;names&#39; column in Pst.prior_information that is a list</span>
 <span class="sd">        of parameter names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -786,26 +823,25 @@
                         <span class="n">obs_group</span><span class="o">=</span><span class="s2">&quot;pi_obgnme&quot;</span><span class="p">,</span><span class="n">coef_dict</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot; a helper to construct a new prior information equation.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            par_names : (list)</span>
-<span class="sd">                parameter names in the equation</span>
-<span class="sd">            pilbl : (str)</span>
-<span class="sd">                name to assign the prior information equation.  If None,</span>
-<span class="sd">                a generic equation name is formed. Default is None</span>
-<span class="sd">            rhs : (float)</span>
-<span class="sd">                the right-hand side of the equation</span>
-<span class="sd">            weight : (float)</span>
-<span class="sd">                the weight of the equation</span>
-<span class="sd">            obs_group : (str)</span>
-<span class="sd">                the observation group for the equation. Default is &#39;pi_obgnme&#39;</span>
-<span class="sd">            coef_dict : (dict)</span>
-<span class="sd">                a dictionary of parameter name, coefficient pairs to assign</span>
-<span class="sd">                leading coefficients for one or more parameters in the equation.</span>
-<span class="sd">                If a parameter is not listed, 1.0 is used for its coefficients.</span>
-<span class="sd">                Default is {}</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        par_names : list</span>
+<span class="sd">            parameter names in the equation</span>
+<span class="sd">        pilbl : str</span>
+<span class="sd">            name to assign the prior information equation.  If None,</span>
+<span class="sd">            a generic equation name is formed. Default is None</span>
+<span class="sd">        rhs : (float)</span>
+<span class="sd">            the right-hand side of the equation</span>
+<span class="sd">        weight : (float)</span>
+<span class="sd">            the weight of the equation</span>
+<span class="sd">        obs_group : str</span>
+<span class="sd">            the observation group for the equation. Default is &#39;pi_obgnme&#39;</span>
+<span class="sd">        coef_dict : dict</span>
+<span class="sd">            a dictionary of parameter name, coefficient pairs to assign</span>
+<span class="sd">            leading coefficients for one or more parameters in the equation.</span>
+<span class="sd">            If a parameter is not listed, 1.0 is used for its coefficients.</span>
+<span class="sd">            Default is {}</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">pilbl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">pilbl</span> <span class="o">=</span> <span class="s2">&quot;pilbl_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__pi_count</span><span class="p">)</span>
@@ -846,8 +882,6 @@
 <span class="sd">        parameter_data dataframe.  Equations that list fixed, tied or missing parameters</span>
 <span class="sd">        are removed. This method is called during Pst.write()</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
@@ -865,18 +899,15 @@
 <div class="viewcode-block" id="Pst.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a pest control file</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            new_filename : (str)</span>
-<span class="sd">                name of the new pest control file</span>
-<span class="sd">            update_regul : (boolean)</span>
-<span class="sd">                flag to update zero-order Tikhonov prior information</span>
-<span class="sd">                equations to prefer the current parameter values</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_filename : str</span>
+<span class="sd">            name of the new pest control file</span>
+<span class="sd">        update_regul : (boolean)</span>
+<span class="sd">            flag to update zero-order Tikhonov prior information</span>
+<span class="sd">            equations to prefer the current parameter values</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_rectify_pgroups</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rectify_pi</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_control_section</span><span class="p">()</span>
@@ -1008,19 +1039,22 @@
 <div class="viewcode-block" id="Pst.get"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">obs_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get a new pst object with subset of parameters and/or observations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            par_names : (list)</span>
-<span class="sd">                a list of parameter names to have in the new Pst instance.</span>
-<span class="sd">                If None, all parameters are in the new Pst instance. Default</span>
-<span class="sd">                is None</span>
-<span class="sd">            obs_names : (list)</span>
-<span class="sd">                a list of observation names to have in the new Pst instance.</span>
-<span class="sd">                If None, all observations are in teh new Pst instance. Default</span>
-<span class="sd">                is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        par_names : list</span>
+<span class="sd">            a list of parameter names to have in the new Pst instance.</span>
+<span class="sd">            If None, all parameters are in the new Pst instance. Default</span>
+<span class="sd">            is None</span>
+<span class="sd">        obs_names : list</span>
+<span class="sd">            a list of observation names to have in the new Pst instance.</span>
+<span class="sd">            If None, all observations are in teh new Pst instance. Default</span>
+<span class="sd">            is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            Pst : Pst</span>
-<span class="sd">                a new Pst instance</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Pst : Pst</span>
+<span class="sd">            a new Pst instance</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
         <span class="c1">#if par_names is None and obs_names is None:</span>
@@ -1084,13 +1118,12 @@
 <span class="sd">            parameter data section dataframe</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">            parfile : (str)</span>
-<span class="sd">                parameter file to use.  If None, try to use</span>
-<span class="sd">                a parameter file that corresponds to the case name.</span>
-<span class="sd">                Default is None</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parfile : str</span>
+<span class="sd">            parameter file to use.  If None, try to use</span>
+<span class="sd">            a parameter file that corresponds to the case name.</span>
+<span class="sd">            Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">parfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.par&quot;</span><span class="p">)</span>
@@ -1108,13 +1141,12 @@
 <span class="sd">        in a pest record file so that total phi is equal to the number of</span>
 <span class="sd">        non-zero weighted observations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            recfile : (str)</span>
-<span class="sd">                record file name.  If None, try to use a record file</span>
-<span class="sd">                with the Pst case name.  Default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        recfile : str</span>
+<span class="sd">            record file name.  If None, try to use a record file</span>
+<span class="sd">            with the Pst case name.  Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">recfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">recfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.rec&quot;</span><span class="p">)</span>
@@ -1147,13 +1179,12 @@
 <span class="sd">        in a pest residual file so that total phi is equal to the number of</span>
 <span class="sd">        non-zero weighted observations</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            resfile : (str)</span>
-<span class="sd">                residual file name.  If None, try to use a residual file</span>
-<span class="sd">                with the Pst case name.  Default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        resfile : str</span>
+<span class="sd">            residual file name.  If None, try to use a residual file</span>
+<span class="sd">            with the Pst case name.  Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">resfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="n">resfile</span>
@@ -1165,12 +1196,11 @@
         <span class="sd">&quot;&quot;&quot;resets the weights of observations by group to account for</span>
 <span class="sd">        residual phi components.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            components : (dict)</span>
-<span class="sd">                a dictionary of obs group:phi contribution pairs</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        components : dict</span>
+<span class="sd">            a dictionary of obs group:phi contribution pairs</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
         <span class="n">nz_groups</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">groups</span>
@@ -1198,15 +1228,17 @@
         <span class="sd">&quot;&quot;&quot;private method to reset weights based on target phi values</span>
 <span class="sd">        for each group.  This method should not be called directly</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            target_phis : (dict)</span>
-<span class="sd">                target phi contribution for groups to reweight</span>
-<span class="sd">            res_idxs : (dict)</span>
-<span class="sd">                the index positions of each group of interest</span>
-<span class="sd">                in the res dataframe</span>
-<span class="sd">            obs_idxs : (dict)</span>
-<span class="sd">                the index positions of each group of interest</span>
-<span class="sd">                in the observation data dataframe</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        target_phis : dict</span>
+<span class="sd">            target phi contribution for groups to reweight</span>
+<span class="sd">        res_idxs : dict</span>
+<span class="sd">            the index positions of each group of interest</span>
+<span class="sd">            in the res dataframe</span>
+<span class="sd">        obs_idxs : dict</span>
+<span class="sd">            the index positions of each group of interest</span>
+<span class="sd">            in the observation data dataframe</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">target_phis</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -1229,14 +1261,13 @@
         <span class="sd">&quot;&quot;&quot;reset the weight for a list of observation names.  Supports the</span>
 <span class="sd">        data worth analyses in pyemu.Schur class</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            obslist : (list)</span>
-<span class="sd">                list of observation names</span>
-<span class="sd">            weight : (float)</span>
-<span class="sd">                new weight to assign</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obslist : list</span>
+<span class="sd">            list of observation names</span>
+<span class="sd">        weight : (float)</span>
+<span class="sd">            new weight to assign</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
@@ -1254,20 +1285,20 @@
         <span class="sd">&quot;&quot;&quot;reset the weights of observation groups to contribute a specified</span>
 <span class="sd">        amount to the composite objective function</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            obs_dict : (dict)</span>
-<span class="sd">                dictionary of obs name,new contribution pairs</span>
-<span class="sd">            obsgrp_dict : (dict)</span>
-<span class="sd">                dictionary of obs group name,contribution pairs</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_dict : dict</span>
+<span class="sd">            dictionary of obs name,new contribution pairs</span>
+<span class="sd">        obsgrp_dict : dict</span>
+<span class="sd">            dictionary of obs group name,contribution pairs</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        if all observations in a named obs group have zero weight, they will be</span>
+<span class="sd">        assigned a non-zero weight so that the request phi contribution</span>
+<span class="sd">        can be met.  Similarly, any observations listed in obs_dict with zero</span>
+<span class="sd">        weight will also be reset</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            if all observations in a named obs group have zero weight, they will be</span>
-<span class="sd">            assigned a non-zero weight so that the request phi contribution</span>
-<span class="sd">            can be met.  Similarly, any observations listed in obs_dict with zero</span>
-<span class="sd">            weight will also be reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
@@ -1298,18 +1329,17 @@
                              <span class="n">leave_zero</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;setup  weights inversely proportional to the observation value</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            fraction_stdev : (float)</span>
-<span class="sd">                the fraction portion of the observation</span>
-<span class="sd">                val to treat as the standard deviation.  set to 1.0 for</span>
-<span class="sd">                inversely proportional</span>
-<span class="sd">            wmax : (float)</span>
-<span class="sd">                maximum weight to allow</span>
-<span class="sd">            leave_zero : (boolean)</span>
-<span class="sd">                flag to leave existing zero weights</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fraction_stdev : float</span>
+<span class="sd">            the fraction portion of the observation</span>
+<span class="sd">            val to treat as the standard deviation.  set to 1.0 for</span>
+<span class="sd">            inversely proportional</span>
+<span class="sd">        wmax : float</span>
+<span class="sd">            maximum weight to allow</span>
+<span class="sd">        leave_zero : bool</span>
+<span class="sd">            flag to leave existing zero weights</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">new_weights</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">oval</span><span class="p">,</span> <span class="n">ow</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsval</span><span class="p">,</span>
@@ -1329,8 +1359,10 @@
 <span class="sd">        pertubations.  The pertubation values are added to the</span>
 <span class="sd">        Pst.parameter_data attribute</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            user beware!</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        user beware!</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_increments</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pertubation&quot;</span><span class="p">]</span> <span class="o">=</span> \
@@ -1363,8 +1395,9 @@
         <span class="sd">&quot;&quot;&quot; experimental method to calculate parameter increments for use</span>
 <span class="sd">        in the finite difference pertubation calculations</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            user beware!</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        user beware!</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enforce_bounds</span><span class="p">()</span>
@@ -1416,6 +1449,7 @@
 <div class="viewcode-block" id="Pst.enforce_bounds"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.enforce_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">enforce_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; enforce bounds violation resulting from the</span>
 <span class="sd">        parameter pertubation calculations</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">too_big</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">&gt;</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span>
@@ -1434,21 +1468,28 @@
 <span class="sd">        parameter info.  Tries to use INSCHEK to set somewhat meaningful observation</span>
 <span class="sd">        values</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            tpl_files : (list)</span>
-<span class="sd">                list of template file names</span>
-<span class="sd">            in_files : (list)</span>
-<span class="sd">                list of model input file names (pairs with template files)</span>
-<span class="sd">            ins_files : (list)</span>
-<span class="sd">                list of instruction file names</span>
-<span class="sd">            out_files : (list)</span>
-<span class="sd">                list of model output file names (pairs with instruction files)</span>
-<span class="sd">            pst_filename : (str)</span>
-<span class="sd">                name of control file to write.  If None, no file is written.</span>
-<span class="sd">                Default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tpl_files : list</span>
+<span class="sd">            list of template file names</span>
+<span class="sd">        in_files : list</span>
+<span class="sd">            list of model input file names (pairs with template files)</span>
+<span class="sd">        ins_files : list</span>
+<span class="sd">            list of instruction file names</span>
+<span class="sd">        out_files : list</span>
+<span class="sd">            list of model output file names (pairs with instruction files)</span>
+<span class="sd">        pst_filename : str</span>
+<span class="sd">            name of control file to write.  If None, no file is written.</span>
+<span class="sd">            Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            Pst : Pst</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Pst : Pst</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        calls pyemu.helpers.pst_from_io_files()</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">pyemu</span> <span class="k">import</span> <span class="n">helpers</span>
         <span class="k">return</span> <span class="n">helpers</span><span class="o">.</span><span class="n">pst_from_io_files</span><span class="p">(</span><span class="n">tpl_files</span><span class="o">=</span><span class="n">tpl_files</span><span class="p">,</span><span class="n">in_files</span><span class="o">=</span><span class="n">in_files</span><span class="p">,</span>

@@ -49,14 +49,16 @@
     <span class="sd">&quot;&quot;&quot; a basic class for logging events during the linear analysis calculations</span>
 <span class="sd">        if filename is passed, then a file handle is opened.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            Filename to write logged events to. If False, no file will be created,</span>
-<span class="sd">            and logged events will be displayed on standard out.</span>
-<span class="sd">        echo : (boolean)</span>
-<span class="sd">            Flag to cause logged events to be echoed to the screen.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Filename to write logged events to. If False, no file will be created,</span>
+<span class="sd">        and logged events will be displayed on standard out.</span>
+<span class="sd">    echo : bool</span>
+<span class="sd">        Flag to cause logged events to be echoed to the screen.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
 <span class="sd">    items : dict</span>
 <span class="sd">        Dictionary holding events to be logged.  If a log entry is</span>
 <span class="sd">        not in `items`, then it is treated as a new entry with the string</span>
@@ -83,9 +85,11 @@
 <div class="viewcode-block" id="Logger.statement"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.logger.Logger.statement">[docs]</a>    <span class="k">def</span> <span class="nf">statement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">phrase</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; log a one time statement</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            phrase : (str)</span>
-<span class="sd">                statement to log</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phrase : str</span>
+<span class="sd">            statement to log</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
@@ -101,8 +105,9 @@
 <span class="sd">        start time is saved.  The second time the phrase is logged, the</span>
 <span class="sd">        elapsed time is written</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            phrase : (str)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            phrase : str</span>
 <span class="sd">                the thing that happened</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
@@ -128,9 +133,10 @@
 <div class="viewcode-block" id="Logger.warn"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.logger.Logger.warn">[docs]</a>    <span class="k">def</span> <span class="nf">warn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a warning to the log file.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            message : (str)</span>
-<span class="sd">                the warning text</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            the warning text</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; WARNING: &quot;</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">echo</span><span class="p">:</span>
@@ -142,10 +148,13 @@
 <div class="viewcode-block" id="Logger.lraise"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.logger.Logger.lraise">[docs]</a>    <span class="k">def</span> <span class="nf">lraise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">message</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;log an exception, close the log file, then raise the exception</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            message : (str)</span>
-<span class="sd">                the exception message</span>
-<span class="sd">        Raises:</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : str</span>
+<span class="sd">            the exception message</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
 <span class="sd">            exception with message</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span> <span class="o">+</span> <span class="s2">&quot; ERROR: &quot;</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>

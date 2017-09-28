@@ -80,9 +80,30 @@
 <dt id="pyemu.en.Ensemble">
 <em class="property">class </em><code class="descclassname">pyemu.en.</code><code class="descname">Ensemble</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">pandas.core.frame.DataFrame</span></code></p>
-<p>The base class type for handling parameter and observation ensembles.
-It is directly derived from pandas.DataFrame.  This class should not be
-instantiated directly.</p>
+<dl class="docutils">
+<dt>The base class type for handling parameter and observation ensembles.</dt>
+<dd>It is directly derived from pandas.DataFrame.  This class should not be
+instantiated directly.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*args</strong> (<em>list</em>) – positional args to pass to pandas.DataFrame()</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to pandas.DataFrame().  Must contain
+‘columns’ and ‘mean_values’</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Ensemble</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="pyemu.en.Ensemble.as_pyemu_matrix">
 <code class="descname">as_pyemu_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.as_pyemu_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.as_pyemu_matrix" title="Permalink to this definition">¶</a></dt>
@@ -91,7 +112,7 @@ instantiated directly.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pyemu.Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
@@ -107,7 +128,7 @@ instantiated directly.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Ensemble</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Ensemble</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></td>
 </tr>
@@ -126,20 +147,12 @@ instantiated directly.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cov</strong> – (pyemu.Cov)
-covariance structure to draw from</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to generate</li>
-<li><strong>names</strong> – <p>(list)
-list of columne names to draw for.  If None, values all names</p>
-<blockquote>
-<div>are drawn</div></blockquote>
-</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cov</strong> (<em>pyemu.Cov</em>) – covariance structure to draw from</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
+<li><strong>names</strong> (<em>list</em>) – list of columns names to draw for.  If None, values all names
+are drawn</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -154,10 +167,9 @@ list of columne names to draw for.  If None, values all names</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> – (varies)
-argument to pass to pandas.DataFrame.drop()</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> (<em>iterable</em>) – argument to pass to pandas.DataFrame.drop()</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Ensemble</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Ensemble</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></td>
 </tr>
@@ -174,35 +186,16 @@ argument to pass to pandas.DataFrame.drop()</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>*args</strong> – (list)
-positional args to pass to pandas.DataFrame.dropna()</li>
-<li><strong>**kwargs</strong> – (dict)
-keyword args to pass to pandas.DataFrame.dropna()</li>
+<li><strong>*args</strong> (<em>list</em>) – positional args to pass to pandas.DataFrame.dropna()</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to pandas.DataFrame.dropna()</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Ensemble</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Ensemble</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyemu.en.Ensemble.enforce">
-<code class="descname">enforce</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.enforce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.enforce" title="Permalink to this definition">¶</a></dt>
-<dd><p>placeholder method for derived ParameterEnsemble type
-to enforce parameter bounds</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">Exception if called</td>
 </tr>
 </tbody>
 </table>
@@ -217,12 +210,11 @@ a pandas.DataFrame</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> – (dict)
-optional args to pass to the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>dict</em>) – optional args to pass to the
 Ensemble Constructor.  Expects ‘df’ in kwargs.keys()
 that must be a pandas.DataFrame instance</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Ensemble</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Ensemble</strong></td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></td>
 </tr>
@@ -239,14 +231,15 @@ that must be a pandas.DataFrame instance</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>*args</strong> – (list)
-positional args to pass to pandas.DataFrame.plot()</li>
-<li><strong>**kwargs</strong> – (dict)
-keyword args to pass to pandas.DataFrame.plot()</li>
+<li><strong>*args</strong> (<em>list</em>) – positional args to pass to pandas.DataFrame.plot()</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to pandas.DataFrame.plot()</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pandas.DataFrame.plot() return</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame.plot() return</p>
 </td>
 </tr>
 </tbody>
@@ -258,14 +251,6 @@ keyword args to pass to pandas.DataFrame.plot()</li>
 <code class="descname">reseed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.reseed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.reseed" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to reset the numpy.random seed using the pyemu.en
 SEED global variable</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 </dd></dl>
@@ -278,12 +263,10 @@ SEED global variable</p>
 generate realizations of observation noise.  These are typically generated from
 the weights listed in the control file.  However, a general covariance matrix can
 be explicitly used.</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>Note:</dt>
-<dd>Does not generate noise realizations for observations with zero weight</dd>
-</dl>
-</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Does not generate noise realizations for observations with zero weight</p>
+</div>
 <dl class="method">
 <dt id="pyemu.en.ObservationEnsemble.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.copy" title="Permalink to this definition">¶</a></dt>
@@ -292,7 +275,7 @@ be explicitly used.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ObservationEnsemble</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>ObservationEnsemble</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble">ObservationEnsemble</a></td>
 </tr>
@@ -310,16 +293,11 @@ zero-weighted observations are set to mean value for all realizations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cov</strong> – (pyemu.Cov)
-covariance matrix that describes the support volume around the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cov</strong> (<em>pyemu.Cov</em>) – covariance matrix that describes the support volume around the
 mean values.</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to draw</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to draw</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -337,15 +315,13 @@ transforms the oe argument</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>oe</strong> – (ObservationEnsemble)
-an existing ObservationEnsemble instance to use for ‘mean_values’ and
+<li><strong>oe</strong> (<a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble"><em>ObservationEnsemble</em></a>) – an existing ObservationEnsemble instance to use for ‘mean_values’ and
 ‘columns’ arguments</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to draw</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to draw</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">ObservationEnsemble</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ObservationEnsemble</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble">ObservationEnsemble</a></p>
@@ -364,9 +340,9 @@ This is a zero-valued pandas.Series</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>mean_values</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.ObservationEnsemble.mean_values" title="pyemu.en.ObservationEnsemble.mean_values">mean_values</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas Series</td>
 </tr>
 </tbody>
 </table>
@@ -381,8 +357,7 @@ column names.  Uses ObservationEnsemble.pst.nnz_obs_names</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list
-non-zero weight observation names</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – non-zero weight observation names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -399,7 +374,7 @@ of only non-zero weighted observations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ObservationEnsemble</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>ObservationEnsemble</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble">ObservationEnsemble</a></td>
 </tr>
@@ -417,7 +392,7 @@ updated prior to calling this method to evaluate new weighting strategies</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -431,11 +406,38 @@ updated prior to calling this method to evaluate new weighting strategies</p>
 <dt id="pyemu.en.ParameterEnsemble">
 <em class="property">class </em><code class="descclassname">pyemu.en.</code><code class="descname">ParameterEnsemble</code><span class="sig-paren">(</span><em>pst</em>, <em>istransformed=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble"><code class="xref py py-class docutils literal"><span class="pre">pyemu.en.Ensemble</span></code></a></p>
-<p>Ensemble derived type for parameters
-implements bounds enforcement, log10 transformation,
+<dl class="docutils">
+<dt>Ensemble derived type for parameters</dt>
+<dd>implements bounds enforcement, log10 transformation,
 fixed parameters and null-space projection
 Note: uses the parnme attribute of Pst.parameter_data from column names
-and uses the parval1 attribute of Pst.parameter_data as mean values</p>
+and uses the parval1 attribute of Pst.parameter_data as mean values</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – The ‘columns’ and ‘mean_values’ args need for Ensemble
+are derived from the pst.parameter_data.parnme and pst.parameter_data.parval1
+items, respectively</li>
+<li><strong>istransformed</strong> (<em>bool</em>) – flag indicating the transformation status (log10) of the arguments be passed</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword arguments to pass to Ensemble constructor.</li>
+<li><strong>bound_tol</strong> (<em>float</em>) – fractional amount to reset bounds transgression within the bound.
+This has been shown to be very useful for the subsequent recalibration
+because it moves parameters off of their bounds, so they are not treated as frozen in
+the upgrade calculations. defaults to 0.0</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="pyemu.en.ParameterEnsemble.adj_names">
 <code class="descname">adj_names</code><a class="headerlink" href="#pyemu.en.ParameterEnsemble.adj_names" title="Permalink to this definition">¶</a></dt>
@@ -444,11 +446,7 @@ and uses the parval1 attribute of Pst.parameter_data as mean values</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>adjustable parameter names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – adjustable parameter names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -464,7 +462,7 @@ and uses the parval1 attribute of Pst.parameter_data as mean values</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ParameterEnsemble</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>ParameterEnsemble</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></td>
 </tr>
@@ -480,24 +478,17 @@ and uses the parval1 attribute of Pst.parameter_data as mean values</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cov</strong> – (pyemu.Cov)
-covariance matrix that describes the support around
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>cov</strong> (<em>pyemu.Cov</em>) – covariance matrix that describes the support around
 the mean parameter values</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to generate</li>
-<li><strong>how</strong> – (str) (optional)
-distribution to use to generate realizations.  Options are
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
+<li><strong>how</strong> (<em>str</em>) – distribution to use to generate realizations.  Options are
 ‘normal’ or ‘uniform’.  Default is ‘normal’.  If ‘uniform’,
 cov argument is ignored</li>
-<li><strong>enforce_bounds</strong> – str (optional)
-how to enforce parameter bound violations.  Options are
+<li><strong>enforce_bounds</strong> (<em>str</em>) – how to enforce parameter bound violations.  Options are
 ‘reset’ (reset individual violating values), ‘drop’ (drop realizations
 that have one or more violating values.  Default is None (no bounds enforcement)</li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -513,11 +504,8 @@ draw method(s), so users shouldn’t need to call this</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enforce_bounds</strong> – (str)
-can be ‘reset’ to reset offending values or ‘drop’ to drop
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enforce_bounds</strong> (<em>str</em>) – can be ‘reset’ to reset offending values or ‘drop’ to drop
 offending realizations</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -550,7 +538,7 @@ scaling factor needed to bring the most violated parameter back in bounds</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">NotImplementedErrors if called.</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">NotImplementedError if called.</td>
 </tr>
 </tbody>
 </table>
@@ -564,7 +552,7 @@ scaling factor needed to bring the most violated parameter back in bounds</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fixed_indexer</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
@@ -583,17 +571,14 @@ dataframe expansion-by-loc that is one col at a time.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pe</strong> – (ParameterEnsemble)
-existing ParameterEnsemble used to get information
+<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
 needed to call ParameterEnsemble constructor</li>
-<li><strong>cov</strong> – (pyemu.Cov)
-covariance matrix to use for drawing</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to generate</li>
+<li><strong>cov</strong> (<em>(</em><em>pyemu.Cov</em><em>)</em>) – covariance matrix to use for drawing</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">ParameterEnsemble</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
@@ -618,15 +603,13 @@ transforms the pe argument</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pe</strong> – (ParameterEnsemble)
-existing ParameterEnsemble used to get information
+<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
 needed to call ParameterEnsemble constructor</li>
-<li><strong>num_reals</strong> – (int)
-number of realizations to generate</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">ParameterEnsemble</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
@@ -645,9 +628,9 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>istransformed</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">boolean</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -661,7 +644,7 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>lbnd</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
@@ -677,7 +660,7 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>log_indexer</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
@@ -693,9 +676,9 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>mean_values</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.ObservationEnsemble.mean_values" title="pyemu.en.ObservationEnsemble.mean_values">mean_values</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
 </tbody>
 </table>
@@ -709,11 +692,7 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>parameter names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>list</strong> – parameter names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -730,24 +709,15 @@ transformation status of the ParameterEnsemble</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>projection_matrix</strong> – (pyemu.Matrix)
-projection operator - must already respect log transform</li>
-<li><strong>inplace</strong> – (boolean)
-project self or return a new ParameterEnsemble instance</li>
-<li><strong>log</strong> – (pyemu.Logger)
-for logging progress</li>
-<li><strong>enforce_bounds</strong> – (str)
-parameter bound enforcement flag. ‘drop’ removes
+<li><strong>projection_matrix</strong> (<em>pyemu.Matrix</em>) – projection operator - must already respect log transform</li>
+<li><strong>inplace</strong> (<em>bool</em>) – project self or return a new ParameterEnsemble instance</li>
+<li><strong>log</strong> (<em>pyemu.Logger</em>) – for logging progress</li>
+<li><strong>enforce_bounds</strong> (<em>str</em>) – parameter bound enforcement flag. ‘drop’ removes
 offending realizations, ‘reset’ resets offending values</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>ParameterEnsemble</dt>
-<dd><p class="first last">if inplace is False</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong> – if inplace is False</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
@@ -762,19 +732,11 @@ offending realizations, ‘reset’ resets offending values</li>
 <code class="descname">read_parfiles</code><span class="sig-paren">(</span><em>parfile_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.read_parfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.read_parfiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>read the ParameterEnsemble realizations from par files.  Used to fill
 the ParameterEnsemble with realizations from PEST-type par files</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>parfile_names: (list)</dt>
-<dd>list of par files to load</dd>
-</dl>
-</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parfile_names</strong> (<em>list</em>) – list of par files to load</td>
 </tr>
 </tbody>
 </table>
@@ -794,10 +756,7 @@ fill ParameterEnsemble from PEST-type par files</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> – (str)
-the par file prefix</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>str</em>) – the par file prefix</td>
 </tr>
 </tbody>
 </table>
@@ -814,10 +773,8 @@ ParameterEnsemble csv is not in Log10 space</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>*args</strong> – (list)
-positional arguments to pass to pandas.DataFrame.to_csv()</li>
-<li><strong>**kwrags</strong> – (dict)
-keyword arguments to pass to pandas.DataFrame.to_csv()</li>
+<li><strong>*args</strong> (<em>list</em>) – positional arguments to pass to pandas.DataFrame.to_csv()</li>
+<li><strong>**kwrags</strong> (<em>dict</em>) – keyword arguments to pass to pandas.DataFrame.to_csv()</li>
 </ul>
 </td>
 </tr>
@@ -839,8 +796,7 @@ log10 before writing</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> – (str)
-file prefix for par files</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>prefix</strong> (<em>str</em>) – file prefix for par files</td>
 </tr>
 </tbody>
 </table>
@@ -859,7 +815,7 @@ log10 before writing</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.Series</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>ubnd</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
@@ -880,38 +836,33 @@ assumptions.</p>
 <dd><p>Bases: <a class="reference internal" href="#pyemu.la.LinearAnalysis" title="pyemu.la.LinearAnalysis"><code class="xref py py-class docutils literal"><span class="pre">pyemu.la.LinearAnalysis</span></code></a></p>
 <p>Derived class for error variance analysis.  Supports 2-term and
 3-term error variance analysis.  Inherits from pyemu.LinearAnalysis.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">There are some additional keyword args that can be passed to active
-the 3-term error variance calculation</p>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>**kwargs</strong> – (dict)
-keyword args to pass to the LinearAnalysis base constructor.</li>
-<li><strong>omitted_parameters</strong> – (list)
-list of parameters to treat as “omitted”.  Passing this argument
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to the LinearAnalysis base constructor.</li>
+<li><strong>omitted_parameters</strong> (<em>list</em>) – list of parameters to treat as “omitted”.  Passing this argument
 activates 3-term error variance analysis.</li>
-<li><strong>omitted_parcov</strong> – (varies)
-argument that can be cast to a parcov for the omitted parameters.
+<li><strong>omitted_parcov</strong> (<em>varies</em>) – argument that can be cast to a parcov for the omitted parameters.
 If None, omitted_parcov will be formed by extracting from the
 LinearAnalsis.parcov attribute.</li>
-<li><strong>omitted_predictions</strong> – (varies)
-argument that can be cast to a “predictions” attribute for
+<li><strong>omitted_predictions</strong> (<em>varies</em>) – argument that can be cast to a “predictions” attribute for
 prediction sensitivity vectors WRT omitted parameters.  If None,
 these vectors will be extracted from the LinearAnalysis.predictions
 attribute</li>
-<li><strong>kl</strong> – (boolean)
-flag to perform KL scaling on the jacobian before error variance
+<li><strong>kl</strong> (<em>bool</em>) – flag to perform KL scaling on the jacobian before error variance
 calculations</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are some additional keyword args that can be passed to active
+the 3-term error variance calculation</p>
+</div>
 <dl class="method">
 <dt id="pyemu.ev.ErrVar.G">
 <code class="descname">G</code><span class="sig-paren">(</span><em>singular_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar.G"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ev.ErrVar.G" title="Permalink to this definition">¶</a></dt>
@@ -923,16 +874,11 @@ calculations</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc R at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc R at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>parameter solution matrix at singular value</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>G</strong> – parameter solution matrix at singular value</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.G" title="pyemu.ev.ErrVar.G">G</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -942,27 +888,15 @@ singular value to calc R at</td>
 <dt id="pyemu.ev.ErrVar.I_minus_R">
 <code class="descname">I_minus_R</code><span class="sig-paren">(</span><em>singular_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar.I_minus_R"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ev.ErrVar.I_minus_R" title="Permalink to this definition">¶</a></dt>
 <dd><p>get I - R at singular value</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>Parameters:</dt>
-<dd><dl class="first last docutils">
-<dt>singular_value <span class="classifier-delimiter">:</span> <span class="classifier">(int)</span></dt>
-<dd>singular value to calc R at</dd>
-</dl>
-</dd>
-</dl>
-</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>identity matrix minus resolution matrix at singular_value</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc R at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">I - R</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>I - R</strong> – identity matrix minus resolution matrix at singular_value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -976,16 +910,11 @@ singular value to calc R at</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc R at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc R at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>resolution matrix at singular_value</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>R</strong> – resolution matrix at singular_value</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.R" title="pyemu.ev.ErrVar.R">R</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -1003,20 +932,16 @@ singular value to calc R at</td>
 <dd><dl class="docutils">
 <dt>get the null space term (first term) contribution to parameter error variance</dt>
 <dd>at a singular value</dd>
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>singular_value <span class="classifier-delimiter">:</span> <span class="classifier">(int)</span></dt>
-<dd>singular value to calc first term at</dd>
-</dl>
-</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>first_term</strong> – first term contribution to parameter error variance</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc first term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>first_term</strong> – first term contribution to parameter error variance</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -1028,24 +953,16 @@ singular value to calc R at</td>
 <dd><dl class="docutils">
 <dt>get the null space term (first term) contribution to prediction error variance</dt>
 <dd>at a singular value.  used to construct error variance dataframe</dd>
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>singular_value <span class="classifier-delimiter">:</span> <span class="classifier">(int)</span></dt>
-<dd>singular value to calc first term at</dd>
-</dl>
-</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>dictionary of (“first”,prediction_names),error variance pairs at singular_value</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc first term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict</strong> – dictionary of (“first”,prediction_names),error variance pairs at singular_value</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
@@ -1062,15 +979,10 @@ singular value to calc R at</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_values</strong> – (list)
-singular values to test.  defaults to
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_values</strong> (<em>list</em>) – singular values to test.  defaults to
 range(0,min(nnz_obs,nadj_par) + 1)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>multi-indexed pandas dataframe</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – multi-indexed pandas dataframe</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -1086,15 +998,10 @@ range(0,min(nnz_obs,nadj_par) + 1)</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-the singular spectrum truncation point</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – the singular spectrum truncation point</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>A pandas dataframe of the V_1**2 Matrix with the
-identifiability in the column labeled “ident”</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – A pandas dataframe of the V_1**2 Matrix with the
+identifiability in the column labeled “ident”</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -1110,18 +1017,15 @@ identifiability in the column labeled “ident”</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Jco</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>omitted_jco</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.omitted_jco" title="pyemu.ev.ErrVar.omitted_jco">omitted_jco</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Jco</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p>returns a reference</p>
 <p class="last">if ErrorVariance.__omitted_jco is None,
 then dynamically load the attribute before returning</p>
 </div>
@@ -1135,18 +1039,15 @@ then dynamically load the attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Cov</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>omitted_parcov</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.omitted_parcov" title="pyemu.ev.ErrVar.omitted_parcov">omitted_parcov</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p>returns a reference</p>
 <p class="last">If ErrorVariance.__omitted_parcov is None,
 attribute is dynamically loaded</p>
 </div>
@@ -1161,23 +1062,16 @@ a pyemu.Matrix)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>a matrix of prediction sensitivity vectors (column wise) to
-omitted parameters</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>omitted_predictions</strong> – a matrix of prediction sensitivity vectors (column wise) to
+omitted parameters</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.omitted_predictions" title="pyemu.ev.ErrVar.omitted_predictions">omitted_predictions</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p>returns a reference</p>
 <p class="last">if ErrorVariance.__omitted_predictions is not set, then dynamically load the
 attribute before returning</p>
 </div>
@@ -1200,16 +1094,11 @@ attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc second term at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc second term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Cov</dt>
-<dd>second term contribution to parameter error variance</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>second_parameter</strong> – second term contribution to parameter error variance</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.second_parameter" title="pyemu.ev.ErrVar.second_parameter">second_parameter</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -1227,14 +1116,9 @@ error variance dataframe</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc second term at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc second term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>dictionary of (“second”,prediction_names), error variance</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict</strong> – dictionary of (“second”,prediction_names), error variance</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -1259,16 +1143,11 @@ singular value to calc second term at</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc third term at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc third term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Cov</dt>
-<dd>0.0 if need_omitted is False</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>third_parameter</strong> – 0.0 if need_omitted is False</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.ev.ErrVar.third_parameter" title="pyemu.ev.ErrVar.third_parameter">third_parameter</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -1285,14 +1164,9 @@ singular value to calc third term at</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to calc third term at</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to calc third term at</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>dictionary of (“third”,prediction_names),error variance</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict</strong> – dictionary of (“third”,prediction_names),error variance</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -1308,14 +1182,9 @@ singular value to calc third term at</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> – (int)
-singular value to test</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – singular value to test</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>dictionary of (err var term,prediction_name), standard_deviation pairs</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict</strong> – dictionary of (err var term,prediction_name), standard_deviation pairs</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -1378,55 +1247,52 @@ all other pyemu analysis objects (Schur, ErrVar, MonteCarlo, and EnsembleSmoothe
 <dt id="pyemu.la.LinearAnalysis">
 <em class="property">class </em><code class="descclassname">pyemu.la.</code><code class="descname">LinearAnalysis</code><span class="sig-paren">(</span><em>jco=None</em>, <em>pst=None</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>predictions=None</em>, <em>ref_var=1.0</em>, <em>verbose=False</em>, <em>resfile=False</em>, <em>forecasts=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="docutils">
-<dt>The super class for linear analysis.  Can be used directly, but</dt>
-<dd>for prior uncertainty analyses only.  The derived types
+<p>The super class for linear analysis.  Can be used directly, but
+for prior uncertainty analyses only.  The derived types
 (pyemu.Schur, pyemu.ErrVar, pyemu.MonteCarlo, pyemu.EnsembleSmoother)
 are for different forms of posterior uncertainty analyses. This class
-tries hard to not load items until they are needed; all arguments are optional</dd>
-</dl>
+tries hard to not load items until they are needed; all arguments are
+optional</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>jco</strong> – (varies)
-something that can be cast or loaded into a pyemu.Jco.  Can be a
+<li><strong>jco</strong> (<em>(</em><em>varies</em><em>)</em>) – something that can be cast or loaded into a pyemu.Jco.  Can be a
 str for a filename or pyemu.Matrix/pyemu.Jco object.</li>
-<li><strong>pst</strong> – (varies)
-something that can be cast into a pyemu.Pst.  Can be an str for a
+<li><strong>pst</strong> (<em>(</em><em>varies</em><em>)</em>) – something that can be cast into a pyemu.Pst.  Can be an str for a
 filename or an existing pyemu.Pst.  If None, a pst filename is sought
 with the same base name as the jco argument (if passed)</li>
-<li><strong>parcov</strong> – (varies)
-prior parameter covariance matrix.  If str, a filename is assumed and
+<li><strong>parcov</strong> (<em>(</em><em>varies</em><em>)</em>) – prior parameter covariance matrix.  If str, a filename is assumed and
 the prior parameter covariance matrix is loaded from a file using
 the file extension.  If None, the prior parameter covariance matrix is
 constructed from the parameter bounds in the control file represented
 by the pst argument. Can also be a pyemu.Cov instance</li>
-<li><strong>obscov</strong> – (varies)
-observation noise covariance matrix. If str, a filename is assumed and
+<li><strong>obscov</strong> (<em>(</em><em>varies</em><em>)</em>) – observation noise covariance matrix. If str, a filename is assumed and
 the observation noise covariance matrix is loaded from a file using
 the file extension.  If None, the observation noise covariance matrix is
 constructed from the weights in the control file represented
 by the pst argument. Can also be a pyemu.Cov instance</li>
-<li><strong>predictions</strong> – (varies)
-prediction (aka forecast) sensitivity vectors.  If str, a filename
+<li><strong>predictions</strong> (<em>(</em><em>varies</em><em>)</em>) – prediction (aka forecast) sensitivity vectors.  If str, a filename
 is assumed and predictions are loaded from a file using the file extension.
 Can also be a pyemu.Matrix instance, a numpy.ndarray or a collection
 of pyemu.Matrix or numpy.ndarray.</li>
-<li><strong>ref_var</strong> – (float)
-reference variance</li>
-<li><strong>verbose</strong> – (either bool or string)
-controls log file / screen output.  If str, a filename is assumed and
-and log file is written to verbose</li>
+<li><strong>ref_var</strong> (<em>(</em><em>float</em><em>)</em>) – reference variance</li>
+<li><strong>verbose</strong> (<em>(</em><em>either bool</em><em> or </em><em>string</em><em>)</em>) – <dl class="docutils">
+<dt>controls log file / screen output.  If str, a filename is assumed and</dt>
+<dd>and log file is written to verbose</dd>
+</dl>
+</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p class="rubric">Notes</p>
-<p>the class makes heavy use of property decorator to encapsulate
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the class makes heavy use of property decorator to encapsulate
 private attributes</p>
+</div>
 <dl class="method">
 <dt id="pyemu.la.LinearAnalysis.adj_par_names">
 <code class="descname">adj_par_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.adj_par_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.adj_par_names" title="Permalink to this definition">¶</a></dt>
@@ -1436,13 +1302,9 @@ names</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>pyemu.Pst.adj_par_names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>adj_par_names</strong> – pyemu.Pst.adj_par_names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.pst.html#pyemu.pst.pst_handler.Pst.adj_par_names" title="pyemu.pst.pst_handler.Pst.adj_par_names">adj_par_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -1458,8 +1320,7 @@ is equal to the number of non-zero weights.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> – (str)
-residual file to use.  If None, residual file with case name is
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> (<em>str</em>) – residual file to use.  If None, residual file with case name is
 sought. default is None</td>
 </tr>
 </tbody>
@@ -1474,11 +1335,14 @@ sought. default is None</td>
 <dt id="pyemu.la.LinearAnalysis.apply_karhunen_loeve_scaling">
 <code class="descname">apply_karhunen_loeve_scaling</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.apply_karhunen_loeve_scaling"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.apply_karhunen_loeve_scaling" title="Permalink to this definition">¶</a></dt>
 <dd><p>apply karhuene-loeve scaling to the jacobian matrix.</p>
-<p>This scaling is not necessary for analyses using Schur’s
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This scaling is not necessary for analyses using Schur’s
 complement, but can be very important for error variance
 analyses.  This operation effectively transfers prior knowledge
 specified in the parcov to the jacobian and reset parcov to the
 identity matrix.</p>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1502,9 +1366,9 @@ it has not yet been created</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fehalf</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.fehalf" title="pyemu.la.LinearAnalysis.fehalf">fehalf</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -1518,11 +1382,7 @@ it has not yet been created</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>list of forecast names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>forecast_names</strong> – list of forecast names</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -1545,32 +1405,25 @@ it has not yet been created</p>
 <dl class="method">
 <dt id="pyemu.la.LinearAnalysis.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>par_names=None</em>, <em>obs_names=None</em>, <em>astype=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.get" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>method to get a new LinearAnalysis class using a</dt>
-<dd><blockquote class="first">
-<div>subset of parameters and/or observations</div></blockquote>
-<dl class="last docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>par_names <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>par names for new object</dd>
-<dt>obs_names <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd>obs names for new object</dd>
-<dt>astype <span class="classifier-delimiter">:</span> <span class="classifier">(either pyemu.Schur or pyemu.ErrVar type)</span></dt>
-<dd>type to cast the new object.  If None, return type is
-same as self</dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
+<dd><p>method to get a new LinearAnalysis class using a
+subset of parameters and/or observations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">LinearAnalysis</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>par_names</strong> (<em>list</em>) – par names for new object</li>
+<li><strong>obs_names</strong> (<em>list</em>) – obs names for new object</li>
+<li><strong>astype</strong> (<em>pyemu.Schur</em><em> or </em><em>pyemu.ErrVar</em>) – type to cast the new object.  If None, return type is
+same as self</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">new</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>new</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.la.LinearAnalysis" title="pyemu.la.LinearAnalysis">LinearAnalysis</a></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1585,9 +1438,9 @@ PEST-style and Hill-style.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>css</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">css</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -1601,20 +1454,16 @@ PEST-style and Hill-style.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Jco</dt>
-<dd>the jacobian matrix attribute</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>jco</strong> – the jacobian matrix attribute</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.jco" title="pyemu.la.LinearAnalysis.jco">jco</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Jco</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference
-if LinearAnalysis.__jco is not set, the dynamically load the
+<p>returns a reference</p>
+<p class="last">if LinearAnalysis.__jco is not set, the dynamically load the
 jco attribute before returning</p>
 </div>
 </dd></dl>
@@ -1627,7 +1476,7 @@ jco attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pyemu.Matrix</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
@@ -1643,13 +1492,9 @@ jco attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.Series</dt>
-<dd>the maximum likelihood parameter estimates</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>post_expt</strong> – the maximum likelihood parameter estimates</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">post_expt</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Series</td>
 </tr>
 </tbody>
 </table>
@@ -1664,13 +1509,9 @@ observation names</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>list</dt>
-<dd>pyemu.Pst.nnz_obs_names</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>nnz_obs_names</strong> – pyemu.Pst.nnz_obs_names</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyemu.pst.html#pyemu.pst.pst_handler.Pst.nnz_obs_names" title="pyemu.pst.pst_handler.Pst.nnz_obs_names">nnz_obs_names</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
@@ -1684,20 +1525,16 @@ observation names</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Cov</dt>
-<dd>a reference to the obscov attribute</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>obscov</strong> – a reference to the obscov attribute</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.obscov" title="pyemu.la.LinearAnalysis.obscov">obscov</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference
-if LinearAnalysis.__obscov is not set, the dynamically load the
+<p>returns a reference</p>
+<p class="last">if LinearAnalysis.__obscov is not set, the dynamically load the
 obscov attribute before returning</p>
 </div>
 </dd></dl>
@@ -1710,20 +1547,16 @@ obscov attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Cov</dt>
-<dd>a reference to the parcov attribute</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>parcov</strong> – a reference to the parcov attribute</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.parcov" title="pyemu.la.LinearAnalysis.parcov">parcov</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference
-if LinearAnalysis.__parcov is not set, the dynamically load the
+<p>returns a reference</p>
+<p class="last">if LinearAnalysis.__parcov is not set, the dynamically load the
 parcov attribute before returning</p>
 </div>
 </dd></dl>
@@ -1736,21 +1569,19 @@ parcov attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>a matrix of prediction sensitivity vectors (column wise)</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>predictions</strong> – a matrix of prediction sensitivity vectors (column wise)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.predictions" title="pyemu.la.LinearAnalysis.predictions">predictions</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a reference
-if LinearAnalysis.__predictions is not set, the dynamically load the
-predictions attribute before returning</p>
+<p>returns a reference</p>
+<dl class="last docutils">
+<dt>if LinearAnalysis.__predictions is not set, the dynamically load the</dt>
+<dd>predictions attribute before returning</dd>
+</dl>
 </div>
 </dd></dl>
 
@@ -1762,11 +1593,7 @@ predictions attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>iterator</dt>
-<dd>iterator on prediction sensitivity vectors (matrix)</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>iterator</strong> – iterator on prediction sensitivity vectors (matrix)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">iterator</td>
 </tr>
@@ -1782,13 +1609,9 @@ predictions attribute before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>a dictionary of forecast name, prior variance pairs</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>prior_forecast</strong> – a dictionary of forecast name, prior variance pairs</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.prior_forecast" title="pyemu.la.LinearAnalysis.prior_forecast">prior_forecast</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
@@ -1803,9 +1626,9 @@ LinearAnalysis.parcov</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Cov</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>prior_parameter</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.prior_parameter" title="pyemu.la.LinearAnalysis.prior_parameter">prior_parameter</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -1819,13 +1642,9 @@ LinearAnalysis.parcov</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>(dict)</dt>
-<dd>dictionary of prediction name, prior variance pairs</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>prior_prediction</strong> – dictionary of prediction name, prior variance pairs</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.prior_prediction" title="pyemu.la.LinearAnalysis.prior_prediction">prior_prediction</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
@@ -1839,16 +1658,16 @@ LinearAnalysis.parcov</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Pst</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pst</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.pst" title="pyemu.la.LinearAnalysis.pst">pst</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Pst</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">returns a references
-If LinearAnalysis.__pst is None, then the pst attribute is
+<p>returns a references</p>
+<p class="last">If LinearAnalysis.__pst is None, then the pst attribute is
 dynamically loaded before returning</p>
 </div>
 </dd></dl>
@@ -1862,9 +1681,9 @@ it has not yet been created</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>qhalf</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.qhalf" title="pyemu.la.LinearAnalysis.qhalf">qhalf</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -1879,9 +1698,9 @@ it has not yet been created</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>qhalfx</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.qhalfx" title="pyemu.la.LinearAnalysis.qhalfx">qhalfx</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -1891,44 +1710,44 @@ it has not yet been created</p>
 <dt id="pyemu.la.LinearAnalysis.reset_obscov">
 <code class="descname">reset_obscov</code><span class="sig-paren">(</span><em>arg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.reset_obscov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.reset_obscov" title="Permalink to this definition">¶</a></dt>
 <dd><p>reset the obscov attribute to None</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>arg <span class="classifier-delimiter">:</span> <span class="classifier">(str or matrix)</span></dt>
-<dd>the value to assign to the obscov attribute.  If None,
-the private __obscov attribute is cleared but not reset</dd>
-</dl>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> (<em>str</em><em> or </em><em>pyemu.Matrix</em>) – the value to assign to the obscov attribute.  If None,
+the private __obscov attribute is cleared but not reset</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyemu.la.LinearAnalysis.reset_parcov">
 <code class="descname">reset_parcov</code><span class="sig-paren">(</span><em>arg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.reset_parcov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.reset_parcov" title="Permalink to this definition">¶</a></dt>
 <dd><p>reset the parcov attribute to None</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>arg <span class="classifier-delimiter">:</span> <span class="classifier">(str or matrix)</span></dt>
-<dd>the value to assign to the parcov attribute.  If None,
-the private __parcov attribute is cleared but not reset</dd>
-</dl>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> (<em>str</em><em> or </em><em>pyemu.Matrix</em>) – the value to assign to the parcov attribute.  If None,
+the private __parcov attribute is cleared but not reset</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyemu.la.LinearAnalysis.reset_pst">
 <code class="descname">reset_pst</code><span class="sig-paren">(</span><em>arg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.reset_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.reset_pst" title="Permalink to this definition">¶</a></dt>
 <dd><p>reset the LinearAnalysis.pst attribute</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>arg <span class="classifier-delimiter">:</span> <span class="classifier">(str or matrix)</span></dt>
-<dd>the value to assign to the pst attribute</dd>
-</dl>
-</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arg</strong> (<em>(</em><em>str</em><em> or </em><em>matrix</em><em>)</em>) – the value to assign to the pst attribute</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -1940,9 +1759,9 @@ it has not yet been created</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>xtqx</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.la.LinearAnalysis.xtqx" title="pyemu.la.LinearAnalysis.xtqx">xtqx</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -1967,24 +1786,24 @@ it has not yet been created</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>filename</strong> – (str)
-Filename to write logged events to. If False, no file will be created,
+<li><strong>filename</strong> (<em>str</em>) – Filename to write logged events to. If False, no file will be created,
 and logged events will be displayed on standard out.</li>
-<li><strong>echo</strong> – (boolean)
-Flag to cause logged events to be echoed to the screen.</li>
+<li><strong>echo</strong> (<em>bool</em>) – Flag to cause logged events to be echoed to the screen.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Attributes:
-items : dict</p>
-<blockquote>
-<div>Dictionary holding events to be logged.  If a log entry is
+<dl class="attribute">
+<dt id="pyemu.logger.Logger.items">
+<code class="descname">items</code><a class="headerlink" href="#pyemu.logger.Logger.items" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – Dictionary holding events to be logged.  If a log entry is
 not in <cite>items</cite>, then it is treated as a new entry with the string
 being the key and the datetime as the value.  If a log entry is
 in <cite>items</cite>, then the end time and delta time are written and
-the item is popped from the keys.</div></blockquote>
+the item is popped from the keys.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyemu.logger.Logger.log">
 <code class="descname">log</code><span class="sig-paren">(</span><em>phrase</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/logger.html#Logger.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.logger.Logger.log" title="Permalink to this definition">¶</a></dt>
@@ -1995,8 +1814,7 @@ elapsed time is written</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>phrase</strong> – (str)
-the thing that happened</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>phrase</strong> (<em>str</em>) – the thing that happened</td>
 </tr>
 </tbody>
 </table>
@@ -2010,8 +1828,7 @@ the thing that happened</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> – (str)
-the exception message</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) – the exception message</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">exception with message</td>
 </tr>
@@ -2027,8 +1844,7 @@ the exception message</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>phrase</strong> – (str)
-statement to log</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>phrase</strong> (<em>str</em>) – statement to log</td>
 </tr>
 </tbody>
 </table>
@@ -2042,8 +1858,7 @@ statement to log</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> – (str)
-the warning text</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em>) – the warning text</td>
 </tr>
 </tbody>
 </table>
@@ -2066,8 +1881,7 @@ pyemu.LinearAnalysis</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> – (varies)
-dictionary of keyword arguments.  See pyemu.LinearAnalysis for
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>dict</em>) – dictionary of keyword arguments.  See pyemu.LinearAnalysis for
 complete definitions</td>
 </tr>
 </tbody>
@@ -2075,20 +1889,20 @@ complete definitions</td>
 <dl class="attribute">
 <dt id="pyemu.mc.MonteCarlo.parensemble">
 <code class="descname">parensemble</code><a class="headerlink" href="#pyemu.mc.MonteCarlo.parensemble" title="Permalink to this definition">¶</a></dt>
-<dd><p>(pyemu.ParameterEnsemble)</p>
+<dd><p><em>pyemu.ParameterEnsemble</em></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyemu.mc.MonteCarlo.obsensemble">
 <code class="descname">obsensemble</code><a class="headerlink" href="#pyemu.mc.MonteCarlo.obsensemble" title="Permalink to this definition">¶</a></dt>
-<dd><p>(pyemu.ObservationEnsemble)</p>
+<dd><p><em>pyemu.ObservationEnsemble</em></p>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MonteCarlo</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>MonteCarlo</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.mc.MonteCarlo" title="pyemu.mc.MonteCarlo">MonteCarlo</a></td>
 </tr>
@@ -2107,20 +1921,15 @@ optionally MonteCarlo.obsensemble.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>num_reals</strong> – (int)
-number of realization to generate</li>
-<li><strong>par_file</strong> – (str)
-parameter file to use as mean values. If None,
+<li><strong>num_reals</strong> (<em>int</em>) – number of realization to generate</li>
+<li><strong>par_file</strong> (<em>str</em>) – parameter file to use as mean values. If None,
 use MonteCarlo.pst.parameter_data.parval1.
 Default is None</li>
-<li><strong>obs</strong> – (boolean)
-add a realization of measurement noise to observation values,
+<li><strong>obs</strong> (<em>bool</em>) – add a realization of measurement noise to observation values,
 forming MonteCarlo.obsensemble.Default is False</li>
-<li><strong>enforce_bounds</strong> – (str)
-enforce parameter bounds based on control file information.
+<li><strong>enforce_bounds</strong> (<em>str</em>) – enforce parameter bounds based on control file information.
 options are ‘reset’, ‘drop’ or None.  Default is None</li>
-<li><strong>how</strong> – (str)
-type of distribution to draw from. Must be in [“gaussian”,”uniform”]
+<li><strong>how</strong> (<em>str</em>) – type of distribution to draw from. Must be in [“gaussian”,”uniform”]
 default is “gaussian”.</li>
 </ul>
 </td>
@@ -2141,18 +1950,14 @@ values</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>epsilon</strong> – (float)
-singular value ratio</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>epsilon</strong> (<em>float</em>) – singular value ratio</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>nsing</strong> – number of singular components above the epsilon ratio threshold</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
 </tr>
 </tbody>
 </table>
-<p>Returns :</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>nsing <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd>number of singular components above the epsilon ratio threshold</dd>
-</dl>
-</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If nsing == nadj_par, then None is returned</p>
@@ -2167,18 +1972,13 @@ singular value ratio</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nsing</strong> – (int)
-optional number of singular components to use
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nsing</strong> (<em>int</em>) – optional number of singular components to use
 If Nonte, then nsing is determined from
 call to MonteCarlo.get_nsing()</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Matrix</dt>
-<dd>the null-space projection matrix (V2V2^T)</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>v2_proj</strong> – the null-space projection matrix (V2V2^T)</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">v2_proj</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -2192,9 +1992,9 @@ call to MonteCarlo.get_nsing()</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>num_real</strong></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">num_real</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
 </tbody>
 </table>
@@ -2209,28 +2009,19 @@ call to MonteCarlo.get_nsing()</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>par_file</strong> – (str)
-an optional file of parameter values to use</li>
-<li><strong>nsing</strong> – (int)
-number of singular values to in forming null subspace matrix</li>
-<li><strong>inplace</strong> – (boolean)
-overwrite the existing parameter ensemble with the
+<li><strong>par_file</strong> (<em>str</em>) – an optional file of parameter values to use</li>
+<li><strong>nsing</strong> (<em>int</em>) – number of singular values to in forming null subspace matrix</li>
+<li><strong>inplace</strong> (<em>bool</em>) – overwrite the existing parameter ensemble with the
 projected values</li>
-<li><strong>enforce_bounds</strong> – (str)
-how to enforce parameter bounds.  can be None, ‘reset’, or ‘drop’.
+<li><strong>enforce_bounds</strong> (<em>str</em>) – how to enforce parameter bounds.  can be None, ‘reset’, or ‘drop’.
 Default is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>pyemu.ParameterEnsemble</dt>
-<dd><p class="first last">if inplace is False, otherwise None</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>par_en</strong> – if inplace is False, otherwise None</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">par_en</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pyemu.ParameterEnsemble</p>
 </td>
 </tr>
 </tbody>
@@ -2249,16 +2040,13 @@ Default is None</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>prefix</strong> – (str)
-pest control file prefix</li>
-<li><strong>existing_jco</strong> – (str)
-filename of an existing jacobian matrix to add to the
+<li><strong>prefix</strong> (<em>str</em>) – pest control file prefix</li>
+<li><strong>existing_jco</strong> (<em>str</em>) – filename of an existing jacobian matrix to add to the
 pest++ options in the control file.  This is useful for
 NSMC since this jco can be used to get the first set of
 parameter upgrades for free!  Needs to be the path the jco
 file as seen from the location where pest++ will be run</li>
-<li><strong>noptmax</strong> – (int)
-value of NOPTMAX to set in new pest control files</li>
+<li><strong>noptmax</strong> (<em>int</em>) – value of NOPTMAX to set in new pest control files</li>
 </ul>
 </td>
 </tr>
@@ -2283,8 +2071,7 @@ analysis using Schur compliment</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> – (varies)
-keyword arguments to pass to the LinearAnalysis constructor.  See
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwargs</strong> (<em>dict</em>) – keyword arguments to pass to the LinearAnalysis constructor.  See
 LinearAnalysis definition for argument types</td>
 </tr>
 </tbody>
@@ -2303,20 +2090,17 @@ as a results of added some observations</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obslist_dict</strong> – (dict)
-a nested dictionary-list of groups of observations
+<li><strong>obslist_dict</strong> (<em>dict</em>) – a nested dictionary-list of groups of observations
 that are to be treated as gained.  key values become
 row labels in returned dataframe. If None, then every zero-weighted
 observation is tested sequentially. Default is None</li>
-<li><strong>base_obslist</strong> – (list)
-observation names to treat as the “existing” observations.
+<li><strong>base_obslist</strong> (<em>list</em>) – observation names to treat as the “existing” observations.
 The values of obslist_dict will be added to this list during
 each test.  If None, then the values in obslist_dict will
 be treated as the entire calibration dataset.  That is, there
 are no existing data. Default is None.  Standard practice would
 be to pass this argument as Schur.pst.nnz_obs_names.</li>
-<li><strong>reset_zero_weight</strong> – (boolean or float)
-a flag to reset observations with zero weight in either
+<li><strong>reset_zero_weight</strong> (<em>(</em><em>boolean</em><em> or </em><em>float</em><em>)</em>) – a flag to reset observations with zero weight in either
 obslist_dict or base_obslist. The value of reset_zero_weights
 can be cast to a float,then that value will be assigned to
 zero weight obs.  Otherwise, zero weight obs will be given a
@@ -2324,16 +2108,11 @@ weight of 1.0.  Default is False.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd><p class="first last">dataframe with row labels (index) of obslist_dict.keys() and
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pandas.DataFrame</strong> – dataframe with row labels (index) of obslist_dict.keys() and
 columns of forecast_name.  The values in the dataframe are the
 posterior variance of the forecasts resulting from notional inversion
 using the observations in obslist_dict[key value] plus the observations
 in base_obslist (if any)</p>
-</dd>
-</dl>
-</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -2357,18 +2136,13 @@ some parameters becoming known perfectly</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_names</strong> – list
-parameters that are to be treated as notionally perfectly
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parameter_names</strong> (<em>list</em>) – parameters that are to be treated as notionally perfectly
 known</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>Schur</dt>
-<dd>a new Schur instance conditional on perfect knowledge
-of some parameters</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>la_cond</strong> – a new Schur instance conditional on perfect knowledge
+of some parameters</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">la_cond</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.sc.Schur" title="pyemu.sc.Schur">Schur</a></td>
 </tr>
 </tbody>
 </table>
@@ -2387,16 +2161,11 @@ don’t call this method directly</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>include_map</strong> – (boolean)
-if True, add the prior and posterior expectations
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>include_map</strong> (<em>bool</em>) – if True, add the prior and posterior expectations
 and report standard deviation instead of variance</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>dataframe of prior,posterior variances and percent
-uncertainty reduction of each parameter</dd>
-</dl>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – dataframe of prior,posterior variances and percent
+uncertainty reduction of each parameter</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -2418,22 +2187,17 @@ reduction as a result of some parameter becoming perfectly known</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parlist_dict</strong> – (dict)
-a nested dictionary-list of groups of parameters
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>parlist_dict</strong> (<em>dict</em>) – a nested dictionary-list of groups of parameters
 that are to be treated as perfectly known.  key values become
 row labels in returned dataframe.  If None, each adjustable parameter
 is sequentially treated as known and the returned dataframe
 has row labels for each adjustable parameter</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>a dataframe that summarizes the parameter contribution analysis.
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – a dataframe that summarizes the parameter contribution analysis.
 The dataframe has index (row labels) of the keys in parlist_dict
 and a column labels of forecast names.  The values in the dataframe
 are the posterior variance of the forecast conditional on perfect
-knowledge of the parameters in the values of parlist_dict</dd>
-</dl>
-</td>
+knowledge of the parameters in the values of parlist_dict</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -2452,15 +2216,11 @@ group names and the values are the adjustable parameters in the groups</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>a dataframe that summarizes the parameter contribution analysis.
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – a dataframe that summarizes the parameter contribution analysis.
 The dataframe has index (row labels) that are the parameter groups
 and a column labels of forecast names.  The values in the dataframe
 are the posterior variance of the forecast conditional on perfect
-knowledge of the adjustable parameters in each parameter groups</dd>
-</dl>
-</td>
+knowledge of the adjustable parameters in each parameter groups</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
@@ -2472,27 +2232,17 @@ knowledge of the adjustable parameters in each parameter groups</dd>
 <dt id="pyemu.sc.Schur.get_parameter_summary">
 <code class="descname">get_parameter_summary</code><span class="sig-paren">(</span><em>include_map=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.get_parameter_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.sc.Schur.get_parameter_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>get a summary of the parameter uncertainty</p>
-<dl class="docutils">
-<dt>Parameters</dt>
-<dd><dl class="first last docutils">
-<dt>include_map <span class="classifier-delimiter">:</span> <span class="classifier">(boolean)</span></dt>
-<dd>if True, add the prior and posterior expectations
-and report standard deviation instead of variance</dd>
-</dl>
-</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>dataframe of prior,posterior variances and percent
-uncertainty reduction of each parameter</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>include_map</strong> (<em>bool</em>) – if True, add the prior and posterior expectations
+and report standard deviation instead of variance</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – dataframe of prior,posterior variances and percent
+uncertainty reduction of each parameter</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -2511,14 +2261,10 @@ estimates - use this!</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.Dataframe</dt>
-<dd>a dataframe that has index (row labels) that are the observation groups
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Dataframe</strong> – a dataframe that has index (row labels) that are the observation groups
 and a column labels of forecast names.  The values in the dataframe
 are the posterior variance of the forecast resulting from
-losing non-zero weight observations in each observation group</dd>
-</dl>
-</td>
+losing non-zero weight observations in each observation group</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Dataframe</td>
 </tr>
@@ -2536,28 +2282,21 @@ as a result of losing some observations</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>obslist_dict</strong> – (dict)
-dictionary of groups of observations
+<li><strong>obslist_dict</strong> (<em>dict</em>) – dictionary of groups of observations
 that are to be treated as lost.  key values become
 row labels in returned dataframe. If None, then test every
 (nonzero weight - see reset_zero_weight) observation</li>
-<li><strong>reset_zero_weight</strong> – (boolean or float)
-a flag to reset observations with zero weight in obslist_dict.
+<li><strong>reset_zero_weight</strong> (<em>bool</em><em> or </em><em>float</em>) – a flag to reset observations with zero weight in obslist_dict.
 If the value of reset_zero_weights can be cast to a float,
 then that value will be assigned to zero weight obs.  Otherwise,
 zero weight obs will be given a weight of 1.0</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd><p class="first last">a dataframe with index of obslist_dict.keys() and columns
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pandas.DataFrame</strong> – a dataframe with index of obslist_dict.keys() and columns
 of forecast names.  The values in the dataframe are the posterior
 variances of the forecasts resulting from losing the information
-containted in obslist_dict[key value]</p>
-</dd>
-</dl>
-</p>
+contained in obslist_dict[key value]</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -2580,15 +2319,9 @@ weights will be dropped unless reset_zero_weight is set</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>dataframe with prior and posterior forecast expected values</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – dataframe with prior and posterior forecast expected values</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
 </tbody>
 </table>
@@ -2603,13 +2336,9 @@ estimation</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd>a dataframe with prior and posterior parameter expectations</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>post_expt</strong> – a dataframe with prior and posterior parameter expectations</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">post_expt</td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -2628,36 +2357,27 @@ the conditional information from the last iteration.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>forecast</strong> – (str)
-name of the forecast to use in the ranking process.  If
+<li><strong>forecast</strong> (<em>str</em>) – name of the forecast to use in the ranking process.  If
 more than one forecast has been listed, this argument is required</li>
-<li><strong>niter</strong> – (int)
-number of sequential iterations</li>
-<li><strong>obslist_dict</strong> (<em>dict</em>) – nested dictionary-list of  groups of observations
+<li><strong>niter</strong> (<em>int</em>) – number of sequential iterations</li>
+<li><strong>dict</strong> (<em>obslist_dict</em>) – nested dictionary-list of  groups of observations
 that are to be treated as gained.  key values become
 row labels in result dataframe. If None, then test every observation
 individually</li>
-<li><strong>base_obslist</strong> – (list)
-observation names to treat as the “existing” observations.
+<li><strong>base_obslist</strong> (<em>list</em>) – observation names to treat as the “existing” observations.
 The values of obslist_dict will be added to this list during testing.
 If None, then each list in the values of obslist_dict will be
 treated as an individual calibration dataset.</li>
-<li><strong>reset_zero_weight</strong> – (boolean or float)
-a flag to reset observations with zero weight in either
+<li><strong>reset_zero_weight</strong> (<em>(</em><em>boolean</em><em> or </em><em>float</em><em>)</em>) – a flag to reset observations with zero weight in either
 obslist_dict or base_obslist. If the value of reset_zero_weights
 can be cast to a float,then that value will be assigned to
 zero weight obs.  Otherwise, zero weight obs will be given a weight of 1.0</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd><p class="first last">DataFrame with columns of best obslist_dict key for each iteration.
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pandas.DataFrame</strong> – DataFrame with columns of best obslist_dict key for each iteration.
 Columns of forecast variance percent reduction for this iteration,
 (percent reduction compared to initial base case)</p>
-</dd>
-</dl>
-</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -2680,24 +2400,17 @@ next iteration seeks the next most influential group of parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>forecast</strong> – (str)
-name of the forecast to use in the ranking process.  If
+<li><strong>forecast</strong> (<em>str</em>) – name of the forecast to use in the ranking process.  If
 more than one forecast has been listed, this argument is required</li>
-<li><strong>parlist_dict</strong> – (dict)
-a nested dictionary-list of groups of parameters
+<li><strong>parlist_dict</strong> (<em>dict</em>) – a nested dictionary-list of groups of parameters
 that are to be treated as perfectly known.  key values become
 row labels in dataframe</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>pandas.DataFrame</dt>
-<dd><p class="first last">a dataframe with index of iteration number and columns
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pandas.DataFrame</strong> – a dataframe with index of iteration number and columns
 of parlist_dict keys.  The values are the results of the knowing
 each parlist_dict entry expressed as posterior variance reduction</p>
-</dd>
-</dl>
-</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
@@ -2744,13 +2457,9 @@ Schur compliment before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>pyemu.Cov</dt>
-<dd>the posterior parameter covariance matrix</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>posterior_parameter</strong> – the posterior parameter covariance matrix</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.sc.Schur.posterior_parameter" title="pyemu.sc.Schur.posterior_parameter">posterior_parameter</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -2768,11 +2477,7 @@ Schur compliment before returning</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>dict</dt>
-<dd>a dictionary of forecast names, posterior variance pairs</dd>
-</dl>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>dict</strong> – a dictionary of forecast names, posterior variance pairs</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -2819,9 +2524,8 @@ Schur compliment before returning</p>
 modules are designed to work directly and seamlessly with PEST and PEST++ model
 independent interface.  pyEMU can also be used to setup this interface.</p>
 <p>Several forms of uncertainty analyses are support including FOSM-based
-analyses (pyemu.Schur and pyemu.ErrVar), Monte Carlo (including</p>
-<blockquote>
-<div>GLUE and null-space Monte Carlo) and a prototype iterative Ensemble Smoother</div></blockquote>
+analyses (pyemu.Schur and pyemu.ErrVar), Monte Carlo (including
+GLUE and null-space Monte Carlo) and a prototype iterative Ensemble Smoother</p>
 </div>
 </div>
 
