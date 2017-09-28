@@ -57,8 +57,8 @@
                            <span class="n">pp_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">tpl_dir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
                            <span class="n">shapename</span><span class="o">=</span><span class="s2">&quot;pp.shp&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;setup grid-based pilot points.  Uses the ibound to determine</span>
-<span class="sd">    where to set pilot points. pilot points are given generic &quot;pp_&quot;</span>
-<span class="sd">    names unless predict_dict is passed.  write template files and a</span>
+<span class="sd">    where to set pilot points. pilot points are given generic ``pp_``</span>
+<span class="sd">    names unless ``prefix_dict`` is passed.  Write template files and a</span>
 <span class="sd">    shapefile as well...hopefully this is useful to someone...</span>
 
 <span class="sd">    Parameters</span>
@@ -73,9 +73,11 @@
 <span class="sd">        If None and ml is None, then pilot points are set in all rows and columns according to</span>
 <span class="sd">        every_n_cell.  Default is None.</span>
 <span class="sd">    prefix_dict : dict</span>
-<span class="sd">        a dictionary of pilot point parameter prefix, layer pairs.  example : {&quot;hk&quot;:[0,1,2,3]} would</span>
-<span class="sd">        setup pilot points with the prefix &quot;hk&quot; for model layers 1 - 4 (zero based). If None, a generic set</span>
-<span class="sd">        of pilot points with the &quot;pp&quot; prefix are setup for a generic nrowXncol grid. Default is None</span>
+<span class="sd">        a dictionary of layer index, pilot point parameter prefixes.</span>
+<span class="sd">        Example : ``{0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]}`` would setup pilot points with</span>
+<span class="sd">        the prefix ``&quot;hk&quot;`` for model layers 1 and ``&quot;vka&quot;`` for model layer 2 (zero based).</span>
+<span class="sd">        If None, a generic set of pilot points with the &quot;pp&quot; prefix are setup</span>
+<span class="sd">        for a generic nrowXncol grid. Default is None.</span>
 <span class="sd">    use_ibound_zones : bool</span>
 <span class="sd">        a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound</span>
 <span class="sd">        values greater than zero are treated as a single zone.  Default is False.</span>
@@ -84,14 +86,24 @@
 <span class="sd">    tpl_dir : str</span>
 <span class="sd">        directory to write pilot point template file to.  Default is &#39;.&#39;</span>
 <span class="sd">    shapename : str</span>
-<span class="sd">        name of shapefile to write that containts pilot point information. Default is &quot;pp.shp&quot;</span>
+<span class="sd">        name of shapefile to write that contains pilot point information. Default is &quot;pp.shp&quot;</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    pp_df : pandas.DataFrame</span>
 <span class="sd">        a dataframe summarizing pilot point information (same information</span>
 <span class="sd">        written to shapename</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import flopy``</span>
 
+<span class="sd">    ``&gt;&gt;&gt;from pyemu.utils import setup_pilotpoints_grid``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;m = flopy.modflow.Modfow.load(&quot;mymodel.nam&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;setup_pilotpoints_grid(m,prefix_dict={0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]},``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;                       every_n_cell=3,shapename=&quot;layer1_pp.shp&quot;)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="kn">import</span> <span class="nn">flopy</span>
@@ -363,7 +375,7 @@
 <span class="sd">        the pp_file arg. Default is None</span>
 <span class="sd">    name_prefix : str</span>
 <span class="sd">        name to prepend to parameter names for each pilot point.  For example,</span>
-<span class="sd">        if name_prefix = &quot;hk_&quot;, then each pilot point parameter will be named</span>
+<span class="sd">        if ``name_prefix = &quot;hk_&quot;``, then each pilot point parameter will be named</span>
 <span class="sd">        &quot;hk_0001&quot;,&quot;hk_0002&quot;, etc.  If None, parameter names from pp_df.name</span>
 <span class="sd">        are used.  Default is None.</span>
 

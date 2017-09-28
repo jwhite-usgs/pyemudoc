@@ -1816,17 +1816,22 @@ file.</p>
 <dl class="function">
 <dt id="pyemu.utils.helpers.kl_apply">
 <code class="descclassname">pyemu.utils.helpers.</code><code class="descname">kl_apply</code><span class="sig-paren">(</span><em>par_file</em>, <em>basis_file</em>, <em>par_to_file_dict</em>, <em>arr_shape</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#kl_apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.kl_apply" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Applies a KL parameterization transform from basis factors to model</dt>
-<dd>input arrays.  Companion function to kl_setup()</dd>
-<dt>par_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>the csv file to get factor values from.  Must contain
-the following columns: name, new_val, org_val</dd>
-<dt>basis_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd>the binary file that contains the reduced basis</dd>
-<dt>par_to_file_dict <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
-<dd>a mapping from KL parameter prefixes to array file names.</dd>
-</dl>
+<dd><p>Applies a KL parameterization transform from basis factors to model
+input arrays.  Companion function to kl_setup()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>par_file</strong> (<em>str</em>) – the csv file to get factor values from.  Must contain
+the following columns: name, new_val, org_val</li>
+<li><strong>basis_file</strong> (<em>str</em>) – the binary file that contains the reduced basis</li>
+<li><strong>par_to_file_dict</strong> (<em>dict</em>) – a mapping from KL parameter prefixes to array file names.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -2111,7 +2116,7 @@ adjustable parameters are used. Default is None</li>
 <li><strong>tpl_file</strong> (<em>str</em>) – template file name to write.  If None, append “.tpl” to
 the pp_file arg. Default is None</li>
 <li><strong>name_prefix</strong> (<em>str</em>) – name to prepend to parameter names for each pilot point.  For example,
-if name_prefix = “<a href="#id1"><span class="problematic" id="id2">hk_</span></a>”, then each pilot point parameter will be named
+if <code class="docutils literal"><span class="pre">name_prefix</span> <span class="pre">=</span> <span class="pre">&quot;hk_&quot;</span></code>, then each pilot point parameter will be named
 “hk_0001”,”hk_0002”, etc.  If None, parameter names from pp_df.name
 are used.  Default is None.</li>
 </ul>
@@ -2173,8 +2178,8 @@ are used.  Default is None.</li>
 <dt id="pyemu.utils.pp_utils.setup_pilotpoints_grid">
 <code class="descclassname">pyemu.utils.pp_utils.</code><code class="descname">setup_pilotpoints_grid</code><span class="sig-paren">(</span><em>ml=None</em>, <em>sr=None</em>, <em>ibound=None</em>, <em>prefix_dict=None</em>, <em>every_n_cell=4</em>, <em>use_ibound_zones=False</em>, <em>pp_dir='.'</em>, <em>tpl_dir='.'</em>, <em>shapename='pp.shp'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/pp_utils.html#setup_pilotpoints_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.pp_utils.setup_pilotpoints_grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup grid-based pilot points.  Uses the ibound to determine
-where to set pilot points. pilot points are given generic “<a href="#id3"><span class="problematic" id="id4">pp_</span></a>”
-names unless predict_dict is passed.  write template files and a
+where to set pilot points. pilot points are given generic <code class="docutils literal"><span class="pre">pp_</span></code>
+names unless <code class="docutils literal"><span class="pre">prefix_dict</span></code> is passed.  Write template files and a
 shapefile as well…hopefully this is useful to someone…</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2187,14 +2192,16 @@ ml must not be None.  Default is None</li>
 <li><strong>ibound</strong> (<em>numpy.ndarray</em>) – the modflow ibound integer array.  Used to set pilot points only in active areas.
 If None and ml is None, then pilot points are set in all rows and columns according to
 every_n_cell.  Default is None.</li>
-<li><strong>prefix_dict</strong> (<em>dict</em>) – a dictionary of pilot point parameter prefix, layer pairs.  example : {“hk”:[0,1,2,3]} would
-setup pilot points with the prefix “hk” for model layers 1 - 4 (zero based). If None, a generic set
-of pilot points with the “pp” prefix are setup for a generic nrowXncol grid. Default is None</li>
+<li><strong>prefix_dict</strong> (<em>dict</em>) – a dictionary of layer index, pilot point parameter prefixes.
+Example : <code class="docutils literal"><span class="pre">{0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]}</span></code> would setup pilot points with
+the prefix <code class="docutils literal"><span class="pre">&quot;hk&quot;</span></code> for model layers 1 and <code class="docutils literal"><span class="pre">&quot;vka&quot;</span></code> for model layer 2 (zero based).
+If None, a generic set of pilot points with the “pp” prefix are setup
+for a generic nrowXncol grid. Default is None.</li>
 <li><strong>use_ibound_zones</strong> (<em>bool</em>) – a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound
 values greater than zero are treated as a single zone.  Default is False.</li>
 <li><strong>pp_dir</strong> (<em>str</em>) – directory to write pilot point files to.  Default is ‘.’</li>
 <li><strong>tpl_dir</strong> (<em>str</em>) – directory to write pilot point template file to.  Default is ‘.’</li>
-<li><strong>shapename</strong> (<em>str</em>) – name of shapefile to write that containts pilot point information. Default is “pp.shp”</li>
+<li><strong>shapename</strong> (<em>str</em>) – name of shapefile to write that contains pilot point information. Default is “pp.shp”</li>
 </ul>
 </td>
 </tr>
@@ -2207,6 +2214,12 @@ written to shapename</p>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;from</span> <span class="pre">pyemu.utils</span> <span class="pre">import</span> <span class="pre">setup_pilotpoints_grid</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modfow.load(&quot;mymodel.nam&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;setup_pilotpoints_grid(m,prefix_dict={0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]},</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">every_n_cell=3,shapename=&quot;layer1_pp.shp&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="function">
