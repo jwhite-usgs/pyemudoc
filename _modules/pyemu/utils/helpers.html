@@ -83,6 +83,12 @@
 
 <span class="sd">    for Windows, if os.system returns non-zero, raises exception</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.run(&quot;pestpp pest.pst&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">bwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
@@ -154,6 +160,18 @@
 <span class="sd">    Cov : pyemu.Cov</span>
 <span class="sd">        a covariance matrix that includes all adjustable parameters in the control</span>
 <span class="sd">        file.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pst = pyemu.Pst(&quot;pest.pst&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;sd = {&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;cov = pyemu.helpers.geostatistical_prior_builder(pst,struct_dict=sd)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;cov.to_ascii(&quot;prior.cov&quot;)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -304,6 +322,18 @@
 <span class="sd">    ----</span>
 <span class="sd">    requires flopy</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import flopy``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;m = flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;a_dict = {&quot;hk&quot;:m.lpf.hk[0].array}``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;ba_dict = pyemu.helpers.kl_setup(10,m.sr,&quot;struct.dat&quot;,a_dict)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -371,6 +401,18 @@
 <span class="sd">    par_to_file_dict : dict</span>
 <span class="sd">        a mapping from KL parameter prefixes to array file names.</span>
 
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This is the companion function to kl_setup.</span>
+
+<span class="sd">    This function should be called during the forward run</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.kl_apply(&quot;kl.dat&quot;,&quot;basis.dat&quot;,{&quot;hk&quot;:&quot;hk_layer_1.dat&quot;,(100,100))``</span>
+
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">par_file</span><span class="p">)</span>
@@ -414,6 +456,14 @@
 <span class="sd">    par_groups : list</span>
 <span class="sd">        parameter groups to build PI equations for.  If None, all</span>
 <span class="sd">        adjustable parameters are used. Default is None</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pst = pyemu.Pst(&quot;pest.pst&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.zero_order_tikhonov(pst)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -498,6 +548,16 @@
 <span class="sd">        If the Pearson C is less than abs_drop_tol, the prior information</span>
 <span class="sd">        equation will not be included in the control file</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pst = pyemu.Pst(&quot;pest.pst&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;cov = pyemu.Cov.from_ascii(&quot;prior.cov&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.first_order_pearson_tikhonov(pst,cov,abs_drop_tol=0.25)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">pyemu</span><span class="o">.</span><span class="n">Cov</span><span class="p">)</span>
     <span class="n">cc_mat</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">to_pearson</span><span class="p">()</span>
@@ -570,6 +630,21 @@
 <span class="sd">        name of directory for master instance.  If master_dir</span>
 <span class="sd">        exists, then it will be removed.  If master_dir is None,</span>
 <span class="sd">        no master instance will be started</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    if all slaves (and optionally master) exit gracefully, then the slave</span>
+<span class="sd">    dirs will be removed unless cleanup is false</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    start 10 slaves using the directory &quot;template&quot; as the base case and</span>
+<span class="sd">    also start a master instance in a directory &quot;master&quot;.</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.start_slaves(&quot;template&quot;,&quot;pestpp&quot;,&quot;pest.pst&quot;,10,master_dir=&quot;master&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">)</span>
@@ -739,6 +814,15 @@
 
 <span class="sd">    if subplots is False, a single axis is returned</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import matplotlib.pyplot as plt``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.plot_summary_distributions(&quot;pest.par.usum.csv&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;plt.show()``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
@@ -941,6 +1025,17 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    pst : pyemu.Pst</span>
+
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    this will construct a new Pst instance from template and instruction files</span>
+<span class="sd">    found in the current directory, assuming that the naming convention follows</span>
+<span class="sd">    that listed in parse_dir_for_io_files()</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pst = pyemu.helpers.pst_from_io_files(*pyemu.helpers.parse_dir_for_io_files(&#39;.&#39;))``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">par_names</span> <span class="o">=</span> <span class="p">[]</span>
