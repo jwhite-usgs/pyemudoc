@@ -39,7 +39,16 @@
           <div class="body" role="main">
             
   <h1>Source code for pyemu.smoother</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span></span><span class="sd">&quot;&quot;&quot;this is a prototype ensemble smoother based on the LM-EnRML</span>
+<span class="sd">algorithm of Chen and Oliver 2013.  It requires the pest++ &quot;sweep&quot; utility</span>
+<span class="sd"> to propagate the ensemble forward.</span>
+
+<span class="sd"> TODO:</span>
+<span class="sd"> handle fixed and tied pars</span>
+<span class="sd"> handle &quot;bunk&quot; mod-sim equivs, like dry cells</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -54,17 +63,43 @@
 <span class="kn">from</span> <span class="nn">pyemu.pst</span> <span class="k">import</span> <span class="n">Pst</span>
 <span class="kn">from</span> <span class="nn">.logger</span> <span class="k">import</span> <span class="n">Logger</span>
 
-<span class="sd">&quot;&quot;&quot;this is a prototype ensemble smoother based on the LM-EnRML</span>
-<span class="sd">algorithm of Chen and Oliver 2013.  It requires the pest++ &quot;sweep&quot; utility</span>
-<span class="sd"> to propagate the ensemble forward.</span>
 
-<span class="sd"> TODO:</span>
-<span class="sd"> handle fixed and tied pars</span>
-<span class="sd"> handle &quot;bunk&quot; mod-sim equivs, like dry cells</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="EnsembleSmoother"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother">[docs]</a><span class="k">class</span> <span class="nc">EnsembleSmoother</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;an implementation of the GLM iterative ensemble smoother</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        pst : pyemu.Pst or str</span>
+<span class="sd">            a control file instance or filename</span>
+<span class="sd">        parcov : pyemu.Cov or str</span>
+<span class="sd">            a prior parameter covariance matrix or filename. If None,</span>
+<span class="sd">            parcov is constructed from parameter bounds (diagonal)</span>
+<span class="sd">        obscov : pyemu.Cov or str</span>
+<span class="sd">            a measurement noise covariance matrix or filename. If None,</span>
+<span class="sd">            obscov is constructed from observation weights.</span>
+<span class="sd">        num_slaves : int</span>
+<span class="sd">            number of slaves to use in (local machine) parallel evaluation of the parmaeter</span>
+<span class="sd">            ensemble.  If 0, serial evaluation is used.  Ignored if submit_file is not None</span>
+<span class="sd">        use_approx_prior : bool</span>
+<span class="sd">             a flag to use the MLE (approx) upgrade solution.  If True, a MAP</span>
+<span class="sd">             solution upgrade is used</span>
+<span class="sd">        submit_file : str</span>
+<span class="sd">            the name of a HTCondor submit file.  If not None, HTCondor is used to</span>
+<span class="sd">            evaluate the parameter ensemble in parallel by issuing condor_submit</span>
+<span class="sd">            as a system command</span>
+<span class="sd">        port : int</span>
+<span class="sd">            the TCP port number to communicate on for parallel run management</span>
+<span class="sd">        slave_dir : str</span>
+<span class="sd">            path to a directory with a complete set of model files and PEST</span>
+<span class="sd">            interface files</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">parcov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obscov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">use_approx_prior</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">submit_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">4004</span><span class="p">,</span><span class="n">slave_dir</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">):</span>
@@ -134,6 +169,43 @@
 
 <div class="viewcode-block" id="EnsembleSmoother.initialize"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">init_lambda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span>
                    <span class="n">parensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">restart_obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the iES process.  Depending on arguments, draws or loads</span>
+<span class="sd">        initial parameter observations ensembles and runs the initial parameter</span>
+<span class="sd">        ensemble</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            num_reals : int</span>
+<span class="sd">                the number of realizations to draw.  Ignored if parensemble/obsensemble</span>
+<span class="sd">                are not None</span>
+<span class="sd">            init_lambda : float</span>
+<span class="sd">                the initial lambda to use.  During subsequent updates, the lambda is</span>
+<span class="sd">                updated according to upgrade success</span>
+<span class="sd">            enforce_bounds : str</span>
+<span class="sd">                how to enfore parameter bound transgression.  options are</span>
+<span class="sd">                reset, drop, or None</span>
+<span class="sd">            parensemble : pyemu.ParameterEnsemble or str</span>
+<span class="sd">                a parameter ensemble or filename to use as the initial</span>
+<span class="sd">                parameter ensemble.  If not None, then obsenemble must not be</span>
+<span class="sd">                None</span>
+<span class="sd">            obsensemble : pyemu.ObservationEnsemble or str</span>
+<span class="sd">                an observation ensemble or filename to use as the initial</span>
+<span class="sd">                observation ensemble.  If not None, then parensemble must</span>
+<span class="sd">                not be None</span>
+<span class="sd">            restart_obsensemble : pyemu.ObservationEnsemble or str</span>
+<span class="sd">                an observation ensemble or filename to use as an</span>
+<span class="sd">                evaluated observation ensemble.  If not None, this will skip the initial</span>
+<span class="sd">                parameter ensemble evaluation - user beware!</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es.initialize(num_reals=100)``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        (re)initialize the process</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -276,6 +348,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="EnsembleSmoother.get_localizer"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.get_localizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_localizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; get an empty/generic localizer matrix that can be filled</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            localizer : pyemu.Matrix</span>
+<span class="sd">                matrix with nnz obs names for rows and adj par names for columns</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">onames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span>
         <span class="n">pnames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span>
         <span class="n">localizer</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">onames</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">))),</span><span class="n">row_names</span><span class="o">=</span><span class="n">onames</span><span class="p">,</span><span class="n">col_names</span><span class="o">=</span><span class="n">pnames</span><span class="p">)</span>
@@ -471,6 +551,36 @@
         <span class="k">return</span>  <span class="n">obs_matrix</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs0_matrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col_names</span><span class="o">=</span><span class="n">obs_matrix</span><span class="o">.</span><span class="n">col_names</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="n">obs_matrix</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EnsembleSmoother.update"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lambda_mults</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span><span class="n">localizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">run_subset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">use_approx</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;update the iES one GLM cycle</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            lambda_mults : list</span>
+<span class="sd">                a list of lambda multipliers to test.  Each lambda mult value will require</span>
+<span class="sd">                evaluating (a subset of) the parameter ensemble.</span>
+<span class="sd">            localizer : pyemu.Matrix</span>
+<span class="sd">                a jacobian localizing matrix</span>
+<span class="sd">            run_subset : int</span>
+<span class="sd">                the number of realizations to test for each lambda_mult value.  For example,</span>
+<span class="sd">                if run_subset = 30 and num_reals=100, the first 30 realizations will be run (in</span>
+<span class="sd">                parallel) for each lambda_mult value.  Then the best lambda_mult is selected and the</span>
+<span class="sd">                remaining 70 realizations for that lambda_mult value are run (in parallel).</span>
+<span class="sd">            use_approx : bool</span>
+<span class="sd">                 a flag to use the MLE or MAP upgrade solution.  True indicates use MLE solution</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es.initialize(num_reals=100)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es.update(lambda_mults=[0.1,1.0,10.0],run_subset=30)``</span>
+<span class="sd">          </span>
+<span class="sd">         &quot;&quot;&quot;</span>
+
 
         <span class="k">if</span> <span class="n">run_subset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">run_subset</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>

@@ -2562,10 +2562,47 @@ use it instead</p>
 </div>
 <div class="section" id="module-pyemu.smoother">
 <span id="pyemu-smoother-module"></span><h2>pyemu.smoother module<a class="headerlink" href="#module-pyemu.smoother" title="Permalink to this headline">¶</a></h2>
+<p>this is a prototype ensemble smoother based on the LM-EnRML
+algorithm of Chen and Oliver 2013.  It requires the pest++ “sweep” utility</p>
+<blockquote>
+<div><p>to propagate the ensemble forward.</p>
+<p>TODO:
+handle fixed and tied pars
+handle “bunk” mod-sim equivs, like dry cells</p>
+</div></blockquote>
 <dl class="class">
 <dt id="pyemu.smoother.EnsembleSmoother">
 <em class="property">class </em><code class="descclassname">pyemu.smoother.</code><code class="descname">EnsembleSmoother</code><span class="sig-paren">(</span><em>pst</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>num_slaves=0</em>, <em>use_approx_prior=True</em>, <em>submit_file=None</em>, <em>verbose=False</em>, <em>port=4004</em>, <em>slave_dir='template'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>an implementation of the GLM iterative ensemble smoother</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em><em> or </em><em>str</em>) – a control file instance or filename</li>
+<li><strong>parcov</strong> (<em>pyemu.Cov</em><em> or </em><em>str</em>) – a prior parameter covariance matrix or filename. If None,
+parcov is constructed from parameter bounds (diagonal)</li>
+<li><strong>obscov</strong> (<em>pyemu.Cov</em><em> or </em><em>str</em>) – a measurement noise covariance matrix or filename. If None,
+obscov is constructed from observation weights.</li>
+<li><strong>num_slaves</strong> (<em>int</em>) – number of slaves to use in (local machine) parallel evaluation of the parmaeter
+ensemble.  If 0, serial evaluation is used.  Ignored if submit_file is not None</li>
+<li><strong>use_approx_prior</strong> (<em>bool</em>) – a flag to use the MLE (approx) upgrade solution.  If True, a MAP
+solution upgrade is used</li>
+<li><strong>submit_file</strong> (<em>str</em>) – the name of a HTCondor submit file.  If not None, HTCondor is used to
+evaluate the parameter ensemble in parallel by issuing condor_submit
+as a system command</li>
+<li><strong>port</strong> (<em>int</em>) – the TCP port number to communicate on for parallel run management</li>
+<li><strong>slave_dir</strong> (<em>str</em>) – path to a directory with a complete set of model files and PEST
+interface files</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es</span> <span class="pre">=</span> <span class="pre">pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)</span></code></p>
 <dl class="attribute">
 <dt id="pyemu.smoother.EnsembleSmoother.current_phi">
 <code class="descname">current_phi</code><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.current_phi" title="Permalink to this definition">¶</a></dt>
@@ -2574,18 +2611,84 @@ use it instead</p>
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleSmoother.get_localizer">
 <code class="descname">get_localizer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.get_localizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.get_localizer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>get an empty/generic localizer matrix that can be filled</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>localizer</strong> – matrix with nnz obs names for rows and adj par names for columns</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleSmoother.initialize">
 <code class="descname">initialize</code><span class="sig-paren">(</span><em>num_reals=1</em>, <em>init_lambda=None</em>, <em>enforce_bounds='reset'</em>, <em>parensemble=None</em>, <em>obsensemble=None</em>, <em>restart_obsensemble=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.initialize" title="Permalink to this definition">¶</a></dt>
-<dd><p>(re)initialize the process</p>
+<dd><p>Initialize the iES process.  Depending on arguments, draws or loads
+initial parameter observations ensembles and runs the initial parameter
+ensemble</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_reals</strong> (<em>int</em>) – the number of realizations to draw.  Ignored if parensemble/obsensemble
+are not None</li>
+<li><strong>init_lambda</strong> (<em>float</em>) – the initial lambda to use.  During subsequent updates, the lambda is
+updated according to upgrade success</li>
+<li><strong>enforce_bounds</strong> (<em>str</em>) – how to enfore parameter bound transgression.  options are
+reset, drop, or None</li>
+<li><strong>parensemble</strong> (<em>pyemu.ParameterEnsemble</em><em> or </em><em>str</em>) – a parameter ensemble or filename to use as the initial
+parameter ensemble.  If not None, then obsenemble must not be
+None</li>
+<li><strong>obsensemble</strong> (<em>pyemu.ObservationEnsemble</em><em> or </em><em>str</em>) – an observation ensemble or filename to use as the initial
+observation ensemble.  If not None, then parensemble must
+not be None</li>
+<li><strong>restart_obsensemble</strong> (<em>pyemu.ObservationEnsemble</em><em> or </em><em>str</em>) – an observation ensemble or filename to use as an
+evaluated observation ensemble.  If not None, this will skip the initial
+parameter ensemble evaluation - user beware!</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es</span> <span class="pre">=</span> <span class="pre">pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es.initialize(num_reals=100)</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleSmoother.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>lambda_mults=[1.0], localizer=None, run_subset=None, use_approx=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>update the iES one GLM cycle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lambda_mults</strong> (<em>list</em>) – a list of lambda multipliers to test.  Each lambda mult value will require
+evaluating (a subset of) the parameter ensemble.</li>
+<li><strong>localizer</strong> (<em>pyemu.Matrix</em>) – a jacobian localizing matrix</li>
+<li><strong>run_subset</strong> (<em>int</em>) – the number of realizations to test for each lambda_mult value.  For example,
+if run_subset = 30 and num_reals=100, the first 30 realizations will be run (in
+parallel) for each lambda_mult value.  Then the best lambda_mult is selected and the
+remaining 70 realizations for that lambda_mult value are run (in parallel).</li>
+<li><strong>use_approx</strong> (<em>bool</em>) – a flag to use the MLE or MAP upgrade solution.  True indicates use MLE solution</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es</span> <span class="pre">=</span> <span class="pre">pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es.initialize(num_reals=100)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es.update(lambda_mults=[0.1,1.0,10.0],run_subset=30)</span></code></p>
+</dd></dl>
 
 </dd></dl>
 
