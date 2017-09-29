@@ -62,6 +62,12 @@
 <span class="sd">    Note</span>
 <span class="sd">    ----</span>
 <span class="sd">    Same call signature as the base LinearAnalysis class</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">jco</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -107,6 +113,17 @@
 <span class="sd">        Note</span>
 <span class="sd">        ----</span>
 <span class="sd">        returns a reference</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;post_cov = sc.posterior_parameter``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;post_cov.to_ascii(&quot;post.cov&quot;)``</span>
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_parameter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -216,6 +233,11 @@
 <span class="sd">        dict : dict</span>
 <span class="sd">            a dictionary of forecast names, posterior variance pairs</span>
 
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        This method is not as easy to use as Schur.get_forecast_summary(), please</span>
+<span class="sd">        use it instead</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_prediction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__posterior_prediction</span>
@@ -252,6 +274,23 @@
 <span class="sd">        ----</span>
 <span class="sd">        this is the primary method for accessing parameter uncertainty</span>
 <span class="sd">        estimates - use this!</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import matplotlib.pyplot as plt``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;,forecasts=[&quot;fore1&quot;,&quot;fore2&quot;])``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;par_sum = sc.get_parameter_summary()``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;par_sum.plot(kind=&quot;bar&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;plt.show()``</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prior_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">posterior_parameter</span><span class="o">.</span><span class="n">col_names</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">prior_mat</span><span class="o">.</span><span class="n">isdiagonal</span><span class="p">:</span>
@@ -295,6 +334,28 @@
 <span class="sd">        ----</span>
 <span class="sd">        this is the primary method for accessing forecast uncertainty</span>
 <span class="sd">        estimates - use this!</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import matplotlib.pyplot as plt``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        This usage assumes you have set the ``++forecasts()`` argument in the</span>
+<span class="sd">        control file:</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        or, you can pass the forecasts directly, assuming the forecasts are</span>
+<span class="sd">        names of zero-weight observations:</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;,forecasts=[&quot;fore1&quot;,&quot;fore2&quot;])``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;fore_sum = sc.get_forecast_summary()``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;fore_sum.plot(kind=&quot;bar&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;plt.show()``</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">sum</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;prior_var&quot;</span><span class="p">:[],</span> <span class="s2">&quot;post_var&quot;</span><span class="p">:[],</span> <span class="s2">&quot;percent_reduction&quot;</span><span class="p">:[]}</span>
@@ -419,6 +480,14 @@
 <span class="sd">            are the posterior variance of the forecast conditional on perfect</span>
 <span class="sd">            knowledge of the parameters in the values of parlist_dict</span>
 
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;df = sc.get_par_contribution()``</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from parameters&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parlist_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -526,6 +595,15 @@
 <span class="sd">        ----</span>
 <span class="sd">        all observations listed in obslist_dict and base_obslist with zero</span>
 <span class="sd">        weights will be dropped unless reset_zero_weight is set</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;df = sc.get_added_obs_importance(base_obslist=sc.pst.nnz_obs_names,reset_zero=True)``</span>
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -671,6 +749,14 @@
 <span class="sd">        ----</span>
 <span class="sd">        all observations listed in obslist_dict with zero</span>
 <span class="sd">        weights will be dropped unless reset_zero_weight is set</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``df = sc.get_removed_obs_importance()``</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -824,7 +910,18 @@
 <span class="sd">            Columns of forecast variance percent reduction for this iteration,</span>
 <span class="sd">            (percent reduction compared to initial base case)</span>
 
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;sc = pyemu.Schur(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;df = sc.next_most_added_importance_obs(forecast=&quot;fore1&quot;,``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;      base_obslist=sc.pst.nnz_obs_names,reset_zero=True``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
 
         <span class="k">if</span> <span class="n">forecast</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">forecasts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="s2">&quot;forecast arg list one and only one&quot;</span> <span class="o">+</span>\

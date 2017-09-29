@@ -69,6 +69,12 @@
 <span class="sd">    -------</span>
 <span class="sd">    MonteCarlo : MonteCarlo</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;mc = pyemu.MonteCarlo(pst=&quot;pest.pst&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MonteCarlo</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -147,7 +153,7 @@
         <span class="k">return</span> <span class="n">v2_proj</span></div>
 
 <div class="viewcode-block" id="MonteCarlo.draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.mc.MonteCarlo.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">par_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">enforce_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">):</span>
+             <span class="n">enforce_bounds</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;draw stochastic realizations of parameters and</span>
 <span class="sd">           optionally observations, filling MonteCarlo.parensemble and</span>
 <span class="sd">           optionally MonteCarlo.obsensemble.</span>
@@ -169,6 +175,14 @@
 <span class="sd">        how : str</span>
 <span class="sd">            type of distribution to draw from. Must be in [&quot;gaussian&quot;,&quot;uniform&quot;]</span>
 <span class="sd">            default is &quot;gaussian&quot;.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc = pyemu.MonteCarlo(pst=&quot;pest.pst&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc.draw(1000)``</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">par_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -221,6 +235,22 @@
 <span class="sd">        -------</span>
 <span class="sd">        par_en : pyemu.ParameterEnsemble</span>
 <span class="sd">            if inplace is False, otherwise None</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        to use this method, the MonteCarlo instance must have been constructed</span>
+<span class="sd">        with the ``jco`` argument.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc = pyemu.MonteCarlo(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc.draw(1000)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc.project_parensemble(par_file=&quot;final.par&quot;,nsing=100)``</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span><span class="s2">&quot;MonteCarlo.project_parensemble()&quot;</span> <span class="o">+</span>\
                                     <span class="s2">&quot;requires a jacobian attribute&quot;</span>
@@ -253,6 +283,16 @@
 
 <span class="sd">        noptmax: int</span>
 <span class="sd">            value of NOPTMAX to set in new pest control files</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc = pyemu.MonteCarlo(jco=&quot;pest.jcb&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc.draw(1000, obs=True)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;mc.write_psts(&quot;mc_&quot;, existing_jco=&quot;pest.jcb&quot;, noptmax=1)``</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;writing realized pest control files&quot;</span><span class="p">)</span>

@@ -1908,6 +1908,9 @@ complete definitions</td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc</span> <span class="pre">=</span> <span class="pre">pyemu.MonteCarlo(pst=&quot;pest.pst&quot;)</span></code></p>
 <dl class="method">
 <dt id="pyemu.mc.MonteCarlo.draw">
 <code class="descname">draw</code><span class="sig-paren">(</span><em>num_reals=1</em>, <em>par_file=None</em>, <em>obs=False</em>, <em>enforce_bounds=None</em>, <em>cov=None</em>, <em>how='gaussian'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mc.html#MonteCarlo.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mc.MonteCarlo.draw" title="Permalink to this definition">¶</a></dt>
@@ -1936,6 +1939,10 @@ default is “gaussian”.</li>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc</span> <span class="pre">=</span> <span class="pre">pyemu.MonteCarlo(pst=&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc.draw(1000)</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2026,6 +2033,16 @@ Default is None</li>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">to use this method, the MonteCarlo instance must have been constructed
+with the <code class="docutils literal"><span class="pre">jco</span></code> argument.</p>
+</div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc</span> <span class="pre">=</span> <span class="pre">pyemu.MonteCarlo(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc.draw(1000)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc.project_parensemble(par_file=&quot;final.par&quot;,nsing=100)</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2052,6 +2069,11 @@ file as seen from the location where pest++ will be run</li>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc</span> <span class="pre">=</span> <span class="pre">pyemu.MonteCarlo(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc.draw(1000,</span> <span class="pre">obs=True)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;mc.write_psts(&quot;mc_&quot;,</span> <span class="pre">existing_jco=&quot;pest.jcb&quot;,</span> <span class="pre">noptmax=1)</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -2080,6 +2102,9 @@ LinearAnalysis definition for argument types</td>
 <p class="first admonition-title">Note</p>
 <p class="last">Same call signature as the base LinearAnalysis class</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
 <dl class="method">
 <dt id="pyemu.sc.Schur.get_added_obs_importance">
 <code class="descname">get_added_obs_importance</code><span class="sig-paren">(</span><em>obslist_dict=None</em>, <em>base_obslist=None</em>, <em>reset_zero_weight=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.get_added_obs_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.sc.Schur.get_added_obs_importance" title="Permalink to this definition">¶</a></dt>
@@ -2125,6 +2150,10 @@ in base_obslist (if any)</p>
 <p class="last">all observations listed in obslist_dict and base_obslist with zero
 weights will be dropped unless reset_zero_weight is set</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">sc.get_added_obs_importance(base_obslist=sc.pst.nnz_obs_names,reset_zero=True)</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2176,6 +2205,18 @@ uncertainty reduction of each parameter</td>
 <p class="last">this is the primary method for accessing forecast uncertainty
 estimates - use this!</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p>This usage assumes you have set the <code class="docutils literal"><span class="pre">++forecasts()</span></code> argument in the
+control file:</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p>or, you can pass the forecasts directly, assuming the forecasts are
+names of zero-weight observations:</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;,forecasts=[&quot;fore1&quot;,&quot;fore2&quot;])</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;fore_sum</span> <span class="pre">=</span> <span class="pre">sc.get_forecast_summary()</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;fore_sum.plot(kind=&quot;bar&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2203,6 +2244,10 @@ knowledge of the parameters in the values of parlist_dict</td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">sc.get_par_contribution()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2251,6 +2296,14 @@ uncertainty reduction of each parameter</td>
 <p class="last">this is the primary method for accessing parameter uncertainty
 estimates - use this!</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;,forecasts=[&quot;fore1&quot;,&quot;fore2&quot;])</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;par_sum</span> <span class="pre">=</span> <span class="pre">sc.get_parameter_summary()</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;par_sum.plot(kind=&quot;bar&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2309,6 +2362,10 @@ contained in obslist_dict[key value]</p>
 <p class="last">all observations listed in obslist_dict with zero
 weights will be dropped unless reset_zero_weight is set</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">sc.get_removed_obs_importance()</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -2385,6 +2442,11 @@ Columns of forecast variance percent reduction for this iteration,
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">sc.next_most_added_importance_obs(forecast=&quot;fore1&quot;,</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">base_obslist=sc.pst.nnz_obs_names,reset_zero=True</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -2467,6 +2529,11 @@ Schur compliment before returning</p>
 <p class="first admonition-title">Note</p>
 <p class="last">returns a reference</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sc</span> <span class="pre">=</span> <span class="pre">pyemu.Schur(jco=&quot;pest.jcb&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;post_cov</span> <span class="pre">=</span> <span class="pre">sc.posterior_parameter</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;post_cov.to_ascii(&quot;post.cov&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -2483,6 +2550,11 @@ Schur compliment before returning</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is not as easy to use as Schur.get_forecast_summary(), please
+use it instead</p>
+</div>
 </dd></dl>
 
 </dd></dl>

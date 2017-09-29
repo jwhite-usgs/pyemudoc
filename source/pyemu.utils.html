@@ -76,6 +76,9 @@ Default is 0.0</li>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
 </dd></dl>
 
 <dl class="class">
@@ -109,6 +112,9 @@ Default is 0.0</li>
 <p class="first admonition-title">Note</p>
 <p class="last">the Gaussian variogram can be unstable (not invertible) for long ranges.</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GauVario(a=1000,contribution=1.0)</span></code></p>
 </dd></dl>
 
 <dl class="class">
@@ -152,10 +158,15 @@ Default is “none</li>
 <dd><p><em>str</em> – the transform of the GeoStruct</p>
 </dd></dl>
 
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
 <dl class="method">
 <dt id="pyemu.utils.geostats.GeoStruct.covariance">
 <code class="descname">covariance</code><span class="sig-paren">(</span><em>pt0</em>, <em>pt1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#GeoStruct.covariance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.GeoStruct.covariance" title="Permalink to this definition">¶</a></dt>
-<dd><p>get the covariance between two points implied by the GeoStruct</p>
+<dd><p>get the covariance between two points implied by the GeoStruct.
+This is used during the ordinary kriging process to get the RHS</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -208,6 +219,9 @@ the “cov” argument was passed.</p>
 <p class="last">either “names” or “cov” must be passed.  If “cov” is passed, cov.shape
 must equal len(x) and len(y).</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -322,6 +336,12 @@ and is loaded as such using pyemu.pp_utils.pp_file_to_dataframe()</p>
 <p class="last">If zoned interpolation is used for grid-based interpolation, then
 point_data must also contain a “zone” column</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
 <dl class="method">
 <dt id="pyemu.utils.geostats.OrdinaryKrige.calc_factors">
 <code class="descname">calc_factors</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>minpts_interp=1</em>, <em>maxpts_interp=20</em>, <em>search_radius=10000000000.0</em>, <em>verbose=False</em>, <em>pt_zone=None</em>, <em>forgive=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#OrdinaryKrige.calc_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.OrdinaryKrige.calc_factors" title="Permalink to this definition">¶</a></dt>
@@ -417,6 +437,17 @@ process for each grid node</p>
 <p class="first admonition-title">Note</p>
 <p class="last">this method calls OrdinaryKrige.calc_factors()</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>&gt;&gt;&gt;m = flopy.modflow.Modflow.load(“mymodel.nam”)</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">var_filename=&quot;ok_var.dat&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -496,6 +527,9 @@ Default is 0.0</li>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.SphVario(a=1000,contribution=1.0)</span></code></p>
 </dd></dl>
 
 <dl class="class">
@@ -737,6 +771,9 @@ are set to fill_value</li>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.utils.geostats.fac2real(&quot;hkpp.dat&quot;,out_file=&quot;hk_layer_1.ref&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -753,7 +790,7 @@ are set to fill_value</li>
 can have only 3 columns.  attr_name must be in the GSLIB file header</li>
 <li><strong>x_idx</strong> (<em>(</em><em>int</em><em>)</em>) – the index of the x-coordinate information in the GSLIB file. Default is
 0 (first column)</li>
-<li><strong>y_idx</strong> (<em>(</em><em>int</em><em>)</em>) – the index of the y-coordinate information i the GSLIB file.
+<li><strong>y_idx</strong> (<em>(</em><em>int</em><em>)</em>) – the index of the y-coordinate information in the GSLIB file.
 Default is 1 (second column)</li>
 </ul>
 </td>
@@ -773,6 +810,9 @@ Default is 1 (second column)</li>
 <p class="first admonition-title">Note</p>
 <p class="last">assigns generic point names (“pt0, pt1, etc)</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">pyemu.utiils.geostats.gslib_2_dataframe(&quot;prop.gslib&quot;,attr_name=&quot;hk&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -798,7 +838,7 @@ division in the experimental variogram</td>
 <dl class="function">
 <dt id="pyemu.utils.geostats.parse_factor_line">
 <code class="descclassname">pyemu.utils.geostats.</code><code class="descname">parse_factor_line</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#parse_factor_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.parse_factor_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to parse a factor file line</p>
+<dd><p>function to parse a factor file line.  Used by fac2real()</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -839,6 +879,9 @@ a GeoStruct</p>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.read_sgems_variogram_xml(&quot;sgems.xml&quot;)</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -868,6 +911,9 @@ a GeoStruct</p>
 <p class="last">if only on structure is listed in struct_file, then return type
 is GeoStruct.  Otherwise, return type is a list of GeoStruct</p>
 </div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.reads_struct_file(&quot;struct.dat&quot;)</span></code></p>
 </dd></dl>
 
 </div>

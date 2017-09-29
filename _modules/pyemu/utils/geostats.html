@@ -104,6 +104,14 @@
 <span class="sd">    transform : str</span>
 <span class="sd">        the transform of the GeoStruct</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nugget</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">variograms</span><span class="o">=</span><span class="p">[],</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;struct1&quot;</span><span class="p">,</span>
                  <span class="n">transform</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">):</span>
@@ -165,7 +173,16 @@
 <span class="sd">        ----</span>
 <span class="sd">        either &quot;names&quot; or &quot;cov&quot; must be passed.  If &quot;cov&quot; is passed, cov.shape</span>
 <span class="sd">        must equal len(x) and len(y).</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;cov = gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)``</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -193,7 +210,8 @@
         <span class="k">return</span> <span class="n">cov</span></div>
 
 <div class="viewcode-block" id="GeoStruct.covariance"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance">[docs]</a>    <span class="k">def</span> <span class="nf">covariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pt0</span><span class="p">,</span><span class="n">pt1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the covariance between two points implied by the GeoStruct</span>
+        <span class="sd">&quot;&quot;&quot;get the covariance between two points implied by the GeoStruct.</span>
+<span class="sd">        This is used during the ordinary kriging process to get the RHS</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -521,6 +539,17 @@
 <span class="sd">    point_data must also contain a &quot;zone&quot; column</span>
 
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;ok = pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">geostruct</span><span class="p">,</span><span class="n">point_data</span><span class="p">):</span>
@@ -642,6 +671,29 @@
 <span class="sd">        ----</span>
 <span class="sd">        this method calls OrdinaryKrige.calc_factors()</span>
 
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import flopy``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;ok = pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;m = flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span>
+
+<span class="sd">        ``&gt;&gt;&gt;df = ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;                          var_filename=&quot;ok_var.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)``</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">spatial_reference</span> <span class="o">=</span> <span class="n">spatial_reference</span>
@@ -743,6 +795,7 @@
 <span class="sd">        df : pandas.DataFrame</span>
 <span class="sd">            a dataframe with information summarizing the ordinary kriging</span>
 <span class="sd">            process for each interpolation points</span>
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1229,6 +1282,12 @@
 <span class="sd">    -------</span>
 <span class="sd">    ExpVario : ExpVario</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ExpVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
@@ -1275,6 +1334,13 @@
 <span class="sd">    Note</span>
 <span class="sd">    ----</span>
 <span class="sd">    the Gaussian variogram can be unstable (not invertible) for long ranges.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.GauVario(a=1000,contribution=1.0)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
@@ -1321,6 +1387,11 @@
 <span class="sd">    -------</span>
 <span class="sd">    SphVario : SphVario</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.SphVario(a=1000,contribution=1.0)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1382,6 +1453,13 @@
 <span class="sd">    ----</span>
 <span class="sd">    if only on structure is listed in struct_file, then return type</span>
 <span class="sd">    is GeoStruct.  Otherwise, return type is a list of GeoStruct</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.reads_struct_file(&quot;struct.dat&quot;)``</span>
+
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1531,6 +1609,13 @@
 <span class="sd">    -------</span>
 <span class="sd">    GeoStruct : GeoStruct</span>
 
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.read_sgems_variogram_xml(&quot;sgems.xml&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">ET</span>
@@ -1610,7 +1695,7 @@
 <span class="sd">        the index of the x-coordinate information in the GSLIB file. Default is</span>
 <span class="sd">        0 (first column)</span>
 <span class="sd">    y_idx : (int)</span>
-<span class="sd">        the index of the y-coordinate information i the GSLIB file.</span>
+<span class="sd">        the index of the y-coordinate information in the GSLIB file.</span>
 <span class="sd">        Default is 1 (second column)</span>
 
 <span class="sd">    Returns</span>
@@ -1625,6 +1710,11 @@
 <span class="sd">    ----</span>
 <span class="sd">    assigns generic point names (&quot;pt0, pt1, etc)</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;df = pyemu.utiils.geostats.gslib_2_dataframe(&quot;prop.gslib&quot;,attr_name=&quot;hk&quot;)``</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1736,6 +1826,12 @@
 <span class="sd">    out_file : str</span>
 <span class="sd">        if out_file it not None</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.utils.geostats.fac2real(&quot;hkpp.dat&quot;,out_file=&quot;hk_layer_1.ref&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="n">pp_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
@@ -1808,7 +1904,7 @@
     <span class="k">return</span> <span class="n">arr</span></div>
 
 <div class="viewcode-block" id="parse_factor_line"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.parse_factor_line">[docs]</a><span class="k">def</span> <span class="nf">parse_factor_line</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; function to parse a factor file line</span>
+    <span class="sd">&quot;&quot;&quot; function to parse a factor file line.  Used by fac2real()</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
