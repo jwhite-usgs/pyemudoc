@@ -164,6 +164,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">current_phi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; the current phi vector</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            current_phi : pandas.DataFrame</span>
+<span class="sd">                the current phi vector as a pandas dataframe</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)},</span>\
                             <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
@@ -578,7 +586,7 @@
 <span class="sd">        ``&gt;&gt;&gt;es.initialize(num_reals=100)``</span>
 
 <span class="sd">        ``&gt;&gt;&gt;es.update(lambda_mults=[0.1,1.0,10.0],run_subset=30)``</span>
-<span class="sd">          </span>
+
 <span class="sd">         &quot;&quot;&quot;</span>
 
 

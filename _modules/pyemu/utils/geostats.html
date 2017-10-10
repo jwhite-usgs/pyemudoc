@@ -686,7 +686,7 @@
 
 <span class="sd">        ``&gt;&gt;&gt;ok = pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)``</span>
 
-<span class="sd">        ``&gt;&gt;&gt;m = flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span>
+<span class="sd">        ``&gt;&gt;&gt;m = flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)``</span>
 
 <span class="sd">        ``&gt;&gt;&gt;df = ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,``</span>
 
@@ -1790,6 +1790,7 @@
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="n">item</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s2">&quot;pairs&quot;</span><span class="p">:</span><span class="n">pairs</span><span class="p">})</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">y</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
         <span class="n">dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
     <span class="k">return</span> <span class="n">dfs</span></div>
 

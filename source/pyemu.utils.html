@@ -444,7 +444,7 @@ process for each grid node</p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a>&gt;&gt;&gt;m = flopy.modflow.Modflow.load(“mymodel.nam”)</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span></code></p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,</span></code></p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">var_filename=&quot;ok_var.dat&quot;)</span></code></p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)</span></code></p>
