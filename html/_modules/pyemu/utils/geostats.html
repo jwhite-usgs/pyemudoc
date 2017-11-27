@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyemu.utils.geostats &#8212; pyEMU 1.0 documentation</title>
+    <title>pyemu.utils.geostats &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1.0',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -26,6 +26,7 @@
     <link rel="search" title="Search" href="../../../search.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -81,18 +82,36 @@
     <span class="sd">&quot;&quot;&quot;a geostatistical structure object.  The object contains</span>
 <span class="sd">    variograms and (optionally) nugget information.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        nugget : (float)</span>
-<span class="sd">            nugget contribution</span>
-<span class="sd">        variograms : (list or Vario2d instance)</span>
-<span class="sd">            variogram(s) associated with this GeoStruct instance</span>
-<span class="sd">        name : (str)</span>
-<span class="sd">            name to assign the structure.  Default is &quot;struct1&quot;.</span>
-<span class="sd">        transform : (str)</span>
-<span class="sd">            the transformation to apply to the GeoStruct.  Can be</span>
-<span class="sd">            &quot;none&quot; or &quot;log&quot;, depending on the transformation of the</span>
-<span class="sd">            property being represented by the GeoStruct.</span>
-<span class="sd">            Default is &quot;none</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nugget : (float)</span>
+<span class="sd">        nugget contribution</span>
+<span class="sd">    variograms : (list or Vario2d instance)</span>
+<span class="sd">        variogram(s) associated with this GeoStruct instance</span>
+<span class="sd">    name : (str)</span>
+<span class="sd">        name to assign the structure.  Default is &quot;struct1&quot;.</span>
+<span class="sd">    transform : (str)</span>
+<span class="sd">        the transformation to apply to the GeoStruct.  Can be</span>
+<span class="sd">        &quot;none&quot; or &quot;log&quot;, depending on the transformation of the</span>
+<span class="sd">        property being represented by the GeoStruct.</span>
+<span class="sd">        Default is &quot;none</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    variograms : list</span>
+<span class="sd">        the Vario2d objects associated with the GeoStruct</span>
+<span class="sd">    name : str</span>
+<span class="sd">        the name of the GeoStruct</span>
+<span class="sd">    transform : str</span>
+<span class="sd">        the transform of the GeoStruct</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">nugget</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">variograms</span><span class="o">=</span><span class="p">[],</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;struct1&quot;</span><span class="p">,</span>
@@ -111,9 +130,10 @@
 <div class="viewcode-block" id="GeoStruct.to_struct_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.to_struct_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_struct_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; write a PEST-style structure file</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            f : (str or file handle)</span>
-<span class="sd">                file to write the GeoStruct information to</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : (str or file handle)</span>
+<span class="sd">            file to write the GeoStruct information to</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -131,27 +151,39 @@
 <div class="viewcode-block" id="GeoStruct.covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;build a pyemu.Cov instance from GeoStruct</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            x : (iterable of floats)</span>
-<span class="sd">                x-coordinate locations</span>
-<span class="sd">            y : (iterable of floats)</span>
-<span class="sd">                y-coordinate locations</span>
-<span class="sd">            names : (iterable of str)</span>
-<span class="sd">                names of location. If None, cov must not be None.  Default is None.</span>
-<span class="sd">            cov : (pyemu.Cov) instance</span>
-<span class="sd">                an existing Cov instance.  The contribution of this GeoStruct is added</span>
-<span class="sd">                to cov.  If cov is None, names must not be None. Default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : (iterable of floats)</span>
+<span class="sd">            x-coordinate locations</span>
+<span class="sd">        y : (iterable of floats)</span>
+<span class="sd">            y-coordinate locations</span>
+<span class="sd">        names : (iterable of str)</span>
+<span class="sd">            names of location. If None, cov must not be None.  Default is None.</span>
+<span class="sd">        cov : (pyemu.Cov) instance</span>
+<span class="sd">            an existing Cov instance.  The contribution of this GeoStruct is added</span>
+<span class="sd">            to cov.  If cov is None, names must not be None. Default is None</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : pyemu.Cov</span>
-<span class="sd">                the covariance matrix implied by this GeoStruct for the x,y pairs.</span>
-<span class="sd">                cov has row and column names supplied by the names argument unless</span>
-<span class="sd">                the &quot;cov&quot; argument was passed.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : pyemu.Cov</span>
+<span class="sd">            the covariance matrix implied by this GeoStruct for the x,y pairs.</span>
+<span class="sd">            cov has row and column names supplied by the names argument unless</span>
+<span class="sd">            the &quot;cov&quot; argument was passed.</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            either &quot;names&quot; or &quot;cov&quot; must be passed.  If &quot;cov&quot; is passed, cov.shape</span>
-<span class="sd">            must equal len(x) and len(y).</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        either &quot;names&quot; or &quot;cov&quot; must be passed.  If &quot;cov&quot; is passed, cov.shape</span>
+<span class="sd">        must equal len(x) and len(y).</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;cov = gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)``</span>
+
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -179,15 +211,18 @@
         <span class="k">return</span> <span class="n">cov</span></div>
 
 <div class="viewcode-block" id="GeoStruct.covariance"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance">[docs]</a>    <span class="k">def</span> <span class="nf">covariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pt0</span><span class="p">,</span><span class="n">pt1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the covariance between two points implied by the GeoStruct</span>
+        <span class="sd">&quot;&quot;&quot;get the covariance between two points implied by the GeoStruct.</span>
+<span class="sd">        This is used during the ordinary kriging process to get the RHS</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            pt0 : (iterable length 2 of floats)</span>
-<span class="sd">            pt1 : (iterable length 2 of floats)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pt0 : (iterable length 2 of floats)</span>
+<span class="sd">        pt1 : (iterable length 2 of floats)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            covariance : float</span>
-<span class="sd">                the covariance between pt0 and pt1 implied by the GeoStruct</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        covariance : float</span>
+<span class="sd">            the covariance between pt0 and pt1 implied by the GeoStruct</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#raise Exception()</span>
@@ -200,22 +235,26 @@
         <span class="sd">&quot;&quot;&quot; Get the covariance between point x0,y0 and the points</span>
 <span class="sd">        contained in xother, yother.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            x0 : (float)</span>
-<span class="sd">                x-coordinate</span>
-<span class="sd">            y0 : (float)</span>
-<span class="sd">                y-coordinate</span>
-<span class="sd">            xother : (iterable of floats)</span>
-<span class="sd">                x-coordinate of other points</span>
-<span class="sd">            yother : (iterable of floats)</span>
-<span class="sd">                y-coordinate of other points</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x0 : (float)</span>
+<span class="sd">            x-coordinate</span>
+<span class="sd">        y0 : (float)</span>
+<span class="sd">            y-coordinate</span>
+<span class="sd">        xother : (iterable of floats)</span>
+<span class="sd">            x-coordinate of other points</span>
+<span class="sd">        yother : (iterable of floats)</span>
+<span class="sd">            y-coordinate of other points</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : numpy.ndarray</span>
-<span class="sd">                a 1-D array of covariance between point x0,y0 and the</span>
-<span class="sd">                points contained in xother, yother.  len(cov) = len(xother) =</span>
-<span class="sd">                len(yother)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : numpy.ndarray</span>
+<span class="sd">            a 1-D array of covariance between point x0,y0 and the</span>
+<span class="sd">            points contained in xother, yother.  len(cov) = len(xother) =</span>
+<span class="sd">            len(yother)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">xother</span><span class="p">)))</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nugget</span>
         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variograms</span><span class="p">:</span>
             <span class="n">cov</span> <span class="o">+=</span> <span class="n">v</span><span class="o">.</span><span class="n">covariance_points</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="n">xother</span><span class="p">,</span><span class="n">yother</span><span class="p">)</span>
@@ -225,10 +264,11 @@
     <span class="k">def</span> <span class="nf">sill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the sill of the GeoStruct</span>
 
-<span class="sd">        Return:</span>
-<span class="sd">             sill : float</span>
-<span class="sd">                the sill of the (nested) GeoStruct, including nugget and contribution</span>
-<span class="sd">                from each variogram</span>
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">        sill : float</span>
+<span class="sd">            the sill of the (nested) GeoStruct, including nugget and contribution</span>
+<span class="sd">            from each variogram</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nugget</span>
         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variograms</span><span class="p">:</span>
@@ -239,19 +279,22 @@
 <div class="viewcode-block" id="GeoStruct.plot"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; make a cheap plot of the GeoStruct</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            **kwargs : (dict)</span>
-<span class="sd">                keyword arguments to use for plotting.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : (dict)</span>
+<span class="sd">            keyword arguments to use for plotting.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            ax : matplotlib.pyplot.axis</span>
-<span class="sd">                the axis with the GeoStruct plot</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : matplotlib.pyplot.axis</span>
+<span class="sd">            the axis with the GeoStruct plot</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">             optional arguments include &quot;ax&quot; (an existing axis),</span>
-<span class="sd">             &quot;individuals&quot; (plot each variogram on a separate axis),</span>
-<span class="sd">             &quot;legend&quot; (add a legend to the plot(s)).  All other kwargs</span>
-<span class="sd">             are passed to matplotlib.pyplot.plot()</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        optional arguments include &quot;ax&quot; (an existing axis),</span>
+<span class="sd">        &quot;individuals&quot; (plot each variogram on a separate axis),</span>
+<span class="sd">        &quot;legend&quot; (add a legend to the plot(s)).  All other kwargs</span>
+<span class="sd">        are passed to matplotlib.pyplot.plot()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#</span>
@@ -281,9 +324,10 @@
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; the str representation of the GeoStruct</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str : str</span>
-<span class="sd">                the str representation of the GeoStruct</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str : str</span>
+<span class="sd">            the str representation of the GeoStruct</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;name:</span><span class="si">{0}</span><span class="s1">,nugget:</span><span class="si">{1}</span><span class="s1">,structures:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">nugget</span><span class="p">)</span>
@@ -479,21 +523,34 @@
 <div class="viewcode-block" id="OrdinaryKrige"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.OrdinaryKrige">[docs]</a><span class="k">class</span> <span class="nc">OrdinaryKrige</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Ordinary Kriging using Pandas and Numpy.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        geostruct : (GeoStruct)</span>
-<span class="sd">            a pyemu.geostats.GeoStruct to use for the kriging</span>
-<span class="sd">        point_data : (pandas.DataFrame)</span>
-<span class="sd">            the conditioning points to use for kriging.  point_data must contain</span>
-<span class="sd">            columns &quot;name&quot;, &quot;x&quot;, &quot;y&quot;.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    geostruct : (GeoStruct)</span>
+<span class="sd">        a pyemu.geostats.GeoStruct to use for the kriging</span>
+<span class="sd">    point_data : (pandas.DataFrame)</span>
+<span class="sd">        the conditioning points to use for kriging.  point_data must contain</span>
+<span class="sd">        columns &quot;name&quot;, &quot;x&quot;, &quot;y&quot;.</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        if point_data is an str, then it is assumed to be a pilot points file</span>
-<span class="sd">        and is loaded as such using pyemu.pp_utils.pp_file_to_dataframe()</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    if point_data is an str, then it is assumed to be a pilot points file</span>
+<span class="sd">    and is loaded as such using pyemu.pp_utils.pp_file_to_dataframe()</span>
 
-<span class="sd">        If zoned interpolation is used for grid-based interpolation, then</span>
-<span class="sd">        point_data must also contain a &quot;zone&quot; column</span>
+<span class="sd">    If zoned interpolation is used for grid-based interpolation, then</span>
+<span class="sd">    point_data must also contain a &quot;zone&quot; column</span>
 
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;ok = pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">geostruct</span><span class="p">,</span><span class="n">point_data</span><span class="p">):</span>
@@ -527,16 +584,20 @@
         <span class="sd">&quot;&quot;&quot; check for point_data entries that are closer than</span>
 <span class="sd">        EPSILON distance - this will cause a singular kriging matrix.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            rectify : (boolean)</span>
-<span class="sd">                flag to fix the problems with point_data</span>
-<span class="sd">                by dropping additional points that are</span>
-<span class="sd">                closer than EPSILON distance.  Default is False</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        rectify : (boolean)</span>
+<span class="sd">            flag to fix the problems with point_data</span>
+<span class="sd">            by dropping additional points that are</span>
+<span class="sd">            closer than EPSILON distance.  Default is False</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this method will issue warnings for points that are closer</span>
-<span class="sd">            than EPSILON distance</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this method will issue warnings for points that are closer</span>
+<span class="sd">        than EPSILON distance</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">ptx_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">values</span>
         <span class="n">pty_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">values</span>
         <span class="n">ptnames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">point_data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">values</span>
@@ -564,49 +625,75 @@
                           <span class="n">var_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">forgive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; calculate kriging factors (weights) for a structured grid.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            spatial_reference : (flopy.utils.reference.SpatialReference)</span>
-<span class="sd">                a spatial reference that describes the orientation and</span>
-<span class="sd">                spatail projection of the the structured grid</span>
-<span class="sd">            zone_array : (numpy.ndarray)</span>
-<span class="sd">                an integer array of zones to use for kriging.  If not None,</span>
-<span class="sd">                then point_data must also contain a &quot;zone&quot; column.  point_data</span>
-<span class="sd">                entries with a zone value not found in zone_array will be skipped.</span>
-<span class="sd">                If None, then all point_data will (potentially) be used for</span>
-<span class="sd">                interpolating each grid node. Default is None</span>
-<span class="sd">            minpts_interp : (int)</span>
-<span class="sd">                minimum number of point_data entires to use for interpolation at</span>
-<span class="sd">                a given grid node.  grid nodes with less than minpts_interp</span>
-<span class="sd">                point_data found will be skipped (assigned np.NaN).  Defaut is 1</span>
-<span class="sd">            maxpts_interp : (int)</span>
-<span class="sd">                maximum number of point_data entries to use for interpolation at</span>
-<span class="sd">                a given grid node.  A larger maxpts_interp will yield &quot;smoother&quot;</span>
-<span class="sd">                interplation, but using a large maxpts_interp will slow the</span>
-<span class="sd">                (already) slow kriging solution process and may lead to</span>
-<span class="sd">                memory errors. Default is 20.</span>
-<span class="sd">            search_radius : (float)</span>
-<span class="sd">                the size of the region around a given grid node to search for</span>
-<span class="sd">                point_data entries. Default is 1.0e+10</span>
-<span class="sd">            verbose : (boolean)</span>
-<span class="sd">                a flag to  echo process to stdout during the interpolatino process.</span>
-<span class="sd">                Default is False</span>
-<span class="sd">            var_filename : (str)</span>
-<span class="sd">                a filename to save the kriging variance for each interpolated grid node.</span>
-<span class="sd">                Default is None.</span>
-<span class="sd">            forgive : (boolean)</span>
-<span class="sd">                flag to continue if inversion of the kriging matrix failes at one or more</span>
-<span class="sd">                grid nodes.  Inversion usually fails if the kriging matrix is singular,</span>
-<span class="sd">                resulting from point_data entries closer than EPSILON distance.  If True,</span>
-<span class="sd">                warnings are issued for each failed inversion.  If False, an exception</span>
-<span class="sd">                is raised for failed matrix inversion.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        spatial_reference : (flopy.utils.reference.SpatialReference)</span>
+<span class="sd">            a spatial reference that describes the orientation and</span>
+<span class="sd">            spatail projection of the the structured grid</span>
+<span class="sd">        zone_array : (numpy.ndarray)</span>
+<span class="sd">            an integer array of zones to use for kriging.  If not None,</span>
+<span class="sd">            then point_data must also contain a &quot;zone&quot; column.  point_data</span>
+<span class="sd">            entries with a zone value not found in zone_array will be skipped.</span>
+<span class="sd">            If None, then all point_data will (potentially) be used for</span>
+<span class="sd">            interpolating each grid node. Default is None</span>
+<span class="sd">        minpts_interp : (int)</span>
+<span class="sd">            minimum number of point_data entires to use for interpolation at</span>
+<span class="sd">            a given grid node.  grid nodes with less than minpts_interp</span>
+<span class="sd">            point_data found will be skipped (assigned np.NaN).  Defaut is 1</span>
+<span class="sd">        maxpts_interp : (int)</span>
+<span class="sd">            maximum number of point_data entries to use for interpolation at</span>
+<span class="sd">            a given grid node.  A larger maxpts_interp will yield &quot;smoother&quot;</span>
+<span class="sd">            interplation, but using a large maxpts_interp will slow the</span>
+<span class="sd">            (already) slow kriging solution process and may lead to</span>
+<span class="sd">            memory errors. Default is 20.</span>
+<span class="sd">        search_radius : (float)</span>
+<span class="sd">            the size of the region around a given grid node to search for</span>
+<span class="sd">            point_data entries. Default is 1.0e+10</span>
+<span class="sd">        verbose : (boolean)</span>
+<span class="sd">            a flag to  echo process to stdout during the interpolatino process.</span>
+<span class="sd">            Default is False</span>
+<span class="sd">        var_filename : (str)</span>
+<span class="sd">            a filename to save the kriging variance for each interpolated grid node.</span>
+<span class="sd">            Default is None.</span>
+<span class="sd">        forgive : (boolean)</span>
+<span class="sd">            flag to continue if inversion of the kriging matrix failes at one or more</span>
+<span class="sd">            grid nodes.  Inversion usually fails if the kriging matrix is singular,</span>
+<span class="sd">            resulting from point_data entries closer than EPSILON distance.  If True,</span>
+<span class="sd">            warnings are issued for each failed inversion.  If False, an exception</span>
+<span class="sd">            is raised for failed matrix inversion.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            df : pandas.DataFrame</span>
-<span class="sd">                a dataframe with information summarizing the ordinary kriging</span>
-<span class="sd">                process for each grid node</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with information summarizing the ordinary kriging</span>
+<span class="sd">            process for each grid node</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this method calls OrdinaryKrige.calc_factors()</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this method calls OrdinaryKrige.calc_factors()</span>
+
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import flopy``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;gs = pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;ok = pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;m = flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;df = ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;                          var_filename=&quot;ok_var.dat&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)``</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -674,39 +761,42 @@
         <span class="sd">&quot;&quot;&quot; calculate ordinary kriging factors (weights) for the points</span>
 <span class="sd">        represented by arguments x and y</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            x : (iterable of floats)</span>
-<span class="sd">                x-coordinates to calculate kriging factors for</span>
-<span class="sd">            y : (iterable of floats)</span>
-<span class="sd">                y-coordinates to calculate kriging factors for</span>
-<span class="sd">            minpts_interp : (int)</span>
-<span class="sd">                minimum number of point_data entires to use for interpolation at</span>
-<span class="sd">                a given x,y interplation point.  interpolation points with less</span>
-<span class="sd">                than minpts_interp point_data found will be skipped</span>
-<span class="sd">                (assigned np.NaN).  Defaut is 1</span>
-<span class="sd">            maxpts_interp : (int)</span>
-<span class="sd">                maximum number of point_data entries to use for interpolation at</span>
-<span class="sd">                a given x,y interpolation point.  A larger maxpts_interp will</span>
-<span class="sd">                yield &quot;smoother&quot; interplation, but using a large maxpts_interp</span>
-<span class="sd">                will slow the (already) slow kriging solution process and may</span>
-<span class="sd">                lead to memory errors. Default is 20.</span>
-<span class="sd">            search_radius : (float)</span>
-<span class="sd">                the size of the region around a given x,y interpolation point to search for</span>
-<span class="sd">                point_data entries. Default is 1.0e+10</span>
-<span class="sd">            verbose : (boolean)</span>
-<span class="sd">                a flag to  echo process to stdout during the interpolatino process.</span>
-<span class="sd">                Default is False</span>
-<span class="sd">            forgive : (boolean)</span>
-<span class="sd">                flag to continue if inversion of the kriging matrix failes at one or more</span>
-<span class="sd">                interpolation points.  Inversion usually fails if the kriging matrix is singular,</span>
-<span class="sd">                resulting from point_data entries closer than EPSILON distance.  If True,</span>
-<span class="sd">                warnings are issued for each failed inversion.  If False, an exception</span>
-<span class="sd">                is raised for failed matrix inversion.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : (iterable of floats)</span>
+<span class="sd">            x-coordinates to calculate kriging factors for</span>
+<span class="sd">        y : (iterable of floats)</span>
+<span class="sd">            y-coordinates to calculate kriging factors for</span>
+<span class="sd">        minpts_interp : (int)</span>
+<span class="sd">            minimum number of point_data entires to use for interpolation at</span>
+<span class="sd">            a given x,y interplation point.  interpolation points with less</span>
+<span class="sd">            than minpts_interp point_data found will be skipped</span>
+<span class="sd">            (assigned np.NaN).  Defaut is 1</span>
+<span class="sd">        maxpts_interp : (int)</span>
+<span class="sd">            maximum number of point_data entries to use for interpolation at</span>
+<span class="sd">            a given x,y interpolation point.  A larger maxpts_interp will</span>
+<span class="sd">            yield &quot;smoother&quot; interplation, but using a large maxpts_interp</span>
+<span class="sd">            will slow the (already) slow kriging solution process and may</span>
+<span class="sd">            lead to memory errors. Default is 20.</span>
+<span class="sd">        search_radius : (float)</span>
+<span class="sd">            the size of the region around a given x,y interpolation point to search for</span>
+<span class="sd">            point_data entries. Default is 1.0e+10</span>
+<span class="sd">        verbose : (boolean)</span>
+<span class="sd">            a flag to  echo process to stdout during the interpolatino process.</span>
+<span class="sd">            Default is False</span>
+<span class="sd">        forgive : (boolean)</span>
+<span class="sd">            flag to continue if inversion of the kriging matrix failes at one or more</span>
+<span class="sd">            interpolation points.  Inversion usually fails if the kriging matrix is singular,</span>
+<span class="sd">            resulting from point_data entries closer than EPSILON distance.  If True,</span>
+<span class="sd">            warnings are issued for each failed inversion.  If False, an exception</span>
+<span class="sd">            is raised for failed matrix inversion.</span>
 
-<span class="sd">         Returns:</span>
-<span class="sd">            df : pandas.DataFrame</span>
-<span class="sd">                a dataframe with information summarizing the ordinary kriging</span>
-<span class="sd">                process for each interpolation points</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with information summarizing the ordinary kriging</span>
+<span class="sd">            process for each interpolation points</span>
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -849,6 +939,8 @@
         <span class="sd">&quot;&quot;&quot; write a grid-based PEST-style factors file.  This file can be used with</span>
 <span class="sd">        the fac2real() method to write an interpolated structured array</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
 <span class="sd">        filename : (str)</span>
 <span class="sd">            factor filename</span>
 <span class="sd">        points_file : (str)</span>
@@ -858,8 +950,9 @@
 <span class="sd">            zone filename to add to the header of the factors file.</span>
 <span class="sd">            Not used by fac2real() method.  Default is &quot;zone.junk&quot;</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            this method should be called after OrdinaryKirge.calc_factors_grid()</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this method should be called after OrdinaryKirge.calc_factors_grid()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interp_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -888,25 +981,29 @@
 <div class="viewcode-block" id="Vario2d"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d">[docs]</a><span class="k">class</span> <span class="nc">Vario2d</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;base class for 2-D variograms.</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        contribution : (float)</span>
-<span class="sd">            sill of the variogram</span>
-<span class="sd">        a : (float)</span>
-<span class="sd">            (practical) range of correlation</span>
-<span class="sd">        anisotropy : (float)</span>
-<span class="sd">            Anisotropy ratio. Default is 1.0</span>
-<span class="sd">        bearing : (float)</span>
-<span class="sd">            angle in degrees East of North corresponding to anisotropy ellipse.</span>
-<span class="sd">            Default is 0.0</span>
-<span class="sd">        name : (str)</span>
-<span class="sd">            name of the variogram.  Default is &quot;var1&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contribution : (float)</span>
+<span class="sd">        sill of the variogram</span>
+<span class="sd">    a : (float)</span>
+<span class="sd">        (practical) range of correlation</span>
+<span class="sd">    anisotropy : (float)</span>
+<span class="sd">        Anisotropy ratio. Default is 1.0</span>
+<span class="sd">    bearing : (float)</span>
+<span class="sd">        angle in degrees East of North corresponding to anisotropy ellipse.</span>
+<span class="sd">        Default is 0.0</span>
+<span class="sd">    name : (str)</span>
+<span class="sd">        name of the variogram.  Default is &quot;var1&quot;</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Vario2d : Vario2d</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Vario2d : Vario2d</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        This base class should not be instantiated directly as it does not implement</span>
-<span class="sd">        an h_function() method.</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This base class should not be instantiated directly as it does not implement</span>
+<span class="sd">    an h_function() method.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
@@ -923,9 +1020,10 @@
 <div class="viewcode-block" id="Vario2d.to_struct_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.to_struct_file">[docs]</a>    <span class="k">def</span> <span class="nf">to_struct_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; write the Vario2d to a PEST-style structure file</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            f : (str or file handle)</span>
-<span class="sd">                item to write to</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        f : (str or file handle)</span>
+<span class="sd">            item to write to</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -941,9 +1039,10 @@
     <span class="k">def</span> <span class="nf">bearing_rads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the bearing of the Vario2d in radians</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            bearing_rads : float</span>
-<span class="sd">                the Vario2d bearing in radians</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bearing_rads : float</span>
+<span class="sd">            the Vario2d bearing in radians</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span> <span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">90.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bearing</span><span class="p">)</span>
 
@@ -951,9 +1050,10 @@
     <span class="k">def</span> <span class="nf">rotation_coefs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the rotation coefficents in radians</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            rotation_coefs : list</span>
-<span class="sd">                the rotation coefficients implied by Vario2d.bearing</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        rotation_coefs : list</span>
+<span class="sd">            the rotation coefficients implied by Vario2d.bearing</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -965,13 +1065,15 @@
 <div class="viewcode-block" id="Vario2d.inv_h"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.inv_h">[docs]</a>    <span class="k">def</span> <span class="nf">inv_h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; the inverse of the h_function.  Used for plotting</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            h : (float)</span>
-<span class="sd">                the value of h_function to invert</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        h : (float)</span>
+<span class="sd">            the value of h_function to invert</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            inv_h : float</span>
-<span class="sd">                the inverse of h</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        inv_h : float</span>
+<span class="sd">            the inverse of h</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contribution</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_h_function</span><span class="p">(</span><span class="n">h</span><span class="p">)</span></div>
@@ -979,17 +1081,20 @@
 <div class="viewcode-block" id="Vario2d.plot"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get a cheap plot of the Vario2d</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            **kwargs : (dict)</span>
-<span class="sd">                keyword arguments to use for plotting</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs : (dict)</span>
+<span class="sd">            keyword arguments to use for plotting</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            ax : matplotlib.pyplot.axis</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : matplotlib.pyplot.axis</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            optional arguments in kwargs include</span>
-<span class="sd">            &quot;ax&quot; (existing matplotlib.pyplot.axis).  Other</span>
-<span class="sd">            kwargs are passed to matplotlib.pyplot.plot()</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        optional arguments in kwargs include</span>
+<span class="sd">        &quot;ax&quot; (existing matplotlib.pyplot.axis).  Other</span>
+<span class="sd">        kwargs are passed to matplotlib.pyplot.plot()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1004,21 +1109,24 @@
 <div class="viewcode-block" id="Vario2d.covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;build a pyemu.Cov instance implied by Vario2d</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            x : (iterable of floats)</span>
-<span class="sd">                x-coordinate locations</span>
-<span class="sd">            y : (iterable of floats)</span>
-<span class="sd">                y-coordinate locations</span>
-<span class="sd">            names : (iterable of str)</span>
-<span class="sd">                names of locations. If None, cov must not be None</span>
-<span class="sd">            cov : (pyemu.Cov)</span>
-<span class="sd">                an existing Cov instance.  Vario2d contribution is added to cov</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : (iterable of floats)</span>
+<span class="sd">            x-coordinate locations</span>
+<span class="sd">        y : (iterable of floats)</span>
+<span class="sd">            y-coordinate locations</span>
+<span class="sd">        names : (iterable of str)</span>
+<span class="sd">            names of locations. If None, cov must not be None</span>
+<span class="sd">        cov : (pyemu.Cov)</span>
+<span class="sd">            an existing Cov instance.  Vario2d contribution is added to cov</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : pyemu.Cov</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : pyemu.Cov</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            either names or cov must not be None.</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        either names or cov must not be None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -1062,12 +1170,15 @@
         <span class="sd">&quot;&quot;&quot; private method to rotate points</span>
 <span class="sd">        according to Vario2d.bearing and Vario2d.anisotropy</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
 <span class="sd">        dx : (float or numpy.ndarray)</span>
 <span class="sd">            x-coordinates to rotate</span>
 <span class="sd">        dy : (float or numpy.ndarray)</span>
 <span class="sd">            y-coordinates to rotate</span>
 
-<span class="sd">        Returns:</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
 <span class="sd">            dxx : (float or numpy.ndarray)</span>
 <span class="sd">                rotated x-coordinates</span>
 <span class="sd">            dyy : (float or numpy.ndarray)</span>
@@ -1088,23 +1199,26 @@
         <span class="sd">&quot;&quot;&quot; get the covariance between base point x0,y0 and</span>
 <span class="sd">        other points xother,yother implied by Vario2d</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            x0 : (float)</span>
-<span class="sd">                x-coordinate of base point</span>
-<span class="sd">            y0 : (float)</span>
-<span class="sd">                y-coordinate of base point</span>
-<span class="sd">            xother : (float or numpy.ndarray)</span>
-<span class="sd">                x-coordinates of other points</span>
-<span class="sd">            yother : (float or numpy.ndarray)</span>
-<span class="sd">                y-coordinates of other points</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x0 : (float)</span>
+<span class="sd">            x-coordinate of base point</span>
+<span class="sd">        y0 : (float)</span>
+<span class="sd">            y-coordinate of base point</span>
+<span class="sd">        xother : (float or numpy.ndarray)</span>
+<span class="sd">            x-coordinates of other points</span>
+<span class="sd">        yother : (float or numpy.ndarray)</span>
+<span class="sd">            y-coordinates of other points</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : numpy.ndarray</span>
-<span class="sd">                covariance between base point and other points implied by</span>
-<span class="sd">                Vario2d.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : numpy.ndarray</span>
+<span class="sd">            covariance between base point and other points implied by</span>
+<span class="sd">            Vario2d.</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            len(cov) = len(xother) = len(yother)</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        len(cov) = len(xother) = len(yother)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dx</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">-</span> <span class="n">xother</span>
@@ -1116,15 +1230,17 @@
 <div class="viewcode-block" id="Vario2d.covariance"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance">[docs]</a>    <span class="k">def</span> <span class="nf">covariance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pt0</span><span class="p">,</span><span class="n">pt1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the covarince between two points implied by Vario2d</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            pt0 : (iterable of len 2)</span>
-<span class="sd">                first point x and y</span>
-<span class="sd">            pt1 : (iterable of len 2)</span>
-<span class="sd">                second point x and y</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pt0 : (iterable of len 2)</span>
+<span class="sd">            first point x and y</span>
+<span class="sd">        pt1 : (iterable of len 2)</span>
+<span class="sd">            second point x and y</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            cov : float</span>
-<span class="sd">                covariance between pt0 and pt1</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        cov : float</span>
+<span class="sd">            covariance between pt0 and pt1</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1137,8 +1253,9 @@
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the str representation of Vario2d</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            str : str</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str : str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;name:</span><span class="si">{0}</span><span class="s2">,contribution:</span><span class="si">{1}</span><span class="s2">,a:</span><span class="si">{2}</span><span class="s2">,anisotropy:</span><span class="si">{3}</span><span class="s2">,bearing:</span><span class="si">{4}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span>\
             <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">contribution</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>\
@@ -1148,38 +1265,48 @@
 <div class="viewcode-block" id="ExpVario"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.ExpVario">[docs]</a><span class="k">class</span> <span class="nc">ExpVario</span><span class="p">(</span><span class="n">Vario2d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Exponetial variogram derived type</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        contribution : (float)</span>
-<span class="sd">            sill of the variogram</span>
-<span class="sd">        a : (float)</span>
-<span class="sd">            (practical) range of correlation</span>
-<span class="sd">        anisotropy : (float)</span>
-<span class="sd">            Anisotropy ratio. Default is 1.0</span>
-<span class="sd">        bearing : (float)</span>
-<span class="sd">            angle in degrees East of North corresponding to anisotropy ellipse.</span>
-<span class="sd">            Default is 0.0</span>
-<span class="sd">        name : (str)</span>
-<span class="sd">            name of the variogram.  Default is &quot;var1&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contribution : (float)</span>
+<span class="sd">        sill of the variogram</span>
+<span class="sd">    a : (float)</span>
+<span class="sd">        (practical) range of correlation</span>
+<span class="sd">    anisotropy : (float)</span>
+<span class="sd">        Anisotropy ratio. Default is 1.0</span>
+<span class="sd">    bearing : (float)</span>
+<span class="sd">        angle in degrees East of North corresponding to anisotropy ellipse.</span>
+<span class="sd">        Default is 0.0</span>
+<span class="sd">    name : (str)</span>
+<span class="sd">        name of the variogram.  Default is &quot;var1&quot;</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        ExpVario : ExpVario</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ExpVario : ExpVario</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ExpVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExpVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
                                       <span class="n">bearing</span><span class="o">=</span><span class="n">bearing</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vartype</span> <span class="o">=</span> <span class="mi">2</span>
 
     <span class="k">def</span> <span class="nf">_h_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; private method exponential variogram &quot;h&quot; function</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            h : (float or numpy.ndarray)</span>
-<span class="sd">                distance(s)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        h : (float or numpy.ndarray)</span>
+<span class="sd">            distance(s)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            h_function : float or numpy.ndarray</span>
-<span class="sd">                the value of the &quot;h&quot; function implied by the ExpVario</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h_function : float or numpy.ndarray</span>
+<span class="sd">            the value of the &quot;h&quot; function implied by the ExpVario</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contribution</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span></div>
@@ -1187,83 +1314,108 @@
 <div class="viewcode-block" id="GauVario"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GauVario">[docs]</a><span class="k">class</span> <span class="nc">GauVario</span><span class="p">(</span><span class="n">Vario2d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gaussian variogram derived type</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        contribution : (float)</span>
-<span class="sd">            sill of the variogram</span>
-<span class="sd">        a : (float)</span>
-<span class="sd">            (practical) range of correlation</span>
-<span class="sd">        anisotropy : (float)</span>
-<span class="sd">            Anisotropy ratio. Default is 1.0</span>
-<span class="sd">        bearing : (float)</span>
-<span class="sd">            angle in degrees East of North corresponding to anisotropy ellipse.</span>
-<span class="sd">            Default is 0.0</span>
-<span class="sd">        name : (str)</span>
-<span class="sd">            name of the variogram.  Default is &quot;var1&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contribution : (float)</span>
+<span class="sd">        sill of the variogram</span>
+<span class="sd">    a : (float)</span>
+<span class="sd">        (practical) range of correlation</span>
+<span class="sd">    anisotropy : (float)</span>
+<span class="sd">        Anisotropy ratio. Default is 1.0</span>
+<span class="sd">    bearing : (float)</span>
+<span class="sd">        angle in degrees East of North corresponding to anisotropy ellipse.</span>
+<span class="sd">        Default is 0.0</span>
+<span class="sd">    name : (str)</span>
+<span class="sd">        name of the variogram.  Default is &quot;var1&quot;</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        GauVario : GauVario</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    GauVario : GauVario</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        the Gaussian variogram can be unstable (not invertible) for long ranges.</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    the Gaussian variogram can be unstable (not invertible) for long ranges.</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.GauVario(a=1000,contribution=1.0)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GauVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GauVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
                                       <span class="n">bearing</span><span class="o">=</span><span class="n">bearing</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vartype</span> <span class="o">=</span> <span class="mi">3</span>
 
     <span class="k">def</span> <span class="nf">_h_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; private method for the gaussian variogram &quot;h&quot; function</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            h : (float or numpy.ndarray)</span>
-<span class="sd">                distance(s)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        h : (float or numpy.ndarray)</span>
+<span class="sd">            distance(s)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            h_function : float or numpy.ndarray</span>
-<span class="sd">                the value of the &quot;h&quot; function implied by the GauVario</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h_function : float or numpy.ndarray</span>
+<span class="sd">            the value of the &quot;h&quot; function implied by the GauVario</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">hh</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">h</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contribution</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">hh</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SphVario"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.SphVario">[docs]</a><span class="k">class</span> <span class="nc">SphVario</span><span class="p">(</span><span class="n">Vario2d</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Spherical variogram derived type</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        contribution : (float)</span>
-<span class="sd">            sill of the variogram</span>
-<span class="sd">        a : (float)</span>
-<span class="sd">            (practical) range of correlation</span>
-<span class="sd">        anisotropy : (float)</span>
-<span class="sd">            Anisotropy ratio. Default is 1.0</span>
-<span class="sd">        bearing : (float)</span>
-<span class="sd">            angle in degrees East of North corresponding to anisotropy ellipse.</span>
-<span class="sd">            Default is 0.0</span>
-<span class="sd">        name : (str)</span>
-<span class="sd">            name of the variogram.  Default is &quot;var1&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    contribution : (float)</span>
+<span class="sd">        sill of the variogram</span>
+<span class="sd">    a : (float)</span>
+<span class="sd">        (practical) range of correlation</span>
+<span class="sd">    anisotropy : (float)</span>
+<span class="sd">        Anisotropy ratio. Default is 1.0</span>
+<span class="sd">    bearing : (float)</span>
+<span class="sd">        angle in degrees East of North corresponding to anisotropy ellipse.</span>
+<span class="sd">        Default is 0.0</span>
+<span class="sd">    name : (str)</span>
+<span class="sd">        name of the variogram.  Default is &quot;var1&quot;</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        SphVario : SphVario</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    SphVario : SphVario</span>
 
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;v = pyemu.utils.geostats.SphVario(a=1000,contribution=1.0)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">bearing</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;var1&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SphVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SphVario</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">contribution</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">anisotropy</span><span class="o">=</span><span class="n">anisotropy</span><span class="p">,</span>
                                       <span class="n">bearing</span><span class="o">=</span><span class="n">bearing</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vartype</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">_h_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; private method for the spherical variogram &quot;h&quot; function</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            h : (float or numpy.ndarray)</span>
-<span class="sd">                distance(s)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        h : (float or numpy.ndarray)</span>
+<span class="sd">            distance(s)</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            h_function : float or numpy.ndarray</span>
-<span class="sd">                the value of the &quot;h&quot; function implied by the SphVario</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h_function : float or numpy.ndarray</span>
+<span class="sd">            the value of the &quot;h&quot; function implied by the SphVario</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">hh</span> <span class="o">=</span> <span class="n">h</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span>
         <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">contribution</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">hh</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.5</span> <span class="o">-</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">hh</span> <span class="o">*</span> <span class="n">hh</span><span class="p">))))</span>
         <span class="n">h</span><span class="p">[</span><span class="n">hh</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -1287,18 +1439,29 @@
 <div class="viewcode-block" id="read_struct_file"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.read_struct_file">[docs]</a><span class="k">def</span> <span class="nf">read_struct_file</span><span class="p">(</span><span class="n">struct_file</span><span class="p">,</span><span class="n">return_type</span><span class="o">=</span><span class="n">GeoStruct</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;read an existing PEST-type structure file into a GeoStruct instance</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        struct_file : (str)</span>
-<span class="sd">            existing pest-type structure file</span>
-<span class="sd">        return_type :  (object)</span>
-<span class="sd">            the instance type to return.  Default is GeoStruct</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    struct_file : (str)</span>
+<span class="sd">        existing pest-type structure file</span>
+<span class="sd">    return_type :  (object)</span>
+<span class="sd">        the instance type to return.  Default is GeoStruct</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        GeoStruct : list or GeoStruct</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    GeoStruct : list or GeoStruct</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        if only on structure is listed in struct_file, then return type</span>
-<span class="sd">        is GeoStruct.  Otherwise, return type is a list of GeoStruct</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    if only on structure is listed in struct_file, then return type</span>
+<span class="sd">    is GeoStruct.  Otherwise, return type is a list of GeoStruct</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.reads_struct_file(&quot;struct.dat&quot;)``</span>
+
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">VARTYPE</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="n">SphVario</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="n">ExpVario</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="n">GauVario</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="kc">None</span><span class="p">}</span>
@@ -1348,14 +1511,18 @@
 <span class="k">def</span> <span class="nf">_read_variogram</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function to instantiate a Vario2d from a PEST-style structure file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">            f : (file handle)</span>
-<span class="sd">                file handle opened for reading</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : (file handle)</span>
+<span class="sd">        file handle opened for reading</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        Vario2d : Vario2d</span>
-<span class="sd">            Vario2d derived type</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Vario2d : Vario2d</span>
+<span class="sd">        Vario2d derived type</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">vartype</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">bearing</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -1386,19 +1553,22 @@
 <span class="k">def</span> <span class="nf">_read_structure_attributes</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; function to read information from a PEST-style structure file</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        f : (file handle)</span>
-<span class="sd">            file handle open for reading</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : (file handle)</span>
+<span class="sd">        file handle open for reading</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        nugget : float</span>
-<span class="sd">            the GeoStruct nugget</span>
-<span class="sd">        transform : str</span>
-<span class="sd">            the GeoStruct transformation</span>
-<span class="sd">        variogram_info : dict</span>
-<span class="sd">            dictionary of structure-level variogram information</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nugget : float</span>
+<span class="sd">        the GeoStruct nugget</span>
+<span class="sd">    transform : str</span>
+<span class="sd">        the GeoStruct transformation</span>
+<span class="sd">    variogram_info : dict</span>
+<span class="sd">        dictionary of structure-level variogram information</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">variogram_info</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">while</span> <span class="s2">&quot;end structure&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
@@ -1429,14 +1599,23 @@
     <span class="sd">&quot;&quot;&quot; function to read an SGEMS-type variogram XML file into</span>
 <span class="sd">    a GeoStruct</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        xml_file : (str)</span>
-<span class="sd">            SGEMS variogram XML file</span>
-<span class="sd">        return_type :  (object)</span>
-<span class="sd">            the instance type to return.  Default is GeoStruct</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    xml_file : (str)</span>
+<span class="sd">        SGEMS variogram XML file</span>
+<span class="sd">    return_type :  (object)</span>
+<span class="sd">        the instance type to return.  Default is GeoStruct</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        GeoStruct : GeoStruct</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    GeoStruct : GeoStruct</span>
+
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;gs = pyemu.utils.geostats.read_sgems_variogram_xml(&quot;sgems.xml&quot;)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -1506,29 +1685,37 @@
 <div class="viewcode-block" id="gslib_2_dataframe"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.gslib_2_dataframe">[docs]</a><span class="k">def</span> <span class="nf">gslib_2_dataframe</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">attr_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">x_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">y_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; function to read a GSLIB point data file into a pandas.DataFrame</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            GSLIB file</span>
-<span class="sd">        attr_name : (str)</span>
-<span class="sd">            the column name in the dataframe for the attribute.  If None, GSLIB file</span>
-<span class="sd">            can have only 3 columns.  attr_name must be in the GSLIB file header</span>
-<span class="sd">        x_idx : (int)</span>
-<span class="sd">            the index of the x-coordinate information in the GSLIB file. Default is</span>
-<span class="sd">            0 (first column)</span>
-<span class="sd">        y_idx : (int)</span>
-<span class="sd">            the index of the y-coordinate information i the GSLIB file.</span>
-<span class="sd">            Default is 1 (second column)</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : (str)</span>
+<span class="sd">        GSLIB file</span>
+<span class="sd">    attr_name : (str)</span>
+<span class="sd">        the column name in the dataframe for the attribute.  If None, GSLIB file</span>
+<span class="sd">        can have only 3 columns.  attr_name must be in the GSLIB file header</span>
+<span class="sd">    x_idx : (int)</span>
+<span class="sd">        the index of the x-coordinate information in the GSLIB file. Default is</span>
+<span class="sd">        0 (first column)</span>
+<span class="sd">    y_idx : (int)</span>
+<span class="sd">        the index of the y-coordinate information in the GSLIB file.</span>
+<span class="sd">        Default is 1 (second column)</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
 
-<span class="sd">    Raises:</span>
-<span class="sd">        exception if attr_name is None and GSLIB file has more than 3 columns</span>
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    exception if attr_name is None and GSLIB file has more than 3 columns</span>
 
-<span class="sd">    Note:</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    assigns generic point names (&quot;pt0, pt1, etc)</span>
 
-<span class="sd">        assigns generic point names (&quot;pt0, pt1, etc)</span>
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
 
+<span class="sd">    ``&gt;&gt;&gt;df = pyemu.utiils.geostats.gslib_2_dataframe(&quot;prop.gslib&quot;,attr_name=&quot;hk&quot;)``</span>
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1569,15 +1756,19 @@
     <span class="sd">&quot;&quot;&quot; read an SGEM experimental variogram into a sequence of</span>
 <span class="sd">    pandas.DataFrames</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        filename : (str)</span>
-<span class="sd">            an SGEMS experimental variogram XML file</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : (str)</span>
+<span class="sd">        an SGEMS experimental variogram XML file</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        dfs : list</span>
-<span class="sd">            a list of pandas.DataFrames of x, y, pairs for each</span>
-<span class="sd">            division in the experimental variogram</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dfs : list</span>
+<span class="sd">        a list of pandas.DataFrames of x, y, pairs for each</span>
+<span class="sd">        division in the experimental variogram</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="k">as</span> <span class="nn">etree</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -1600,6 +1791,7 @@
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">attrib</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="n">item</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;x&quot;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="s2">&quot;pairs&quot;</span><span class="p">:</span><span class="n">pairs</span><span class="p">})</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">y</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
         <span class="n">dfs</span><span class="p">[</span><span class="n">title</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
     <span class="k">return</span> <span class="n">dfs</span></div>
 
@@ -1610,30 +1802,40 @@
     <span class="sd">&quot;&quot;&quot;A python replication of the PEST fac2real utility for creating a</span>
 <span class="sd">    structure grid array from previously calculated kriging factors (weights)</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        pp_file : (str)</span>
-<span class="sd">            PEST-type pilot points file</span>
-<span class="sd">        factors_file : (str)</span>
-<span class="sd">            PEST-style factors file</span>
-<span class="sd">        out_file : (str)</span>
-<span class="sd">            filename of array to write.  If None, array is returned, else</span>
-<span class="sd">            value of out_file is returned.  Default is &quot;test.ref&quot;.</span>
-<span class="sd">        upper_lim : (float)</span>
-<span class="sd">            maximum interpolated value in the array.  Values greater than</span>
-<span class="sd">            upper_lim are set to fill_value</span>
-<span class="sd">        lower_lim : (float)</span>
-<span class="sd">            minimum interpolated value in the array.  Values less than lower_lim</span>
-<span class="sd">            are set to fill_value</span>
-<span class="sd">        fill_value : (float)</span>
-<span class="sd">            the value to assign array nodes that are not interpolated</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pp_file : (str)</span>
+<span class="sd">        PEST-type pilot points file</span>
+<span class="sd">    factors_file : (str)</span>
+<span class="sd">        PEST-style factors file</span>
+<span class="sd">    out_file : (str)</span>
+<span class="sd">        filename of array to write.  If None, array is returned, else</span>
+<span class="sd">        value of out_file is returned.  Default is &quot;test.ref&quot;.</span>
+<span class="sd">    upper_lim : (float)</span>
+<span class="sd">        maximum interpolated value in the array.  Values greater than</span>
+<span class="sd">        upper_lim are set to fill_value</span>
+<span class="sd">    lower_lim : (float)</span>
+<span class="sd">        minimum interpolated value in the array.  Values less than lower_lim</span>
+<span class="sd">        are set to fill_value</span>
+<span class="sd">    fill_value : (float)</span>
+<span class="sd">        the value to assign array nodes that are not interpolated</span>
 
 
-<span class="sd">    Returns:</span>
-<span class="sd">        arr : numpy.ndarray</span>
-<span class="sd">            if out_file is None</span>
-<span class="sd">        out_file : str</span>
-<span class="sd">            if out_file it not None</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    arr : numpy.ndarray</span>
+<span class="sd">        if out_file is None</span>
+<span class="sd">    out_file : str</span>
+<span class="sd">        if out_file it not None</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;pyemu.utils.geostats.fac2real(&quot;hkpp.dat&quot;,out_file=&quot;hk_layer_1.ref&quot;)``</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="n">pp_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pp_file</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pp_file</span><span class="p">)</span>
         <span class="c1"># pp_data = pd.read_csv(pp_file,delim_whitespace=True,header=None,</span>
@@ -1698,26 +1900,33 @@
         <span class="n">arr</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_sum</span>
     <span class="n">arr</span><span class="p">[</span><span class="n">arr</span><span class="o">&lt;</span><span class="n">lower_lim</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_lim</span>
     <span class="n">arr</span><span class="p">[</span><span class="n">arr</span><span class="o">&gt;</span><span class="n">upper_lim</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_lim</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">arr</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">pp_data</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">lower_lim</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">arr</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%15.6E</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">out_file</span>
     <span class="k">return</span> <span class="n">arr</span></div>
 
 <div class="viewcode-block" id="parse_factor_line"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.parse_factor_line">[docs]</a><span class="k">def</span> <span class="nf">parse_factor_line</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; function to parse a factor file line</span>
+    <span class="sd">&quot;&quot;&quot; function to parse a factor file line.  Used by fac2real()</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        line : (str)</span>
-<span class="sd">            a factor line from a factor file</span>
-<span class="sd">    Returns:</span>
-<span class="sd">        inode : int</span>
-<span class="sd">            the inode of the grid node</span>
-<span class="sd">        itrans : int</span>
-<span class="sd">            flag for transformation of the grid node</span>
-<span class="sd">        fac_data : dict</span>
-<span class="sd">            a dictionary of point number, factor</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    line : (str)</span>
+<span class="sd">        a factor line from a factor file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    inode : int</span>
+<span class="sd">        the inode of the grid node</span>
+<span class="sd">    itrans : int</span>
+<span class="sd">        flag for transformation of the grid node</span>
+<span class="sd">    fac_data : dict</span>
+<span class="sd">        a dictionary of point number, factor</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">inode</span><span class="p">,</span><span class="n">itrans</span><span class="p">,</span><span class="n">nfac</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">[:</span><span class="mi">3</span><span class="p">]]</span>
     <span class="n">fac_data</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">ifac</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">ifac</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">ifac</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="o">+</span><span class="n">nfac</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)}</span>
@@ -1757,11 +1966,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Jeremy White.
+      &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 

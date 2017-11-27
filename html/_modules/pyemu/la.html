@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyemu.la &#8212; pyEMU 1.0 documentation</title>
+    <title>pyemu.la &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -26,6 +26,7 @@
     <link rel="search" title="Search" href="../../search.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -55,45 +56,50 @@
 
 
 <div class="viewcode-block" id="LinearAnalysis"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.la.LinearAnalysis">[docs]</a><span class="k">class</span> <span class="nc">LinearAnalysis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; The super class for linear analysis.  Can be used directly, but</span>
-<span class="sd">        for prior uncertainty analyses only.  The derived types</span>
-<span class="sd">        (pyemu.Schur, pyemu.ErrVar, pyemu.MonteCarlo, pyemu.EnsembleSmoother)</span>
-<span class="sd">        are for different forms of posterior uncertainty analyses. This class</span>
-<span class="sd">        tries hard to not load items until they are needed; all arguments are optional</span>
+    <span class="sd">&quot;&quot;&quot;The super class for linear analysis.  Can be used directly, but</span>
+<span class="sd">    for prior uncertainty analyses only.  The derived types</span>
+<span class="sd">    (pyemu.Schur, pyemu.ErrVar, pyemu.MonteCarlo, pyemu.EnsembleSmoother)</span>
+<span class="sd">    are for different forms of posterior uncertainty analyses. This class</span>
+<span class="sd">    tries hard to not load items until they are needed; all arguments are</span>
+<span class="sd">    optional</span>
 
-<span class="sd">    Parameters:</span>
-<span class="sd">        jco : (varies)</span>
-<span class="sd">            something that can be cast or loaded into a pyemu.Jco.  Can be a</span>
-<span class="sd">            str for a filename or pyemu.Matrix/pyemu.Jco object.</span>
-<span class="sd">        pst : (varies)</span>
-<span class="sd">            something that can be cast into a pyemu.Pst.  Can be an str for a</span>
-<span class="sd">            filename or an existing pyemu.Pst.  If None, a pst filename is sought</span>
-<span class="sd">            with the same base name as the jco argument (if passed)</span>
-<span class="sd">        parcov : (varies)</span>
-<span class="sd">            prior parameter covariance matrix.  If str, a filename is assumed and</span>
-<span class="sd">            the prior parameter covariance matrix is loaded from a file using</span>
-<span class="sd">            the file extension.  If None, the prior parameter covariance matrix is</span>
-<span class="sd">            constructed from the parameter bounds in the control file represented</span>
-<span class="sd">            by the pst argument. Can also be a pyemu.Cov instance</span>
-<span class="sd">        obscov : (varies)</span>
-<span class="sd">            observation noise covariance matrix. If str, a filename is assumed and</span>
-<span class="sd">            the observation noise covariance matrix is loaded from a file using</span>
-<span class="sd">            the file extension.  If None, the observation noise covariance matrix is</span>
-<span class="sd">            constructed from the weights in the control file represented</span>
-<span class="sd">            by the pst argument. Can also be a pyemu.Cov instance</span>
-<span class="sd">        predictions : (varies)</span>
-<span class="sd">            prediction (aka forecast) sensitivity vectors.  If str, a filename</span>
-<span class="sd">            is assumed and predictions are loaded from a file using the file extension.</span>
-<span class="sd">            Can also be a pyemu.Matrix instance, a numpy.ndarray or a collection</span>
-<span class="sd">            of pyemu.Matrix or numpy.ndarray.</span>
-<span class="sd">        ref_var : (float)</span>
-<span class="sd">            reference variance</span>
-<span class="sd">        verbose : (either bool or string)</span>
-<span class="sd">            controls log file / screen output.  If str, a filename is assumed and</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    jco : (varies)</span>
+<span class="sd">        something that can be cast or loaded into a pyemu.Jco.  Can be a</span>
+<span class="sd">        str for a filename or pyemu.Matrix/pyemu.Jco object.</span>
+<span class="sd">    pst : (varies)</span>
+<span class="sd">        something that can be cast into a pyemu.Pst.  Can be an str for a</span>
+<span class="sd">        filename or an existing pyemu.Pst.  If None, a pst filename is sought</span>
+<span class="sd">        with the same base name as the jco argument (if passed)</span>
+<span class="sd">    parcov : (varies)</span>
+<span class="sd">        prior parameter covariance matrix.  If str, a filename is assumed and</span>
+<span class="sd">        the prior parameter covariance matrix is loaded from a file using</span>
+<span class="sd">        the file extension.  If None, the prior parameter covariance matrix is</span>
+<span class="sd">        constructed from the parameter bounds in the control file represented</span>
+<span class="sd">        by the pst argument. Can also be a pyemu.Cov instance</span>
+<span class="sd">    obscov : (varies)</span>
+<span class="sd">        observation noise covariance matrix. If str, a filename is assumed and</span>
+<span class="sd">        the observation noise covariance matrix is loaded from a file using</span>
+<span class="sd">        the file extension.  If None, the observation noise covariance matrix is</span>
+<span class="sd">        constructed from the weights in the control file represented</span>
+<span class="sd">        by the pst argument. Can also be a pyemu.Cov instance</span>
+<span class="sd">    predictions : (varies)</span>
+<span class="sd">        prediction (aka forecast) sensitivity vectors.  If str, a filename</span>
+<span class="sd">        is assumed and predictions are loaded from a file using the file extension.</span>
+<span class="sd">        Can also be a pyemu.Matrix instance, a numpy.ndarray or a collection</span>
+<span class="sd">        of pyemu.Matrix or numpy.ndarray.</span>
+<span class="sd">    ref_var : (float)</span>
+<span class="sd">        reference variance</span>
+<span class="sd">    verbose : (either bool or string)</span>
+<span class="sd">        controls log file / screen output.  If str, a filename is assumed and</span>
 <span class="sd">            and log file is written to verbose</span>
-<span class="sd">    Notes:</span>
-<span class="sd">        the class makes heavy use of property decorator to encapsulate</span>
-<span class="sd">        private attributes</span>
+<span class="sd">    </span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    the class makes heavy use of property decorator to encapsulate</span>
+<span class="sd">    private attributes</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jco</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parcov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">obscov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">predictions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ref_var</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -157,7 +163,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;pre-loading base components&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;unused kwargs in type &quot;</span> <span class="o">+</span>
-                             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span> <span class="o">+</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span>
                              <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unused kwargs&quot;</span> <span class="o">+</span>
                              <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
@@ -192,15 +198,19 @@
 <span class="sd">        Uses extension: &#39;jco&#39; or &#39;jcb&#39;: binary, &#39;mat&#39;,&#39;vec&#39; or &#39;cov&#39;: ASCII,</span>
 <span class="sd">        &#39;unc&#39;: pest uncertainty file.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            filename : (str)</span>
-<span class="sd">                the name of the file</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the name of the file</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            m : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        m : pyemu.Matrix</span>
 
-<span class="sd">        Raises:</span>
-<span class="sd">            exception for unrecognized extension</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        exception for unrecognized extension</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;LinearAnalysis.__fromfile(): &quot;</span> <span class="o">+</span>\
                                         <span class="s2">&quot;file not found:&quot;</span> <span class="o">+</span> <span class="n">filename</span>
@@ -503,9 +513,11 @@
     <span class="k">def</span> <span class="nf">forecast_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the forecast (aka prediction) names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">             list : list</span>
-<span class="sd">                list of forecast names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        forecast_names : list</span>
+<span class="sd">            list of forecast names</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">forecasts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
@@ -516,14 +528,18 @@
     <span class="k">def</span> <span class="nf">parcov</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the prior parameter covariance matrix attribute</span>
 
-<span class="sd">        Return:</span>
-<span class="sd">            parcov : pyemu.Cov</span>
-<span class="sd">                a reference to the parcov attribute</span>
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">        parcov : pyemu.Cov</span>
+<span class="sd">            a reference to the parcov attribute</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a reference</span>
-<span class="sd">            if LinearAnalysis.__parcov is not set, the dynamically load the</span>
-<span class="sd">            parcov attribute before returning</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a reference</span>
+<span class="sd">        </span>
+<span class="sd">        if LinearAnalysis.__parcov is not set, the dynamically load the</span>
+<span class="sd">        parcov attribute before returning</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__load_parcov</span><span class="p">()</span>
@@ -534,14 +550,17 @@
     <span class="k">def</span> <span class="nf">obscov</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the observation noise covariance matrix attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            obscov : pyemu.Cov</span>
-<span class="sd">                a reference to the obscov attribute</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obscov : pyemu.Cov</span>
+<span class="sd">            a reference to the obscov attribute</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a reference</span>
-<span class="sd">            if LinearAnalysis.__obscov is not set, the dynamically load the</span>
-<span class="sd">            obscov attribute before returning</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a reference</span>
+<span class="sd">        </span>
+<span class="sd">        if LinearAnalysis.__obscov is not set, the dynamically load the</span>
+<span class="sd">        obscov attribute before returning</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obscov</span><span class="p">:</span>
@@ -553,9 +572,11 @@
         <span class="sd">&quot;&quot;&quot; wrapper around pyemu.Pst.nnz_obs_names for listing non-zero</span>
 <span class="sd">        observation names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            nnz_obs_names : list</span>
-<span class="sd">                pyemu.Pst.nnz_obs_names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nnz_obs_names : list</span>
+<span class="sd">            pyemu.Pst.nnz_obs_names</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pst</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span>
@@ -566,9 +587,11 @@
         <span class="sd">&quot;&quot;&quot; wrapper around pyemu.Pst.adj_par_names for list adjustable parameter</span>
 <span class="sd">        names</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            adj_par_names : list</span>
-<span class="sd">                pyemu.Pst.adj_par_names</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adj_par_names : list</span>
+<span class="sd">            pyemu.Pst.adj_par_names</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pst</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span>
@@ -579,14 +602,18 @@
     <span class="k">def</span> <span class="nf">jco</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the jacobian matrix attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            jco : pyemu.Jco</span>
-<span class="sd">                the jacobian matrix attribute</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        jco : pyemu.Jco</span>
+<span class="sd">            the jacobian matrix attribute</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a reference</span>
-<span class="sd">            if LinearAnalysis.__jco is not set, the dynamically load the</span>
-<span class="sd">            jco attribute before returning</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a reference</span>
+<span class="sd">        </span>
+<span class="sd">        if LinearAnalysis.__jco is not set, the dynamically load the</span>
+<span class="sd">        jco attribute before returning</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__jco</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__load_jco</span><span class="p">()</span>
@@ -597,13 +624,16 @@
     <span class="k">def</span> <span class="nf">predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the predictions (aka forecasts) attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            predictions : pyemu.Matrix</span>
-<span class="sd">                a matrix of prediction sensitivity vectors (column wise)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        predictions : pyemu.Matrix</span>
+<span class="sd">            a matrix of prediction sensitivity vectors (column wise)</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a reference</span>
-<span class="sd">            if LinearAnalysis.__predictions is not set, the dynamically load the</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a reference</span>
+<span class="sd">        </span>
+<span class="sd">        if LinearAnalysis.__predictions is not set, the dynamically load the</span>
 <span class="sd">            predictions attribute before returning</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -615,9 +645,10 @@
     <span class="k">def</span> <span class="nf">predictions_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; property decorated prediction iterator</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            iterator : iterator</span>
-<span class="sd">                iterator on prediction sensitivity vectors (matrix)</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        iterator : iterator</span>
+<span class="sd">            iterator on prediction sensitivity vectors (matrix)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">forecast_names</span><span class="p">:</span>
@@ -639,13 +670,16 @@
     <span class="k">def</span> <span class="nf">pst</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the pyemu.Pst attribute</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pst : pyemu.Pst</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pst : pyemu.Pst</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            returns a references</span>
-<span class="sd">            If LinearAnalysis.__pst is None, then the pst attribute is</span>
-<span class="sd">            dynamically loaded before returning</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        returns a references</span>
+<span class="sd">        </span>
+<span class="sd">        If LinearAnalysis.__pst is None, then the pst attribute is</span>
+<span class="sd">        dynamically loaded before returning</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__pst</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst_arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;linear_analysis.pst: can&#39;t access self.pst:&quot;</span> <span class="o">+</span>
@@ -662,8 +696,9 @@
         <span class="sd">&quot;&quot;&quot;get the KL parcov scaling matrix attribute.  Create the attribute if</span>
 <span class="sd">        it has not yet been created</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            fehalf : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fehalf : pyemu.Matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fehalf</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
@@ -679,8 +714,9 @@
         <span class="sd">&quot;&quot;&quot;get the square root of the cofactor matrix attribute. Create the attribute if</span>
 <span class="sd">        it has not yet been created</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            qhalf : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        qhalf : pyemu.Matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__qhalf</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
@@ -695,8 +731,9 @@
         <span class="sd">&quot;&quot;&quot;get the half normal matrix attribute.  Create the attribute if</span>
 <span class="sd">        it has not yet been created</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            qhalfx : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        qhalfx : pyemu.Matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__qhalfx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -710,8 +747,9 @@
         <span class="sd">&quot;&quot;&quot;get the normal matrix attribute. Create the attribute if</span>
 <span class="sd">        it has not yet been created</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            xtqx : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        xtqx : pyemu.Matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__xtqx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -725,8 +763,10 @@
         <span class="sd">&quot;&quot;&quot; get the maximum likelihood parameter covariance matrix.</span>
 
 
-<span class="sd">        Returns:</span>
-<span class="sd">            pyemu.Matrix : pyemu.Matrix</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pyemu.Matrix : pyemu.Matrix</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span><span class="o">.</span><span class="n">inv</span>
 
@@ -735,8 +775,9 @@
         <span class="sd">&quot;&quot;&quot;the prior parameter covariance matrix.  Just a wrapper around</span>
 <span class="sd">        LinearAnalysis.parcov</span>
 
-<span class="sd">        Return:</span>
-<span class="sd">            prior_parameter : pyemu.Cov</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prior_parameter : pyemu.Cov</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov</span>
@@ -745,9 +786,10 @@
     <span class="k">def</span> <span class="nf">prior_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;thin wrapper for prior_prediction</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            prior_forecast : dict</span>
-<span class="sd">                a dictionary of forecast name, prior variance pairs</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prior_forecast : dict</span>
+<span class="sd">            a dictionary of forecast name, prior variance pairs</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_prediction</span>
@@ -756,9 +798,11 @@
     <span class="k">def</span> <span class="nf">mle_parameter_estimate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; get the maximum likelihood parameter estimate.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">             post_expt : pandas.Series</span>
-<span class="sd">                the maximum likelihood parameter estimates</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">         post_expt : pandas.Series</span>
+<span class="sd">            the maximum likelihood parameter estimates</span>
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">res</span>
         <span class="k">assert</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -786,9 +830,11 @@
     <span class="k">def</span> <span class="nf">prior_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get a dict of prior prediction variances</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            prior_prediction : (dict)</span>
-<span class="sd">                dictionary of prediction name, prior variance pairs</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        prior_prediction : dict</span>
+<span class="sd">            dictionary of prediction name, prior variance pairs</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prior_prediction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__prior_prediction</span>
@@ -809,11 +855,14 @@
 <div class="viewcode-block" id="LinearAnalysis.apply_karhunen_loeve_scaling"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.la.LinearAnalysis.apply_karhunen_loeve_scaling">[docs]</a>    <span class="k">def</span> <span class="nf">apply_karhunen_loeve_scaling</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;apply karhuene-loeve scaling to the jacobian matrix.</span>
 
-<span class="sd">            This scaling is not necessary for analyses using Schur&#39;s</span>
-<span class="sd">            complement, but can be very important for error variance</span>
-<span class="sd">            analyses.  This operation effectively transfers prior knowledge</span>
-<span class="sd">            specified in the parcov to the jacobian and reset parcov to the</span>
-<span class="sd">            identity matrix.</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        This scaling is not necessary for analyses using Schur&#39;s</span>
+<span class="sd">        complement, but can be very important for error variance</span>
+<span class="sd">        analyses.  This operation effectively transfers prior knowledge</span>
+<span class="sd">        specified in the parcov to the jacobian and reset parcov to the</span>
+<span class="sd">        identity matrix.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cnames</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">col_names</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__jco</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fehalf</span>
@@ -834,8 +883,9 @@
         <span class="sd">&quot;&quot;&quot; reset the LinearAnalysis.pst attribute</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">            arg : (str or matrix)</span>
-<span class="sd">                the value to assign to the pst attribute</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg : (str or matrix)</span>
+<span class="sd">            the value to assign to the pst attribute</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting pst&quot;</span><span class="p">)</span>
@@ -846,9 +896,10 @@
         <span class="sd">&quot;&quot;&quot;reset the parcov attribute to None</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">            arg : (str or matrix)</span>
-<span class="sd">                the value to assign to the parcov attribute.  If None,</span>
-<span class="sd">                the private __parcov attribute is cleared but not reset</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg : str or pyemu.Matrix</span>
+<span class="sd">            the value to assign to the parcov attribute.  If None,</span>
+<span class="sd">            the private __parcov attribute is cleared but not reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting parcov&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="kc">None</span>
@@ -860,9 +911,10 @@
         <span class="sd">&quot;&quot;&quot;reset the obscov attribute to None</span>
 
 <span class="sd">        Parameters</span>
-<span class="sd">            arg : (str or matrix)</span>
-<span class="sd">                the value to assign to the obscov attribute.  If None,</span>
-<span class="sd">                the private __obscov attribute is cleared but not reset</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arg : str or pyemu.Matrix</span>
+<span class="sd">            the value to assign to the obscov attribute.  If None,</span>
+<span class="sd">            the private __obscov attribute is cleared but not reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting obscov&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__obscov</span> <span class="o">=</span> <span class="kc">None</span>
@@ -896,19 +948,22 @@
 
 <div class="viewcode-block" id="LinearAnalysis.get"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.la.LinearAnalysis.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">par_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obs_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">astype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;method to get a new LinearAnalysis class using a</span>
-<span class="sd">             subset of parameters and/or observations</span>
+<span class="sd">        subset of parameters and/or observations</span>
 
-<span class="sd">         Parameters</span>
-<span class="sd">            par_names : list</span>
-<span class="sd">                par names for new object</span>
-<span class="sd">            obs_names : list</span>
-<span class="sd">                obs names for new object</span>
-<span class="sd">            astype : (either pyemu.Schur or pyemu.ErrVar type)</span>
-<span class="sd">                type to cast the new object.  If None, return type is</span>
-<span class="sd">                same as self</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        par_names : list</span>
+<span class="sd">            par names for new object</span>
+<span class="sd">        obs_names : list</span>
+<span class="sd">            obs names for new object</span>
+<span class="sd">        astype : pyemu.Schur or pyemu.ErrVar</span>
+<span class="sd">            type to cast the new object.  If None, return type is</span>
+<span class="sd">            same as self</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            new : LinearAnalysis</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        new : LinearAnalysis</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># make sure we aren&#39;t fooling with unwanted prior information</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
@@ -977,13 +1032,15 @@
 <span class="sd">        based on the phi components in res_file so that the total phi</span>
 <span class="sd">        is equal to the number of non-zero weights.</span>
 
-<span class="sd">        Parameters:</span>
-<span class="sd">            resfile : (str)</span>
-<span class="sd">                residual file to use.  If None, residual file with case name is</span>
-<span class="sd">                sought. default is None</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        resfile : str</span>
+<span class="sd">            residual file to use.  If None, residual file with case name is</span>
+<span class="sd">            sought. default is None</span>
 
-<span class="sd">        Note:</span>
-<span class="sd">            calls pyemu.Pst.adjust_weights_resfile()</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        calls pyemu.Pst.adjust_weights_resfile()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_resfile</span><span class="p">(</span><span class="n">resfile</span><span class="p">)</span>
@@ -994,8 +1051,10 @@
         <span class="sd">&quot;&quot;&quot; get a dataframe of composite scaled sensitivities.  Includes both</span>
 <span class="sd">        PEST-style and Hill-style.</span>
 
-<span class="sd">        Returns:</span>
-<span class="sd">            css : pandas.DataFrame</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        css : pandas.DataFrame</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
@@ -1042,11 +1101,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Jeremy White.
+      &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 
