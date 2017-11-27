@@ -27,6 +27,7 @@
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
@@ -41,12 +42,7 @@
   <h1>Source code for pyemu.smoother</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;this is a prototype ensemble smoother based on the LM-EnRML</span>
 <span class="sd">algorithm of Chen and Oliver 2013.  It requires the pest++ &quot;sweep&quot; utility</span>
-<span class="sd"> to propagate the ensemble forward.</span>
-
-<span class="sd"> TODO:</span>
-<span class="sd"> handle fixed and tied pars</span>
-<span class="sd"> handle &quot;bunk&quot; mod-sim equivs, like dry cells</span>
-
+<span class="sd">to propagate the ensemble forward.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -64,9 +60,8 @@
 <span class="kn">from</span> <span class="nn">.logger</span> <span class="k">import</span> <span class="n">Logger</span>
 
 
-
-<div class="viewcode-block" id="EnsembleSmoother"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother">[docs]</a><span class="k">class</span> <span class="nc">EnsembleSmoother</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;an implementation of the GLM iterative ensemble smoother</span>
+<div class="viewcode-block" id="EnsembleMethod"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleMethod">[docs]</a><span class="k">class</span> <span class="nc">EnsembleMethod</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Base class for ensemble-type methods.  Should not be instantiated directly</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -81,9 +76,6 @@
 <span class="sd">        num_slaves : int</span>
 <span class="sd">            number of slaves to use in (local machine) parallel evaluation of the parmaeter</span>
 <span class="sd">            ensemble.  If 0, serial evaluation is used.  Ignored if submit_file is not None</span>
-<span class="sd">        use_approx_prior : bool</span>
-<span class="sd">             a flag to use the MLE (approx) upgrade solution.  If True, a MAP</span>
-<span class="sd">             solution upgrade is used</span>
 <span class="sd">        submit_file : str</span>
 <span class="sd">            the name of a HTCondor submit file.  If not None, HTCondor is used to</span>
 <span class="sd">            evaluate the parameter ensemble in parallel by issuing condor_submit</span>
@@ -94,11 +86,6 @@
 <span class="sd">            path to a directory with a complete set of model files and PEST</span>
 <span class="sd">            interface files</span>
 
-<span class="sd">    Example</span>
-<span class="sd">    -------</span>
-<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
-
-<span class="sd">    ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">parcov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obscov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">use_approx_prior</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -117,7 +104,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">slave_dir</span> <span class="o">=</span> <span class="n">slave_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">submit_file</span> <span class="o">=</span> <span class="n">submit_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">use_approx_prior</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">use_approx_prior</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">paren_prefix</span> <span class="o">=</span> <span class="s2">&quot;.parensemble.</span><span class="si">{0:04d}</span><span class="s2">.csv&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">obsen_prefix</span> <span class="o">=</span> <span class="s2">&quot;.obsensemble.</span><span class="si">{0:04d}</span><span class="s2">.csv&quot;</span>
 
@@ -154,12 +140,7 @@
 
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="c1">#self.num_reals = 0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">half_obscov_diag</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">iter_num</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c1">#self.enforce_bounds = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raw_sweep_out</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
@@ -175,213 +156,14 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi&quot;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)},</span>\
                             <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-<div class="viewcode-block" id="EnsembleSmoother.initialize"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">init_lambda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span>
-                   <span class="n">parensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">restart_obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the iES process.  Depending on arguments, draws or loads</span>
-<span class="sd">        initial parameter observations ensembles and runs the initial parameter</span>
-<span class="sd">        ensemble</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">current_actual_phi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">phi_vector</span><span class="p">()</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">            num_reals : int</span>
-<span class="sd">                the number of realizations to draw.  Ignored if parensemble/obsensemble</span>
-<span class="sd">                are not None</span>
-<span class="sd">            init_lambda : float</span>
-<span class="sd">                the initial lambda to use.  During subsequent updates, the lambda is</span>
-<span class="sd">                updated according to upgrade success</span>
-<span class="sd">            enforce_bounds : str</span>
-<span class="sd">                how to enfore parameter bound transgression.  options are</span>
-<span class="sd">                reset, drop, or None</span>
-<span class="sd">            parensemble : pyemu.ParameterEnsemble or str</span>
-<span class="sd">                a parameter ensemble or filename to use as the initial</span>
-<span class="sd">                parameter ensemble.  If not None, then obsenemble must not be</span>
-<span class="sd">                None</span>
-<span class="sd">            obsensemble : pyemu.ObservationEnsemble or str</span>
-<span class="sd">                an observation ensemble or filename to use as the initial</span>
-<span class="sd">                observation ensemble.  If not None, then parensemble must</span>
-<span class="sd">                not be None</span>
-<span class="sd">            restart_obsensemble : pyemu.ObservationEnsemble or str</span>
-<span class="sd">                an observation ensemble or filename to use as an</span>
-<span class="sd">                evaluated observation ensemble.  If not None, this will skip the initial</span>
-<span class="sd">                parameter ensemble evaluation - user beware!</span>
+<div class="viewcode-block" id="EnsembleMethod.initialize"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleMethod.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;EnsembleMethod.initialize() must be implemented by the derived types&quot;</span><span class="p">)</span></div>
 
-<span class="sd">        Example</span>
-<span class="sd">        -------</span>
-<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
-
-<span class="sd">        ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
-
-<span class="sd">        ``&gt;&gt;&gt;es.initialize(num_reals=100)``</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        (re)initialize the process</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c1"># initialize the phi report csv</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">enforce_bounds</span> <span class="o">=</span> <span class="n">enforce_bounds</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span><span class="o">+</span><span class="s2">&quot;.iobj.csv&quot;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;iter_num,total_runs,lambda,min,max,mean,median,std,&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{0:010d}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                                    <span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reals</span><span class="p">)]))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">total_runs</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c1"># this matrix gets used a lot, so only calc once and store</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obscov_inv_sqrt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">)</span><span class="o">.</span><span class="n">inv</span><span class="o">.</span><span class="n">sqrt</span>
-
-        <span class="k">if</span> <span class="n">parensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">obsensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing with existing ensembles&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading parensemble from file&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">lraise</span><span class="p">(</span><span class="s2">&quot;can not find parensemble file: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                                       <span class="nb">format</span><span class="p">(</span><span class="n">parensemble</span><span class="p">))</span>
-                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="c1">#df.index = [str(i) for i in df.index]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading parensemble from file&quot;</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="n">ParameterEnsemble</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">parensemble</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unrecognized arg type for parensemble, &quot;</span> <span class="o">+</span>\
-                                <span class="s2">&quot;should be filename or ParameterEnsemble&quot;</span> <span class="o">+</span>\
-                                <span class="s2">&quot;, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">parensemble</span><span class="p">)))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading obsensemble from file&quot;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">lraise</span><span class="p">(</span><span class="s2">&quot;can not find obsensemble file: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                                       <span class="nb">format</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">))</span>
-                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">]</span>
-                <span class="c1">#df.index = [str(i) for i in df.index]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading obsensemble from file&quot;</span><span class="p">)</span>
-
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="n">ObservationEnsemble</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">obsensemble</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unrecognized arg type for obsensemble, &quot;</span> <span class="o">+</span>\
-                                <span class="s2">&quot;should be filename or ObservationEnsemble&quot;</span> <span class="o">+</span>\
-                                <span class="s2">&quot;, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">)))</span>
-
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="c1">#self.num_reals = self.parensemble_0.shape[0]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing with existing ensembles&quot;</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing smoother with </span><span class="si">{0}</span><span class="s2"> realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
-            <span class="c1">#self.num_reals = int(num_reals)</span>
-            <span class="c1">#assert self.num_reals &gt; 1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">cov</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">enforce</span><span class="p">(</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="n">enforce_bounds</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
-                                      <span class="bp">self</span><span class="o">.</span><span class="n">paren_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing obsensemble&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">cov</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
-            <span class="c1">#self.obsensemble = self.obsensemble_0.copy()</span>
-
-            <span class="c1"># save the base obsensemble</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
-                                      <span class="bp">self</span><span class="o">.</span><span class="n">obsen_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing obsensemble&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing smoother with </span><span class="si">{0}</span><span class="s2"> realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">obs0_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">nonzero</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">enforce_bounds</span> <span class="o">=</span> <span class="n">enforce_bounds</span>
-
-        <span class="k">if</span> <span class="n">restart_obsensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading restart_obsensemble </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">))</span>
-            <span class="n">failed_runs</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_obs_ensemble</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">)</span>
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading restart_obsensemble </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">))</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># run the initial parameter ensemble</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;evaluating initial ensembles&quot;</span><span class="p">)</span>
-            <span class="n">failed_runs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_obs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
-                                      <span class="bp">self</span><span class="o">.</span><span class="n">obsen_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;evaluating initial ensembles&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">failed_runs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;dropping failed realizations&quot;</span><span class="p">)</span>
-            <span class="c1">#failed_runs_str = [str(f) for f in failed_runs]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">failed_runs</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">failed_runs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_phi_report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_best_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;initial phi (mean, std): </span><span class="si">{0:15.6G}</span><span class="s2">,</span><span class="si">{1:15.6G}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                              <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">last_best_std</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">init_lambda</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">init_lambda</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1">#following chen and oliver</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-
-        <span class="c1"># if using the approximate form of the algorithm, let</span>
-        <span class="c1"># the parameter scaling matrix be the identity matrix</span>
-        <span class="c1"># jwhite - dec 5 2016 - using the actual parcov inv</span>
-        <span class="c1"># for upgrades seems to be pushing parameters around</span>
-        <span class="c1"># too much.  for now, just not using it, maybe</span>
-        <span class="c1"># better choices of lambda will tame it</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;current lambda:</span><span class="si">{0:15.6g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="p">))</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_approx_prior</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;using approximate parcov in solution&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1">#self.logger.statement(&quot;using full parcov in solution&quot;)</span>
-            <span class="c1"># if self.parcov.isdiagonal:</span>
-            <span class="c1">#     self.half_parcov_diag = self.parcov.sqrt.inv</span>
-            <span class="c1"># else:</span>
-            <span class="c1">#     self.half_parcov_diag = Cov(x=np.diag(self.parcov.x),</span>
-            <span class="c1">#                                 names=self.parcov.col_names,</span>
-            <span class="c1">#                                 isdiagonal=True).inv.sqrt</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta_par</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="p">)</span>
-        <span class="n">u</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span><span class="o">.</span><span class="n">pseudo_inv_components</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Am</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="n">inv</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
-
-<div class="viewcode-block" id="EnsembleSmoother.get_localizer"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.get_localizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_localizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; get an empty/generic localizer matrix that can be filled</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">            localizer : pyemu.Matrix</span>
-<span class="sd">                matrix with nnz obs names for rows and adj par names for columns</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">onames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span>
-        <span class="n">pnames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span>
-        <span class="n">localizer</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">onames</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">))),</span><span class="n">row_names</span><span class="o">=</span><span class="n">onames</span><span class="p">,</span><span class="n">col_names</span><span class="o">=</span><span class="n">pnames</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">localizer</span></div>
-
-    <span class="k">def</span> <span class="nf">_calc_delta_par</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parensemble</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        calc the scaled parameter ensemble differences from the mean</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_calc_delta_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obsensemble</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">        calc the scaled observation ensemble differences from the mean</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta</span><span class="p">(</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">nonzero</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">inv</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_calc_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ensemble</span><span class="p">,</span><span class="n">scaling_matrix</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_calc_delta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ensemble</span><span class="p">,</span><span class="n">scaling_matrix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        calc the scaled  ensemble differences from the mean</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -389,7 +171,8 @@
         <span class="n">delta</span> <span class="o">=</span> <span class="n">ensemble</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="n">delta</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">-=</span> <span class="n">mean</span>
-        <span class="n">delta</span> <span class="o">=</span> <span class="n">scaling_matrix</span> <span class="o">*</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">if</span> <span class="n">scaling_matrix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">scaling_matrix</span> <span class="o">*</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span>
         <span class="n">delta</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">ensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)))</span>
         <span class="k">return</span> <span class="n">delta</span>
 
@@ -557,6 +340,293 @@
     <span class="k">def</span> <span class="nf">_get_residual_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obsensemble</span><span class="p">):</span>
         <span class="n">obs_matrix</span> <span class="o">=</span> <span class="n">obsensemble</span><span class="o">.</span><span class="n">nonzero</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span>
         <span class="k">return</span>  <span class="n">obs_matrix</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs0_matrix</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col_names</span><span class="o">=</span><span class="n">obs_matrix</span><span class="o">.</span><span class="n">col_names</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="n">obs_matrix</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EnsembleMethod.update"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleMethod.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lambda_mults</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span><span class="n">localizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">run_subset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">use_approx</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;EnsembleMethod.update() must be implemented by the derived types&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EnsembleSmoother"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother">[docs]</a><span class="k">class</span> <span class="nc">EnsembleSmoother</span><span class="p">(</span><span class="n">EnsembleMethod</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;an implementation of the GLM iterative ensemble smoother</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        pst : pyemu.Pst or str</span>
+<span class="sd">            a control file instance or filename</span>
+<span class="sd">        parcov : pyemu.Cov or str</span>
+<span class="sd">            a prior parameter covariance matrix or filename. If None,</span>
+<span class="sd">            parcov is constructed from parameter bounds (diagonal)</span>
+<span class="sd">        obscov : pyemu.Cov or str</span>
+<span class="sd">            a measurement noise covariance matrix or filename. If None,</span>
+<span class="sd">            obscov is constructed from observation weights.</span>
+<span class="sd">        num_slaves : int</span>
+<span class="sd">            number of slaves to use in (local machine) parallel evaluation of the parmaeter</span>
+<span class="sd">            ensemble.  If 0, serial evaluation is used.  Ignored if submit_file is not None</span>
+<span class="sd">        use_approx_prior : bool</span>
+<span class="sd">             a flag to use the MLE (approx) upgrade solution.  If True, a MAP</span>
+<span class="sd">             solution upgrade is used</span>
+<span class="sd">        submit_file : str</span>
+<span class="sd">            the name of a HTCondor submit file.  If not None, HTCondor is used to</span>
+<span class="sd">            evaluate the parameter ensemble in parallel by issuing condor_submit</span>
+<span class="sd">            as a system command</span>
+<span class="sd">        port : int</span>
+<span class="sd">            the TCP port number to communicate on for parallel run management</span>
+<span class="sd">        slave_dir : str</span>
+<span class="sd">            path to a directory with a complete set of model files and PEST</span>
+<span class="sd">            interface files</span>
+<span class="sd">        drop_bad_reals : float</span>
+<span class="sd">                drop realizations with phi greater than drop_bad_reals. If None, all</span>
+<span class="sd">                realizations are kept. Default is None</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">    ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">parcov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obscov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">use_approx_prior</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">submit_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">4004</span><span class="p">,</span><span class="n">slave_dir</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">,</span><span class="n">drop_bad_reals</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EnsembleSmoother</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span><span class="n">parcov</span><span class="o">=</span><span class="n">parcov</span><span class="p">,</span><span class="n">obscov</span><span class="o">=</span><span class="n">obscov</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="n">num_slaves</span><span class="p">,</span>
+                                              <span class="n">submit_file</span><span class="o">=</span><span class="n">submit_file</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span><span class="n">slave_dir</span><span class="o">=</span><span class="n">slave_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_approx_prior</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">use_approx_prior</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">half_obscov_diag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span> <span class="o">=</span> <span class="n">drop_bad_reals</span>
+
+<div class="viewcode-block" id="EnsembleSmoother.initialize"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">init_lambda</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="s2">&quot;reset&quot;</span><span class="p">,</span>
+                   <span class="n">parensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">restart_obsensemble</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the iES process.  Depending on arguments, draws or loads</span>
+<span class="sd">        initial parameter observations ensembles and runs the initial parameter</span>
+<span class="sd">        ensemble</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            num_reals : int</span>
+<span class="sd">                the number of realizations to draw.  Ignored if parensemble/obsensemble</span>
+<span class="sd">                are not None</span>
+<span class="sd">            init_lambda : float</span>
+<span class="sd">                the initial lambda to use.  During subsequent updates, the lambda is</span>
+<span class="sd">                updated according to upgrade success</span>
+<span class="sd">            enforce_bounds : str</span>
+<span class="sd">                how to enfore parameter bound transgression.  options are</span>
+<span class="sd">                reset, drop, or None</span>
+<span class="sd">            parensemble : pyemu.ParameterEnsemble or str</span>
+<span class="sd">                a parameter ensemble or filename to use as the initial</span>
+<span class="sd">                parameter ensemble.  If not None, then obsenemble must not be</span>
+<span class="sd">                None</span>
+<span class="sd">            obsensemble : pyemu.ObservationEnsemble or str</span>
+<span class="sd">                an observation ensemble or filename to use as the initial</span>
+<span class="sd">                observation ensemble.  If not None, then parensemble must</span>
+<span class="sd">                not be None</span>
+<span class="sd">            restart_obsensemble : pyemu.ObservationEnsemble or str</span>
+<span class="sd">                an observation ensemble or filename to use as an</span>
+<span class="sd">                evaluated observation ensemble.  If not None, this will skip the initial</span>
+<span class="sd">                parameter ensemble evaluation - user beware!</span>
+
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        ``&gt;&gt;&gt;import pyemu``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es = pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)``</span>
+
+<span class="sd">        ``&gt;&gt;&gt;es.initialize(num_reals=100)``</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        (re)initialize the process</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># initialize the phi report csv</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enforce_bounds</span> <span class="o">=</span> <span class="n">enforce_bounds</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_runs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># this matrix gets used a lot, so only calc once and store</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obscov_inv_sqrt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">)</span><span class="o">.</span><span class="n">inv</span><span class="o">.</span><span class="n">sqrt</span>
+
+        <span class="k">if</span> <span class="n">parensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">obsensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing with existing ensembles&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading parensemble from file&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">lraise</span><span class="p">(</span><span class="s2">&quot;can not find parensemble file: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
+                                       <span class="nb">format</span><span class="p">(</span><span class="n">parensemble</span><span class="p">))</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="c1">#df.index = [str(i) for i in df.index]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading parensemble from file&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span><span class="n">ParameterEnsemble</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">parensemble</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unrecognized arg type for parensemble, &quot;</span> <span class="o">+</span>\
+                                <span class="s2">&quot;should be filename or ParameterEnsemble&quot;</span> <span class="o">+</span>\
+                                <span class="s2">&quot;, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">parensemble</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading obsensemble from file&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">lraise</span><span class="p">(</span><span class="s2">&quot;can not find obsensemble file: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
+                                       <span class="nb">format</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">))</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">]</span>
+                <span class="c1">#df.index = [str(i) for i in df.index]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading obsensemble from file&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">,</span><span class="n">ObservationEnsemble</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">obsensemble</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unrecognized arg type for obsensemble, &quot;</span> <span class="o">+</span>\
+                                <span class="s2">&quot;should be filename or ObservationEnsemble&quot;</span> <span class="o">+</span>\
+                                <span class="s2">&quot;, not </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obsensemble</span><span class="p">)))</span>
+
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1">#self.num_reals = self.parensemble_0.shape[0]</span>
+            <span class="n">num_reals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing with existing ensembles&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing smoother with </span><span class="si">{0}</span><span class="s2"> realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
+            <span class="c1">#self.num_reals = int(num_reals)</span>
+            <span class="c1">#assert self.num_reals &gt; 1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">cov</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">enforce</span><span class="p">(</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="n">enforce_bounds</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">paren_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing parensemble&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing obsensemble&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">cov</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+            <span class="c1">#self.obsensemble = self.obsensemble_0.copy()</span>
+
+            <span class="c1"># save the base obsensemble</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">obsen_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing obsensemble&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;initializing smoother with </span><span class="si">{0}</span><span class="s2"> realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs0_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">nonzero</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enforce_bounds</span> <span class="o">=</span> <span class="n">enforce_bounds</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;.iobj.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;iter_num,total_runs,lambda,min,max,mean,median,std,&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{0:010d}</span><span class="s2">&quot;</span><span class="o">.</span> \
+                                    <span class="nb">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reals</span><span class="p">)]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phi_csv</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">restart_obsensemble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading restart_obsensemble </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">))</span>
+            <span class="n">failed_runs</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_obs_ensemble</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble_0</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading restart_obsensemble </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">restart_obsensemble</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># run the initial parameter ensemble</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;evaluating initial ensembles&quot;</span><span class="p">)</span>
+            <span class="n">failed_runs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_obs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">filename</span> <span class="o">+</span>\
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">obsen_prefix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;evaluating initial ensembles&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">failed_runs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;dropping failed realizations&quot;</span><span class="p">)</span>
+            <span class="c1">#failed_runs_str = [str(f) for f in failed_runs]</span>
+            <span class="c1">#self.parensemble = self.parensemble.drop(failed_runs)</span>
+            <span class="c1">#self.obsensemble = self.obsensemble.drop(failed_runs)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">failed_runs</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">failed_runs</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">drop_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">run_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">drop_idx</span> <span class="o">=</span> <span class="n">run_ids</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;dropped all realizations as &#39;bad&#39;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> realizations dropped as &#39;bad&#39; (indices :</span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span>\
+                                 <span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">),</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">drop_idx</span><span class="p">])))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_phi_report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_best_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;initial phi (mean, std): </span><span class="si">{0:15.6G}</span><span class="s2">,</span><span class="si">{1:15.6G}</span><span class="s2">&quot;</span><span class="o">.</span>\
+                              <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">last_best_std</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">init_lambda</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">init_lambda</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#following chen and oliver</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+
+        <span class="c1"># if using the approximate form of the algorithm, let</span>
+        <span class="c1"># the parameter scaling matrix be the identity matrix</span>
+        <span class="c1"># jwhite - dec 5 2016 - using the actual parcov inv</span>
+        <span class="c1"># for upgrades seems to be pushing parameters around</span>
+        <span class="c1"># too much.  for now, just not using it, maybe</span>
+        <span class="c1"># better choices of lambda will tame it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;current lambda:</span><span class="si">{0:15.6g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_approx_prior</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;using approximate parcov in solution&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1">#self.logger.statement(&quot;using full parcov in solution&quot;)</span>
+            <span class="c1"># if self.parcov.isdiagonal:</span>
+            <span class="c1">#     self.half_parcov_diag = self.parcov.sqrt.inv</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     self.half_parcov_diag = Cov(x=np.diag(self.parcov.x),</span>
+            <span class="c1">#                                 names=self.parcov.col_names,</span>
+            <span class="c1">#                                 isdiagonal=True).inv.sqrt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta_par</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble_0</span><span class="p">)</span>
+        <span class="n">u</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_par_prior</span><span class="o">.</span><span class="n">pseudo_inv_components</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Am</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">s</span><span class="o">.</span><span class="n">inv</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__initialized</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="EnsembleSmoother.get_localizer"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.get_localizer">[docs]</a>    <span class="k">def</span> <span class="nf">get_localizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; get an empty/generic localizer matrix that can be filled</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            localizer : pyemu.Matrix</span>
+<span class="sd">                matrix with nnz obs names for rows and adj par names for columns</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">onames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span>
+        <span class="n">pnames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span>
+        <span class="n">localizer</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">onames</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">))),</span><span class="n">row_names</span><span class="o">=</span><span class="n">onames</span><span class="p">,</span><span class="n">col_names</span><span class="o">=</span><span class="n">pnames</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">localizer</span></div>
+
+    <span class="k">def</span> <span class="nf">_calc_delta_par</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parensemble</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        calc the scaled parameter ensemble differences from the mean</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta</span><span class="p">(</span><span class="n">parensemble</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">half_parcov_diag</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_calc_delta_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obsensemble</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        calc the scaled observation ensemble differences from the mean</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_delta</span><span class="p">(</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">nonzero</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">inv</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="EnsembleSmoother.update"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.smoother.EnsembleSmoother.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lambda_mults</span><span class="o">=</span><span class="p">[</span><span class="mf">1.0</span><span class="p">],</span><span class="n">localizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">run_subset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">use_approx</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;update the iES one GLM cycle</span>
@@ -750,6 +820,26 @@
                                          <span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">failed_runs_this</span><span class="p">),</span><span class="n">lam_vals</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
                     <span class="n">oe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">failed_runs_this</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
                     <span class="n">oe</span> <span class="o">=</span> <span class="n">oe</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+            <span class="c1"># don&#39;t drop bad reals here, instead, mask bad reals in the lambda</span>
+            <span class="c1"># selection and drop later</span>
+            <span class="c1"># if self.drop_bad_reals is not None:</span>
+            <span class="c1">#     assert isinstance(drop_bad_reals, float)</span>
+            <span class="c1">#     drop_idx = np.argwhere(self.current_phi_vec &gt; self.drop_bad_reals).flatten()</span>
+            <span class="c1">#     run_ids = self.obsensemble.index.values</span>
+            <span class="c1">#     drop_idx = run_ids[drop_idx]</span>
+            <span class="c1">#     if len(drop_idx) == self.obsensemble.shape[0]:</span>
+            <span class="c1">#         raise Exception(&quot;dropped all realizations as &#39;bad&#39;&quot;)</span>
+            <span class="c1">#     if len(drop_idx) &gt; 0:</span>
+            <span class="c1">#         self.logger.warn(&quot;{0} realizations dropped as &#39;bad&#39; (indices :{1})&quot;. \</span>
+            <span class="c1">#                          format(len(drop_idx), &#39;,&#39;.join([str(d) for d in drop_idx])))</span>
+            <span class="c1">#         self.parensemble.loc[drop_idx, :] = np.NaN</span>
+            <span class="c1">#         self.parensemble = self.parensemble.dropna()</span>
+            <span class="c1">#         self.obsensemble.loc[drop_idx, :] = np.NaN</span>
+            <span class="c1">#         self.obsensemble = self.obsensemble.dropna()</span>
+            <span class="c1">#</span>
+            <span class="c1">#         self.current_phi_vec = self._calc_phi_vec(self.obsensemble)</span>
+
             <span class="n">obsen_lam</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oe</span><span class="p">)</span>
         <span class="n">obsen_combine</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -763,6 +853,16 @@
                               <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="p">,</span>
                          <span class="bp">self</span><span class="o">.</span><span class="n">last_best_mean</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">last_best_std</span><span class="p">))</span>
         <span class="n">phi_vecs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="n">obsen</span><span class="p">)</span> <span class="k">for</span> <span class="n">obsen</span> <span class="ow">in</span> <span class="n">obsen_lam</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pv</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">phi_vecs</span><span class="p">):</span>
+                <span class="c1">#for testing the drop_bad_reals functionality</span>
+                <span class="c1">#pv[[0,3,7]] = self.drop_bad_reals + 1.0</span>
+                <span class="n">pv</span><span class="p">[</span><span class="n">pv</span><span class="o">&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                <span class="n">pv</span> <span class="o">=</span> <span class="n">pv</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">pv</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;all realization for lambda </span><span class="si">{0}</span><span class="s2"> dropped as &#39;bad&#39;&quot;</span><span class="o">.</span>\
+                                    <span class="nb">format</span><span class="p">(</span><span class="n">lam_vals</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                <span class="n">phi_vecs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pv</span>
         <span class="n">mean_std</span> <span class="o">=</span> <span class="p">[(</span><span class="n">pv</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">pv</span><span class="o">.</span><span class="n">std</span><span class="p">())</span> <span class="k">for</span> <span class="n">pv</span> <span class="ow">in</span> <span class="n">phi_vecs</span><span class="p">]</span>
         <span class="n">update_pars</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">update_lambda</span> <span class="o">=</span> <span class="kc">False</span>
@@ -796,18 +896,43 @@
                 <span class="n">failed_runs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_obs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">failed_runs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;dropping failed realizations&quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">failed_runs</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">failed_runs</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">failed_runs</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">failed_runs</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_phi_report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">*</span> <span class="n">lambda_mults</span><span class="p">[</span><span class="n">best_i</span><span class="p">])</span>
+
+
+
+                <span class="c1">#self._phi_report(self.current_phi_vec,self.current_lambda * lambda_mults[best_i])</span>
                 <span class="n">best_mean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
                 <span class="n">best_std</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="n">obsen_lam</span><span class="p">[</span><span class="n">best_i</span><span class="p">]</span>
                 <span class="c1"># reindex parensemble in case failed runs</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">index</span><span class="p">],</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_phi_report</span><span class="p">(</span><span class="n">phi_vecs</span><span class="p">[</span><span class="n">best_i</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">*</span> <span class="n">lambda_mults</span><span class="p">[</span><span class="n">best_i</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="n">phi_vecs</span><span class="p">[</span><span class="n">best_i</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># for testing drop_bad_reals functionality</span>
+                <span class="c1"># self.current_phi_vec[::2] = self.drop_bad_reals + 1.0</span>
+                <span class="n">drop_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_bad_reals</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+                <span class="n">run_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+                <span class="n">drop_idx</span> <span class="o">=</span> <span class="n">run_ids</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;dropped too many realizations as &#39;bad&#39;&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> realizations dropped as &#39;bad&#39; (indices :</span><span class="si">{1}</span><span class="s2">)&quot;</span><span class="o">.</span> \
+                                     <span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">drop_idx</span><span class="p">),</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">drop_idx</span><span class="p">])))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">drop_idx</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_phi_vec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_phi_report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_phi_vec</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">*</span> <span class="n">lambda_mults</span><span class="p">[</span><span class="n">best_i</span><span class="p">])</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;   best lambda:</span><span class="si">{0:15.6G}</span><span class="s2">, mean:</span><span class="si">{1:15.6G}</span><span class="s2">, std:</span><span class="si">{2:15.6G}</span><span class="s2">&quot;</span><span class="o">.</span>\
                   <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="o">*</span><span class="n">lambda_mults</span><span class="p">[</span><span class="n">best_i</span><span class="p">],</span>
@@ -819,7 +944,7 @@
             <span class="c1"># be aggressive</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">*=</span> <span class="p">(</span><span class="n">lambda_mults</span><span class="p">[</span><span class="n">best_i</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.75</span><span class="p">)</span>
             <span class="c1"># but don&#39;t let lambda get too small</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span><span class="p">,</span><span class="mf">0.00001</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;updating lambda: </span><span class="si">{0:15.6G}</span><span class="s2">&quot;</span><span class="o">.</span>\
                   <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_lambda</span> <span class="p">))</span>
 
@@ -866,7 +991,7 @@
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 

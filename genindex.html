@@ -28,6 +28,7 @@
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
@@ -75,6 +76,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.add_external">add_external() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_observations">add_observations() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_parameters">add_parameters() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_pi_equation">add_pi_equation() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.optimization.add_pi_obj_func">add_pi_obj_func() (in module pyemu.utils.optimization)</a>
@@ -91,10 +96,10 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights">adjust_weights() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
-      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_by_list">adjust_weights_by_list() (pyemu.pst.pst_handler.Pst method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_by_list">adjust_weights_by_list() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_recfile">adjust_weights_recfile() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_resfile">adjust_weights_resfile() (pyemu.pst.pst_handler.Pst method)</a>
@@ -165,8 +170,6 @@
 </li>
       <li><a href="source/pyemu.html#pyemu.inf.Influence.cooks_d">cooks_d (pyemu.inf.Influence attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.copy">copy() (pyemu.en.Ensemble method)</a>
 
       <ul>
@@ -177,6 +180,8 @@
         <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData.copy">(pyemu.pst.pst_controldata.ControlData method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov">Cov (class in pyemu.mat.mat_handler)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance">covariance() (pyemu.utils.geostats.GeoStruct method)</a>
@@ -197,7 +202,9 @@
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance_points">(pyemu.utils.geostats.Vario2d method)</a>
 </li>
       </ul></li>
-      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.current_phi">current_phi (pyemu.smoother.EnsembleSmoother attribute)</a>
+      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.current_actual_phi">current_actual_phi (pyemu.smoother.EnsembleMethod attribute)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.current_phi">current_phi (pyemu.smoother.EnsembleMethod attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -263,6 +270,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod">EnsembleMethod (class in pyemu.smoother)</a>
+</li>
       <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother">EnsembleSmoother (class in pyemu.smoother)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar">ErrVar (class in pyemu.ev)</a>
@@ -461,12 +470,16 @@
       </ul></li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.indices">indices() (pyemu.mat.mat_handler.Matrix method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.inf.Influence">Influence (class in pyemu.inf)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.initialize">initialize() (pyemu.smoother.EnsembleSmoother method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.initialize">initialize() (pyemu.smoother.EnsembleMethod method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.initialize">(pyemu.smoother.EnsembleSmoother method)</a>
 </li>
+      </ul></li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.integer">integer (pyemu.mat.mat_handler.Matrix attribute)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.inv">inv (pyemu.mat.mat_handler.Matrix attribute)</a>
@@ -1043,12 +1056,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.u">u (pyemu.mat.mat_handler.Matrix attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.ubnd">ubnd (pyemu.en.ParameterEnsemble attribute)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.update">update() (pyemu.smoother.EnsembleSmoother method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.update">update() (pyemu.smoother.EnsembleMethod method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.update">(pyemu.smoother.EnsembleSmoother method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1185,7 +1202,7 @@
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 

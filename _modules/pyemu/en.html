@@ -27,6 +27,7 @@
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
@@ -79,7 +80,7 @@
         <span class="k">assert</span> <span class="s2">&quot;columns&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="s2">&quot;ensemble requires &#39;columns&#39; kwarg&quot;</span>
 
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">mean_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Ensemble requires &#39;mean_values&#39; kwarg&quot;</span><span class="p">)</span>
@@ -226,11 +227,12 @@
 <span class="sd">            Ensemble : Ensemble</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">diff</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__sub__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Ensemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
 
+
 <div class="viewcode-block" id="Ensemble.from_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.from_dataframe">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;class method constructor to create an Ensemble from</span>
 <span class="sd">        a pandas.DataFrame</span>
 
@@ -248,7 +250,7 @@
         <span class="n">df</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;df&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-        <span class="n">e</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
                 <span class="n">mean_values</span><span class="o">=</span><span class="n">mean_values</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">e</span></div>
 
@@ -300,7 +302,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;mean_values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsval</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ObservationEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ObservationEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span> <span class="o">=</span> <span class="n">pst</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
 
@@ -376,7 +378,7 @@
                         <span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obs_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ObservationEnsemble.from_id_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.from_id_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_id_gaussian_draw</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">oe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_id_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">oe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up independent draws</span>
 <span class="sd">        for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor</span>
 <span class="sd">        transforms the oe argument</span>
@@ -406,7 +408,7 @@
                 <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">]</span> <span class="o">+=</span> <span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsval</span>
-        <span class="n">new_oe</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">new_oe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_oe</span></div>
 
 
@@ -425,7 +427,8 @@
         <span class="n">obsval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span>
         <span class="n">phi_vec</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
-            <span class="n">phi</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">]</span> <span class="o">-</span> <span class="n">obsval</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">simval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">]</span>
+            <span class="n">phi</span> <span class="o">=</span> <span class="p">(((</span><span class="n">simval</span> <span class="o">-</span> <span class="n">obsval</span><span class="p">)</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
             <span class="n">phi_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;phi&quot;</span><span class="p">:</span><span class="n">phi_vec</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
 
@@ -466,7 +469,7 @@
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;mean_values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParameterEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ParameterEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># a flag for current log transform status</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__istransformed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">istransformed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span> <span class="o">=</span> <span class="n">pst</span>
@@ -680,7 +683,7 @@
 
 
 <div class="viewcode-block" id="ParameterEnsemble.from_uniform_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_uniform_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_uniform_draw</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_uniform_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up uniform draws</span>
 <span class="sd">        for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor</span>
 <span class="sd">        transforms the pe argument</span>
@@ -721,12 +724,12 @@
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span>
 
-        <span class="n">new_pe</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
+        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
         <span class="c1">#new_pe._applied_tied()</span>
         <span class="k">return</span> <span class="n">new_pe</span></div>
 
 <div class="viewcode-block" id="ParameterEnsemble.from_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up draws</span>
 <span class="sd">        for a really large (&gt;1E6) ensemble sizes.  gets around the</span>
 <span class="sd">        dataframe expansion-by-loc that is one col at a time.</span>
@@ -808,7 +811,7 @@
             <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">fval</span>
 
         <span class="c1">#print(&quot;apply tied&quot;)</span>
-        <span class="n">new_pe</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
         <span class="c1">#ParameterEnsemble.apply_tied(new_pe)</span>
         <span class="k">return</span> <span class="n">new_pe</span></div>
 
@@ -1196,7 +1199,7 @@
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 

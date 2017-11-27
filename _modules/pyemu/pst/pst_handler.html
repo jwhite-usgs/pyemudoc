@@ -27,6 +27,7 @@
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   
+  
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
@@ -82,7 +83,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pi_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tied</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span> <span class="o">=</span> <span class="n">ControlData</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">svd_data</span> <span class="o">=</span> <span class="n">SvdData</span><span class="p">()</span>
@@ -96,7 +97,7 @@
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;model_command&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Pst</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Pst</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">phi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -948,7 +949,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pargpnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pargpnme</span><span class="o">.</span><span class="n">values</span>
         <span class="c1">#self.parameter_groups.index = pargpnme</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_fieldnames&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;WARNING: NaNs in parameter_data dataframe&quot;</span><span class="p">)</span>
 
         <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* parameter data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -985,7 +986,7 @@
             <span class="k">except</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">SFMT</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;obs_fieldnames&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;WARNING: NaNs in observation_data dataframe&quot;</span><span class="p">)</span>
         <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* observation data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="c1">#self.observation_data.index = self.observation_data.pop(&quot;obsnme&quot;)</span>
@@ -1120,7 +1121,7 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.zero_oder_tikhonov has moved to utils.helpers&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Pst.parrep"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.parrep">[docs]</a>    <span class="k">def</span> <span class="nf">parrep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.parrep"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.parrep">[docs]</a>    <span class="k">def</span> <span class="nf">parrep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">enforce_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;replicates the pest parrep util. replaces the parval1 field in the</span>
 <span class="sd">            parameter data section dataframe</span>
 
@@ -1130,6 +1131,10 @@
 <span class="sd">            parameter file to use.  If None, try to use</span>
 <span class="sd">            a parameter file that corresponds to the case name.</span>
 <span class="sd">            Default is None</span>
+<span class="sd">        enforce_hounds : bool</span>
+<span class="sd">            flag to enforce parameter bounds after parameter values are updated.</span>
+<span class="sd">            This is useful because PEST and PEST++ round the parameter values in the</span>
+<span class="sd">            par file, which may cause slight bound violations</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">parfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1139,7 +1144,15 @@
         <span class="n">par_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">par_df</span><span class="o">.</span><span class="n">parnme</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span> <span class="o">=</span> <span class="n">par_df</span><span class="o">.</span><span class="n">parval1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">par_df</span><span class="o">.</span><span class="n">scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">par_df</span><span class="o">.</span><span class="n">offset</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">par_df</span><span class="o">.</span><span class="n">offset</span>
+
+        <span class="k">if</span> <span class="n">enforce_bounds</span><span class="p">:</span>
+            <span class="n">par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">parval1</span> <span class="o">&gt;</span> <span class="n">par</span><span class="o">.</span><span class="n">parubnd</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+            <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">parval1</span> <span class="o">&lt;</span> <span class="n">par</span><span class="o">.</span><span class="n">parlbnd</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+            <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span></div>
+
 
 
 
@@ -1470,7 +1483,7 @@
 
 
 <div class="viewcode-block" id="Pst.from_io_files"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.from_io_files">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_io_files</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span><span class="n">tpl_files</span><span class="p">,</span><span class="n">in_files</span><span class="p">,</span><span class="n">ins_files</span><span class="p">,</span><span class="n">out_files</span><span class="p">,</span><span class="n">pst_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_io_files</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">tpl_files</span><span class="p">,</span><span class="n">in_files</span><span class="p">,</span><span class="n">ins_files</span><span class="p">,</span><span class="n">out_files</span><span class="p">,</span><span class="n">pst_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; create a Pst instance from model interface files. Assigns generic values for</span>
 <span class="sd">        parameter info.  Tries to use INSCHEK to set somewhat meaningful observation</span>
 <span class="sd">        values</span>
@@ -1501,20 +1514,170 @@
         <span class="kn">from</span> <span class="nn">pyemu</span> <span class="k">import</span> <span class="n">helpers</span>
         <span class="k">return</span> <span class="n">helpers</span><span class="o">.</span><span class="n">pst_from_io_files</span><span class="p">(</span><span class="n">tpl_files</span><span class="o">=</span><span class="n">tpl_files</span><span class="p">,</span><span class="n">in_files</span><span class="o">=</span><span class="n">in_files</span><span class="p">,</span>
                                            <span class="n">ins_files</span><span class="o">=</span><span class="n">ins_files</span><span class="p">,</span><span class="n">out_files</span><span class="o">=</span><span class="n">out_files</span><span class="p">,</span>
-                                         <span class="n">pst_filename</span><span class="o">=</span><span class="n">pst_filename</span><span class="p">)</span></div></div>
+                                         <span class="n">pst_filename</span><span class="o">=</span><span class="n">pst_filename</span><span class="p">)</span></div>
 
-    <span class="c1"># eventually move this to pst_utils</span>
-    <span class="c1"># @classmethod</span>
-    <span class="c1"># def from_flopy_model(cls,m,pp_pakattr_list=None,const_pakattr_list=None,bc_pakattr_list=None,</span>
-    <span class="c1">#                      pp_space=None,pp_bounds=None,pp_geostruct=None,bc_geostruct=None,</span>
-    <span class="c1">#                      remove_existing=False):</span>
-    <span class="c1">#     from pyemu import helpers</span>
-    <span class="c1">#     return helpers.pst_from_flopy_model(m,pp_pakattr_list=pp_pakattr_list,</span>
-    <span class="c1">#                                         const_pakattr_list=const_pakattr_list,</span>
-    <span class="c1">#                                         bc_pakattr_list=bc_pakattr_list,</span>
-    <span class="c1">#                                         pp_space=None,pp_bounds=None,pp_geostruct=None,</span>
-    <span class="c1">#                                         bc_geostruct=None,remove_existing=remove_existing)</span>
-    <span class="c1">#</span>
+    <span class="k">def</span> <span class="nf">add_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">template_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">,</span><span class="n">pst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add new parameters to a control file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            tpl_file : str</span>
+<span class="sd">                template file</span>
+<span class="sd">            in_file : str</span>
+<span class="sd">                model input file</span>
+<span class="sd">            pst_path : str(optional)</span>
+<span class="sd">                the path to append to the template_file and in_file in the control file.  If</span>
+<span class="sd">                not None, then any existing path in front of the template or in file is split off</span>
+<span class="sd">                and pst_path is prepended.  Default is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        new_par_data : pandas.DataFrame</span>
+<span class="sd">            the data for the new parameters that were added</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        populates the new parameter information with default values</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+
+        <span class="c1"># get the parameter names in the template file</span>
+        <span class="n">parnme</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">parse_tpl_file</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+
+        <span class="c1"># find &quot;new&quot; parameters that are not already in the control file</span>
+        <span class="n">new_parnme</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parnme</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_parnme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no new parameters found in template file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_file</span><span class="p">))</span>
+
+        <span class="c1"># extend parameter_data</span>
+        <span class="n">new_par_data</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">populate_dataframe</span><span class="p">(</span><span class="n">new_parnme</span><span class="p">,</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_fieldnames&quot;</span><span class="p">],</span>
+                                                    <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_defaults&quot;</span><span class="p">],</span>
+                                                    <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_dtype&quot;</span><span class="p">])</span>
+        <span class="n">new_par_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_parnme</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_parnme</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_par_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pst_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">template_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">template_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">in_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_par_data</span>
+
+
+<div class="viewcode-block" id="Pst.add_parameters"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">add_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">template_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">,</span><span class="n">pst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add new parameters to a control file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            tpl_file : str</span>
+<span class="sd">                template file</span>
+<span class="sd">            in_file : str</span>
+<span class="sd">                model input file</span>
+<span class="sd">            pst_path : str(optional)</span>
+<span class="sd">                the path to append to the template_file and in_file in the control file.  If</span>
+<span class="sd">                not None, then any existing path in front of the template or in file is split off</span>
+<span class="sd">                and pst_path is prepended.  Default is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        new_par_data : pandas.DataFrame</span>
+<span class="sd">            the data for the new parameters that were added. If no new parameters are in the</span>
+<span class="sd">            new template file, returns None</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        populates the new parameter information with default values</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+
+        <span class="c1"># get the parameter names in the template file</span>
+        <span class="n">parnme</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">parse_tpl_file</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+
+        <span class="c1"># find &quot;new&quot; parameters that are not already in the control file</span>
+        <span class="n">new_parnme</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parnme</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_parnme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no new parameters found in template file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_file</span><span class="p">))</span>
+            <span class="n">new_par_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># extend pa</span>
+            <span class="c1"># rameter_data</span>
+            <span class="n">new_par_data</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">populate_dataframe</span><span class="p">(</span><span class="n">new_parnme</span><span class="p">,</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_fieldnames&quot;</span><span class="p">],</span>
+                                                        <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_defaults&quot;</span><span class="p">],</span>
+                                                        <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;par_dtype&quot;</span><span class="p">])</span>
+            <span class="n">new_par_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_parnme</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_parnme</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_par_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pst_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">template_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">template_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">in_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">in_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">template_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">in_file</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_par_data</span></div>
+
+
+<div class="viewcode-block" id="Pst.add_observations"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_observations">[docs]</a>    <span class="k">def</span> <span class="nf">add_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">,</span><span class="n">pst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add new parameters to a control file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            ins_file : str</span>
+<span class="sd">                instruction file</span>
+<span class="sd">            out_file : str</span>
+<span class="sd">                model output file</span>
+<span class="sd">            pst_path : str(optional)</span>
+<span class="sd">                the path to append to the instruction file and out file in the control file.  If</span>
+<span class="sd">                not None, then any existing path in front of the template or in file is split off</span>
+<span class="sd">                and pst_path is prepended.  Default is None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        new_obs_data : pandas.DataFrame</span>
+<span class="sd">            the data for the new observations that were added</span>
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        populates the new observation information with default values</span>
+
+<span class="sd">        tries to run inschek to populate obsval with the current model output file values</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ins_file</span><span class="p">),</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="n">ins_file</span><span class="p">)</span>
+
+        <span class="c1"># get the parameter names in the template file</span>
+        <span class="n">obsnme</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">parse_ins_file</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)</span>
+
+        <span class="c1"># find &quot;new&quot; parameters that are not already in the control file</span>
+        <span class="n">new_obsnme</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obsnme</span> <span class="k">if</span> <span class="n">o</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_obsnme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;no new observations found in instruction file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">))</span>
+
+        <span class="c1"># extend observation_data</span>
+        <span class="n">new_obs_data</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">populate_dataframe</span><span class="p">(</span><span class="n">new_obsnme</span><span class="p">,</span><span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;obs_fieldnames&quot;</span><span class="p">],</span>
+                                                    <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;obs_defaults&quot;</span><span class="p">],</span>
+                                                    <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;obs_dtype&quot;</span><span class="p">])</span>
+        <span class="n">new_obs_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_obsnme</span><span class="p">,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obsnme</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_obs_data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pst_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ins_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsval</span>
+            <span class="n">new_obs_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsval</span>
+        <span class="k">return</span> <span class="n">new_obs_data</span></div></div>
+
+
 </pre></div>
 
           </div>
@@ -1549,7 +1712,7 @@
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
 
