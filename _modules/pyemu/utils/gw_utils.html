@@ -45,10 +45,11 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="kn">from</span> <span class="nn">pyemu.pst.pst_utils</span> <span class="k">import</span> <span class="n">SFMT</span><span class="p">,</span><span class="n">IFMT</span><span class="p">,</span><span class="n">FFMT</span><span class="p">,</span><span class="n">pst_config</span>
+<span class="kn">from</span> <span class="nn">pyemu.pst.pst_utils</span> <span class="k">import</span> <span class="n">SFMT</span><span class="p">,</span><span class="n">IFMT</span><span class="p">,</span><span class="n">FFMT</span><span class="p">,</span><span class="n">pst_config</span><span class="p">,</span><span class="n">_try_run_inschek</span>
 <span class="kn">from</span> <span class="nn">pyemu.utils.helpers</span> <span class="k">import</span> <span class="n">run</span>
 <span class="n">PP_FMT</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">SFMT</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">FFMT</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">FFMT</span><span class="p">,</span> <span class="s2">&quot;zone&quot;</span><span class="p">:</span> <span class="n">IFMT</span><span class="p">,</span> <span class="s2">&quot;tpl&quot;</span><span class="p">:</span> <span class="n">SFMT</span><span class="p">,</span>
           <span class="s2">&quot;parval1&quot;</span><span class="p">:</span> <span class="n">FFMT</span><span class="p">}</span>
@@ -131,6 +132,7 @@
 <span class="sd">    hydmod_file : str</span>
 <span class="sd">        modflow hydmod file</span>
 
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    df : pandas.DataFrame</span>
@@ -203,7 +205,7 @@
     <span class="n">obs</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">HydmodObs</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">)</span>
     <span class="n">hyd_df</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
 
-    <span class="n">hyd_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;totim&#39;</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">hyd_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;totim&#39;</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
     <span class="c1">#hyd_df.loc[:,&quot;datetime&quot;] = hyd_df.index</span>
     <span class="n">hyd_df</span><span class="p">[</span><span class="s1">&#39;totim&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
 
@@ -215,7 +217,15 @@
 
     <span class="n">hyd_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;obsval&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">hyd_df</span><span class="p">[</span><span class="s1">&#39;obsnme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hyd_df</span><span class="o">.</span><span class="n">variable</span><span class="p">,</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">datestamp</span><span class="p">)]</span>
+    <span class="n">hyd_df</span><span class="p">[</span><span class="s1">&#39;obsnme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">j</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hyd_df</span><span class="o">.</span><span class="n">variable</span><span class="p">,</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">datestamp</span><span class="p">)]</span>
+
+    <span class="n">vc</span> <span class="o">=</span> <span class="n">hyd_df</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+    <span class="n">vc</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">vc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">vc</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vc</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">hyd_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;hyd_df.duplciates.csv&quot;</span><span class="p">)</span>
+        <span class="n">obs</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;hyd_org.duplicates.csv&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;duplicates in obsnme:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vc</span><span class="p">))</span>
+    <span class="c1">#assert hyd_df.obsnme.value_counts().max() == 1,&quot;duplicates in obsnme&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">hydmod_outfile</span><span class="p">:</span>
         <span class="n">hydmod_outfile</span> <span class="o">=</span> <span class="n">hydmod_file</span> <span class="o">+</span> <span class="s1">&#39;.dat&#39;</span>
@@ -431,8 +441,8 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error import flopy: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
     <span class="n">mlf</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">MfListBudget</span><span class="p">(</span><span class="n">list_filename</span><span class="p">)</span>
     <span class="n">flx</span><span class="p">,</span><span class="n">vol</span> <span class="o">=</span> <span class="n">mlf</span><span class="o">.</span><span class="n">get_dataframes</span><span class="p">(</span><span class="n">start_datetime</span><span class="o">=</span><span class="n">start_datetime</span><span class="p">,</span><span class="n">diff</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">flx</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">flx_filename</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index_label</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">)</span>
-    <span class="n">vol</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">vol_filename</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index_label</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">)</span>
+    <span class="n">flx</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">flx_filename</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index_label</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span><span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;%Y%M</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">vol</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">vol_filename</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index_label</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span><span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;%Y%M</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">flx</span><span class="p">,</span><span class="n">vol</span></div>
 
 
@@ -555,6 +565,7 @@
             <span class="n">jidx</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hds</span><span class="o">.</span><span class="n">ncol</span><span class="p">)])</span>
             <span class="n">idx</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;i</span><span class="si">{0:04d}</span><span class="s2">_j</span><span class="si">{1:04d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hds</span><span class="o">.</span><span class="n">ncol</span><span class="p">)])</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[:</span><span class="n">hds</span><span class="o">.</span><span class="n">nrow</span><span class="o">*</span><span class="n">hds</span><span class="o">.</span><span class="n">ncol</span><span class="p">]</span>
+
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">)</span>
     <span class="n">data_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
     <span class="n">data_cols</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
@@ -689,6 +700,94 @@
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_kper</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">df_kper</span><span class="o">.</span><span class="n">k</span><span class="p">,</span><span class="n">df_kper</span><span class="o">.</span><span class="n">i</span><span class="p">,</span><span class="n">df_kper</span><span class="o">.</span><span class="n">j</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;obsnme&quot;</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="setup_sft_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sft_obs">[docs]</a><span class="k">def</span> <span class="nf">setup_sft_obs</span><span class="p">(</span><span class="n">sft_file</span><span class="p">,</span><span class="n">ins_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">start_datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">times</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;writes an instruction file for a mt3d-usgs sft output file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        sft_file : str</span>
+<span class="sd">            the sft output file (ASCII)</span>
+<span class="sd">        ins_file : str</span>
+<span class="sd">            the name of the instruction file to create.  If None, the name</span>
+<span class="sd">            is &lt;sft_file&gt;.ins.  Default is None</span>
+<span class="sd">        start_datetime : str</span>
+<span class="sd">            a pandas.to_datetime() compatible str.  If not None,</span>
+<span class="sd">            then the resulting observation names have the datetime</span>
+<span class="sd">            suffix.  If None, the suffix is the output totim.  Default</span>
+<span class="sd">            is None</span>
+<span class="sd">        times : iterable</span>
+<span class="sd">            a container of times to make observations for.  If None, all times are used.</span>
+<span class="sd">            Default is None.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            a dataframe with obsnme and obsval for the sft simulated concentrations and flows.</span>
+<span class="sd">            If inschek was not successfully run, then returns None</span>
+
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">        setups up observations for SW conc, GW conc and flowgw for all times and reaches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sft_file</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">times</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">utimes</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">times</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">utimes</span><span class="p">:</span>
+            <span class="n">missing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;the following times are missing:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)))</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">times</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">start_datetime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">start_datetime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">start_datetime</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;time_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">start_datetime</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;time_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">time_str</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">%m%Y&quot;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;time_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0:08.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;ins_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;l1</span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="s2">&quot;ins_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;l1 w w w !sfrconc</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">! !flowgw</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">! !gwconc</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span>\
+                                     <span class="nb">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">sfr_node</span><span class="p">,</span><span class="n">x</span><span class="o">.</span><span class="n">time_str</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">ins_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ins_file</span> <span class="o">=</span> <span class="n">sft_file</span><span class="o">+</span><span class="s2">&quot;.ins&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pif ~</span><span class="se">\n</span><span class="s2">l2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">ins_str</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">sft_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<span class="c1"># def setup_ssm_parameters(mt):</span>
+<span class="c1">#     &quot;&quot;&quot;Set up ssm file multiplier parameters for the point sources and sinks</span>
+<span class="c1">#</span>
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#         ssm_file : str</span>
+<span class="c1">#             the ssm file to parameterize</span>
+<span class="c1">#</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     try:</span>
+<span class="c1">#         import flopy</span>
+<span class="c1">#     except Exception as e:</span>
+<span class="c1">#         raise Exception(&quot;error importing flopy: {0}&quot;.format(str(e)))</span>
+<span class="c1">#</span>
+<span class="c1">#     # first load the stress period list data in the ssm file</span>
+<span class="c1">#</span>
+<span class="c1">#     ssm = flopy.mt3d.Mt3dSsm.load(ssm_file,</span>
 </pre></div>
 
           </div>

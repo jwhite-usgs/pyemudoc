@@ -610,6 +610,40 @@ that have one or more violating values.  Default is None (no bounds enforcement)
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown">
+<em class="property">classmethod </em><code class="descname">from_gaussian_draw_homegrown</code><span class="sig-paren">(</span><em>pe</em>, <em>cov</em>, <em>num_reals=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_gaussian_draw_homegrown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown" title="Permalink to this definition">¶</a></dt>
+<dd><p>this is an experiemental method to help speed up draws
+for a really large (&gt;1E6) ensemble sizes.  gets around the
+dataframe expansion-by-loc that is one col at a time.  Implements
+multivariate normal draws to get around the 32-bit lapack limitations
+in scipy/numpy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
+needed to call ParameterEnsemble constructor</li>
+<li><strong>cov</strong> (<em>(</em><em>pyemu.Cov</em><em>)</em>) – covariance matrix to use for drawing</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this constructor transforms the pe argument!</p>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="pyemu.en.ParameterEnsemble.from_uniform_draw">
 <em class="property">classmethod </em><code class="descname">from_uniform_draw</code><span class="sig-paren">(</span><em>pe</em>, <em>num_reals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_uniform_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_uniform_draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>this is an experiemental method to help speed up uniform draws

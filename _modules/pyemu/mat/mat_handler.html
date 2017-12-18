@@ -1676,6 +1676,42 @@
         <span class="n">col_names</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">(),</span><span class="n">row_names</span><span class="o">=</span><span class="n">row_names</span><span class="p">,</span><span class="n">col_names</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="Matrix.from_names"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_names">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_names</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">row_names</span><span class="p">,</span><span class="n">col_names</span><span class="p">,</span><span class="n">isdiagonal</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">autoalign</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; class method to create a new Matrix instance from</span>
+<span class="sd">        row names and column names, filled with trash</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            row_names : iterable</span>
+<span class="sd">                row names for the new matrix</span>
+<span class="sd">            col_names : iterable</span>
+<span class="sd">                col_names for the new matrix</span>
+<span class="sd">            isdiagonal : bool</span>
+<span class="sd">                flag for diagonal matrix. Default is False</span>
+<span class="sd">            autoalign : bool</span>
+<span class="sd">                flag for autoaligning new matrix</span>
+<span class="sd">                during linear algebra calcs. Default</span>
+<span class="sd">                is True</span>
+<span class="sd">            random : bool</span>
+<span class="sd">                flag for contents of the trash matrix.</span>
+<span class="sd">                If True, fill with random numbers, if False, fill with zeros</span>
+<span class="sd">                Default is False</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            mat : Matrix</span>
+<span class="sd">                the new Matrix instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">random</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row_names</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">))),</span> <span class="n">row_names</span><span class="o">=</span><span class="n">row_names</span><span class="p">,</span>
+                       <span class="n">col_names</span><span class="o">=</span><span class="n">col_names</span><span class="p">,</span> <span class="n">isdiagonal</span><span class="o">=</span><span class="n">isdiagonal</span><span class="p">,</span> <span class="n">autoalign</span><span class="o">=</span><span class="n">autoalign</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">row_names</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">col_names</span><span class="p">))),</span><span class="n">row_names</span><span class="o">=</span><span class="n">row_names</span><span class="p">,</span>
+                      <span class="n">col_names</span><span class="o">=</span><span class="n">col_names</span><span class="p">,</span><span class="n">isdiagonal</span><span class="o">=</span><span class="n">isdiagonal</span><span class="p">,</span><span class="n">autoalign</span><span class="o">=</span><span class="n">autoalign</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Matrix.to_dataframe"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.to_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return a pandas.DataFrame representation of the Matrix object</span>
 
@@ -1864,8 +1900,34 @@
         <span class="n">otherobs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">col_names</span><span class="p">)</span>
         <span class="n">selfidx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">selfobs</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parnames</span><span class="p">]</span>
         <span class="n">otheridx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">otherobs</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parnames</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="n">selfidx</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="n">otheridx</span><span class="p">]</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="n">selfidx</span><span class="p">]</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="n">otheridx</span><span class="p">]</span></div>
 
+
+<div class="viewcode-block" id="Jco.from_pst"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Jco.from_pst">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pst</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span> <span class="n">random</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;construct a new empty Jco from a control file filled</span>
+<span class="sd">        with trash</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            pst : Pst</span>
+<span class="sd">                a control file instance.  If type is &#39;str&#39;,</span>
+<span class="sd">                Pst is loaded from filename</span>
+<span class="sd">            random : bool</span>
+<span class="sd">                flag for contents of the trash matrix.</span>
+<span class="sd">                If True, fill with random numbers, if False, fill with zeros</span>
+<span class="sd">                Default is False</span>
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">            jco : Jco</span>
+<span class="sd">                the new Jco instance</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="n">pst</span> <span class="o">=</span> <span class="n">Pst</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Jco</span><span class="o">.</span><span class="n">from_names</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">,</span> <span class="n">random</span><span class="o">=</span><span class="n">random</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="Cov"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Cov">[docs]</a><span class="k">class</span> <span class="nc">Cov</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;a subclass of Matrix for handling diagonal or dense Covariance matrices</span>

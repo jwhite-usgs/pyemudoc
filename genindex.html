@@ -328,10 +328,10 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData.formatted_values">formatted_values (pyemu.pst.pst_controldata.ControlData attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_ascii">from_ascii() (pyemu.mat.mat_handler.Matrix class method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_binary">from_binary() (pyemu.mat.mat_handler.Matrix class method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.from_dataframe">from_dataframe() (pyemu.en.Ensemble class method)</a>
@@ -344,9 +344,13 @@
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw">from_gaussian_draw() (pyemu.en.ParameterEnsemble class method)</a>
 </li>
+      <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown">from_gaussian_draw_homegrown() (pyemu.en.ParameterEnsemble class method)</a>
+</li>
       <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.from_id_gaussian_draw">from_id_gaussian_draw() (pyemu.en.ObservationEnsemble class method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.from_io_files">from_io_files() (pyemu.pst.pst_handler.Pst class method)</a>
+</li>
+      <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_names">from_names() (pyemu.mat.mat_handler.Matrix class method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_observation_data">from_observation_data() (pyemu.mat.mat_handler.Cov class method)</a>
 </li>
@@ -355,6 +359,8 @@
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parameter_data">from_parameter_data() (pyemu.mat.mat_handler.Cov class method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parbounds">from_parbounds() (pyemu.mat.mat_handler.Cov class method)</a>
+</li>
+      <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Jco.from_pst">from_pst() (pyemu.mat.mat_handler.Jco class method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_uncfile">from_uncfile() (pyemu.mat.mat_handler.Cov class method)</a>
 </li>
@@ -402,10 +408,10 @@
 </li>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar.get_errvar_dataframe">get_errvar_dataframe() (pyemu.ev.ErrVar method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.sc.Schur.get_forecast_summary">get_forecast_summary() (pyemu.sc.Schur method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar.get_identifiability_dataframe">get_identifiability_dataframe() (pyemu.ev.ErrVar method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.get_localizer">get_localizer() (pyemu.smoother.EnsembleSmoother method)</a>
@@ -431,6 +437,8 @@
       <li><a href="source/pyemu.html#pyemu.sc.Schur.get_removed_obs_group_importance">get_removed_obs_group_importance() (pyemu.sc.Schur method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.sc.Schur.get_removed_obs_importance">get_removed_obs_importance() (pyemu.sc.Schur method)</a>
+</li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get_res_stats">get_res_stats() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.get_uncfile_dimensions">get_uncfile_dimensions() (pyemu.mat.mat_handler.Cov static method)</a>
 </li>
@@ -960,6 +968,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sft_obs">setup_sft_obs() (in module pyemu.utils.gw_utils)</a>
+</li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_smp">setup_smp() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_water_budget_obs">setup_water_budget_obs() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
@@ -1106,11 +1116,15 @@
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_grid_tpl">write_grid_tpl() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
-      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.write_parfile">write_parfile() (in module pyemu.pst.pst_utils)</a>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.write_input_files">write_input_files() (in module pyemu.pst.pst_utils)</a>
+
+      <ul>
+        <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_input_files">(pyemu.pst.pst_handler.Pst method)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.write_parvals_in_tplfiles">write_parvals_in_tplfiles() (in module pyemu.pst.pst_utils)</a>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.write_parfile">write_parfile() (in module pyemu.pst.pst_utils)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.write_pp_file">write_pp_file() (in module pyemu.utils.gw_utils)</a>
 
@@ -1130,7 +1144,7 @@
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_u2d">write_u2d() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
-      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_zone_tpl">write_zone_tpl() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_zone_tpl">write_zone_tpl() (pyemu.utils.helpers.PstFromFlopyModel static method)</a>
 </li>
   </ul></td>
 </tr></table>

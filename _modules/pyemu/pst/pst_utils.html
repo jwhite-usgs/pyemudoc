@@ -285,7 +285,7 @@
     <span class="k">return</span> <span class="n">par_names</span></div>
 
 
-<div class="viewcode-block" id="write_parvals_in_tplfiles"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.write_parvals_in_tplfiles">[docs]</a><span class="k">def</span> <span class="nf">write_parvals_in_tplfiles</span><span class="p">(</span><span class="n">pst</span><span class="p">):</span>
+<div class="viewcode-block" id="write_input_files"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.write_input_files">[docs]</a><span class="k">def</span> <span class="nf">write_input_files</span><span class="p">(</span><span class="n">pst</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;write parameter values to a model input files using a template files with</span>
 <span class="sd">    current parameter values (stored in Pst.parameter_data.parval1).</span>
 <span class="sd">    This is a simple implementation of what PEST does.  It does not</span>
@@ -297,8 +297,10 @@
 <span class="sd">        a Pst instance</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">par</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span>
+    <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parval1_trans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">parval1</span> <span class="o">*</span> <span class="n">par</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">+</span> <span class="n">par</span><span class="o">.</span><span class="n">offset</span>
     <span class="k">for</span> <span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">template_files</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">input_files</span><span class="p">):</span>
-        <span class="n">write_to_template</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">)</span></div>
+        <span class="n">write_to_template</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1_trans</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="write_to_template"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.write_to_template">[docs]</a><span class="k">def</span> <span class="nf">write_to_template</span><span class="p">(</span><span class="n">parvals</span><span class="p">,</span><span class="n">tpl_file</span><span class="p">,</span><span class="n">in_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; write parameter values to model input files using template files</span>
