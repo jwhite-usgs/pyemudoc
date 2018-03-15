@@ -1084,6 +1084,88 @@ written to shapename</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.gw_utils.setup_mtlist_budget_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_mtlist_budget_obs</code><span class="sig-paren">(</span><em>list_filename</em>, <em>gw_filename='mtlist_gw.dat'</em>, <em>sw_filename='mtlist_sw.dat'</em>, <em>start_datetime='1-1-1970'</em>, <em>gw_prefix='gw'</em>, <em>sw_prefix='sw'</em>, <em>save_setup_file=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_mtlist_budget_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_mtlist_budget_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup observations of gw (and optionally sw) mass budgets from mt3dusgs list file.  writes
+an instruction file and also a _setup_.csv to use when constructing a pest
+control file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>list_filename</strong> (<em>str</em>) – modflow list file</li>
+<li><strong>gw_filename</strong> (<em>str</em>) – output filename that will contain the gw budget observations. Default is
+“mtlist_gw.dat”</li>
+<li><strong>sw_filename</strong> (<em>str</em>) – output filename that will contain the sw budget observations. Default is
+“mtlist_sw.dat”</li>
+<li><strong>start_datetime</strong> (<em>str</em>) – an str that can be parsed into a pandas.TimeStamp.  used to give budget
+observations meaningful names</li>
+<li><strong>gw_prefix</strong> (<em>str</em>) – a prefix to add to the GW budget observations.  Useful if processing
+more than one list file as part of the forward run process. Default is ‘gw’.</li>
+<li><strong>sw_prefix</strong> (<em>str</em>) – a prefix to add to the SW budget observations.  Useful if processing
+more than one list file as part of the forward run process. Default is ‘sw’.</li>
+<li><strong>save_setup_file</strong> (<em>(</em><em>boolean</em><em>)</em>) – a flag to save _setup_&lt;list_filename&gt;.csv file that contains useful
+control file information</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>frun_line, ins_filenames, df</strong> – the command to add to the forward run script, the names of the instruction
+files and a dataframe with information for constructing a control file.  If INSCHEK fails
+to run, df = None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str, list(str), pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function uses INSCHEK to get observation values; the observation values are
+the values of the list file list_filename.  If INSCHEK fails to run, the obseravtion
+values are set to 1.0E+10</p>
+<p>the instruction files are named &lt;out_filename&gt;.ins</p>
+<p class="last">It is recommended to use the default value for gw_filename or sw_filename.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_mtlist_budget_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_mtlist_budget_obs</code><span class="sig-paren">(</span><em>list_filename</em>, <em>gw_filename='mtlist_gw.dat'</em>, <em>sw_filename='mtlist_sw.dat'</em>, <em>start_datetime='1-1-1970'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_mtlist_budget_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_mtlist_budget_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>process an MT3D list file to extract mass budget entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>list_filename</strong> (<em>str</em>) – the mt3d list file</li>
+<li><strong>gw_filename</strong> (<em>str</em>) – the name of the output file with gw mass budget information.
+Default is “mtlist_gw.dat”</li>
+<li><strong>sw_filename</strong> (<em>str</em>) – the name of the output file with sw mass budget information.
+Default is “mtlist_sw.dat”</li>
+<li><strong>start_datatime</strong> (<em>str</em>) – an str that can be cast to a pandas.TimeStamp.  Used to give
+observations a meaningful name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>gw</strong> (<em>pandas.DataFrame</em>) – the gw mass dataframe</li>
+<li><strong>sw</strong> (<em>pandas.DataFrame (optional)</em>) – the sw mass dataframe</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>requires flopy</p>
+<p class="last">if SFT is not active, no SW mass budget will be returned</p>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_mflist_budget_obs">
 <code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_mflist_budget_obs</code><span class="sig-paren">(</span><em>list_filename</em>, <em>flx_filename='flux.dat'</em>, <em>vol_filename='vol.dat'</em>, <em>start_datetime=&quot;1-1'1970&quot;</em>, <em>prefix=''</em>, <em>save_setup_file=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_mflist_budget_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_mflist_budget_obs" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup observations of budget volume and flux from modflow list file.  writes
@@ -1188,10 +1270,10 @@ returns np.NaN if the value should be skipped.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>forward_run_line</strong> – a python code str to add to the forward run script</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>(forward_run_line, df)</strong> – a python code str to add to the forward run script and the setup info for the observations</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str, pd.DataFrame</p>
 </td>
 </tr>
 </tbody>
@@ -1256,7 +1338,7 @@ then the file is treated as a UcnFile type.</td>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_sft_obs">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sft_obs</code><span class="sig-paren">(</span><em>sft_file</em>, <em>ins_file=None</em>, <em>start_datetime=None</em>, <em>times=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sft_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sft_obs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sft_obs</code><span class="sig-paren">(</span><em>sft_file</em>, <em>ins_file=None</em>, <em>start_datetime=None</em>, <em>times=None</em>, <em>ncomp=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sft_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sft_obs" title="Permalink to this definition">¶</a></dt>
 <dd><p>writes an instruction file for a mt3d-usgs sft output file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1272,6 +1354,7 @@ suffix.  If None, the suffix is the output totim.  Default
 is None</li>
 <li><strong>times</strong> (<em>iterable</em>) – a container of times to make observations for.  If None, all times are used.
 Default is None.</li>
+<li><strong>ncomp</strong> (<em>int</em>) – number of components in transport model. Default is 1.</li>
 </ul>
 </td>
 </tr>
@@ -1290,6 +1373,143 @@ If inschek was not successfully run, then returns None</p>
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_sft_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sft_obs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sft_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sft_obs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.setup_sfr_seg_parameters">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sfr_seg_parameters</code><span class="sig-paren">(</span><em>nam_file, model_ws='.', par_cols=['flow', 'runoff', 'hcond1', 'hcond2', 'pptsw'], tie_hcond=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup multiplier parameters for SFR segment data.  Just handles the
+standard input case, not all the cryptic SFR options.  Loads the dis, bas, and sfr files
+with flopy using model_ws.  However, expects that apply_sfr_seg_parameters() will be called
+from within model_ws at runtime.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nam_file</strong> (<em>str</em>) – MODFLOw name file.  DIS, BAS, and SFR must be available as pathed in the nam_file</li>
+<li><strong>model_ws</strong> (<em>str</em>) – model workspace for flopy to load the MODFLOW model from</li>
+<li><strong>par_cols</strong> (<em>list</em><em>(</em><em>str</em><em>)</em>) – segment data entires to parameterize</li>
+<li><strong>tie_hcond</strong> (<em>flag to use same mult par for hcond1 and hcond2 for a given segment.  Default is True</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – a dataframe with useful parameter setup information</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the number (and numbering) of segment data entries must consistent across
+all stress periods.
+writes &lt;nam_file&gt;+”_backup_.sfr” as the backup of the original sfr file
+skips values = 0.0 since multipliers don’t work for these</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_sfr_seg_parameters">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_seg_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply the SFR segement multiplier parameters.  Expected to be run in the same dir
+as the model exists</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>sfr</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">flopy.modflow.ModflowSfr instance</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">expects “sfr_seg_pars.config” to exist
+expects &lt;nam_file&gt;+”_backup_.sfr” to exist</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.setup_sfr_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sfr_obs</code><span class="sig-paren">(</span><em>sfr_out_file</em>, <em>seg_group_dict=None</em>, <em>ins_file=None</em>, <em>model=None</em>, <em>include_path=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sfr_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sfr_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup observations using the sfr ASCII output file.  Setups
+the ability to aggregate flows for groups of segments.  Applies
+only flow to aquier and flow out.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sft_out_file</strong> (<em>str</em>) – the existing SFR output file</li>
+<li><strong>seg_group_dict</strong> (<em>dict</em>) – a dictionary of SFR segements to aggregate together for a single obs.
+the key value in the dict is the base observation name. If None, all segments
+are used as individual observations. Default is None</li>
+<li><strong>model</strong> (<em>flopy.mbase</em>) – a flopy model.  If passed, the observation names will have the datetime of the
+observation appended to them.  If None, the observation names will have the
+stress period appended to them. Default is None.</li>
+<li><strong>include_path</strong> (<em>bool</em>) – flag to prepend sfr_out_file path to sfr_obs.config.  Useful for setting up
+process in separate directory for where python is running.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – dataframe of obsnme, obsval and obgnme if inschek run was successful.  Else None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_sfr_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_obs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply the sfr observation process - pairs with setup_sfr_obs().
+requires sfr_obs.config.  Writes &lt;sfr_out_file&gt;.processed, where
+&lt;sfr_out_file&gt; is defined in “sfr_obs.config”</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>df</strong> – a dataframe of aggregrated sfr segment aquifer and outflow</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pd.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.load_sfr_out">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">load_sfr_out</code><span class="sig-paren">(</span><em>sfr_out_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#load_sfr_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.load_sfr_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>load an ASCII SFR output file into a dictionary of kper: dataframes.  aggregates
+segments and only returns flow to aquifer and flow out.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sfr_out_file</strong> (<em>str</em>) – SFR ASCII output file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>sfr_dict</strong> – dictionary of {kper:dataframe}</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyemu.utils.helpers">
 <span id="pyemu-utils-helpers-module"></span><h2>pyemu.utils.helpers module<a class="headerlink" href="#module-pyemu.utils.helpers" title="Permalink to this headline">¶</a></h2>
@@ -1297,7 +1517,7 @@ If inschek was not successfully run, then returns None</p>
 perform complex tasks</p>
 <dl class="function">
 <dt id="pyemu.utils.helpers.run">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd_str</em>, <em>cwd='.'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.run" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd_str</em>, <em>cwd='.'</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>an OS agnostic function to execute command</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1306,6 +1526,7 @@ perform complex tasks</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>cmd_str</strong> (<em>str</em>) – the str to execute with os.system()</li>
 <li><strong>cwd</strong> (<em>str</em>) – the directory to execute the command in</li>
+<li><strong>verbose</strong> (<em>bool</em>) – flag to echo to stdout complete cmd str</li>
 </ul>
 </td>
 </tr>
@@ -1378,7 +1599,7 @@ for one or more parameters in a full covariance matrix</p>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.kl_setup">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">kl_setup</code><span class="sig-paren">(</span><em>num_eig</em>, <em>sr</em>, <em>struct_file</em>, <em>array_dict</em>, <em>basis_file='basis.dat'</em>, <em>tpl_file='kl.tpl'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#kl_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.kl_setup" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">kl_setup</code><span class="sig-paren">(</span><em>num_eig</em>, <em>sr</em>, <em>struct</em>, <em>array_dict</em>, <em>basis_file='basis.jco'</em>, <em>tpl_file='kl.tpl'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#kl_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.kl_setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup a karhuenen-Loeve based parameterization for a given
 geostatistical structure.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1387,11 +1608,12 @@ geostatistical structure.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>num_eig</strong> (<em>int</em>) – number of basis vectors to retain in the reduced basis</li>
-<li><strong>struct_file</strong> (<em>str</em>) – a pest-style geostatistical structure file</li>
+<li><strong>sr</strong> (<em>flopy.reference.SpatialReference</em>) – </li>
+<li><strong>struct</strong> (<em>str</em><em> or </em><em>pyemu.geostats.Geostruct</em>) – geostatistical structure (or file containing one)</li>
 <li><strong>array_dict</strong> (<em>dict</em>) – a dict of arrays to setup as KL-based parameters.  The key becomes the
 parameter name prefix. The total number of parameters is
 len(array_dict) * num_eig</li>
-<li><strong>basis_file</strong> (<em>str</em>) – the name of the binary file where the reduced basis will be saved</li>
+<li><strong>basis_file</strong> (<em>str</em>) – the name of the PEST-format binary file where the reduced basis will be saved</li>
 <li><strong>tpl_file</strong> (<em>str</em>) – the name of the template file to make.  The template
 file is a csv file with the parameter names, the
 original factor values,and the template entries.
@@ -1525,7 +1747,7 @@ equation will not be included in the control file</li>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.start_slaves">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">start_slaves</code><span class="sig-paren">(</span><em>slave_dir</em>, <em>exe_rel_path</em>, <em>pst_rel_path</em>, <em>num_slaves=None</em>, <em>slave_root='..'</em>, <em>port=4004</em>, <em>rel_path=None</em>, <em>local=True</em>, <em>cleanup=True</em>, <em>master_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#start_slaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.start_slaves" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">start_slaves</code><span class="sig-paren">(</span><em>slave_dir</em>, <em>exe_rel_path</em>, <em>pst_rel_path</em>, <em>num_slaves=None</em>, <em>slave_root='..'</em>, <em>port=4004</em>, <em>rel_path=None</em>, <em>local=True</em>, <em>cleanup=True</em>, <em>master_dir=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#start_slaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.start_slaves" title="Permalink to this definition">¶</a></dt>
 <dd><p>start a group of pest(++) slaves on the local machine</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1544,6 +1766,7 @@ slave_dir, defaults to the uppermost level of the slave dir</li>
 <li><strong>master_dir</strong> (<em>str</em>) – name of directory for master instance.  If master_dir
 exists, then it will be removed.  If master_dir is None,
 no master instance will be started</li>
+<li><strong>verbose</strong> (<em>bool</em>) – flag to echo useful information to stdout</li>
 </ul>
 </td>
 </tr>
@@ -1559,79 +1782,6 @@ dirs will be removed unless cleanup is false</p>
 <p>start 10 slaves using the directory “template” as the base case and
 also start a master instance in a directory “master”.</p>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.start_slaves(&quot;template&quot;,&quot;pestpp&quot;,&quot;pest.pst&quot;,10,master_dir=&quot;master&quot;)</span></code></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyemu.utils.helpers.plot_summary_distributions">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">plot_summary_distributions</code><span class="sig-paren">(</span><em>df</em>, <em>ax=None</em>, <em>label_post=False</em>, <em>label_prior=False</em>, <em>subplots=False</em>, <em>figsize=(11</em>, <em>8.5)</em>, <em>pt_color='b'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#plot_summary_distributions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.plot_summary_distributions" title="Permalink to this definition">¶</a></dt>
-<dd><p>helper function to plot gaussian distrbutions from prior and posterior
-means and standard deviations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>df</strong> (<em>pandas.DataFrame</em>) – a dataframe and csv file.  Must have columns named:
-‘prior_mean’,’prior_stdev’,’post_mean’,’post_stdev’.  If loaded
-from a csv file, column 0 is assumed to tbe the index</li>
-<li><strong>ax</strong> (<em>matplotlib.pyplot.axis</em>) – If None, and not subplots, then one is created
-and all distributions are plotted on a single plot</li>
-<li><strong>label_post</strong> (<em>bool</em>) – flag to add text labels to the peak of the posterior</li>
-<li><strong>label_prior</strong> (<em>bool</em>) – flag to add text labels to the peak of the prior</li>
-<li><strong>subplots</strong> (<em>(</em><em>boolean</em><em>)</em>) – flag to use subplots.  If True, then 6 axes per page
-are used and a single prior and posterior is plotted on each</li>
-<li><strong>figsize</strong> (<em>tuple</em>) – matplotlib figure size</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>figs</strong> (<em>list</em>) – list of figures</li>
-<li><strong>axes</strong> (<em>list</em>) – list of axes</li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>This is useful for demystifying FOSM results</p>
-<p class="last">if subplots is False, a single axis is returned</p>
-</div>
-<p class="rubric">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.plot_summary_distributions(&quot;pest.par.usum.csv&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyemu.utils.helpers.gaussian_distribution">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">gaussian_distribution</code><span class="sig-paren">(</span><em>mean</em>, <em>stdev</em>, <em>num_pts=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#gaussian_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.gaussian_distribution" title="Permalink to this definition">¶</a></dt>
-<dd><p>get an x and y numpy.ndarray that spans the +/- 4
-standard deviation range of a gaussian distribution with
-a given mean and standard deviation. useful for plotting</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mean</strong> (<em>float</em>) – the mean of the distribution</li>
-<li><strong>stdev</strong> (<em>float</em>) – the standard deviation of the distribution</li>
-<li><strong>num_pts</strong> (<em>int</em>) – the number of points in the returned ndarrays.
-Default is 50</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>x</strong> (<em>numpy.ndarray</em>) – the x-values of the distribution</li>
-<li><strong>y</strong> (<em>numpy.ndarray</em>) – the y-values of the distribution</li>
-</ul>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="function">
@@ -1727,7 +1877,7 @@ that listed in parse_dir_for_io_files()</p>
 
 <dl class="class">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel">
-<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>bc_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>bc_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>bc_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>bc_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>all_wells=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="docutils">
 <dt>a monster helper class to setup multiplier parameters for an</dt>
@@ -1844,6 +1994,13 @@ run script.  Default is [].</li>
 <li><strong>model_exe_name</strong> (<em>str</em>) – binary name to run modflow.  If None, a default from flopy is used,
 which is dangerous because of the non-standard binary names
 (e.g. MODFLOW-NWT_x64, MODFLOWNWT, mfnwt, etc). Default is None.</li>
+<li><strong>build_prior</strong> (<em>bool</em>) – flag to build prior covariance matrix. Default is Triue</li>
+<li><strong>sfr_obs</strong> (<em>bool</em>) – flag to include observations of flow and aquifer exchange from
+the sfr ASCII output file</li>
+<li><strong>all_wells</strong> (<em>bool</em>) – flag to add multiplier parameters for every wells in all stress periods.
+These parameters are treated as independent - not correlated in space or
+time to each other or any other parameters.  If True, ‘wel.flux’ must not
+be in bc_props</li>
 </ul>
 </td>
 </tr>
@@ -1866,6 +2023,18 @@ which is dangerous because of the non-standard binary names
 <p class="last">works a lot better of TEMPCHEK, INSCHEK and PESTCHEK are available in the
 system path variable</p>
 </div>
+<dl class="method">
+<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_obs">
+<code class="descname">setup_sfr_obs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_sfr_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup sfr ASCII observations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars">
+<code class="descname">setup_sfr_pars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_sfr_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup multiplier parameters for sfr segment data</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_mult_dirs">
 <code class="descname">setup_mult_dirs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_mult_dirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_mult_dirs" title="Permalink to this definition">¶</a></dt>
@@ -2058,15 +2227,28 @@ Util2D filename</p>
 
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.build_prior">
-<code class="descname">build_prior</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_prior" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build_prior</code><span class="sig-paren">(</span><em>fmt='ascii'</em>, <em>filename=None</em>, <em>droptol=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_prior" title="Permalink to this definition">¶</a></dt>
 <dd><p>build a prior parameter covariance matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>cov</strong> – a full covariance matrix</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fmt</strong> (<em>str</em>) – the format to save the cov matrix.  Options are “ascii”,”binary”,”uncfile”.
+default is “ascii”</li>
+<li><strong>filename</strong> (<em>str</em>) – the filename to save the prior cov matrix to.  If None, the name is formed using
+model nam_file name.  Default is None.</li>
+<li><strong>droptol</strong> (<em>float</em>) – tolerance for dropping near-zero values when writing compressed binary.
+Default is None</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>cov</strong> (<em>pyemu.Cov</em>)</li>
+<li><em>a full covariance matrix</em></li>
+</ul>
+</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2074,9 +2256,18 @@ Util2D filename</p>
 
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.build_pst">
-<code class="descname">build_pst</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_pst" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build_pst</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_pst" title="Permalink to this definition">¶</a></dt>
 <dd><p>build the pest control file using the parameterizations and
 observations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – the filename to save the pst to.  If None, the name if formed from
+the model namfile name.  Default is None.</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>calls pyemu.Pst.from_io_files</p>
@@ -2154,6 +2345,12 @@ parameters</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_all_wells">
+<code class="descname">setup_all_wells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_all_wells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_all_wells" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper to setup crazy numbers of well flux multipliers</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.bc_helper">
 <code class="descname">bc_helper</code><span class="sig-paren">(</span><em>k</em>, <em>pak</em>, <em>attr</em>, <em>col</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.bc_helper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.bc_helper" title="Permalink to this definition">¶</a></dt>
 <dd><p>helper to setup boundary condition multiplier parameters for a given
@@ -2222,8 +2419,8 @@ volume and flux water buget information</p>
 the parameterization constructed by PstFromFlopyModel during a forward run</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>requires “arr_pars.csv”</p>
-<p class="last">should be added to the forward_run.py script</p>
+<p>requires “arr_pars.csv” - this file is written by PstFromFlopy</p>
+<p class="last">the function should be added to the forward_run.py script</p>
 </div>
 </dd></dl>
 
@@ -2237,6 +2434,119 @@ the parameterization constructed by PstFromFlopyModel during a forward run</p>
 <p>requires “bc_pars.csv”</p>
 <p class="last">should be added to the forward_run.py script</p>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.apply_all_wells">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">apply_all_wells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#apply_all_wells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.apply_all_wells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.plot_flopy_par_ensemble">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">plot_flopy_par_ensemble</code><span class="sig-paren">(</span><em>pst</em>, <em>pe</em>, <em>num_reals=None</em>, <em>model=None</em>, <em>fig_axes_generator=None</em>, <em>pcolormesh_transform=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#plot_flopy_par_ensemble"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.plot_flopy_par_ensemble" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to plot ensemble of parameter values for a flopy/modflow model.  Assumes
+the FlopytoPst helper was used to setup the model and the forward run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pst</strong> (<em>Pst instance</em>) – </li>
+<li><strong>pe</strong> (<em>ParameterEnsemble instance</em>) – </li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to process.  If None, all realizations are processed.
+default is None</li>
+<li><strong>model</strong> (<em>flopy.mbase</em>) – model instance used for masking inactive areas and also geo-locating plots.  If None,
+generic plots are made.  Default is None.</li>
+<li><strong>fig_axes_generator</strong> (<em>function</em>) – a function that returns a pyplot.figure and list of pyplot.axes instances for plots.
+If None, a generic 8.5inX11in figure with 3 rows and 2 cols is used.</li>
+<li><strong>pcolormesh_transform</strong> (<em>cartopy.csr.CRS</em>) – transform to map pcolormesh plot into correct location.  Requires model arg</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Needs “arr_pars.csv” to run</p>
+</div>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">add better support for log vs nonlog- currently just logging everything
+add support for cartopy basemap and stamen tiles</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.plot_summary_distributions">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">plot_summary_distributions</code><span class="sig-paren">(</span><em>df</em>, <em>ax=None</em>, <em>label_post=False</em>, <em>label_prior=False</em>, <em>subplots=False</em>, <em>figsize=(11</em>, <em>8.5)</em>, <em>pt_color='b'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#plot_summary_distributions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.plot_summary_distributions" title="Permalink to this definition">¶</a></dt>
+<dd><p>helper function to plot gaussian distrbutions from prior and posterior
+means and standard deviations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>df</strong> (<em>pandas.DataFrame</em>) – a dataframe and csv file.  Must have columns named:
+‘prior_mean’,’prior_stdev’,’post_mean’,’post_stdev’.  If loaded
+from a csv file, column 0 is assumed to tbe the index</li>
+<li><strong>ax</strong> (<em>matplotlib.pyplot.axis</em>) – If None, and not subplots, then one is created
+and all distributions are plotted on a single plot</li>
+<li><strong>label_post</strong> (<em>bool</em>) – flag to add text labels to the peak of the posterior</li>
+<li><strong>label_prior</strong> (<em>bool</em>) – flag to add text labels to the peak of the prior</li>
+<li><strong>subplots</strong> (<em>(</em><em>boolean</em><em>)</em>) – flag to use subplots.  If True, then 6 axes per page
+are used and a single prior and posterior is plotted on each</li>
+<li><strong>figsize</strong> (<em>tuple</em>) – matplotlib figure size</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>figs</strong> (<em>list</em>) – list of figures</li>
+<li><strong>axes</strong> (<em>list</em>) – list of axes</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This is useful for demystifying FOSM results</p>
+<p class="last">if subplots is False, a single axis is returned</p>
+</div>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.plot_summary_distributions(&quot;pest.par.usum.csv&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.gaussian_distribution">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">gaussian_distribution</code><span class="sig-paren">(</span><em>mean</em>, <em>stdev</em>, <em>num_pts=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#gaussian_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.gaussian_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>get an x and y numpy.ndarray that spans the +/- 4
+standard deviation range of a gaussian distribution with
+a given mean and standard deviation. useful for plotting</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mean</strong> (<em>float</em>) – the mean of the distribution</li>
+<li><strong>stdev</strong> (<em>float</em>) – the standard deviation of the distribution</li>
+<li><strong>num_pts</strong> (<em>int</em>) – the number of points in the returned ndarrays.
+Default is 50</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>x</strong> (<em>numpy.ndarray</em>) – the x-values of the distribution</li>
+<li><strong>y</strong> (<em>numpy.ndarray</em>) – the y-values of the distribution</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -2473,7 +2783,7 @@ the PEST(++) model independent framework</p>
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

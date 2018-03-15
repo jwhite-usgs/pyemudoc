@@ -44,16 +44,19 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">get_common_elements</span><span class="p">,</span><span class="n">Matrix</span>
+<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">get_common_elements</span><span class="p">,</span><span class="n">Matrix</span><span class="p">,</span><span class="n">Cov</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst.pst_utils</span> <span class="k">import</span> <span class="n">write_parfile</span><span class="p">,</span><span class="n">read_parfile</span>
+<span class="kn">from</span> <span class="nn">pyemu.plot.plot_utils</span> <span class="k">import</span> <span class="n">ensemble_helper</span>
 
 <span class="n">SEED</span> <span class="o">=</span> <span class="mi">358183147</span> <span class="c1">#from random.org on 5 Dec 2016</span>
 <span class="c1">#print(&quot;setting random seed&quot;)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="Ensemble"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble">[docs]</a><span class="k">class</span> <span class="nc">Ensemble</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; The base class type for handling parameter and observation ensembles.</span>
@@ -81,23 +84,29 @@
         <span class="k">assert</span> <span class="s2">&quot;columns&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span><span class="s2">&quot;ensemble requires &#39;columns&#39; kwarg&quot;</span>
 
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
         <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">mean_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Ensemble requires &#39;mean_values&#39; kwarg&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__mean_values</span> <span class="o">=</span> <span class="n">mean_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mean_values</span> <span class="o">=</span> <span class="n">mean_values</span>
 
-<div class="viewcode-block" id="Ensemble.as_pyemu_matrix"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.as_pyemu_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">as_pyemu_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Ensemble.as_pyemu_matrix"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.as_pyemu_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">as_pyemu_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">typ</span><span class="o">=</span><span class="n">Matrix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a pyemu.Matrix from the Ensemble.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            typ : pyemu.Matrix or derived type</span>
+<span class="sd">                the type of matrix to return</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pyemu.Matrix : pyemu.Matrix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">typ</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
                       <span class="n">col_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Ensemble.drop"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.drop">[docs]</a>    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">arg</span><span class="p">):</span>
@@ -193,25 +202,35 @@
     <span class="c1">#     &quot;&quot;&quot;</span>
     <span class="c1">#     raise Exception(&quot;Ensemble.enforce() must overloaded by derived types&quot;)</span>
 
-<div class="viewcode-block" id="Ensemble.plot"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;placeholder overload of pandas.DataFrame.plot()</span>
+<div class="viewcode-block" id="Ensemble.plot"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">,</span><span class="n">plot_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;ensemble.pdf&quot;</span><span class="p">,</span><span class="n">func_dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;plot ensemble histograms to multipage pdf</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        *args : list</span>
-<span class="sd">            positional args to pass to pandas.DataFrame.plot()</span>
+<span class="sd">        bins : int</span>
+<span class="sd">            number of bins</span>
+<span class="sd">        facecolor : str</span>
+<span class="sd">            color</span>
+<span class="sd">        plot_cols : list of str</span>
+<span class="sd">            subset of ensemble columns to plot.  If None, all are plotted.</span>
+<span class="sd">            Default is None</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            pdf filename. Default is &quot;ensemble.pdf&quot;</span>
+<span class="sd">        func_dict : dict</span>
+<span class="sd">            a dict of functions to apply to specific columns (e.g., np.log10)</span>
+
 <span class="sd">        **kwargs : dict</span>
-<span class="sd">            keyword args to pass to pandas.DataFrame.plot()</span>
+<span class="sd">            keyword args to pass to plot_utils.ensemble_helper()</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pandas.DataFrame.plot() return</span>
+<span class="sd">        None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="s2">&quot;marginals&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="n">ensemble_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="n">facecolor</span><span class="p">,</span><span class="n">plot_cols</span><span class="o">=</span><span class="n">plot_cols</span><span class="p">,</span>
+                        <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span></div>
 
 
     <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
@@ -250,12 +269,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;df&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="n">e</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
                 <span class="n">mean_values</span><span class="o">=</span><span class="n">mean_values</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">e</span></div>
 
-<div class="viewcode-block" id="Ensemble.reseed"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.reseed">[docs]</a>    <span class="k">def</span> <span class="nf">reseed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Ensemble.reseed"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.reseed">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reseed</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;method to reset the numpy.random seed using the pyemu.en</span>
 <span class="sd">        SEED global variable</span>
 
@@ -271,7 +292,42 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Ensemble.covariance_matrix"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">localizer</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;calculate the approximate covariance matrix implied by the ensemble using</span>
+<span class="sd">        mean-differencing operation at the core of EnKF</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            localizer : pyemu.Matrix</span>
+<span class="sd">                covariance localizer to apply</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            cov : pyemu.Cov</span>
+<span class="sd">                covariance matrix</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+
+
+        <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="n">Cov</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">delta</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-=</span> <span class="n">mean</span>
+        <span class="n">delta</span> <span class="o">*=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">localizer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">delta</span>
+            <span class="k">return</span> <span class="n">delta</span><span class="o">.</span><span class="n">hadamard_product</span><span class="p">(</span><span class="n">localizer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">delta</span></div></div>
+
+
 
 <div class="viewcode-block" id="ObservationEnsemble"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble">[docs]</a><span class="k">class</span> <span class="nc">ObservationEnsemble</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Ensemble derived type for observations.  This class is primarily used to</span>
@@ -379,16 +435,14 @@
                         <span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obs_names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ObservationEnsemble.from_id_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.from_id_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_id_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">oe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_id_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up independent draws</span>
-<span class="sd">        for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor</span>
-<span class="sd">        transforms the oe argument</span>
+<span class="sd">        for a really large (&gt;1E6) ensemble sizes.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        oe : ObservationEnsemble</span>
-<span class="sd">            an existing ObservationEnsemble instance to use for &#39;mean_values&#39; and</span>
-<span class="sd">            &#39;columns&#39; arguments</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a control file instance</span>
 <span class="sd">        num_reals : int</span>
 <span class="sd">            number of realizations to draw</span>
 
@@ -399,18 +453,62 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># set up some column names</span>
         <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)))</span>
-        <span class="n">obs</span> <span class="o">=</span> <span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span>
-        <span class="n">stds</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="mf">1.0</span><span class="o">/</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">oname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">oname</span> <span class="ow">in</span> <span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">:</span>
-                <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="n">stds</span><span class="p">[</span><span class="n">oname</span><span class="p">],</span><span class="n">size</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+        <span class="c1">#arr = np.empty((num_reals,len(pst.obs_names)))</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span>
+        <span class="n">stds</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="mf">1.0</span><span class="o">/</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">}</span>
+        <span class="n">nz_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">nobs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">oname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">oname</span> <span class="ow">in</span> <span class="n">nz_names</span><span class="p">:</span>
+                <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="n">stds</span><span class="p">[</span><span class="n">oname</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">]</span> <span class="o">+=</span> <span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsval</span>
-        <span class="n">new_oe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">oe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">pst</span><span class="o">.</span><span class="n">obs_names</span><span class="p">]</span> <span class="o">+=</span> <span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsval</span>
+        <span class="n">new_oe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_oe</span></div>
+
+<div class="viewcode-block" id="ObservationEnsemble.to_binary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.to_binary">[docs]</a>    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;write the observation ensemble to a jco-style binary file.  The</span>
+<span class="sd">        ensemble is transposed in the binary file so that the 20-char obs</span>
+<span class="sd">        names are carried</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the filename to write</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        The ensemble is transposed in the binary file</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ObservationEnsemble.from_binary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.from_binary">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;instantiate an observation obsemble from a jco-type file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a Pst instance</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the binary file name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        oe : ObservationEnsemble</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
@@ -431,7 +529,18 @@
             <span class="n">simval</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">]</span>
             <span class="n">phi</span> <span class="o">=</span> <span class="p">(((</span><span class="n">simval</span> <span class="o">-</span> <span class="n">obsval</span><span class="p">)</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
             <span class="n">phi_vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;phi&quot;</span><span class="p">:</span><span class="n">phi_vec</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+        <span class="c1">#return pd.DataFrame({&quot;phi&quot;:phi_vec},index=self.index)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">phi_vec</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ObservationEnsemble.add_base"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.add_base">[docs]</a>    <span class="k">def</span> <span class="nf">add_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add &quot;base&quot; control file values as a realization</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;base&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;base&#39; already in index&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span></div></div>
+
 
 <div class="viewcode-block" id="ParameterEnsemble"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble">[docs]</a><span class="k">class</span> <span class="nc">ParameterEnsemble</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Ensemble derived type for parameters</span>
@@ -482,6 +591,27 @@
                          <span class="s2">&quot;ParameterEnsemble&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bound_tol</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bound_tol&quot;</span><span class="p">,</span><span class="mf">0.0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ParameterEnsemble.dropna"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.dropna">[docs]</a>    <span class="k">def</span> <span class="nf">dropna</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;overload of pandas.DataFrame.dropna()</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            positional args to pass to pandas.DataFrame.dropna()</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            keyword args to pass to pandas.DataFrame.dropna()</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Ensemble : Ensemble</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pe</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
+            <span class="n">pe</span><span class="o">.</span><span class="n">__istransformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">istransformed</span>
+            <span class="k">return</span> <span class="n">pe</span></div>
 
 <div class="viewcode-block" id="ParameterEnsemble.copy"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; overload of Ensemble.copy()</span>
@@ -655,104 +785,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">enforce</span><span class="p">(</span><span class="n">enforce_bounds</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ParameterEnsemble.from_gaussian_draw_homegrown"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_gaussian_draw_homegrown</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pe</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up draws</span>
-<span class="sd">        for a really large (&gt;1E6) ensemble sizes.  gets around the</span>
-<span class="sd">        dataframe expansion-by-loc that is one col at a time.  Implements</span>
-<span class="sd">        multivariate normal draws to get around the 32-bit lapack limitations</span>
-<span class="sd">        in scipy/numpy</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        pe : ParameterEnsemble</span>
-<span class="sd">            existing ParameterEnsemble used to get information</span>
-<span class="sd">            needed to call ParameterEnsemble constructor</span>
-<span class="sd">        cov : (pyemu.Cov)</span>
-<span class="sd">            covariance matrix to use for drawing</span>
-<span class="sd">        num_reals : int</span>
-<span class="sd">            number of realizations to generate</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        ParameterEnsemble : ParameterEnsemble</span>
-
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        this constructor transforms the pe argument!</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">s</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> - starting home-grown multivariate draws&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
-
-
-        <span class="c1"># set up some column names</span>
-        <span class="c1"># real_names = [&quot;{0:d}&quot;.format(i)</span>
-        <span class="c1">#              for i in range(num_reals)]</span>
-        <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">pe</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
-            <span class="n">pe</span><span class="o">.</span><span class="n">_transform</span><span class="p">()</span>
-        <span class="c1"># make sure everything is cool WRT ordering</span>
-        <span class="k">if</span> <span class="n">pe</span><span class="o">.</span><span class="n">names</span> <span class="o">!=</span> <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">:</span>
-            <span class="n">common_names</span> <span class="o">=</span> <span class="n">get_common_elements</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
-                                               <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
-            <span class="n">vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">mean_values</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">]</span>
-            <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">common_names</span><span class="p">)</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">mean_values</span>
-            <span class="n">common_names</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">names</span>
-
-        <span class="c1">#generate standard normal vectors</span>
-        <span class="n">snv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-        <span class="c1">#jwhite - 18-dec-17: the cholesky version is giving significantly diff</span>
-        <span class="c1">#results compared to eigen solve, so turning this off for now - need to</span>
-        <span class="c1">#learn more about this...</span>
-        <span class="n">use_chol</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">use_chol</span><span class="p">:</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">as_2d</span><span class="p">)</span>
-
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1">#decompose...</span>
-            <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">as_2d</span><span class="p">)</span>
-
-            <span class="c1">#form projection matrix</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-
-        <span class="c1">#project...</span>
-        <span class="n">reals</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">snv</span><span class="p">:</span>
-            <span class="n">real</span> <span class="o">=</span> <span class="n">vals</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">vec</span><span class="p">)</span>
-            <span class="n">reals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">real</span><span class="p">)</span>
-
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reals</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">common_names</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
-        <span class="n">istransformed</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">,</span> <span class="s2">&quot;partrans&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
-        <span class="c1">#print(&quot;back transforming&quot;)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">istransformed</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">istransformed</span><span class="p">]</span>
-
-        <span class="c1"># replace the realizations for fixed parameters with the original</span>
-        <span class="c1"># parval1 in the control file</span>
-        <span class="c1">#print(&quot;handling fixed pars&quot;)</span>
-        <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
-        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pe</span><span class="o">.</span><span class="n">fixed_indexer</span><span class="p">,</span> <span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">fval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">fixed_vals</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
-            <span class="c1"># if fname not in df.columns:</span>
-            <span class="c1">#    continue</span>
-            <span class="c1">#print(fname)</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">fval</span>
-
-        <span class="c1"># print(&quot;apply tied&quot;)</span>
-        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-        <span class="c1"># ParameterEnsemble.apply_tied(new_pe)</span>
-
-
-        <span class="n">e</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> - done...took </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">,(</span><span class="n">e</span><span class="o">-</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()))</span>
-
-        <span class="k">return</span> <span class="n">new_pe</span></div>
-
     <span class="k">def</span> <span class="nf">_draw_uniform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Draw parameter realizations from a (log10) uniform distribution</span>
 <span class="sd">        described by the parameter bounds.  Respect Log10 transformation</span>
@@ -779,18 +811,16 @@
                                     <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span>\
                                          <span class="n">loc</span><span class="p">[</span><span class="n">pname</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
 
-
 <div class="viewcode-block" id="ParameterEnsemble.from_uniform_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_uniform_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_uniform_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_uniform_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up uniform draws</span>
 <span class="sd">        for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor</span>
 <span class="sd">        transforms the pe argument</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pe : ParameterEnsemble</span>
-<span class="sd">            existing ParameterEnsemble used to get information</span>
-<span class="sd">            needed to call ParameterEnsemble constructor</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a control file instance</span>
 <span class="sd">        num_reals : int</span>
 <span class="sd">            number of realizations to generate</span>
 
@@ -799,17 +829,25 @@
 <span class="sd">        ParameterEnsemble : ParameterEnsemble</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">pe</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
-            <span class="n">pe</span><span class="o">.</span><span class="n">_transform</span><span class="p">()</span>
-        <span class="n">ub</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">ubnd</span>
-        <span class="n">lb</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">lbnd</span>
+        <span class="c1">#if not pe.istransformed:</span>
+        <span class="c1">#    pe._transform()</span>
+        <span class="c1">#ub = pe.ubnd</span>
+        <span class="c1">#lb = pe.lbnd</span>
+        <span class="n">li</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
+        <span class="n">ub</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parubnd</span>
+        <span class="n">ub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+        <span class="n">ub</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">lb</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parlbnd</span>
+        <span class="n">lb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">lb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+        <span class="n">lb</span> <span class="o">=</span> <span class="n">lb</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
         <span class="c1"># set up some column names</span>
         <span class="c1">#real_names = [&quot;{0:d}&quot;.format(i)</span>
         <span class="c1">#              for i in range(num_reals)]</span>
         <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">)))</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">pe</span><span class="o">.</span><span class="n">adj_names</span><span class="p">:</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">ub</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
                 <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">lb</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span>
                                                       <span class="n">ub</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span>
                                                       <span class="n">size</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
@@ -818,29 +856,34 @@
                                     <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span>\
                                          <span class="n">loc</span><span class="p">[</span><span class="n">pname</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;back transforming&quot;</span><span class="p">)</span>
-        <span class="n">istransformed</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span>
 
-        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">li</span><span class="p">]</span>
+
+        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">))</span>
         <span class="c1">#new_pe._applied_tied()</span>
         <span class="k">return</span> <span class="n">new_pe</span></div>
 
 <div class="viewcode-block" id="ParameterEnsemble.from_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pe</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">use_homegrown</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">group_chunks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up draws</span>
 <span class="sd">        for a really large (&gt;1E6) ensemble sizes.  gets around the</span>
 <span class="sd">        dataframe expansion-by-loc that is one col at a time.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        pe : ParameterEnsemble</span>
-<span class="sd">            existing ParameterEnsemble used to get information</span>
-<span class="sd">            needed to call ParameterEnsemble constructor</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a control file instance</span>
 <span class="sd">        cov : (pyemu.Cov)</span>
 <span class="sd">            covariance matrix to use for drawing</span>
 <span class="sd">        num_reals : int</span>
 <span class="sd">            number of realizations to generate</span>
+<span class="sd">        use_homegrown : bool</span>
+<span class="sd">            flag to use home-grown full cov draws...much faster</span>
+<span class="sd">            than numpy...</span>
+<span class="sd">        group_chunks : bool</span>
+<span class="sd">            flag to break up draws by par groups.  Only applies</span>
+<span class="sd">            to homegrown, full cov case. Default is False</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -857,61 +900,176 @@
         <span class="c1">#              for i in range(num_reals)]</span>
         <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">pe</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
-            <span class="n">pe</span><span class="o">.</span><span class="n">_transform</span><span class="p">()</span>
+        <span class="n">li</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">vals</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+
         <span class="c1"># make sure everything is cool WRT ordering</span>
-        <span class="k">if</span> <span class="n">pe</span><span class="o">.</span><span class="n">names</span> <span class="o">!=</span> <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">:</span>
-            <span class="n">common_names</span> <span class="o">=</span> <span class="n">get_common_elements</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
+        <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="n">vals</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">:</span>
+            <span class="n">common_names</span> <span class="o">=</span> <span class="n">get_common_elements</span><span class="p">(</span><span class="n">vals</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
                                                <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
-            <span class="n">vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">mean_values</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble::from_gaussian_draw() error: cov and pst share no common names&quot;</span><span class="p">)</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">]</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">common_names</span><span class="p">)</span>
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">mean_values</span>
-            <span class="n">common_names</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">names</span>
+            <span class="n">common_names</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span>
 
         <span class="k">if</span> <span class="n">cov</span><span class="o">.</span><span class="n">isdiagonal</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;making diagonal cov draws&quot;</span><span class="p">)</span>
-            <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">)))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;building mean and std dicts&quot;</span><span class="p">)</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)))</span>
             <span class="n">stds</span> <span class="o">=</span> <span class="p">{</span><span class="n">pname</span><span class="p">:</span><span class="n">std</span> <span class="k">for</span> <span class="n">pname</span><span class="p">,</span><span class="n">std</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">common_names</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))}</span>
             <span class="n">means</span> <span class="o">=</span> <span class="p">{</span><span class="n">pname</span><span class="p">:</span><span class="n">val</span> <span class="k">for</span> <span class="n">pname</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">common_names</span><span class="p">,</span><span class="n">vals</span><span class="p">)}</span>
-            <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
-                    <span class="n">s</span> <span class="o">=</span> <span class="n">stds</span><span class="p">[</span><span class="n">pname</span><span class="p">]</span>
-                    <span class="n">v</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="n">pname</span><span class="p">]</span>
-                    <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">means</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span><span class="n">stds</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span>
-                                                <span class="n">size</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;numpy draw&quot;</span><span class="p">)</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">common_names</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;post-processing&quot;</span><span class="p">)</span>
+            <span class="n">adj_pars</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">common_names</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">adj_pars</span><span class="p">:</span>
+                    <span class="c1">#s = stds[pname]</span>
+                    <span class="c1">#v = means[pname]</span>
+                    <span class="c1">#arr[:,i] = np.random.normal(means[pname],stds[pname],</span>
+                    <span class="c1">#                            size=num_reals)</span>
+                    <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">stds</span><span class="p">[</span><span class="n">pname</span><span class="p">])</span> <span class="o">+</span> <span class="n">means</span><span class="p">[</span><span class="n">pname</span><span class="p">]</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="n">pname</span><span class="p">]</span>
-
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;build df&quot;</span><span class="p">)</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arr</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">common_names</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">use_homegrown</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;making full cov draws with home-grown goodness&quot;</span><span class="p">)</span>
+                <span class="c1"># generate standard normal vectors</span>
+
+
+                <span class="c1"># jwhite - 18-dec-17: the cholesky version is giving significantly diff</span>
+                <span class="c1"># results compared to eigen solve, so turning this off for now - need to</span>
+                <span class="c1"># learn more about this...</span>
+                <span class="c1"># use_chol = False</span>
+                <span class="c1"># if use_chol:</span>
+                <span class="c1">#     a = np.linalg.cholesky(cov.as_2d)</span>
+                <span class="c1">#</span>
+                <span class="c1"># else:</span>
+                <span class="c1"># decompose...</span>
+                <span class="k">if</span> <span class="n">group_chunks</span><span class="p">:</span>
+                    <span class="n">par_cov</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cov</span><span class="o">.</span><span class="n">names</span><span class="p">,:]</span>
+                    <span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;idxs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="c1">#print(&quot;algning cov&quot;)</span>
+                    <span class="c1">#cov.align(list(par_cov.parnme))</span>
+                    <span class="n">pargps</span> <span class="o">=</span> <span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reserving reals matrix&quot;</span><span class="p">)</span>
+                    <span class="n">reals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+                    <span class="k">for</span> <span class="n">pargp</span> <span class="ow">in</span> <span class="n">pargps</span><span class="p">:</span>
+                        <span class="n">pnames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span><span class="o">==</span><span class="n">pargp</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">])</span>
+                        <span class="n">idxs</span> <span class="o">=</span> <span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span> <span class="o">==</span> <span class="n">pargp</span><span class="p">,</span> <span class="s2">&quot;idxs&quot;</span><span class="p">]</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;drawing for par group &#39;</span><span class="si">{0}</span><span class="s2">&#39; with </span><span class="si">{1}</span><span class="s2"> pars &quot;</span>
+                              <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)))</span>
+
+                        <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1">#print(&quot;generating snv matrix&quot;)</span>
+                        <span class="n">snv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">))</span>
+
+                        <span class="n">cov_pg</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pnames</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                            <span class="n">reals</span><span class="p">[:,</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">snv</span> <span class="o">*</span> <span class="n">std</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="n">cov_pg</span><span class="o">.</span><span class="n">inv</span>
+                            <span class="k">except</span><span class="p">:</span>
+                                <span class="n">covname</span> <span class="o">=</span> <span class="s2">&quot;trouble_</span><span class="si">{0}</span><span class="s2">.cov&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">)</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;saving toubled cov matrix to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">covname</span><span class="p">))</span>
+                                <span class="n">cov_pg</span><span class="o">.</span><span class="n">to_ascii</span><span class="p">(</span><span class="n">covname</span><span class="p">)</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">get_diagonal_vector</span><span class="p">())</span>
+                                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error inverting cov for par group &#39;</span><span class="si">{0}</span><span class="s2">&#39;,&quot;</span><span class="o">+</span>\
+                                                <span class="s2">&quot;saved trouble cov to </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span>
+                                                <span class="nb">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">,</span><span class="n">covname</span><span class="p">))</span>
+                            <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">as_2d</span><span class="p">)</span>
+                            <span class="c1"># check for near zero eig values</span>
+
+                            <span class="c1">#vdiag = np.diag(v)</span>
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                                <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1.0e-10</span><span class="p">:</span>
+                                    <span class="k">pass</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;near zero eigen value found&quot;</span><span class="p">,</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>\
+                                          <span class="s2">&quot;at index&quot;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s2">&quot; of &quot;</span><span class="p">,</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                                    <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                            <span class="n">vsqrt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                            <span class="n">vsqrt</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                            <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">vsqrt</span><span class="p">)</span>
+                            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                            <span class="n">pg_vals</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">pnames</span><span class="p">]</span>
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reals</span><span class="p">):</span>
+                                <span class="c1">#v = snv[i,:]</span>
+                                <span class="c1">#p = np.dot(a,v)</span>
+                                <span class="n">reals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pg_vals</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">snv</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span>
+                <span class="k">else</span><span class="p">:</span>
+
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;generating snv matrix&quot;</span><span class="p">)</span>
+                    <span class="n">snv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span> <span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;eigen solve for full cov&quot;</span><span class="p">)</span>
+                    <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">as_2d</span><span class="p">)</span>
+                    <span class="c1">#w, v, other = np.linalg.svd(cov.as_2d,full_matrices=True,compute_uv=True)</span>
+
+                    <span class="c1"># form projection matrix</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;form projection&quot;</span><span class="p">)</span>
+                    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
+
+                    <span class="c1"># project...</span>
+                    <span class="n">reals</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">snv</span><span class="p">:</span>
+                        <span class="n">real</span> <span class="o">=</span> <span class="n">vals</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>
+                        <span class="n">reals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">real</span><span class="p">)</span>
+
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reals</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">common_names</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
 
             <span class="c1">#vals = pe.mean_values</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;making full cov draws&quot;</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">cov</span><span class="o">.</span><span class="n">as_2d</span><span class="p">,</span><span class="n">num_reals</span><span class="p">),</span>
-                              <span class="n">columns</span> <span class="o">=</span> <span class="n">common_names</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;making full cov draws with numpy&quot;</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">cov</span><span class="o">.</span><span class="n">as_2d</span><span class="p">,</span><span class="n">num_reals</span><span class="p">),</span>
+                                  <span class="n">columns</span> <span class="o">=</span> <span class="n">common_names</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
             <span class="c1">#print(df.shape,cov.shape)</span>
 
-        <span class="n">istransformed</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">,</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;back transforming&quot;</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">istransformed</span><span class="p">]</span>
+
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span><span class="o">**</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">li</span><span class="p">]</span>
 
         <span class="c1"># replace the realizations for fixed parameters with the original</span>
         <span class="c1"># parval1 in the control file</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handling fixed pars&quot;</span><span class="p">)</span>
-        <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
-        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pe</span><span class="o">.</span><span class="n">fixed_indexer</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
+        <span class="c1">#pe.pst.parameter_data.index = pe.pst.parameter_data.parnme</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span>
+        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">partrans</span><span class="o">==</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">fname</span><span class="p">,</span><span class="n">fval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
-            <span class="c1">#if fname not in df.columns:</span>
-            <span class="c1">#    continue</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+            <span class="c1">#print(fname)</span>
             <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">fval</span>
 
         <span class="c1">#print(&quot;apply tied&quot;)</span>
-        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pe</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
-        <span class="c1">#ParameterEnsemble.apply_tied(new_pe)</span>
+        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">new_pe</span></div>
+
+<div class="viewcode-block" id="ParameterEnsemble.from_binary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_binary">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_binary</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pst</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;instantiate an parameter obsemble from a jco-type file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a Pst instance</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the binary file name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pe : ParameterEnsemble</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParameterEnsemble</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_back_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Private method to remove log10 transformation from ensemble</span>
@@ -1116,26 +1274,26 @@
 <span class="sd">        NotImplementedError if called.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
-        <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubnd</span>
-        <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lbnd</span>
-        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-            <span class="n">mx_diff</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:]</span> <span class="o">-</span> <span class="n">ub</span><span class="p">)</span> <span class="o">/</span> <span class="n">ub</span>
-            <span class="n">mn_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">lb</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:])</span> <span class="o">/</span> <span class="n">lb</span>
-
-            <span class="c1"># if this real has a violation</span>
-            <span class="n">mx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">mx_diff</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="n">mn_diff</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-            <span class="k">if</span> <span class="n">mx</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
-                <span class="n">scale_factor</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">mx</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:]</span> <span class="o">*=</span> <span class="n">scale_factor</span>
-
-            <span class="n">mx</span> <span class="o">=</span> <span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:]</span>
-            <span class="n">mn</span> <span class="o">=</span> <span class="n">lb</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:]</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">mx</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mx</span><span class="o">&lt;</span><span class="mf">0.0</span><span class="p">])</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">mn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mn</span><span class="o">&gt;</span><span class="mf">0.0</span><span class="p">])</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:])</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.0</span> <span class="ow">or</span>\
-                            <span class="p">(</span><span class="n">lb</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">id</span><span class="p">,:])</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">()</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+        <span class="c1"># ub = self.ubnd</span>
+        <span class="c1"># lb = self.lbnd</span>
+        <span class="c1"># for id in self.index:</span>
+        <span class="c1">#     mx_diff = (self.loc[id,:] - ub) / ub</span>
+        <span class="c1">#     mn_diff = (lb - self.loc[id,:]) / lb</span>
+        <span class="c1">#</span>
+        <span class="c1">#     # if this real has a violation</span>
+        <span class="c1">#     mx = max(mx_diff.max(),mn_diff.max())</span>
+        <span class="c1">#     if mx &gt; 1.0:</span>
+        <span class="c1">#         scale_factor = 1.0 / mx</span>
+        <span class="c1">#         self.loc[id,:] *= scale_factor</span>
+        <span class="c1">#</span>
+        <span class="c1">#     mx = ub - self.loc[id,:]</span>
+        <span class="c1">#     mn = lb - self.loc[id,:]</span>
+        <span class="c1">#     print(mx.loc[mx&lt;0.0])</span>
+        <span class="c1">#     print(mn.loc[mn&gt;0.0])</span>
+        <span class="c1">#     if (ub - self.loc[id,:]).min() &lt; 0.0 or\</span>
+        <span class="c1">#                     (lb - self.loc[id,:]).max() &gt; 0.0:</span>
+        <span class="c1">#         raise Exception()</span>
 
 <div class="viewcode-block" id="ParameterEnsemble.enforce_drop"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.enforce_drop">[docs]</a>    <span class="k">def</span> <span class="nf">enforce_drop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; enforce parameter bounds on the ensemble by dropping</span>
@@ -1160,11 +1318,19 @@
 <span class="sd">        violating vals to bound</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ubnd</span>
-        <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lbnd</span>
-        <span class="k">for</span> <span class="n">iname</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ub</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ub</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_tol</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lb</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">lb</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_tol</span><span class="p">)</span></div>
+        <span class="n">ub</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ubnd</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">bound_tol</span><span class="p">))</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">lb</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lbnd</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound_tol</span><span class="p">))</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="c1">#for iname,name in enumerate(self.columns):</span>
+            <span class="c1">#self.loc[self.loc[:,name] &gt; ub[name],name] = ub[name] * (1.0 + self.bound_tol)</span>
+            <span class="c1">#self.loc[self.loc[:,name] &lt; lb[name],name] = lb[name].copy() * (1.0 - self.bound_tol)</span>
+        <span class="c1">#    self.loc[self.loc[:,name] &gt; ub[name],name] = ub[name]</span>
+        <span class="c1">#    self.loc[self.loc[:,name] &lt; lb[name],name] = lb[name]</span>
+
+        <span class="n">val_arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">for</span> <span class="n">iname</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="n">val_arr</span><span class="p">[</span><span class="n">val_arr</span><span class="p">[:,</span><span class="n">iname</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ub</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">iname</span><span class="p">]</span> <span class="o">=</span> <span class="n">ub</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">val_arr</span><span class="p">[</span><span class="n">val_arr</span><span class="p">[:,</span> <span class="n">iname</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lb</span><span class="p">[</span><span class="n">name</span><span class="p">],</span><span class="n">iname</span><span class="p">]</span> <span class="o">=</span> <span class="n">lb</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
 
 <div class="viewcode-block" id="ParameterEnsemble.read_parfiles_prefix"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.read_parfiles_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">read_parfiles_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">prefix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; thin wrapper around read_parfiles using the pnulpar prefix concept.  Used to</span>
@@ -1214,6 +1380,73 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pfile</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;parval1&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ParameterEnsemble.from_parfiles"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_parfiles">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_parfiles</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">parfile_names</span><span class="p">,</span><span class="n">real_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; create a parameter ensemble from parfiles.  Accepts parfiles with less than the</span>
+<span class="sd">        parameters in the control (get NaNs in the ensemble) or extra parameters in the</span>
+<span class="sd">        parfiles (get dropped)</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            pst : pyemu.Pst</span>
+
+<span class="sd">            parfile_names : list of str</span>
+<span class="sd">                par file names</span>
+
+<span class="sd">            real_names : str</span>
+<span class="sd">                optional list of realization names. If None, a single integer counter is used</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pyemu.ParameterEnsemble</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="n">pst</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">(</span><span class="n">pst</span><span class="p">)</span>
+        <span class="n">dfs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">real_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">real_names</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">parfile_names</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">parfile_names</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">rname</span><span class="p">,</span><span class="n">pfile</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">real_names</span><span class="p">,</span><span class="n">parfile_names</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pfile</span><span class="p">),</span> <span class="s2">&quot;ParameterEnsemble.read_parfiles() error: &quot;</span> <span class="o">+</span> \
+                                          <span class="s2">&quot;file: </span><span class="si">{0}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">read_parfile</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
+            <span class="c1">#check for scale differences - I don&#39;t who is dumb enough</span>
+            <span class="c1">#to change scale between par files and pst...</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">scale</span> <span class="o">-</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">scale</span>
+            <span class="k">if</span> <span class="n">diff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;differences in scale detected, applying scale in par file&quot;</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">df</span><span class="o">.</span><span class="n">scale</span>
+
+            <span class="n">dfs</span><span class="p">[</span><span class="n">rname</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">df_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">df_all</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span>
+
+
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">df_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="c1">#if len(pst.par_names) &lt; df_all.shape[1]:</span>
+            <span class="c1">#    raise Exception(&quot;pst is not compatible with par files&quot;)</span>
+            <span class="n">pset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
+            <span class="n">dset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">pset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">dset</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;the following parameters are not in the par files (getting NaNs) :</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>
+                             <span class="nb">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">diff</span><span class="p">)))</span>
+                <span class="n">blank_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">df_all</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
+
+                <span class="n">df_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_all</span><span class="p">,</span><span class="n">blank_df</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">diff</span> <span class="o">=</span> <span class="n">dset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">pset</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;the following par file parameters are not in the control (being dropped):</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>
+                              <span class="nb">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">diff</span><span class="p">)))</span>
+                <span class="n">df_all</span> <span class="o">=</span> <span class="n">df_all</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df_all</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="ParameterEnsemble.to_csv"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.to_csv">[docs]</a>    <span class="k">def</span> <span class="nf">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;overload of pandas.DataFrame.to_csv() to account</span>
@@ -1233,9 +1466,45 @@
 <span class="sd">        log10 before writing</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">retrans</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_back_transform</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ParameterEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="n">retrans</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;NaN in par ensemble&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ParameterEnsemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retrans</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ParameterEnsemble.to_binary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.to_binary">[docs]</a>    <span class="k">def</span> <span class="nf">to_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;write the parameter ensemble to a jco-style binary file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            the filename to write</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">        this function back-transforms inplace with respect to</span>
+<span class="sd">        log10 before writing</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">retrans</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_back_transform</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">retrans</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">retrans</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="ParameterEnsemble.to_parfiles"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.to_parfiles">[docs]</a>    <span class="k">def</span> <span class="nf">to_parfiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">prefix</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1262,7 +1531,17 @@
         <span class="k">for</span> <span class="n">real</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
             <span class="n">par_file</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="s2">.par&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">real</span><span class="p">)</span>
             <span class="n">par_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">real</span><span class="p">,:]</span>
-            <span class="n">write_parfile</span><span class="p">(</span><span class="n">par_df</span><span class="p">,</span><span class="n">par_file</span><span class="p">)</span></div></div>
+            <span class="n">write_parfile</span><span class="p">(</span><span class="n">par_df</span><span class="p">,</span><span class="n">par_file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ParameterEnsemble.add_base"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.add_base">[docs]</a>    <span class="k">def</span> <span class="nf">add_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; add &quot;base&quot; control file values as a realization</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;base&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;base&#39; already in index&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span></div></div>
+        
 </pre></div>
 
           </div>
@@ -1296,7 +1575,7 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

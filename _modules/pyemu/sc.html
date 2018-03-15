@@ -514,9 +514,9 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">par_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">case_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">par_list</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">par_list</span><span class="p">))</span>
             <span class="n">case_prior</span><span class="p">,</span><span class="n">case_post</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__contribution_from_parameters</span><span class="p">(</span><span class="n">par_list</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">par_list</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calculating contribution from: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">par_list</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">forecast</span> <span class="ow">in</span> <span class="n">case_prior</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">pr</span> <span class="o">=</span> <span class="n">case_prior</span><span class="p">[</span><span class="n">forecast</span><span class="p">]</span>
                 <span class="n">pt</span> <span class="o">=</span> <span class="n">case_post</span><span class="p">[</span><span class="n">forecast</span><span class="p">]</span>
@@ -624,7 +624,8 @@
                 <span class="n">weight</span> <span class="o">=</span> <span class="mf">1.0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;resetting zero weights to </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight</span><span class="p">))</span>
             <span class="c1"># make copies of the original obscov and pst</span>
-            <span class="n">org_obscov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
+            <span class="c1">#org_obscov = self.obscov.get(self.obscov.row_names)</span>
+            <span class="n">org_obscov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">org_pst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span>
@@ -638,6 +639,7 @@
 
         <span class="c1"># if needed reset the zero-weight obs in base_obslist</span>
         <span class="k">if</span> <span class="n">base_obslist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">reset</span><span class="p">:</span>
+            <span class="c1"># check for zero</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in base_obslist&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">base_obslist</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in base_obslist&quot;</span><span class="p">)</span>
@@ -647,6 +649,7 @@
 
         <span class="c1"># if needed reset the zero-weight obs in obslist_dict</span>
         <span class="k">if</span> <span class="n">obslist_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">reset</span><span class="p">:</span>
+            <span class="n">z_obs</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">case</span><span class="p">,</span><span class="n">obslist</span> <span class="ow">in</span> <span class="n">obslist_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
                     <span class="n">obslist_dict</span><span class="p">[</span><span class="n">case</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">obslist</span><span class="p">]</span>
@@ -655,9 +658,10 @@
                     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;observation(s) listed in both &quot;</span><span class="o">+</span>\
                                     <span class="s2">&quot;base_obslist and obslist_dict: &quot;</span><span class="o">+</span>\
                                     <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inboth</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">case</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">case</span><span class="p">))</span>
+                <span class="n">z_obs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">obslist</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in obslist_dict&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">z_obs</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in obslist_dict&quot;</span><span class="p">)</span>
 
         <span class="c1"># for a comprehensive obslist_dict</span>
         <span class="k">if</span> <span class="n">obslist_dict</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">reset</span><span class="p">:</span>
@@ -850,18 +854,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">reset_pst</span><span class="p">(</span><span class="n">org_pst</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
-<div class="viewcode-block" id="Schur.get_removed_obs_group_importance"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.get_removed_obs_group_importance">[docs]</a>    <span class="k">def</span> <span class="nf">get_removed_obs_group_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; some sugar to test the importance of observations by group</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        pandas.Dataframe : pandas.Dataframe</span>
-<span class="sd">            a dataframe that has index (row labels) that are the observation groups</span>
-<span class="sd">            and a column labels of forecast names.  The values in the dataframe</span>
-<span class="sd">            are the posterior variance of the forecast resulting from</span>
-<span class="sd">            losing non-zero weight observations in each observation group</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Schur.obs_group_importance"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.obs_group_importance">[docs]</a>    <span class="k">def</span> <span class="nf">obs_group_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">obsgrp_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span>
         <span class="n">obs</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">obsnme</span>
@@ -869,8 +862,13 @@
         <span class="n">groups</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;obgnme&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
         <span class="k">for</span> <span class="n">grp</span><span class="p">,</span> <span class="n">idxs</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">obsgrp_dict</span><span class="p">[</span><span class="n">grp</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_removed_obs_importance</span><span class="p">(</span><span class="n">obsgrp_dict</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">obsgrp_dict</span></div>
+        
+<div class="viewcode-block" id="Schur.get_removed_obs_group_importance"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.get_removed_obs_group_importance">[docs]</a>    <span class="k">def</span> <span class="nf">get_removed_obs_group_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_removed_obs_importance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_group_importance</span><span class="p">())</span></div>
 
+<div class="viewcode-block" id="Schur.get_added_obs_group_importance"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.get_added_obs_group_importance">[docs]</a>    <span class="k">def</span> <span class="nf">get_added_obs_group_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_added_obs_importance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_group_importance</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Schur.next_most_important_added_obs"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.sc.Schur.next_most_important_added_obs">[docs]</a>    <span class="k">def</span> <span class="nf">next_most_important_added_obs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">forecast</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">niter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">obslist_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                                       <span class="n">base_obslist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1082,7 +1080,7 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

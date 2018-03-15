@@ -107,15 +107,17 @@ instantiated directly.</dd>
 </table>
 <dl class="method">
 <dt id="pyemu.en.Ensemble.as_pyemu_matrix">
-<code class="descname">as_pyemu_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.as_pyemu_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.as_pyemu_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="descname">as_pyemu_matrix</code><span class="sig-paren">(</span><em>typ=&lt;class 'pyemu.mat.mat_handler.Matrix'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.as_pyemu_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.as_pyemu_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a pyemu.Matrix from the Ensemble.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pyemu.Matrix</strong></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>typ</strong> (<em>pyemu.Matrix</em><em> or </em><em>derived type</em>) – the type of matrix to return</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pyemu.Matrix</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Matrix</td>
 </tr>
 </tbody>
 </table>
@@ -188,22 +190,27 @@ are drawn</li>
 
 <dl class="method">
 <dt id="pyemu.en.Ensemble.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.plot" title="Permalink to this definition">¶</a></dt>
-<dd><p>placeholder overload of pandas.DataFrame.plot()</p>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>bins=10</em>, <em>facecolor='0.5'</em>, <em>plot_cols=None</em>, <em>filename='ensemble.pdf'</em>, <em>func_dict=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot ensemble histograms to multipage pdf</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>*args</strong> (<em>list</em>) – positional args to pass to pandas.DataFrame.plot()</li>
-<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to pandas.DataFrame.plot()</li>
+<li><strong>bins</strong> (<em>int</em>) – number of bins</li>
+<li><strong>facecolor</strong> (<em>str</em>) – color</li>
+<li><strong>plot_cols</strong> (<em>list of str</em>) – subset of ensemble columns to plot.  If None, all are plotted.
+Default is None</li>
+<li><strong>filename</strong> (<em>str</em>) – pdf filename. Default is “ensemble.pdf”</li>
+<li><strong>func_dict</strong> (<em>dict</em>) – a dict of functions to apply to specific columns (e.g., np.log10)</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to plot_utils.ensemble_helper()</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame.plot() return</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
 </td>
 </tr>
 </tbody>
@@ -231,9 +238,9 @@ that must be a pandas.DataFrame instance</td>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="pyemu.en.Ensemble.reseed">
-<code class="descname">reseed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.reseed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.reseed" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">reseed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.reseed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.reseed" title="Permalink to this definition">¶</a></dt>
 <dd><p>method to reset the numpy.random seed using the pyemu.en
 SEED global variable</p>
 </dd></dl>
@@ -249,6 +256,25 @@ SEED global variable</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>Ensemble</strong></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.en.Ensemble.covariance_matrix">
+<code class="descname">covariance_matrix</code><span class="sig-paren">(</span><em>localizer=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#Ensemble.covariance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.Ensemble.covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the approximate covariance matrix implied by the ensemble using
+mean-differencing operation at the core of EnKF</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>localizer</strong> (<em>pyemu.Matrix</em>) – covariance localizer to apply</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>cov</strong> – covariance matrix</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pyemu.Cov</td>
 </tr>
 </tbody>
 </table>
@@ -358,22 +384,68 @@ of only non-zero weighted observations</p>
 
 <dl class="classmethod">
 <dt id="pyemu.en.ObservationEnsemble.from_id_gaussian_draw">
-<em class="property">classmethod </em><code class="descname">from_id_gaussian_draw</code><span class="sig-paren">(</span><em>oe</em>, <em>num_reals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.from_id_gaussian_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.from_id_gaussian_draw" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_id_gaussian_draw</code><span class="sig-paren">(</span><em>pst</em>, <em>num_reals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.from_id_gaussian_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.from_id_gaussian_draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>this is an experiemental method to help speed up independent draws
-for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor
-transforms the oe argument</p>
+for a really large (&gt;1E6) ensemble sizes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>oe</strong> (<a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble"><em>ObservationEnsemble</em></a>) – an existing ObservationEnsemble instance to use for ‘mean_values’ and
-‘columns’ arguments</li>
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a control file instance</li>
 <li><strong>num_reals</strong> (<em>int</em>) – number of realizations to draw</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ObservationEnsemble</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble">ObservationEnsemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.en.ObservationEnsemble.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>write the observation ensemble to a jco-style binary file.  The
+ensemble is transposed in the binary file so that the 20-char obs
+names are carried</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – the filename to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ensemble is transposed in the binary file</p>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyemu.en.ObservationEnsemble.from_binary">
+<em class="property">classmethod </em><code class="descname">from_binary</code><span class="sig-paren">(</span><em>pst</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>instantiate an observation obsemble from a jco-type file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a Pst instance</li>
+<li><strong>filename</strong> (<em>str</em>) – the binary file name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>oe</strong></p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ObservationEnsemble" title="pyemu.en.ObservationEnsemble">ObservationEnsemble</a></p>
@@ -399,6 +471,12 @@ updated prior to calling this method to evaluate new weighting strategies</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.en.ObservationEnsemble.add_base">
+<code class="descname">add_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ObservationEnsemble.add_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ObservationEnsemble.add_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>add “base” control file values as a realization</p>
 </dd></dl>
 
 </dd></dl>
@@ -439,6 +517,30 @@ the upgrade calculations. defaults to 0.0</li>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="pyemu.en.ParameterEnsemble.dropna">
+<code class="descname">dropna</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.dropna"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.dropna" title="Permalink to this definition">¶</a></dt>
+<dd><p>overload of pandas.DataFrame.dropna()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*args</strong> (<em>list</em>) – positional args to pass to pandas.DataFrame.dropna()</li>
+<li><strong>**kwargs</strong> (<em>dict</em>) – keyword args to pass to pandas.DataFrame.dropna()</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Ensemble</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.Ensemble" title="pyemu.en.Ensemble">Ensemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyemu.en.ParameterEnsemble.copy">
 <code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.copy" title="Permalink to this definition">¶</a></dt>
@@ -610,42 +712,8 @@ that have one or more violating values.  Default is None (no bounds enforcement)
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown">
-<em class="property">classmethod </em><code class="descname">from_gaussian_draw_homegrown</code><span class="sig-paren">(</span><em>pe</em>, <em>cov</em>, <em>num_reals=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_gaussian_draw_homegrown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown" title="Permalink to this definition">¶</a></dt>
-<dd><p>this is an experiemental method to help speed up draws
-for a really large (&gt;1E6) ensemble sizes.  gets around the
-dataframe expansion-by-loc that is one col at a time.  Implements
-multivariate normal draws to get around the 32-bit lapack limitations
-in scipy/numpy</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
-needed to call ParameterEnsemble constructor</li>
-<li><strong>cov</strong> (<em>(</em><em>pyemu.Cov</em><em>)</em>) – covariance matrix to use for drawing</li>
-<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ParameterEnsemble</strong></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">this constructor transforms the pe argument!</p>
-</div>
-</dd></dl>
-
-<dl class="classmethod">
 <dt id="pyemu.en.ParameterEnsemble.from_uniform_draw">
-<em class="property">classmethod </em><code class="descname">from_uniform_draw</code><span class="sig-paren">(</span><em>pe</em>, <em>num_reals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_uniform_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_uniform_draw" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_uniform_draw</code><span class="sig-paren">(</span><em>pst</em>, <em>num_reals</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_uniform_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_uniform_draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>this is an experiemental method to help speed up uniform draws
 for a really large (&gt;1E6) ensemble sizes.  WARNING: this constructor
 transforms the pe argument</p>
@@ -654,8 +722,7 @@ transforms the pe argument</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
-needed to call ParameterEnsemble constructor</li>
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a control file instance</li>
 <li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
 </ul>
 </td>
@@ -672,7 +739,7 @@ needed to call ParameterEnsemble constructor</li>
 
 <dl class="classmethod">
 <dt id="pyemu.en.ParameterEnsemble.from_gaussian_draw">
-<em class="property">classmethod </em><code class="descname">from_gaussian_draw</code><span class="sig-paren">(</span><em>pe</em>, <em>cov</em>, <em>num_reals=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_gaussian_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_gaussian_draw" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_gaussian_draw</code><span class="sig-paren">(</span><em>pst</em>, <em>cov</em>, <em>num_reals=1</em>, <em>use_homegrown=False</em>, <em>group_chunks=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_gaussian_draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_gaussian_draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>this is an experiemental method to help speed up draws
 for a really large (&gt;1E6) ensemble sizes.  gets around the
 dataframe expansion-by-loc that is one col at a time.</p>
@@ -681,10 +748,13 @@ dataframe expansion-by-loc that is one col at a time.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pe</strong> (<a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble"><em>ParameterEnsemble</em></a>) – existing ParameterEnsemble used to get information
-needed to call ParameterEnsemble constructor</li>
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a control file instance</li>
 <li><strong>cov</strong> (<em>(</em><em>pyemu.Cov</em><em>)</em>) – covariance matrix to use for drawing</li>
 <li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
+<li><strong>use_homegrown</strong> (<em>bool</em>) – flag to use home-grown full cov draws…much faster
+than numpy…</li>
+<li><strong>group_chunks</strong> (<em>bool</em>) – flag to break up draws by par groups.  Only applies
+to homegrown, full cov case. Default is False</li>
 </ul>
 </td>
 </tr>
@@ -700,6 +770,30 @@ needed to call ParameterEnsemble constructor</li>
 <p class="first admonition-title">Note</p>
 <p class="last">this constructor transforms the pe argument!</p>
 </div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyemu.en.ParameterEnsemble.from_binary">
+<em class="property">classmethod </em><code class="descname">from_binary</code><span class="sig-paren">(</span><em>pst</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>instantiate an parameter obsemble from a jco-type file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a Pst instance</li>
+<li><strong>filename</strong> (<em>str</em>) – the binary file name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pe</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyemu.en.ParameterEnsemble" title="pyemu.en.ParameterEnsemble">ParameterEnsemble</a></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -813,6 +907,32 @@ self.__istransformed</p>
 </div>
 </dd></dl>
 
+<dl class="classmethod">
+<dt id="pyemu.en.ParameterEnsemble.from_parfiles">
+<em class="property">classmethod </em><code class="descname">from_parfiles</code><span class="sig-paren">(</span><em>pst</em>, <em>parfile_names</em>, <em>real_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.from_parfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.from_parfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a parameter ensemble from parfiles.  Accepts parfiles with less than the
+parameters in the control (get NaNs in the ensemble) or extra parameters in the
+parfiles (get dropped)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> – pyemu.Pst</li>
+<li><strong>parfile_names</strong> – list of str
+par file names</li>
+<li><strong>real_names</strong> – str
+optional list of realization names. If None, a single integer counter is used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pyemu.ParameterEnsemble</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyemu.en.ParameterEnsemble.to_csv">
 <code class="descname">to_csv</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.to_csv" title="Permalink to this definition">¶</a></dt>
@@ -828,6 +948,29 @@ ParameterEnsemble csv is not in Log10 space</p>
 <li><strong>**kwrags</strong> (<em>dict</em>) – keyword arguments to pass to pandas.DataFrame.to_csv()</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">this function back-transforms inplace with respect to
+log10 before writing</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.en.ParameterEnsemble.to_binary">
+<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.to_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>write the parameter ensemble to a jco-style binary file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – the filename to write</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">None</td>
 </tr>
 </tbody>
 </table>
@@ -856,6 +999,12 @@ log10 before writing</p>
 <p class="last">this function back-transforms inplace with respect to
 log10 before writing</p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.en.ParameterEnsemble.add_base">
+<code class="descname">add_base</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/en.html#ParameterEnsemble.add_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.en.ParameterEnsemble.add_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>add “base” control file values as a realization</p>
 </dd></dl>
 
 </dd></dl>
@@ -1226,50 +1375,6 @@ error variance dataframe</dd>
 </tbody>
 </table>
 </dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyemu.inf">
-<span id="pyemu-inf-module"></span><h2>pyemu.inf module<a class="headerlink" href="#module-pyemu.inf" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pyemu.inf.Influence">
-<em class="property">class </em><code class="descclassname">pyemu.inf.</code><code class="descname">Influence</code><span class="sig-paren">(</span><em>jco</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/inf.html#Influence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.inf.Influence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.la.LinearAnalysis" title="pyemu.la.LinearAnalysis"><code class="xref py py-class docutils literal"><span class="pre">pyemu.la.LinearAnalysis</span></code></a></p>
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.observation_leverage">
-<code class="descname">observation_leverage</code><a class="headerlink" href="#pyemu.inf.Influence.observation_leverage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.scaled_res">
-<code class="descname">scaled_res</code><a class="headerlink" href="#pyemu.inf.Influence.scaled_res" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.estimated_err_var">
-<code class="descname">estimated_err_var</code><a class="headerlink" href="#pyemu.inf.Influence.estimated_err_var" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.hat">
-<code class="descname">hat</code><a class="headerlink" href="#pyemu.inf.Influence.hat" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.studentized_res">
-<code class="descname">studentized_res</code><a class="headerlink" href="#pyemu.inf.Influence.studentized_res" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.cooks_d">
-<code class="descname">cooks_d</code><a class="headerlink" href="#pyemu.inf.Influence.cooks_d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.inf.Influence.dfbetas">
-<code class="descname">dfbetas</code><a class="headerlink" href="#pyemu.inf.Influence.dfbetas" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -1800,6 +1905,18 @@ PEST-style and Hill-style.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.la.LinearAnalysis.get_cso_dataframe">
+<code class="descname">get_cso_dataframe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis.get_cso_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis.get_cso_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>get a dataframe of composite observation sensitivity, as returned by PEST in the
+seo file.</p>
+<p>Note that this formulation deviates slightly from the PEST documentation in that the
+values are divided by (npar-1) rather than by (npar).</p>
+<p>The equation is cso_j = ((Q^1/2*J*J^T*Q^1/2)^1/2)_jj/(NPAR-1)
+Returns:
+cso : pandas.DataFrame</p>
 </dd></dl>
 
 </dd></dl>
@@ -2493,23 +2610,19 @@ weights will be dropped unless reset_zero_weight is set</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.sc.Schur.obs_group_importance">
+<code class="descname">obs_group_importance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.obs_group_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.sc.Schur.obs_group_importance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyemu.sc.Schur.get_removed_obs_group_importance">
 <code class="descname">get_removed_obs_group_importance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.get_removed_obs_group_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.sc.Schur.get_removed_obs_group_importance" title="Permalink to this definition">¶</a></dt>
-<dd><p>some sugar to test the importance of observations by group</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Dataframe</strong> – a dataframe that has index (row labels) that are the observation groups
-and a column labels of forecast names.  The values in the dataframe
-are the posterior variance of the forecast resulting from
-losing non-zero weight observations in each observation group</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.Dataframe</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.sc.Schur.get_added_obs_group_importance">
+<code class="descname">get_added_obs_group_importance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.get_added_obs_group_importance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.sc.Schur.get_added_obs_group_importance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyemu.sc.Schur.next_most_important_added_obs">
@@ -2601,6 +2714,56 @@ each parlist_dict entry expressed as posterior variance reduction</p>
 algorithm of Chen and Oliver 2013.  It requires the pest++ “sweep” utility
 to propagate the ensemble forward.</p>
 <dl class="class">
+<dt id="pyemu.smoother.Phi">
+<em class="property">class </em><code class="descclassname">pyemu.smoother.</code><code class="descname">Phi</code><span class="sig-paren">(</span><em>em</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Container class for dealing with ensemble residuals and phi vectors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>em</strong> (<a class="reference internal" href="#pyemu.smoother.EnsembleMethod" title="pyemu.smoother.EnsembleMethod"><em>EnsembleMethod</em></a>) – </td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyemu.smoother.Phi.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>cur_lam=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.smoother.Phi.phi_vec_dict">
+<code class="descname">phi_vec_dict</code><a class="headerlink" href="#pyemu.smoother.Phi.phi_vec_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.smoother.Phi.get_meas_and_regul_phi">
+<code class="descname">get_meas_and_regul_phi</code><span class="sig-paren">(</span><em>obsensemble</em>, <em>parensemble</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.get_meas_and_regul_phi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.get_meas_and_regul_phi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.smoother.Phi.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.smoother.Phi.report">
+<code class="descname">report</code><span class="sig-paren">(</span><em>cur_lam=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.smoother.Phi.get_residual_obs_matrix">
+<code class="descname">get_residual_obs_matrix</code><span class="sig-paren">(</span><em>obsensemble</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.get_residual_obs_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.get_residual_obs_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.smoother.Phi.get_residual_par_matrix">
+<code class="descname">get_residual_par_matrix</code><span class="sig-paren">(</span><em>parensemble</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#Phi.get_residual_par_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.Phi.get_residual_par_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="pyemu.smoother.EnsembleMethod">
 <em class="property">class </em><code class="descclassname">pyemu.smoother.</code><code class="descname">EnsembleMethod</code><span class="sig-paren">(</span><em>pst</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>num_slaves=0</em>, <em>use_approx_prior=True</em>, <em>submit_file=None</em>, <em>verbose=False</em>, <em>port=4004</em>, <em>slave_dir='template'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleMethod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleMethod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
@@ -2628,27 +2791,6 @@ interface files</li>
 </tr>
 </tbody>
 </table>
-<dl class="attribute">
-<dt id="pyemu.smoother.EnsembleMethod.current_phi">
-<code class="descname">current_phi</code><a class="headerlink" href="#pyemu.smoother.EnsembleMethod.current_phi" title="Permalink to this definition">¶</a></dt>
-<dd><p>the current phi vector</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>current_phi</strong> – the current phi vector as a pandas dataframe</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyemu.smoother.EnsembleMethod.current_actual_phi">
-<code class="descname">current_actual_phi</code><a class="headerlink" href="#pyemu.smoother.EnsembleMethod.current_actual_phi" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleMethod.initialize">
 <code class="descname">initialize</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleMethod.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleMethod.initialize" title="Permalink to this definition">¶</a></dt>
@@ -2663,7 +2805,7 @@ interface files</li>
 
 <dl class="class">
 <dt id="pyemu.smoother.EnsembleSmoother">
-<em class="property">class </em><code class="descclassname">pyemu.smoother.</code><code class="descname">EnsembleSmoother</code><span class="sig-paren">(</span><em>pst</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>num_slaves=0</em>, <em>use_approx_prior=True</em>, <em>submit_file=None</em>, <em>verbose=False</em>, <em>port=4004</em>, <em>slave_dir='template'</em>, <em>drop_bad_reals=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.smoother.</code><code class="descname">EnsembleSmoother</code><span class="sig-paren">(</span><em>pst</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>num_slaves=0</em>, <em>submit_file=None</em>, <em>verbose=False</em>, <em>port=4004</em>, <em>slave_dir='template'</em>, <em>drop_bad_reals=None</em>, <em>save_mats=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyemu.smoother.EnsembleMethod" title="pyemu.smoother.EnsembleMethod"><code class="xref py py-class docutils literal"><span class="pre">pyemu.smoother.EnsembleMethod</span></code></a></p>
 <p>an implementation of the GLM iterative ensemble smoother</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2698,7 +2840,7 @@ realizations are kept. Default is None</li>
 <p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;es</span> <span class="pre">=</span> <span class="pre">pyemu.EnsembleSmoother(pst=&quot;pest.pst&quot;)</span></code></p>
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleSmoother.initialize">
-<code class="descname">initialize</code><span class="sig-paren">(</span><em>num_reals=1</em>, <em>init_lambda=None</em>, <em>enforce_bounds='reset'</em>, <em>parensemble=None</em>, <em>obsensemble=None</em>, <em>restart_obsensemble=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.initialize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>num_reals=1</em>, <em>init_lambda=None</em>, <em>enforce_bounds='reset'</em>, <em>parensemble=None</em>, <em>obsensemble=None</em>, <em>restart_obsensemble=None</em>, <em>regul_factor=0.0</em>, <em>use_approx_prior=True</em>, <em>build_empirical_prior=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.initialize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize the iES process.  Depending on arguments, draws or loads
 initial parameter observations ensembles and runs the initial parameter
 ensemble</p>
@@ -2722,6 +2864,16 @@ not be None</li>
 <li><strong>restart_obsensemble</strong> (<em>pyemu.ObservationEnsemble</em><em> or </em><em>str</em>) – an observation ensemble or filename to use as an
 evaluated observation ensemble.  If not None, this will skip the initial
 parameter ensemble evaluation - user beware!</li>
+<li><strong>regul_factor</strong> (<em>float</em>) – the regularization penalty fraction of the composite objective.  The
+Prurist, MAP solution would be regul_factor = 1.0, yielding equal
+parts measurement and regularization to the composite objective function.
+Default is 0.0, which means only seek to minimize the measurement objective
+function</li>
+<li><strong>use_approx_prior</strong> (<em>bool</em>) – a flag to use the inverse, square root of the prior ccovariance matrix
+for scaling the upgrade calculation.  If True, this matrix is not used.
+Default is True</li>
+<li><strong>build_empirical_prior</strong> (<em>bool</em>) – flag to build the prior parameter covariance matrix from an existing parensemble.
+If True and parensemble is None, an exception is raised</li>
 </ul>
 </td>
 </tr>
@@ -2751,7 +2903,7 @@ parameter ensemble evaluation - user beware!</li>
 
 <dl class="method">
 <dt id="pyemu.smoother.EnsembleSmoother.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>lambda_mults=[1.0], localizer=None, run_subset=None, use_approx=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>lambda_mults=[1.0], localizer=None, run_subset=None, use_approx=True, calc_only=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/smoother.html#EnsembleSmoother.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.smoother.EnsembleSmoother.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>update the iES one GLM cycle</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2766,6 +2918,8 @@ if run_subset = 30 and num_reals=100, the first 30 realizations will be run (in
 parallel) for each lambda_mult value.  Then the best lambda_mult is selected and the
 remaining 70 realizations for that lambda_mult value are run (in parallel).</li>
 <li><strong>use_approx</strong> (<em>bool</em>) – a flag to use the MLE or MAP upgrade solution.  True indicates use MLE solution</li>
+<li><strong>calc_only</strong> (<em>bool</em>) – a flag to calculate the upgrade matrix only (not run the ensemble). This is mostly for
+debugging and testing on travis. Default is False</li>
 </ul>
 </td>
 </tr>
@@ -2805,7 +2959,6 @@ GLUE and null-space Monte Carlo) and a prototype iterative Ensemble Smoother</p>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-pyemu.en">pyemu.en module</a></li>
 <li><a class="reference internal" href="#module-pyemu.ev">pyemu.ev module</a></li>
-<li><a class="reference internal" href="#module-pyemu.inf">pyemu.inf module</a></li>
 <li><a class="reference internal" href="#module-pyemu.la">pyemu.la module</a></li>
 <li><a class="reference internal" href="#module-pyemu.logger">pyemu.logger module</a></li>
 <li><a class="reference internal" href="#module-pyemu.mc">pyemu.mc module</a></li>
@@ -2847,7 +3000,7 @@ GLUE and null-space Monte Carlo) and a prototype iterative Ensemble Smoother</p>
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

@@ -51,9 +51,8 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Jco</span><span class="p">,</span> <span class="n">Cov</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst.pst_handler</span> <span class="k">import</span> <span class="n">Pst</span>
+<span class="kn">from</span> <span class="nn">pyemu.utils.helpers</span> <span class="k">import</span> <span class="n">_istextfile</span>
 <span class="kn">from</span> <span class="nn">.logger</span> <span class="k">import</span> <span class="n">Logger</span>
-
-
 
 <div class="viewcode-block" id="LinearAnalysis"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.la.LinearAnalysis">[docs]</a><span class="k">class</span> <span class="nc">LinearAnalysis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The super class for linear analysis.  Can be used directly, but</span>
@@ -231,7 +230,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading cov: &quot;</span><span class="o">+</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">astype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">astype</span> <span class="o">=</span> <span class="n">Cov</span>
-            <span class="n">m</span> <span class="o">=</span> <span class="n">astype</span><span class="o">.</span><span class="n">from_ascii</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_istextfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">astype</span><span class="o">.</span><span class="n">from_ascii</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">astype</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading cov: &quot;</span><span class="o">+</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span><span class="p">[</span><span class="s2">&quot;unc&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading unc: &quot;</span><span class="o">+</span><span class="n">filename</span><span class="p">)</span>
@@ -1069,8 +1071,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">add_transform_columns</span><span class="p">()</span>
         <span class="n">parval1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dss_sum</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;parval1_trans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">css</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;hill_css&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">dss_sum</span> <span class="o">*</span> <span class="n">parval1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">css</span></div></div>
+        <span class="k">return</span> <span class="n">css</span></div>
 
+<div class="viewcode-block" id="LinearAnalysis.get_cso_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.la.LinearAnalysis.get_cso_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_cso_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get a dataframe of composite observation sensitivity, as returned by PEST in the</span>
+<span class="sd">        seo file.</span>
+
+<span class="sd">        Note that this formulation deviates slightly from the PEST documentation in that the</span>
+<span class="sd">        values are divided by (npar-1) rather than by (npar).</span>
+
+<span class="sd">        The equation is cso_j = ((Q^1/2*J*J^T*Q^1/2)^1/2)_jj/(NPAR-1)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        cso : pandas.DataFrame</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">cso</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">qhalfx</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">qhalfx</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">))))</span><span class="o">/</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">npar</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">cso_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;obnme&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s1">&#39;cso&#39;</span><span class="p">:</span><span class="n">cso</span><span class="p">})</span>
+        <span class="n">cso_df</span><span class="o">.</span><span class="n">index</span><span class="o">=</span><span class="n">cso_df</span><span class="p">[</span><span class="s1">&#39;obnme&#39;</span><span class="p">]</span>
+        <span class="n">cso_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;obnme&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cso_df</span></div></div>
 </pre></div>
 
           </div>
@@ -1104,7 +1127,7 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

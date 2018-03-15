@@ -186,13 +186,17 @@ private attributes</p>
 
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.reset_x">
-<code class="descname">reset_x</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.reset_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.reset_x" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reset_x</code><span class="sig-paren">(</span><em>x</em>, <em>copy=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.reset_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.reset_x" title="Permalink to this definition">¶</a></dt>
 <dd><p>reset self.__x private attribute</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<em>numpy.ndarray</em>) – </td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>numpy.ndarray</em>) – </li>
+<li><strong>copy</strong> (<em>bool</em>) – flag to make a copy of ‘x’. Defaule is True</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -592,6 +596,33 @@ for truncation.  Ignored if maxsing is not None</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.mat.mat_handler.Matrix.old_indices">
+<code class="descname">old_indices</code><span class="sig-paren">(</span><em>names</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.old_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.old_indices" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>get the row and col indices of names. If axis is None, two ndarrays</dt>
+<dd>are returned, corresponding the indices of names for each axis</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>names</strong> (<em>iterable</em>) – column and/or row names</li>
+<li><strong>axis</strong> (<em>(</em><em>int</em><em>) </em><em>(</em><em>optional</em><em>)</em>) – the axis to search.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>numpy.ndarray</strong> – indices of names.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.align">
 <code class="descname">align</code><span class="sig-paren">(</span><em>names</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.align"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.align" title="Permalink to this definition">¶</a></dt>
 <dd><p>reorder self by names.  If axis is None, reorder both indices</p>
@@ -633,6 +664,11 @@ for truncation.  Ignored if maxsing is not None</li>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.Matrix.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.drop">
@@ -699,14 +735,18 @@ the name of the column in the new Matrix</td>
 
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_binary" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em>, <em>droptol=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a PEST-compatible binary file.  The format is the same
 as the format used to storage a PEST Jacobian matrix</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – filename to save binary file</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – filename to save binary file</li>
+<li><strong>droptol</strong> (<em>float</em>) – absolute value tolerance to make values smaller than zero.  Default is None</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1386,7 +1426,7 @@ operators to autoalign the elements based on row and column names.</p>
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

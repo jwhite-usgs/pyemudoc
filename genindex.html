@@ -74,6 +74,12 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.add_base">add_base() (pyemu.en.ObservationEnsemble method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.add_base">(pyemu.en.ParameterEnsemble method)</a>
+</li>
+      </ul></li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.add_external">add_external() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_observations">add_observations() (pyemu.pst.pst_handler.Pst method)</a>
@@ -96,15 +102,17 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights">adjust_weights() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_by_list">adjust_weights_by_list() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_recfile">adjust_weights_recfile() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_resfile">adjust_weights_resfile() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.align">align() (pyemu.mat.mat_handler.Matrix method)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.apply_all_wells">apply_all_wells() (in module pyemu.utils.helpers)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.apply_array_pars">apply_array_pars() (in module pyemu.utils.helpers)</a>
 </li>
@@ -115,6 +123,14 @@
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.apply_karhunen_loeve_scaling">apply_karhunen_loeve_scaling() (pyemu.la.LinearAnalysis method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.apply_mflist_budget_obs">apply_mflist_budget_obs() (in module pyemu.utils.gw_utils)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.apply_mtlist_budget_obs">apply_mtlist_budget_obs() (in module pyemu.utils.gw_utils)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.apply_sfr_obs">apply_sfr_obs() (in module pyemu.utils.gw_utils)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.apply_sfr_seg_parameters">apply_sfr_seg_parameters() (in module pyemu.utils.gw_utils)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.apply_sft_obs">apply_sft_obs() (in module pyemu.utils.gw_utils)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.as_2d">as_2d (pyemu.mat.mat_handler.Matrix attribute)</a>
 </li>
@@ -160,6 +176,8 @@
 </li>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.clean">clean() (pyemu.la.LinearAnalysis method)</a>
 </li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.clean_missing_exponent">clean_missing_exponent() (in module pyemu.pst.pst_utils)</a>
+</li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.concat">concat() (in module pyemu.mat.mat_handler)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.condition_on">condition_on() (pyemu.mat.mat_handler.Cov method)</a>
@@ -168,14 +186,14 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData">ControlData (class in pyemu.pst.pst_controldata)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.cooks_d">cooks_d (pyemu.inf.Influence attribute)</a>
-</li>
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.copy">copy() (pyemu.en.Ensemble method)</a>
 
       <ul>
         <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.copy">(pyemu.en.ObservationEnsemble method)</a>
 </li>
         <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.copy">(pyemu.en.ParameterEnsemble method)</a>
+</li>
+        <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.copy">(pyemu.mat.mat_handler.Matrix method)</a>
 </li>
         <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData.copy">(pyemu.pst.pst_controldata.ControlData method)</a>
 </li>
@@ -190,9 +208,11 @@
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance">(pyemu.utils.geostats.Vario2d method)</a>
 </li>
       </ul></li>
-      <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance_matrix">covariance_matrix() (pyemu.utils.geostats.GeoStruct method)</a>
+      <li><a href="source/pyemu.html#pyemu.en.Ensemble.covariance_matrix">covariance_matrix() (pyemu.en.Ensemble method)</a>
 
       <ul>
+        <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance_matrix">(pyemu.utils.geostats.GeoStruct method)</a>
+</li>
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance_matrix">(pyemu.utils.geostats.Vario2d method)</a>
 </li>
       </ul></li>
@@ -202,10 +222,6 @@
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance_points">(pyemu.utils.geostats.Vario2d method)</a>
 </li>
       </ul></li>
-      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.current_actual_phi">current_actual_phi (pyemu.smoother.EnsembleMethod attribute)</a>
-</li>
-      <li><a href="source/pyemu.html#pyemu.smoother.EnsembleMethod.current_phi">current_phi (pyemu.smoother.EnsembleMethod attribute)</a>
-</li>
   </ul></td>
 </tr></table>
 
@@ -219,8 +235,6 @@
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.del_rw">del_rw() (in module pyemu.pst.pst_utils)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.df">df() (pyemu.mat.mat_handler.Matrix method)</a>
-</li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.dfbetas">dfbetas (pyemu.inf.Influence attribute)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.double">double (pyemu.mat.mat_handler.Matrix attribute)</a>
 </li>
@@ -247,7 +261,11 @@
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.drop_prior_information">drop_prior_information() (pyemu.la.LinearAnalysis method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.dropna">dropna() (pyemu.en.Ensemble method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.dropna">(pyemu.en.ParameterEnsemble method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -275,8 +293,6 @@
       <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother">EnsembleSmoother (class in pyemu.smoother)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar">ErrVar (class in pyemu.ev)</a>
-</li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.estimated_err_var">estimated_err_var (pyemu.inf.Influence attribute)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.estimation">estimation (pyemu.pst.pst_handler.Pst attribute)</a>
 </li>
@@ -316,6 +332,8 @@
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.fixed_indexer">fixed_indexer (pyemu.en.ParameterEnsemble attribute)</a>
 </li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.flex_load">flex_load() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.forecast_names">forecast_names (pyemu.la.LinearAnalysis attribute)</a>
 
       <ul>
@@ -330,10 +348,16 @@
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_ascii">from_ascii() (pyemu.mat.mat_handler.Matrix class method)</a>
 </li>
+      <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.from_binary">from_binary() (pyemu.en.ObservationEnsemble class method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_binary">(pyemu.en.ParameterEnsemble class method)</a>
+</li>
+        <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_binary">(pyemu.mat.mat_handler.Matrix class method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_binary">from_binary() (pyemu.mat.mat_handler.Matrix class method)</a>
-</li>
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.from_dataframe">from_dataframe() (pyemu.en.Ensemble class method)</a>
 
       <ul>
@@ -343,8 +367,6 @@
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.from_fortranfile">from_fortranfile() (pyemu.mat.mat_handler.Matrix class method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw">from_gaussian_draw() (pyemu.en.ParameterEnsemble class method)</a>
-</li>
-      <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw_homegrown">from_gaussian_draw_homegrown() (pyemu.en.ParameterEnsemble class method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.from_id_gaussian_draw">from_id_gaussian_draw() (pyemu.en.ObservationEnsemble class method)</a>
 </li>
@@ -356,9 +378,13 @@
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_obsweights">from_obsweights() (pyemu.mat.mat_handler.Cov class method)</a>
 </li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.from_par_obs_names">from_par_obs_names() (pyemu.pst.pst_handler.Pst class method)</a>
+</li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parameter_data">from_parameter_data() (pyemu.mat.mat_handler.Cov class method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parbounds">from_parbounds() (pyemu.mat.mat_handler.Cov class method)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.from_parfiles">from_parfiles() (pyemu.en.ParameterEnsemble class method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Jco.from_pst">from_pst() (pyemu.mat.mat_handler.Jco class method)</a>
 </li>
@@ -394,6 +420,8 @@
         <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get">(pyemu.pst.pst_handler.Pst method)</a>
 </li>
       </ul></li>
+      <li><a href="source/pyemu.html#pyemu.sc.Schur.get_added_obs_group_importance">get_added_obs_group_importance() (pyemu.sc.Schur method)</a>
+</li>
       <li><a href="source/pyemu.html#pyemu.sc.Schur.get_added_obs_importance">get_added_obs_importance() (pyemu.sc.Schur method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.get_common_elements">get_common_elements() (in module pyemu.mat.mat_handler)</a>
@@ -401,6 +429,8 @@
       <li><a href="source/pyemu.html#pyemu.sc.Schur.get_conditional_instance">get_conditional_instance() (pyemu.sc.Schur method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.get_count">get_count() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.get_cso_dataframe">get_cso_dataframe() (pyemu.la.LinearAnalysis method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.ControlData.get_dataframe">get_dataframe() (pyemu.pst.pst_controldata.ControlData static method)</a>
 </li>
@@ -419,6 +449,8 @@
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.get_marker_indices">get_marker_indices() (in module pyemu.pst.pst_utils)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.get_maxsing">get_maxsing() (pyemu.mat.mat_handler.Matrix method)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi.get_meas_and_regul_phi">get_meas_and_regul_phi() (pyemu.smoother.Phi method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.mc.MonteCarlo.get_nsing">get_nsing() (pyemu.mc.MonteCarlo method)</a>
 </li>
@@ -440,6 +472,10 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get_res_stats">get_res_stats() (pyemu.pst.pst_handler.Pst method)</a>
 </li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi.get_residual_obs_matrix">get_residual_obs_matrix() (pyemu.smoother.Phi method)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi.get_residual_par_matrix">get_residual_par_matrix() (pyemu.smoother.Phi method)</a>
+</li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.get_uncfile_dimensions">get_uncfile_dimensions() (pyemu.mat.mat_handler.Cov static method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.grid_prep">grid_prep() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
@@ -453,10 +489,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.hadamard_product">hadamard_product() (pyemu.mat.mat_handler.Matrix method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.hat">hat (pyemu.inf.Influence attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -477,8 +509,6 @@
 </li>
       </ul></li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.indices">indices() (pyemu.mat.mat_handler.Matrix method)</a>
-</li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence">Influence (class in pyemu.inf)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -535,6 +565,8 @@
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis">LinearAnalysis (class in pyemu.la)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.load">load() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.load_sfr_out">load_sfr_out() (in module pyemu.utils.gw_utils)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -648,6 +680,8 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.html#pyemu.sc.Schur.obs_group_importance">obs_group_importance() (pyemu.sc.Schur method)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.obs_groups">obs_groups (pyemu.pst.pst_handler.Pst attribute)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.obs_length">obs_length (pyemu.mat.mat_handler.Matrix attribute)</a>
@@ -660,13 +694,13 @@
       </ul></li>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.obscov">obscov (pyemu.la.LinearAnalysis attribute)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.mc.MonteCarlo.obsensemble">obsensemble (pyemu.mc.MonteCarlo attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.observation_leverage">observation_leverage (pyemu.inf.Influence attribute)</a>
+      <li><a href="source/pyemu.html#pyemu.mc.MonteCarlo.obsensemble">obsensemble (pyemu.mc.MonteCarlo attribute)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble">ObservationEnsemble (class in pyemu.en)</a>
+</li>
+      <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.old_indices">old_indices() (pyemu.mat.mat_handler.Matrix method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar.omitted_jco">omitted_jco (pyemu.ev.ErrVar attribute)</a>
 </li>
@@ -722,11 +756,15 @@
         <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.SvdData.parse_values_from_lines">(pyemu.pst.pst_controldata.SvdData method)</a>
 </li>
       </ul></li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi">Phi (class in pyemu.smoother)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.phi">phi (pyemu.pst.pst_handler.Pst attribute)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.phi_components">phi_components (pyemu.pst.pst_handler.Pst attribute)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.phi_components_normalized">phi_components_normalized (pyemu.pst.pst_handler.Pst attribute)</a>
+</li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi.phi_vec_dict">phi_vec_dict (pyemu.smoother.Phi attribute)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.phi_vector">phi_vector (pyemu.en.ObservationEnsemble attribute)</a>
 </li>
@@ -741,11 +779,15 @@
       <li><a href="source/pyemu.html#pyemu.en.Ensemble.plot">plot() (pyemu.en.Ensemble method)</a>
 
       <ul>
+        <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.plot">(pyemu.pst.pst_handler.Pst method)</a>
+</li>
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.plot">(pyemu.utils.geostats.GeoStruct method)</a>
 </li>
         <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.plot">(pyemu.utils.geostats.Vario2d method)</a>
 </li>
       </ul></li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.plot_flopy_par_ensemble">plot_flopy_par_ensemble() (in module pyemu.utils.helpers)</a>
+</li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.plot_summary_distributions">plot_summary_distributions() (in module pyemu.utils.helpers)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.populate_dataframe">populate_dataframe() (in module pyemu.pst.pst_utils)</a>
@@ -764,6 +806,8 @@
       </ul></li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.pp_prep">pp_prep() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.pp_tpl_to_dataframe">pp_tpl_to_dataframe() (in module pyemu.utils.gw_utils)</a>
 
       <ul>
@@ -772,8 +816,6 @@
       </ul></li>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.predictions">predictions (pyemu.la.LinearAnalysis attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.predictions_iter">predictions_iter (pyemu.la.LinearAnalysis attribute)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.prep_mlt_arrays">prep_mlt_arrays() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
@@ -819,8 +861,6 @@
       <li><a href="source/pyemu.html#module-pyemu.en">pyemu.en (module)</a>
 </li>
       <li><a href="source/pyemu.html#module-pyemu.ev">pyemu.ev (module)</a>
-</li>
-      <li><a href="source/pyemu.html#module-pyemu.inf">pyemu.inf (module)</a>
 </li>
       <li><a href="source/pyemu.html#module-pyemu.la">pyemu.la (module)</a>
 </li>
@@ -902,11 +942,13 @@
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Jco.replace_cols">replace_cols() (pyemu.mat.mat_handler.Jco method)</a>
 </li>
+      <li><a href="source/pyemu.html#pyemu.smoother.Phi.report">report() (pyemu.smoother.Phi method)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.res">res (pyemu.pst.pst_handler.Pst attribute)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.res_from_obseravtion_data">res_from_obseravtion_data() (in module pyemu.pst.pst_utils)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.en.Ensemble.reseed">reseed() (pyemu.en.Ensemble method)</a>
+      <li><a href="source/pyemu.html#pyemu.en.Ensemble.reseed">reseed() (pyemu.en.Ensemble static method)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.la.LinearAnalysis.reset_obscov">reset_obscov() (pyemu.la.LinearAnalysis method)</a>
 </li>
@@ -928,8 +970,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.s">s (pyemu.mat.mat_handler.Matrix attribute)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.scaled_res">scaled_res (pyemu.inf.Influence attribute)</a>
-</li>
       <li><a href="source/pyemu.html#pyemu.sc.Schur">Schur (class in pyemu.sc)</a>
 </li>
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar.second_forecast">second_forecast() (pyemu.ev.ErrVar method)</a>
@@ -939,6 +979,8 @@
       <li><a href="source/pyemu.html#pyemu.ev.ErrVar.second_prediction">second_prediction() (pyemu.ev.ErrVar method)</a>
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.set_res">set_res() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_all_wells">setup_all_wells() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_array_pars">setup_array_pars() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
@@ -956,6 +998,8 @@
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_model">setup_model() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.setup_mtlist_budget_obs">setup_mtlist_budget_obs() (in module pyemu.utils.gw_utils)</a>
+</li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_mult_dirs">setup_mult_dirs() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_observations">setup_observations() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
@@ -966,8 +1010,18 @@
         <li><a href="source/pyemu.utils.html#pyemu.utils.pp_utils.setup_pilotpoints_grid">(in module pyemu.utils.pp_utils)</a>
 </li>
       </ul></li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_obs">setup_sfr_obs() (in module pyemu.utils.gw_utils)</a>
+
+      <ul>
+        <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_obs">(pyemu.utils.helpers.PstFromFlopyModel method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars">setup_sfr_pars() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
+</li>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_seg_parameters">setup_sfr_seg_parameters() (in module pyemu.utils.gw_utils)</a>
+</li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sft_obs">setup_sft_obs() (in module pyemu.utils.gw_utils)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.setup_smp">setup_smp() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
@@ -1008,8 +1062,6 @@
 </li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.str_con">str_con() (in module pyemu.pst.pst_utils)</a>
 </li>
-      <li><a href="source/pyemu.html#pyemu.inf.Influence.studentized_res">studentized_res (pyemu.inf.Influence attribute)</a>
-</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_controldata.SvdData">SvdData (class in pyemu.pst.pst_controldata)</a>
 </li>
   </ul></td>
@@ -1028,16 +1080,22 @@
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.to_ascii">to_ascii() (pyemu.mat.mat_handler.Matrix method)</a>
 </li>
-      <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.to_binary">to_binary() (pyemu.mat.mat_handler.Matrix method)</a>
+      <li><a href="source/pyemu.html#pyemu.en.ObservationEnsemble.to_binary">to_binary() (pyemu.en.ObservationEnsemble method)</a>
+
+      <ul>
+        <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.to_binary">(pyemu.en.ParameterEnsemble method)</a>
 </li>
+        <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.to_binary">(pyemu.mat.mat_handler.Matrix method)</a>
+</li>
+      </ul></li>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.to_csv">to_csv() (pyemu.en.ParameterEnsemble method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Matrix.to_dataframe">to_dataframe() (pyemu.mat.mat_handler.Matrix method)</a>
 </li>
-      <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.OrdinaryKrige.to_grid_factors_file">to_grid_factors_file() (pyemu.utils.geostats.OrdinaryKrige method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.utils.html#pyemu.utils.geostats.OrdinaryKrige.to_grid_factors_file">to_grid_factors_file() (pyemu.utils.geostats.OrdinaryKrige method)</a>
+</li>
       <li><a href="source/pyemu.html#pyemu.en.ParameterEnsemble.to_parfiles">to_parfiles() (pyemu.en.ParameterEnsemble method)</a>
 </li>
       <li><a href="source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.to_pearson">to_pearson() (pyemu.mat.mat_handler.Cov method)</a>
@@ -1075,6 +1133,8 @@
       <ul>
         <li><a href="source/pyemu.html#pyemu.smoother.EnsembleSmoother.update">(pyemu.smoother.EnsembleSmoother method)</a>
 </li>
+        <li><a href="source/pyemu.html#pyemu.smoother.Phi.update">(pyemu.smoother.Phi method)</a>
+</li>
       </ul></li>
   </ul></td>
 </tr></table>
@@ -1109,6 +1169,8 @@
 </li>
         <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write">(pyemu.pst.pst_handler.Pst method)</a>
 </li>
+        <li><a href="source/pyemu.html#pyemu.smoother.Phi.write">(pyemu.smoother.Phi method)</a>
+</li>
       </ul></li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.helpers.PstFromFlopyModel.write_const_tpl">write_const_tpl() (pyemu.utils.helpers.PstFromFlopyModel method)</a>
 </li>
@@ -1124,6 +1186,10 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_obs_summary_table">write_obs_summary_table() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
+      <li><a href="source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_par_summary_table">write_par_summary_table() (pyemu.pst.pst_handler.Pst method)</a>
+</li>
       <li><a href="source/pyemu.pst.html#pyemu.pst.pst_utils.write_parfile">write_parfile() (in module pyemu.pst.pst_utils)</a>
 </li>
       <li><a href="source/pyemu.utils.html#pyemu.utils.gw_utils.write_pp_file">write_pp_file() (in module pyemu.utils.gw_utils)</a>
@@ -1215,7 +1281,7 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

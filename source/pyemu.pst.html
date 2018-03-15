@@ -209,7 +209,7 @@ of the PEST control file</p>
 is the primary mechanism for dealing with PEST control files</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_handler.Pst">
-<em class="property">class </em><code class="descclassname">pyemu.pst.pst_handler.</code><code class="descname">Pst</code><span class="sig-paren">(</span><em>filename</em>, <em>load=True</em>, <em>resfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.pst.pst_handler.</code><code class="descname">Pst</code><span class="sig-paren">(</span><em>filename</em>, <em>load=True</em>, <em>resfile=None</em>, <em>flex=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>basic class for handling pest control files to support linear analysis
 as well as replicate some of the functionality of the pest utilities</p>
@@ -233,6 +233,11 @@ with the control file base name is sought.  Default is None</li>
 </tr>
 </tbody>
 </table>
+<dl class="classmethod">
+<dt id="pyemu.pst.pst_handler.Pst.from_par_obs_names">
+<em class="property">classmethod </em><code class="descname">from_par_obs_names</code><span class="sig-paren">(</span><em>par_names=['par1'], obs_names=['obs1']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.from_par_obs_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.from_par_obs_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="pyemu.pst.pst_handler.Pst.phi">
 <code class="descname">phi</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.phi" title="Permalink to this definition">¶</a></dt>
@@ -613,6 +618,11 @@ least one non-zero weighted observation</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.flex_load">
+<code class="descname">flex_load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.flex_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.flex_load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.load">
 <code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>load the pest control file information</p>
@@ -911,15 +921,15 @@ Default is None</li>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.add_parameters">
-<code class="descname">add_parameters</code><span class="sig-paren">(</span><em>template_file</em>, <em>in_file</em>, <em>pst_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_parameters</code><span class="sig-paren">(</span><em>template_file</em>, <em>in_file=None</em>, <em>pst_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>add new parameters to a control file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tpl_file</strong> (<em>str</em>) – template file</li>
-<li><strong>in_file</strong> (<em>str</em>) – model input file</li>
+<li><strong>template_file</strong> (<em>str</em>) – template file</li>
+<li><strong>in_file</strong> (<em>str</em><em>(</em><em>optional</em><em>)</em>) – model input file. If None, template_file.replace(‘.tpl’,’‘) is used</li>
 <li><strong>pst_path</strong> (<em>str</em><em>(</em><em>optional</em><em>)</em>) – the path to append to the template_file and in_file in the control file.  If
 not None, then any existing path in front of the template or in file is split off
 and pst_path is prepended.  Default is None</li>
@@ -943,7 +953,7 @@ new template file, returns None</p>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.add_observations">
-<code class="descname">add_observations</code><span class="sig-paren">(</span><em>ins_file</em>, <em>out_file</em>, <em>pst_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_observations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_observations</code><span class="sig-paren">(</span><em>ins_file</em>, <em>out_file</em>, <em>pst_path=None</em>, <em>inschek=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_observations" title="Permalink to this definition">¶</a></dt>
 <dd><p>add new parameters to a control file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -955,6 +965,7 @@ new template file, returns None</p>
 <li><strong>pst_path</strong> (<em>str</em><em>(</em><em>optional</em><em>)</em>) – the path to append to the instruction file and out file in the control file.  If
 not None, then any existing path in front of the template or in file is split off
 and pst_path is prepended.  Default is None</li>
+<li><strong>inschek</strong> (<em>bool</em>) – flag to run inschek.  If successful, inscheck outputs are used as obsvals</li>
 </ul>
 </td>
 </tr>
@@ -968,8 +979,7 @@ and pst_path is prepended.  Default is None</li>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>populates the new observation information with default values</p>
-<p class="last">tries to run inschek to populate obsval with the current model output file values</p>
+<p class="last">populates the new observation information with default values</p>
 </div>
 </dd></dl>
 
@@ -1010,6 +1020,87 @@ obsvious to most users, but you never know….</td>
 <p class="first admonition-title">Note</p>
 <p class="last">the normalized RMSE is normalized against the obsval range (max - min)</p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>kind=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to plot various parts of the control. Depending
+on ‘kind’ argument, a multipage pdf is written</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kind</strong> (<em>str</em>) – options are ‘prior’ (prior parameter histograms, ‘1to1’ (line of equality
+and sim vs res), ‘obs_v_sim’ (time series using datetime suffix), ‘phi_pie’
+(pie chart of phi components)</li>
+<li><strong>kwargs</strong> (<em>dict</em>) – optional args for plots</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.write_par_summary_table">
+<code class="descname">write_par_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em>, <em>sigma_range=4.0</em>, <em>caption=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_par_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_par_summary_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a stand alone parameter summary latex table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>str</em>) – latex filename. If None, use &lt;case&gt;.par.tex. Default is None</li>
+<li><strong>group_names</strong> (<em>dict</em>) – par group names : table names for example {“w0”:”well stress period 1”}.
+Default is None</li>
+<li><strong>sigma_range</strong> (<em>float</em>) – number of standard deviations represented by parameter bounds.  Default
+is 4.0, implying 95% confidence bounds</li>
+<li><strong>caption</strong> (<em>str</em>) – table caption.  Default is None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.write_obs_summary_table">
+<code class="descname">write_obs_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em>, <em>caption=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_obs_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_obs_summary_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a stand alone observation summary latex table</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filename</strong> (<em>str</em>) – latex filename. If None, use &lt;case&gt;.par.tex. Default is None</li>
+<li><strong>group_names</strong> (<em>dict</em>) – par group names : table names for example {“w0”:”well stress period 1”}.
+Default is None</li>
+<li><strong>caption</strong> (<em>str</em>) – table caption. Default is None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -1331,7 +1422,7 @@ file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written
 
 <dl class="function">
 <dt id="pyemu.pst.pst_utils.smp_to_ins">
-<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">smp_to_ins</code><span class="sig-paren">(</span><em>smp_filename</em>, <em>ins_filename=None</em>, <em>use_generic_names=False</em>, <em>gwutils_compliant=False</em>, <em>datetime_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#smp_to_ins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.smp_to_ins" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">smp_to_ins</code><span class="sig-paren">(</span><em>smp_filename</em>, <em>ins_filename=None</em>, <em>use_generic_names=False</em>, <em>gwutils_compliant=False</em>, <em>datetime_format=None</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#smp_to_ins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.smp_to_ins" title="Permalink to this definition">¶</a></dt>
 <dd><p>create an instruction file for an smp file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1348,6 +1439,7 @@ int counter instead of trying to use a datetime str</li>
 pest gw utils (fixed format instructions).  If false,
 use free format (with whitespace) instruction set</li>
 <li><strong>datetime_format</strong> (<em>str</em>) – str to pass to datetime.strptime in the smp_to_dataframe() function</li>
+<li><strong>prefix</strong> (<em>str</em>) – a prefix to add to the front of the obsnmes.  Default is ‘’</li>
 </ul>
 </td>
 </tr>
@@ -1458,6 +1550,31 @@ missing information</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyemu.pst.pst_utils.clean_missing_exponent">
+<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">clean_missing_exponent</code><span class="sig-paren">(</span><em>pst_filename</em>, <em>clean_filename='clean.pst'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#clean_missing_exponent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.clean_missing_exponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>fixes the issue where some terrible fortran program may have
+written a floating point format without the ‘e’ - like 1.0-3, really?!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst_filename</strong> (<em>str</em>) – the pest control file</li>
+<li><strong>clean_filename</strong> (<em>str</em>) – the new pest control file to write. Default is “clean.pst”</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyemu.pst">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyemu.pst" title="Permalink to this headline">¶</a></h2>
@@ -1516,7 +1633,7 @@ all sections of the control file.  The primary object is the Pst…start there.<
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

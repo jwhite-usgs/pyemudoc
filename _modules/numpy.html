@@ -151,10 +151,6 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 
-<span class="kn">import</span> <span class="nn">ctypes</span>
-<span class="n">_old_rtld</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">getdlopenflags</span><span class="p">()</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">setdlopenflags</span><span class="p">(</span><span class="n">_old_rtld</span> <span class="o">|</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">RTLD_GLOBAL</span><span class="p">)</span>
-
 <span class="kn">from</span> <span class="nn">._globals</span> <span class="k">import</span> <span class="n">ModuleDeprecationWarning</span><span class="p">,</span> <span class="n">VisibleDeprecationWarning</span>
 <span class="kn">from</span> <span class="nn">._globals</span> <span class="k">import</span> <span class="n">_NoValue</span>
 
@@ -194,9 +190,9 @@
 
     <span class="c1"># We don&#39;t actually use this ourselves anymore, but I&#39;m not 100% sure that</span>
     <span class="c1"># no-one else in the world is using it (though I hope not)</span>
-    <span class="kn">from</span> <span class="nn">.testing</span> <span class="k">import</span> <span class="n">Tester</span>
-    <span class="n">test</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">nosetester</span><span class="o">.</span><span class="n">_numpy_tester</span><span class="p">()</span><span class="o">.</span><span class="n">test</span>
-    <span class="n">bench</span> <span class="o">=</span> <span class="n">testing</span><span class="o">.</span><span class="n">nosetester</span><span class="o">.</span><span class="n">_numpy_tester</span><span class="p">()</span><span class="o">.</span><span class="n">bench</span>
+    <span class="kn">from</span> <span class="nn">.testing</span> <span class="k">import</span> <span class="n">Tester</span><span class="p">,</span> <span class="n">_numpy_tester</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">_numpy_tester</span><span class="p">()</span><span class="o">.</span><span class="n">test</span>
+    <span class="n">bench</span> <span class="o">=</span> <span class="n">_numpy_tester</span><span class="p">()</span><span class="o">.</span><span class="n">bench</span>
 
     <span class="c1"># Allow distributors to run custom init code</span>
     <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">_distributor_init</span>
@@ -244,11 +240,8 @@
     <span class="n">oldnumeric</span> <span class="o">=</span> <span class="s1">&#39;removed&#39;</span>
     <span class="n">numarray</span> <span class="o">=</span> <span class="s1">&#39;removed&#39;</span>
 
-<span class="n">sys</span><span class="o">.</span><span class="n">setdlopenflags</span><span class="p">(</span><span class="n">_old_rtld</span><span class="p">)</span>
-<span class="k">del</span> <span class="n">_old_rtld</span>
-<span class="k">del</span> <span class="n">sys</span>
-<span class="k">del</span> <span class="n">ctypes</span>
-<span class="n">__mkl_version__</span> <span class="o">=</span> <span class="s2">&quot;2017.0.1&quot;</span>
+
+<span class="n">__mkl_version__</span> <span class="o">=</span> <span class="s2">&quot;2018&quot;</span>
 </pre></div>
 
           </div>
@@ -282,7 +275,7 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>
