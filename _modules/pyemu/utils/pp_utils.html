@@ -70,7 +70,7 @@
 <span class="sd">        a spatial reference use to locate the model grid in space.  If None,</span>
 <span class="sd">        ml must not be None.  Default is None</span>
 <span class="sd">    ibound : numpy.ndarray</span>
-<span class="sd">        the modflow ibound integer array.  Used to set pilot points only in active areas.</span>
+<span class="sd">        the modflow ibound integer array.  Used to set pilot points only in active areas (!=0).</span>
 <span class="sd">        If None and ml is None, then pilot points are set in all rows and columns according to</span>
 <span class="sd">        every_n_cell.  Default is None.</span>
 <span class="sd">    prefix_dict : dict</span>
@@ -154,10 +154,10 @@
         <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prefix_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">continue</span>
         <span class="c1">#cycle through rows and cols</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">ib</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">every_n_cell</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">ib</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">every_n_cell</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">ib</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="n">every_n_cell</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">ib</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="n">every_n_cell</span><span class="p">):</span>
                 <span class="c1"># skip if this is an inactive cell</span>
-                <span class="k">if</span> <span class="n">ib</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ib</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># get the attributes we need</span>

@@ -110,6 +110,34 @@ Default is “none</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.utils.geostats.GeoStruct.sparse_covariance_matrix">
+<code class="descname">sparse_covariance_matrix</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#GeoStruct.sparse_covariance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.GeoStruct.sparse_covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>build a pyemu.Cov instance from GeoStruct</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>(</em><em>iterable of floats</em><em>)</em>) – x-coordinate locations</li>
+<li><strong>y</strong> (<em>(</em><em>iterable of floats</em><em>)</em>) – y-coordinate locations</li>
+<li><strong>names</strong> (<em>(</em><em>iterable of str</em><em>)</em>) – (parameter) names of locations.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>sparse</strong> – the sparse covariance matrix implied by this GeoStruct for the x,y pairs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pyemu.SparseMatrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyemu.utils.geostats.GeoStruct.covariance_matrix">
 <code class="descname">covariance_matrix</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>names=None</em>, <em>cov=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#GeoStruct.covariance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.GeoStruct.covariance_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>build a pyemu.Cov instance from GeoStruct</p>
@@ -551,6 +579,34 @@ an h_function() method.</p>
 “ax” (existing matplotlib.pyplot.axis).  Other
 kwargs are passed to matplotlib.pyplot.plot()</p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.utils.geostats.Vario2d.add_sparse_covariance_matrix">
+<code class="descname">add_sparse_covariance_matrix</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>names</em>, <em>iidx</em>, <em>jidx</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#Vario2d.add_sparse_covariance_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.Vario2d.add_sparse_covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>build a pyemu.SparseMatrix instance implied by Vario2d</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>(</em><em>iterable of floats</em><em>)</em>) – x-coordinate locations</li>
+<li><strong>y</strong> (<em>(</em><em>iterable of floats</em><em>)</em>) – y-coordinate locations</li>
+<li><strong>names</strong> (<em>(</em><em>iterable of str</em><em>)</em>) – names of locations. If None, cov must not be None</li>
+<li><strong>iidx</strong> (<em>1-D ndarray</em>) – i row indices</li>
+<li><strong>jidx</strong> (<em>1-D ndarray</em>) – j col indices</li>
+<li><strong>data</strong> (<em>1-D ndarray</em>) – nonzero entries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1244,6 +1300,43 @@ observations a meaningful name</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.gw_utils.setup_hds_timeseries">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_hds_timeseries</code><span class="sig-paren">(</span><em>hds_file</em>, <em>kij_dict</em>, <em>prefix=None</em>, <em>include_path=False</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>a function to setup extracting time-series from a binary modflow
+head save (or equivalent format - ucn, sub, etc).  Writes
+an instruction file and a _set_ csv</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hds_file</strong> (<em>str</em>) – binary filename</li>
+<li><strong>kij_dict</strong> (<em>dict</em>) – dictionary of site_name: [k,i,j] pairs</li>
+<li><strong>prefix</strong> (<em>str</em>) – string to prepend to site_name when forming obsnme’s.  Default is None</li>
+<li><strong>include_path</strong> (<em>bool</em>) – flag to prepend hds_file path. Useful for setting up
+process in separate directory for where python is running.</li>
+<li><strong>model</strong> (<em>flopy.mbase</em>) – a flopy model.  If passed, the observation names will have the datetime of the
+observation appended to them.  If None, the observation names will have the
+stress period appended to them. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This function writes hds_timeseries.config that must be in the same
+dir where apply_hds_timeseries() is called during the forward run</p>
+<p class="last">assumes model time units are days!!!</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_hds_timeseries">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_hds_timeseries</code><span class="sig-paren">(</span><em>config_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_hds_timeseries" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_hds_obs">
 <code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_hds_obs</code><span class="sig-paren">(</span><em>hds_file</em>, <em>kperk_pairs=None</em>, <em>skip=None</em>, <em>prefix='hds'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_hds_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_obs" title="Permalink to this definition">¶</a></dt>
 <dd><p>a function to setup using all values from a
@@ -1282,8 +1375,8 @@ returns np.NaN if the value should be skipped.</li>
 <p class="first admonition-title">Note</p>
 <p>requires flopy</p>
 <p>writes &lt;hds_file&gt;.dat.ins instruction file</p>
-<p>writes _setup_&lt;hds_file&gt;.csv which contains much</p>
-<p class="last">useful information for construction a control file</p>
+<p class="last">writes _setup_&lt;hds_file&gt;.csv which contains much
+useful information for construction a control file</p>
 </div>
 </dd></dl>
 
@@ -1469,6 +1562,11 @@ process in separate directory for where python is running.</li>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function writes “sfr_obs.config” which must be kept in the dir where
+“apply_sfr_obs()” is being called during the forward run</p>
+</div>
 </dd></dl>
 
 <dl class="function">
@@ -1516,6 +1614,13 @@ segments and only returns flow to aquifer and flow out.</p>
 <p>module with high-level functions to help
 perform complex tasks</p>
 <dl class="function">
+<dt id="pyemu.utils.helpers.remove_readonly">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">remove_readonly</code><span class="sig-paren">(</span><em>func</em>, <em>path</em>, <em>excinfo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#remove_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.remove_readonly" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove readonly dirs, apparently only a windows issue
+add to all rmtree calls: shutil.rmtree(<a href="#id1"><span class="problematic" id="id2">**</span></a>,onerror=remove_readonly), wk</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.helpers.run">
 <code class="descclassname">pyemu.utils.helpers.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd_str</em>, <em>cwd='.'</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>an OS agnostic function to execute command</p>
@@ -1548,8 +1653,50 @@ perform complex tasks</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.helpers.sparse_geostatistical_prior_builder">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">sparse_geostatistical_prior_builder</code><span class="sig-paren">(</span><em>pst</em>, <em>struct_dict</em>, <em>sigma_range=4</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#sparse_geostatistical_prior_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.sparse_geostatistical_prior_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>a helper function to construct a full prior covariance matrix using
+a mixture of geostastical structures and parameter bounds information.
+The covariance of parameters associated with geostatistical structures is defined
+as a mixture of GeoStruct and bounds.  That is, the GeoStruct is used to construct a
+pyemu.Cov, then the entire pyemu.Cov is scaled by the uncertainty implied by the bounds and
+sigma_range. Sounds complicated…</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – a control file (or the name of control file)</li>
+<li><strong>struct_dict</strong> (<em>dict</em>) – a python dict of GeoStruct (or structure file), and list of pp tpl files pairs
+If the values in the dict are pd.DataFrames, then they must have an
+‘x’,’y’, and ‘parnme’ column.  If the filename ends in ‘.csv’,
+then a pd.DataFrame is loaded, otherwise a pilot points file is loaded.</li>
+<li><strong>sigma_range</strong> (<em>float</em>) – a float representing the number of standard deviations implied by parameter bounds.
+Default is 4.0, which implies 95% confidence parameter bounds.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – flag for stdout.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>Cov</strong> – a sparse covariance matrix that includes all adjustable parameters in the control
+file.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pyemu.SparseMatrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.sparse_geostatistical_prior_builder(pst,struct_dict=sd)</span></code></p>
+<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov.to_coo(&quot;prior.jcb&quot;)</span></code></p>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.helpers.geostatistical_prior_builder">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">geostatistical_prior_builder</code><span class="sig-paren">(</span><em>pst</em>, <em>struct_dict</em>, <em>sigma_range=4</em>, <em>par_knowledge_dict=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#geostatistical_prior_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_prior_builder" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">geostatistical_prior_builder</code><span class="sig-paren">(</span><em>pst</em>, <em>struct_dict</em>, <em>sigma_range=4</em>, <em>par_knowledge_dict=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#geostatistical_prior_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_prior_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>a helper function to construct a full prior covariance matrix using
 a mixture of geostastical structures and parameter bounds information.
 The covariance of parameters associated with geostatistical structures is defined
@@ -1570,6 +1717,7 @@ then a pd.DataFrame is loaded, otherwise a pilot points file is loaded.</li>
 Default is 4.0, which implies 95% confidence parameter bounds.</li>
 <li><strong>par_knowledge_dict</strong> (<em>dict</em>) – used to condition on existing knowledge about parameters.  This functionality is
 currently in dev - don’t use it.</li>
+<li><strong>verbose</strong> (<em>bool</em>) – stdout flag</li>
 </ul>
 </td>
 </tr>
@@ -1675,7 +1823,7 @@ the following columns: name, new_val, org_val</li>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.zero_order_tikhonov">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">zero_order_tikhonov</code><span class="sig-paren">(</span><em>pst</em>, <em>parbounds=True</em>, <em>par_groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#zero_order_tikhonov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.zero_order_tikhonov" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">zero_order_tikhonov</code><span class="sig-paren">(</span><em>pst</em>, <em>parbounds=True</em>, <em>par_groups=None</em>, <em>reset=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#zero_order_tikhonov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.zero_order_tikhonov" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup preferred-value regularization</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1688,6 +1836,8 @@ to parameter bound width - approx the KL transform. Default
 is True</li>
 <li><strong>par_groups</strong> (<em>list</em>) – parameter groups to build PI equations for.  If None, all
 adjustable parameters are used. Default is None</li>
+<li><strong>reset</strong> (<em>bool</em>) – flag to reset the prior_information attribute of the pst
+instance.  Default is True</li>
 </ul>
 </td>
 </tr>
@@ -1877,7 +2027,7 @@ that listed in parse_dir_for_io_files()</p>
 
 <dl class="class">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel">
-<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>bc_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>bc_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>all_wells=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>temporal_bc_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>temporal_bc_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>all_wells=False</em>, <em>bc_props=[]</em>, <em>spatial_bc_props=[]</em>, <em>spatial_bc_geostruct=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="docutils">
 <dt>a monster helper class to setup multiplier parameters for an</dt>
@@ -1915,7 +2065,7 @@ layers 1,2, and 3.  For time-varying properties (e.g. recharge), the
 iterable is for zero-based stress period indices.  For example, [“rch.rech”,[0,4,10,15]]
 would setup constant (uniform) multiplier parameters for recharge for stress
 period 1,5,11,and 16.</li>
-<li><strong>bc_props</strong> (<em>list</em>) – boundary condition stress-period level multiplier parameters.
+<li><strong>temporal_bc_props</strong> (<em>list</em>) – boundary condition stress-period level multiplier parameters.
 A nested list of boundary condition elements to parameterize using
 name, iterable pairs.  The iterable is zero-based stress-period indices.
 For example, to setup multipliers for WEL flux and for RIV conductance,
@@ -1923,6 +2073,13 @@ bc_props = [[“wel.flux”,[0,1,2]],[“riv.cond”,None]] would setup
 multiplier parameters for well flux for stress periods 1,2 and 3 and
 would setup one single river conductance multipler parameter that is applied
 to all stress periods</li>
+<li><strong>spatial_bc_priops</strong> (<em>list</em>) – boundary condition spatial multiplier parameters.
+A nested list of boundary condition elements to parameterize using
+names (e.g. [“riv.cond”,”wel.flux”].  Setups up cell-based parameters for
+each boundary condition element listed.  These multipler parameters are applied across
+all stress periods.  For this to work, there must be the same number of entries
+for all stress periods.  If more than one BC of the same type is in a single
+cell, only one parameter is used to multiply all BCs in the same cell.</li>
 <li><strong>grid_props</strong> (<em>list</em>) – grid-based (every active model cell) multiplier parameters.
 A nested list of grid-scale model properties to parameterize using
 name, iterable pairs.  For 3D properties, the iterable is zero-based
@@ -1934,7 +2091,7 @@ would setup grid-based multiplier parameters in every active model cell
 for recharge for stress period 1,5,11,and 16.</li>
 <li><strong>grid_geostruct</strong> (<em>pyemu.geostats.GeoStruct</em>) – the geostatistical structure to build the prior parameter covariance matrix
 elements for grid-based parameters.  If None, a generic GeoStruct is created
-using the grid-spacing information.  Default is None</li>
+using an “a” parameter that is 10 times the max cell size.  Default is None</li>
 <li><strong>pp_space</strong> (<em>int</em>) – number of grid cells between pilot points.  If None, use the default
 in pyemu.pp_utils.setup_pilot_points_grid.  Default is None</li>
 <li><strong>zone_props</strong> (<em>list</em>) – zone-based multiplier parameters.
@@ -1958,12 +2115,16 @@ set the bounds for horizontal hydraulic conductivity to
 2.0.  For parameters not found in par_bounds_dict,
 pyemu.helpers.wildass_guess_par_bounds_dict is
 used to set somewhat meaningful bounds.  Default is None</li>
-<li><strong>bc_geostruct</strong> (<em>pyemu.geostats.GeoStruct</em>) – the geostastical struture to build the prior parameter covariance matrix
+<li><strong>temporal_bc_geostruct</strong> (<em>pyemu.geostats.GeoStruct</em>) – the geostastical struture to build the prior parameter covariance matrix
 for time-varying boundary condition multiplier parameters.  This GeoStruct
 express the time correlation so that the ‘a’ parameter is the length of
 time that boundary condition multiplier parameters are correlated across.
 If None, then a generic GeoStruct is created that uses an ‘a’ parameter
 of 3 stress periods.  Default is None</li>
+<li><strong>spatial_bc_geostruct</strong> (<em>pyemu.geostats.GeoStruct</em>) – the geostastical struture to build the prior parameter covariance matrix
+for spatially-varying boundary condition multiplier parameters.
+If None, a generic GeoStruct is created using an “a” parameter that
+is 10 times the max cell size.  Default is None.</li>
 <li><strong>remove_existing</strong> (<em>bool</em>) – a flag to remove an existing new_model_ws directory.  If False and
 new_model_ws exists, an exception is raised.  If True and new_model_ws
 exists, the directory is destroyed - user beware! Default is False.</li>
@@ -1997,10 +2158,6 @@ which is dangerous because of the non-standard binary names
 <li><strong>build_prior</strong> (<em>bool</em>) – flag to build prior covariance matrix. Default is Triue</li>
 <li><strong>sfr_obs</strong> (<em>bool</em>) – flag to include observations of flow and aquifer exchange from
 the sfr ASCII output file</li>
-<li><strong>all_wells</strong> (<em>bool</em>) – flag to add multiplier parameters for every wells in all stress periods.
-These parameters are treated as independent - not correlated in space or
-time to each other or any other parameters.  If True, ‘wel.flux’ must not
-be in bc_props</li>
 </ul>
 </td>
 </tr>
@@ -2227,19 +2384,23 @@ Util2D filename</p>
 
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.build_prior">
-<code class="descname">build_prior</code><span class="sig-paren">(</span><em>fmt='ascii'</em>, <em>filename=None</em>, <em>droptol=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_prior" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build_prior</code><span class="sig-paren">(</span><em>fmt='ascii'</em>, <em>filename=None</em>, <em>droptol=None</em>, <em>chunk=None</em>, <em>sparse=False</em>, <em>sigma_range=6</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.build_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.build_prior" title="Permalink to this definition">¶</a></dt>
 <dd><p>build a prior parameter covariance matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>fmt</strong> (<em>str</em>) – the format to save the cov matrix.  Options are “ascii”,”binary”,”uncfile”.
+<li><strong>fmt</strong> (<em>str</em>) – the format to save the cov matrix.  Options are “ascii”,”binary”,”uncfile”, “coo”.
 default is “ascii”</li>
 <li><strong>filename</strong> (<em>str</em>) – the filename to save the prior cov matrix to.  If None, the name is formed using
 model nam_file name.  Default is None.</li>
 <li><strong>droptol</strong> (<em>float</em>) – tolerance for dropping near-zero values when writing compressed binary.
 Default is None</li>
+<li><strong>chunk</strong> (<em>int</em>) – chunk size to write in a single pass - for binary only</li>
+<li><strong>sparse</strong> (<em>bool</em>) – flag to build a pyemu.SparseMatrix format cov matrix.  Default is False</li>
+<li><strong>sigma_range</strong> (<em>float</em>) – number of standard deviations represented by the parameter bounds.  Default
+is 6.</li>
 </ul>
 </td>
 </tr>
@@ -2340,13 +2501,18 @@ flopy.modflow.ModflowWel, then attrname can only be “flux”</li>
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_bc_pars">
 <code class="descname">setup_bc_pars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_bc_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_bc_pars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_temporal_bc_pars">
+<code class="descname">setup_temporal_bc_pars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_temporal_bc_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_temporal_bc_pars" title="Permalink to this definition">¶</a></dt>
 <dd><p>main entry point for setting up boundary condition multiplier
 parameters</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_all_wells">
-<code class="descname">setup_all_wells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_all_wells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_all_wells" title="Permalink to this definition">¶</a></dt>
+<dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_spatial_bc_pars">
+<code class="descname">setup_spatial_bc_pars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_spatial_bc_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_spatial_bc_pars" title="Permalink to this definition">¶</a></dt>
 <dd><p>helper to setup crazy numbers of well flux multipliers</p>
 </dd></dl>
 
@@ -2435,11 +2601,6 @@ the parameterization constructed by PstFromFlopyModel during a forward run</p>
 <p class="last">should be added to the forward_run.py script</p>
 </div>
 </dd></dl>
-
-<dl class="function">
-<dt id="pyemu.utils.helpers.apply_all_wells">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">apply_all_wells</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#apply_all_wells"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.apply_all_wells" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.plot_flopy_par_ensemble">
@@ -2549,6 +2710,33 @@ Default is 50</li>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyemu.utils.helpers.build_jac_test_csv">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">build_jac_test_csv</code><span class="sig-paren">(</span><em>pst</em>, <em>num_steps</em>, <em>par_names=None</em>, <em>forward=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#build_jac_test_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.build_jac_test_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>build a dataframe of jactest inputs for use with sweep</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – </li>
+<li><strong>num_steps</strong> (<em>int</em>) – number of pertubation steps for each parameter</li>
+<li><strong>par_names</strong> (<em>list</em>) – names of pars to test.  If None, all adjustable pars are used
+Default is None</li>
+<li><strong>forward</strong> (<em>bool</em>) – flag to start with forward pertubations.  Default is True</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyemu.utils.optimization">
 <span id="pyemu-utils-optimization-module"></span><h2>pyemu.utils.optimization module<a class="headerlink" href="#module-pyemu.utils.optimization" title="Permalink to this headline">¶</a></h2>
@@ -2575,7 +2763,7 @@ shapefile as well…hopefully this is useful to someone…</p>
 <li><strong>ml</strong> (<em>flopy.mbase</em>) – a flopy mbase dervied type.  If None, sr must not be None.</li>
 <li><strong>sr</strong> (<em>flopy.utils.reference.SpatialReference</em>) – a spatial reference use to locate the model grid in space.  If None,
 ml must not be None.  Default is None</li>
-<li><strong>ibound</strong> (<em>numpy.ndarray</em>) – the modflow ibound integer array.  Used to set pilot points only in active areas.
+<li><strong>ibound</strong> (<em>numpy.ndarray</em>) – the modflow ibound integer array.  Used to set pilot points only in active areas (!=0).
 If None and ml is None, then pilot points are set in all rows and columns according to
 every_n_cell.  Default is None.</li>
 <li><strong>prefix_dict</strong> (<em>dict</em>) – a dictionary of layer index, pilot point parameter prefixes.

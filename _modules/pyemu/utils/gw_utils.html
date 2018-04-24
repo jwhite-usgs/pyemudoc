@@ -202,7 +202,7 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;flopy is not installed - cannot read </span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
         <span class="k">return</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting to read HYDMOD data from </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">))</span>
+    <span class="c1">#print(&#39;Starting to read HYDMOD data from {0}&#39;.format(hydmod_file))</span>
     <span class="n">obs</span> <span class="o">=</span> <span class="n">fu</span><span class="o">.</span><span class="n">HydmodObs</span><span class="p">(</span><span class="n">hydmod_file</span><span class="p">)</span>
     <span class="n">hyd_df</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">get_dataframe</span><span class="p">()</span>
 
@@ -640,6 +640,187 @@
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; w !</span><span class="si">{0}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obsnme</span><span class="p">))</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
+
+<div class="viewcode-block" id="setup_hds_timeseries"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_hds_timeseries">[docs]</a><span class="k">def</span> <span class="nf">setup_hds_timeseries</span><span class="p">(</span><span class="n">hds_file</span><span class="p">,</span><span class="n">kij_dict</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">include_path</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a function to setup extracting time-series from a binary modflow</span>
+<span class="sd">    head save (or equivalent format - ucn, sub, etc).  Writes</span>
+<span class="sd">    an instruction file and a _set_ csv</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hds_file : str</span>
+<span class="sd">        binary filename</span>
+<span class="sd">    kij_dict : dict</span>
+<span class="sd">        dictionary of site_name: [k,i,j] pairs</span>
+<span class="sd">    prefix : str</span>
+<span class="sd">        string to prepend to site_name when forming obsnme&#39;s.  Default is None</span>
+<span class="sd">    include_path : bool</span>
+<span class="sd">        flag to prepend hds_file path. Useful for setting up</span>
+<span class="sd">        process in separate directory for where python is running.</span>
+<span class="sd">    model : flopy.mbase</span>
+<span class="sd">        a flopy model.  If passed, the observation names will have the datetime of the</span>
+<span class="sd">        observation appended to them.  If None, the observation names will have the</span>
+<span class="sd">        stress period appended to them. Default is None.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function writes hds_timeseries.config that must be in the same</span>
+<span class="sd">    dir where apply_hds_timeseries() is called during the forward run</span>
+
+<span class="sd">    assumes model time units are days!!!</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">flopy</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error importing flopy, returning </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span>
+
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">hds_file</span><span class="p">),</span><span class="s2">&quot;head save file not found&quot;</span>
+    <span class="k">if</span> <span class="n">hds_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ucn&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">hds</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">UcnFile</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error instantiating UcnFile:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">hds</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">HeadFile</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error instantiating HeadFile:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+
+    <span class="n">nlay</span><span class="p">,</span><span class="n">nrow</span><span class="p">,</span><span class="n">ncol</span> <span class="o">=</span> <span class="n">hds</span><span class="o">.</span><span class="n">nlay</span><span class="p">,</span><span class="n">hds</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span><span class="n">hds</span><span class="o">.</span><span class="n">ncol</span>
+
+    <span class="c1">#if include_path:</span>
+    <span class="c1">#    pth = os.path.join(*[p for p in os.path.split(hds_file)[:-1]])</span>
+    <span class="c1">#    config_file = os.path.join(pth,&quot;{0}_timeseries.config&quot;.format(hds_file))</span>
+    <span class="c1">#else:</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_timeseries.config&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;writing config file to </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config_file</span><span class="p">))</span>
+
+    <span class="n">f_config</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">dis</span><span class="o">.</span><span class="n">itmuni</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;setup_hds_timeseries only supports &#39;days&#39; time units...&quot;</span><span class="p">)</span>
+        <span class="n">f_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">,</span><span class="si">{1}</span><span class="s2">,d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">model</span><span class="o">.</span><span class="n">start_datetime</span><span class="p">))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">start_datetime</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">f_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">,none,none</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">f_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;site,k,i,j</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">site</span><span class="p">,(</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kij_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">nlay</span><span class="p">,</span> <span class="n">k</span>
+        <span class="k">assert</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nrow</span><span class="p">,</span> <span class="n">i</span>
+        <span class="k">assert</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">ncol</span><span class="p">,</span> <span class="n">j</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">hds</span><span class="o">.</span><span class="n">get_ts</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)),</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;totim&quot;</span><span class="p">,</span><span class="n">site</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dts</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_timedelta</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">totim</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;totim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dts</span>
+        <span class="c1">#print(df)</span>
+        <span class="n">f_config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">,</span><span class="si">{1}</span><span class="s2">,</span><span class="si">{2}</span><span class="s2">,</span><span class="si">{3}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">site</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">))</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;totim&quot;</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">f_config</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">hds_file</span><span class="o">+</span><span class="s2">&quot;_timeseries.processed&quot;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">t_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0:08.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="n">ins_file</span> <span class="o">=</span> <span class="n">hds_file</span><span class="o">+</span><span class="s2">&quot;_timeseries.processed.ins&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;writing instruction file to </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;pif ~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;l1 </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">t_str</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;l1&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">obsnme</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">_</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">site</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">obsnme</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; w !</span><span class="si">{0}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obsnme</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+    <span class="n">bd</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+    <span class="k">if</span> <span class="n">include_path</span><span class="p">:</span>
+        <span class="n">bd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="n">pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">config_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">apply_hds_timeseries</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bd</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error in apply_sfr_obs(): </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bd</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;obgnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;obgnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">frun_line</span> <span class="o">=</span> <span class="s2">&quot;pyemu.gw_utils.apply_hds_timeseries(&#39;</span><span class="si">{0}</span><span class="s2">&#39;)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">frun_line</span><span class="p">,</span><span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="apply_hds_timeseries"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.apply_hds_timeseries">[docs]</a><span class="k">def</span> <span class="nf">apply_hds_timeseries</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="kn">import</span> <span class="nn">flopy</span>
+
+    <span class="k">if</span> <span class="n">config_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">config_file</span> <span class="o">=</span> <span class="s2">&quot;hds_timeseries.config&quot;</span>
+
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_file</span><span class="p">),</span> <span class="n">config_file</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="n">hds_file</span><span class="p">,</span><span class="n">start_datetime</span><span class="p">,</span><span class="n">time_units</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">site_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="c1">#print(site_df)</span>
+
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">hds_file</span><span class="p">),</span> <span class="s2">&quot;head save file not found&quot;</span>
+    <span class="k">if</span> <span class="n">hds_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.ucn&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">hds</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">UcnFile</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error instantiating UcnFile:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">hds</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">HeadFile</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error instantiating HeadFile:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+
+    <span class="n">nlay</span><span class="p">,</span> <span class="n">nrow</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="n">hds</span><span class="o">.</span><span class="n">nlay</span><span class="p">,</span> <span class="n">hds</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span> <span class="n">hds</span><span class="o">.</span><span class="n">ncol</span>
+
+    <span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">site</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">site_df</span><span class="o">.</span><span class="n">site</span><span class="p">,</span><span class="n">site_df</span><span class="o">.</span><span class="n">k</span><span class="p">,</span><span class="n">site_df</span><span class="o">.</span><span class="n">i</span><span class="p">,</span><span class="n">site_df</span><span class="o">.</span><span class="n">j</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">k</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">nlay</span>
+        <span class="k">assert</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nrow</span>
+        <span class="k">assert</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">ncol</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">hds</span><span class="o">.</span><span class="n">get_ts</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)),</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;totim&quot;</span><span class="p">,</span><span class="n">site</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;totim&quot;</span><span class="p">)</span>
+        <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1">#print(df)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">hds_file</span><span class="o">+</span><span class="s2">&quot;_timeseries.processed&quot;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
 <div class="viewcode-block" id="setup_hds_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_hds_obs">[docs]</a><span class="k">def</span> <span class="nf">setup_hds_obs</span><span class="p">(</span><span class="n">hds_file</span><span class="p">,</span><span class="n">kperk_pairs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">skip</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;hds&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;a function to setup using all values from a</span>
 <span class="sd">    layer-stress period pair for observations.  Writes</span>
@@ -677,7 +858,6 @@
 <span class="sd">    writes &lt;hds_file&gt;.dat.ins instruction file</span>
 
 <span class="sd">    writes _setup_&lt;hds_file&gt;.csv which contains much</span>
-
 <span class="sd">    useful information for construction a control file</span>
 
 
@@ -782,7 +962,9 @@
     <span class="n">setup_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hds_path</span><span class="p">,</span><span class="s2">&quot;_setup_</span><span class="si">{0}</span><span class="s2">.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
     <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">setup_file</span><span class="p">)</span>
     <span class="n">fwd_run_line</span> <span class="o">=</span> <span class="s2">&quot;pyemu.gw_utils.apply_hds_obs(&#39;</span><span class="si">{0}</span><span class="s2">&#39;)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hds_file</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsnme</span>
     <span class="k">return</span> <span class="n">fwd_run_line</span><span class="p">,</span> <span class="n">df</span></div>
+
 
 <div class="viewcode-block" id="last_kstp_from_kper"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.last_kstp_from_kper">[docs]</a><span class="k">def</span> <span class="nf">last_kstp_from_kper</span><span class="p">(</span><span class="n">hds</span><span class="p">,</span><span class="n">kper</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; function to find the last time step (kstp) for a</span>
@@ -813,6 +995,7 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;kstp not found for kper </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kper</span><span class="p">))</span>
     <span class="n">kstp</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">kstp</span></div>
+
 
 <div class="viewcode-block" id="apply_hds_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.apply_hds_obs">[docs]</a><span class="k">def</span> <span class="nf">apply_hds_obs</span><span class="p">(</span><span class="n">hds_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; process a modflow head save file.  A companion function to</span>
@@ -1149,6 +1332,7 @@
     <span class="n">sfr</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">pars</span><span class="p">[</span><span class="s2">&quot;sfr_filename&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">sfr</span></div>
 
+
 <div class="viewcode-block" id="setup_sfr_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_obs">[docs]</a><span class="k">def</span> <span class="nf">setup_sfr_obs</span><span class="p">(</span><span class="n">sfr_out_file</span><span class="p">,</span><span class="n">seg_group_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">ins_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">include_path</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;setup observations using the sfr ASCII output file.  Setups</span>
@@ -1176,6 +1360,11 @@
 <span class="sd">    -------</span>
 <span class="sd">    df : pd.DataFrame</span>
 <span class="sd">        dataframe of obsnme, obsval and obgnme if inschek run was successful.  Else None</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function writes &quot;sfr_obs.config&quot; which must be kept in the dir where</span>
+<span class="sd">    &quot;apply_sfr_obs()&quot; is being called during the forward run</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1245,6 +1434,8 @@
     <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">pth</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">pth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pth</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">pth</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
     <span class="n">bd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
@@ -1254,7 +1445,7 @@
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bd</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">obgnme</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;flaqx&quot;</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;fa&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;flout&quot;</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;obgnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;flaqx&quot;</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;fa&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;flout&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
 
@@ -1295,11 +1486,9 @@
             <span class="c1">#print(obs_base,agg)</span>
             <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">kper</span><span class="p">,</span><span class="n">obs_base</span><span class="p">,</span><span class="n">agg</span><span class="p">[</span><span class="s2">&quot;flaqx&quot;</span><span class="p">],</span><span class="n">agg</span><span class="p">[</span><span class="s2">&quot;flout&quot;</span><span class="p">]])</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">results</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;kper&quot;</span><span class="p">,</span><span class="s2">&quot;obs_base&quot;</span><span class="p">,</span><span class="s2">&quot;flaqx&quot;</span><span class="p">,</span><span class="s2">&quot;flout&quot;</span><span class="p">])</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;kper&quot;</span><span class="p">,</span><span class="s2">&quot;obs_base&quot;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sfr_out_file</span><span class="o">+</span><span class="s2">&quot;.processed&quot;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
-
-
-
 
 
 <div class="viewcode-block" id="load_sfr_out"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.load_sfr_out">[docs]</a><span class="k">def</span> <span class="nf">load_sfr_out</span><span class="p">(</span><span class="n">sfr_out_file</span><span class="p">):</span>

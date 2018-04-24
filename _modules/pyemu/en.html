@@ -49,9 +49,15 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">get_common_elements</span><span class="p">,</span><span class="n">Matrix</span><span class="p">,</span><span class="n">Cov</span>
+<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">get_common_elements</span><span class="p">,</span><span class="n">Matrix</span><span class="p">,</span><span class="n">Cov</span><span class="p">,</span><span class="n">SparseMatrix</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst.pst_utils</span> <span class="k">import</span> <span class="n">write_parfile</span><span class="p">,</span><span class="n">read_parfile</span>
 <span class="kn">from</span> <span class="nn">pyemu.plot.plot_utils</span> <span class="k">import</span> <span class="n">ensemble_helper</span>
+
+<span class="c1">#warnings.filterwarnings(&quot;ignore&quot;,message=&quot;Pandas doesn&#39;t allow columns to be &quot;+\</span>
+<span class="c1">#                                         &quot;created via a new attribute name - see&quot;+\</span>
+<span class="c1">#                                         &quot;https://pandas.pydata.org/pandas-docs/&quot;+\</span>
+<span class="c1">#                                         &quot;stable/indexing.html#attribute-access&quot;)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
 
 <span class="n">SEED</span> <span class="o">=</span> <span class="mi">358183147</span> <span class="c1">#from random.org on 5 Dec 2016</span>
 <span class="c1">#print(&quot;setting random seed&quot;)</span>
@@ -864,11 +870,111 @@
         <span class="c1">#new_pe._applied_tied()</span>
         <span class="k">return</span> <span class="n">new_pe</span></div>
 
+
+<div class="viewcode-block" id="ParameterEnsemble.from_sparse_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_sparse_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_sparse_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; instantiate a parameter ensemble from a sparse covariance matrix.</span>
+<span class="sd">        This is an advanced user method that assumes you know what you are doing</span>
+<span class="sd">        - few guard rails...</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pst : pyemu.Pst</span>
+<span class="sd">            a control file instance</span>
+<span class="sd">        cov : (pyemu.SparseMatrix)</span>
+<span class="sd">            sparse covariance matrix to use for drawing</span>
+<span class="sd">        num_reals : int</span>
+<span class="sd">            number of realizations to generate</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ParameterEnsemble : ParameterEnsemble</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">SparseMatrix</span><span class="p">)</span>
+        <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+        <span class="n">li</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
+
+
+        <span class="n">par_cov</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;idxs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># print(&quot;algning cov&quot;)</span>
+        <span class="c1"># cov.align(list(par_cov.parnme))</span>
+        <span class="n">pargps</span> <span class="o">=</span> <span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reserving reals matrix&quot;</span><span class="p">)</span>
+        <span class="n">reals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span> <span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="k">for</span> <span class="n">ipg</span><span class="p">,</span> <span class="n">pargp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pargps</span><span class="p">):</span>
+            <span class="n">pnames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span> <span class="o">==</span> <span class="n">pargp</span><span class="p">,</span> <span class="s2">&quot;parnme&quot;</span><span class="p">])</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span> <span class="o">==</span> <span class="n">pargp</span><span class="p">,</span> <span class="s2">&quot;idxs&quot;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> of </span><span class="si">{1}</span><span class="s2"> drawing for par group &#39;</span><span class="si">{2}</span><span class="s2">&#39; with </span><span class="si">{3}</span><span class="s2"> pars &quot;</span>
+                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ipg</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pargps</span><span class="p">),</span> <span class="n">pargp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)))</span>
+
+            <span class="n">snv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">))</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...extracting cov from sparse matrix&quot;</span><span class="p">)</span>
+            <span class="n">cov_pg</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get_matrix</span><span class="p">(</span><span class="n">col_names</span><span class="o">=</span><span class="n">pnames</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="n">pnames</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">reals</span><span class="p">[:,</span> <span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">pnames</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">snv</span> <span class="o">*</span> <span class="n">std</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">cov_pg</span><span class="o">.</span><span class="n">inv</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">covname</span> <span class="o">=</span> <span class="s2">&quot;trouble_</span><span class="si">{0}</span><span class="s2">.cov&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;saving toubled cov matrix to </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">covname</span><span class="p">))</span>
+                    <span class="n">cov_pg</span><span class="o">.</span><span class="n">to_ascii</span><span class="p">(</span><span class="n">covname</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">get_diagonal_vector</span><span class="p">())</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error inverting cov for par group &#39;</span><span class="si">{0}</span><span class="s2">&#39;,&quot;</span> <span class="o">+</span> \
+                                    <span class="s2">&quot;saved trouble cov to </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span>
+                                    <span class="nb">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">,</span> <span class="n">covname</span><span class="p">))</span>
+                <span class="n">v</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">as_2d</span><span class="p">)</span>
+                <span class="c1"># check for near zero eig values</span>
+
+                <span class="c1"># vdiag = np.diag(v)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1.0e-10</span><span class="p">:</span>
+                        <span class="k">pass</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;near zero eigen value found&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> \
+                              <span class="s2">&quot;at index&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot; of &quot;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">vsqrt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">vsqrt</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">vsqrt</span><span class="p">)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+                <span class="n">pg_vals</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">pnames</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_reals</span><span class="p">):</span>
+                    <span class="c1"># v = snv[i,:]</span>
+                    <span class="c1"># p = np.dot(a,v)</span>
+                    <span class="n">reals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">pg_vals</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">snv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reals</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">real_names</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">li</span><span class="p">]</span>
+
+        <span class="c1"># replace the realizations for fixed parameters with the original</span>
+        <span class="c1"># parval1 in the control file</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handling fixed pars&quot;</span><span class="p">)</span>
+        <span class="c1"># pe.pst.parameter_data.index = pe.pst.parameter_data.parnme</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span>
+        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">fname</span><span class="p">,</span> <span class="n">fval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">fixed_vals</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+            <span class="c1"># print(fname)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">fval</span>
+
+        <span class="c1"># print(&quot;apply tied&quot;)</span>
+        <span class="n">new_pe</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_pe</span></div>
+
 <div class="viewcode-block" id="ParameterEnsemble.from_gaussian_draw"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_gaussian_draw">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">use_homegrown</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">group_chunks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; this is an experiemental method to help speed up draws</span>
-<span class="sd">        for a really large (&gt;1E6) ensemble sizes.  gets around the</span>
-<span class="sd">        dataframe expansion-by-loc that is one col at a time.</span>
+    <span class="k">def</span> <span class="nf">from_gaussian_draw</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">use_homegrown</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">group_chunks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; instantiate a parameter ensemble from a covariance matrix</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -889,9 +995,6 @@
 <span class="sd">        -------</span>
 <span class="sd">        ParameterEnsemble : ParameterEnsemble</span>
 
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        this constructor transforms the pe argument!</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -961,11 +1064,11 @@
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;reserving reals matrix&quot;</span><span class="p">)</span>
                     <span class="n">reals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
-                    <span class="k">for</span> <span class="n">pargp</span> <span class="ow">in</span> <span class="n">pargps</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">ipg</span><span class="p">,</span><span class="n">pargp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pargps</span><span class="p">):</span>
                         <span class="n">pnames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span><span class="o">==</span><span class="n">pargp</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">])</span>
                         <span class="n">idxs</span> <span class="o">=</span> <span class="n">par_cov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_cov</span><span class="o">.</span><span class="n">pargp</span> <span class="o">==</span> <span class="n">pargp</span><span class="p">,</span> <span class="s2">&quot;idxs&quot;</span><span class="p">]</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;drawing for par group &#39;</span><span class="si">{0}</span><span class="s2">&#39; with </span><span class="si">{1}</span><span class="s2"> pars &quot;</span>
-                              <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pargp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)))</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> of </span><span class="si">{1}</span><span class="s2"> drawing for par group &#39;</span><span class="si">{2}</span><span class="s2">&#39; with </span><span class="si">{3}</span><span class="s2"> pars &quot;</span>
+                              <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ipg</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">pargps</span><span class="p">),</span><span class="n">pargp</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">)))</span>
 
                         <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                         <span class="c1">#print(&quot;generating snv matrix&quot;)</span>
@@ -974,7 +1077,7 @@
                         <span class="n">cov_pg</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pnames</span><span class="p">)</span>
                         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pnames</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                             <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cov_pg</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-                            <span class="n">reals</span><span class="p">[:,</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">snv</span> <span class="o">*</span> <span class="n">std</span>
+                            <span class="n">reals</span><span class="p">[:,</span><span class="n">idxs</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">pnames</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">snv</span> <span class="o">*</span> <span class="n">std</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="k">try</span><span class="p">:</span>
                                 <span class="n">cov_pg</span><span class="o">.</span><span class="n">inv</span>
@@ -1018,7 +1121,7 @@
                     <span class="c1"># form projection matrix</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;form projection&quot;</span><span class="p">)</span>
                     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span>
-
+                    <span class="c1">#print(a)</span>
                     <span class="c1"># project...</span>
                     <span class="n">reals</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">for</span> <span class="n">vec</span> <span class="ow">in</span> <span class="n">snv</span><span class="p">:</span>
@@ -1068,8 +1171,9 @@
 <span class="sd">        pe : ParameterEnsemble</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ParameterEnsemble</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">m</span><span class="p">,</span> <span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_back_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Private method to remove log10 transformation from ensemble</span>

@@ -52,9 +52,10 @@
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">Cov</span>
-<span class="kn">from</span> <span class="nn">pyemu.utils.gw_utils</span> <span class="k">import</span> <span class="n">pp_file_to_dataframe</span>
+<span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">Cov</span><span class="p">,</span><span class="n">SparseMatrix</span>
+<span class="kn">from</span> <span class="nn">pyemu.utils.pp_utils</span> <span class="k">import</span> <span class="n">pp_file_to_dataframe</span>
 
 <span class="n">EPSILON</span> <span class="o">=</span> <span class="mf">1.0e-7</span>
 
@@ -147,6 +148,51 @@
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;END STRUCTURE</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variograms</span><span class="p">:</span>
             <span class="n">v</span><span class="o">.</span><span class="n">to_struct_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GeoStruct.sparse_covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.sparse_covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">sparse_covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;build a pyemu.Cov instance from GeoStruct</span>
+
+<span class="sd">                Parameters</span>
+<span class="sd">                ----------</span>
+<span class="sd">                x : (iterable of floats)</span>
+<span class="sd">                    x-coordinate locations</span>
+<span class="sd">                y : (iterable of floats)</span>
+<span class="sd">                    y-coordinate locations</span>
+<span class="sd">                names : (iterable of str)</span>
+<span class="sd">                   (parameter) names of locations.</span>
+
+<span class="sd">                Returns</span>
+<span class="sd">                -------</span>
+<span class="sd">                sparse : pyemu.SparseMatrix</span>
+<span class="sd">                    the sparse covariance matrix implied by this GeoStruct for the x,y pairs.</span>
+
+<span class="sd">                Example</span>
+<span class="sd">                -------</span>
+<span class="sd">                ``&gt;&gt;&gt;pp_df = pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)``</span>
+
+<span class="sd">                ``&gt;&gt;&gt;cov = gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)``</span>
+
+
+<span class="sd">                &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+
+        <span class="n">iidx</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))]</span>
+        <span class="n">jidx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">iidx</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">nugget</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variograms</span><span class="p">:</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">add_sparse_covariance_matrix</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="p">,</span><span class="n">iidx</span><span class="p">,</span><span class="n">jidx</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">coo</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,(</span><span class="n">iidx</span><span class="p">,</span><span class="n">jidx</span><span class="p">)),</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)))</span>
+        <span class="n">coo</span><span class="o">.</span><span class="n">eliminate_zeros</span><span class="p">()</span>
+        <span class="n">coo</span><span class="o">.</span><span class="n">sum_duplicates</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">SparseMatrix</span><span class="p">(</span><span class="n">coo</span><span class="p">,</span><span class="n">row_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span><span class="n">col_names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="GeoStruct.covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.GeoStruct.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;build a pyemu.Cov instance from GeoStruct</span>
@@ -1106,6 +1152,82 @@
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 
+
+<div class="viewcode-block" id="Vario2d.add_sparse_covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.add_sparse_covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">add_sparse_covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="p">,</span><span class="n">iidx</span><span class="p">,</span><span class="n">jidx</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;build a pyemu.SparseMatrix instance implied by Vario2d</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : (iterable of floats)</span>
+<span class="sd">            x-coordinate locations</span>
+<span class="sd">        y : (iterable of floats)</span>
+<span class="sd">            y-coordinate locations</span>
+<span class="sd">        names : (iterable of str)</span>
+<span class="sd">            names of locations. If None, cov must not be None</span>
+<span class="sd">        iidx : 1-D ndarray</span>
+<span class="sd">            i row indices</span>
+<span class="sd">        jidx : 1-D ndarray</span>
+<span class="sd">            j col indices</span>
+<span class="sd">        data : 1-D ndarray</span>
+<span class="sd">            nonzero entries</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="c1">#     c = np.zeros((len(names), len(names)))</span>
+        <span class="c1">#     np.fill_diagonal(c, self.contribution)</span>
+        <span class="c1">#     cov = Cov(x=c, names=names)</span>
+        <span class="c1"># elif cov is not None:</span>
+        <span class="c1">#     assert cov.shape[0] == x.shape[0]</span>
+        <span class="c1">#     names = cov.row_names</span>
+        <span class="c1">#     c = np.zeros((len(names), 1)) + self.contribution</span>
+        <span class="c1">#     cont = Cov(x=c, names=names, isdiagonal=True)</span>
+        <span class="c1">#     cov += cont</span>
+        <span class="c1">#</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     raise Exception(&quot;Vario2d.covariance_matrix() requires either&quot; +</span>
+        <span class="c1">#                     &quot;names or cov arg&quot;)</span>
+        <span class="c1"># rc = self.rotation_coefs</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+            <span class="n">iidx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">jidx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contribution</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i1</span><span class="p">,</span> <span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="n">dy</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+            <span class="n">dxx</span><span class="p">,</span> <span class="n">dyy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_rotation</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dxx</span> <span class="o">*</span> <span class="n">dxx</span> <span class="o">+</span> <span class="n">dyy</span> <span class="o">*</span> <span class="n">dyy</span><span class="p">)</span>
+
+            <span class="n">h</span><span class="p">[</span><span class="n">h</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">cv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_h_function</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">cv</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;nans in cv for i1 </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i1</span><span class="p">))</span>
+            <span class="c1">#cv[h&gt;self.a] = 0.0</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="n">i1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">iidx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">jidx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cv</span><span class="p">))</span>
+            <span class="c1"># replicate across the diagonal</span>
+            <span class="n">iidx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">jidx</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cv</span><span class="p">))</span></div>
+
+
+
 <div class="viewcode-block" id="Vario2d.covariance_matrix"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.geostats.Vario2d.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;build a pyemu.Cov instance implied by Vario2d</span>
 
@@ -1901,7 +2023,7 @@
     <span class="n">arr</span><span class="p">[</span><span class="n">arr</span><span class="o">&lt;</span><span class="n">lower_lim</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_lim</span>
     <span class="n">arr</span><span class="p">[</span><span class="n">arr</span><span class="o">&gt;</span><span class="n">upper_lim</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_lim</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">arr</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">pp_data</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">lower_lim</span><span class="p">)</span>
+    <span class="c1">#print(out_file,arr.min(),pp_data.parval1.min(),lower_lim)</span>
 
     <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="n">arr</span><span class="p">,</span><span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%15.6E</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>

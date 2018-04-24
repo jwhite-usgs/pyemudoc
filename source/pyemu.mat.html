@@ -48,6 +48,30 @@
 <span id="pyemu-mat-mat-handler-module"></span><h2>pyemu.mat.mat_handler module<a class="headerlink" href="#module-pyemu.mat.mat_handler" title="Permalink to this headline">¶</a></h2>
 <p>Matrix, Jco and Cov classes for easy linear algebra</p>
 <dl class="function">
+<dt id="pyemu.mat.mat_handler.save_coo">
+<code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">save_coo</code><span class="sig-paren">(</span><em>x</em>, <em>row_names</em>, <em>col_names</em>, <em>filename</em>, <em>chunk=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#save_coo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.save_coo" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a PEST-compatible binary file.  The data format is
+[int,int,float] for i,j,value.  It is autodetected during
+the read with Matrix.from_binary().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> (<em>numpy.sparse</em>) – coo sparse matrix</li>
+<li><strong>row_names</strong> (<em>list</em>) – list of row_names</li>
+<li><strong>col_names</strong> (<em>list</em>) – list of col_names</li>
+<li><strong>filename</strong> (<em>str</em>) – filename to save binary file</li>
+<li><strong>droptol</strong> (<em>float</em>) – absolute value tolerance to make values smaller than zero.  Default is None</li>
+<li><strong>chunk</strong> (<em>int</em>) – number of elements to write in a single pass.  Default is None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.mat.mat_handler.concat">
 <code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">concat</code><span class="sig-paren">(</span><em>mats</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.concat" title="Permalink to this definition">¶</a></dt>
 <dd><p>Concatenate Matrix objects.  Tries either axis.</p>
@@ -172,6 +196,11 @@ private attributes</p>
 <dl class="attribute">
 <dt>
 <code class="descname">binary_rec_dt</code><em class="property"> = dtype([('j', '&lt;i4'), ('dtemp', '&lt;f8')])</em></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.mat.mat_handler.Matrix.coo_rec_dt">
+<code class="descname">coo_rec_dt</code><em class="property"> = dtype([('i', '&lt;i4'), ('j', '&lt;i4'), ('dtemp', '&lt;f8')])</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.coo_rec_dt" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -568,6 +597,11 @@ for truncation.  Ignored if maxsing is not None</li>
 </table>
 </dd></dl>
 
+<dl class="staticmethod">
+<dt id="pyemu.mat.mat_handler.Matrix.find_rowcol_indices">
+<em class="property">static </em><code class="descname">find_rowcol_indices</code><span class="sig-paren">(</span><em>names</em>, <em>row_names</em>, <em>col_names</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.find_rowcol_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.find_rowcol_indices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.indices">
 <code class="descname">indices</code><span class="sig-paren">(</span><em>names</em>, <em>axis=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.indices" title="Permalink to this definition">¶</a></dt>
@@ -734,8 +768,29 @@ the name of the column in the new Matrix</td>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.mat.mat_handler.Matrix.to_coo">
+<code class="descname">to_coo</code><span class="sig-paren">(</span><em>filename</em>, <em>droptol=None</em>, <em>chunk=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_coo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_coo" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a PEST-compatible binary file.  The data format is
+[int,int,float] for i,j,value.  It is autodetected during
+the read with Matrix.from_binary().</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> (<em>str</em>) – filename to save binary file</li>
+<li><strong>droptol</strong> (<em>float</em>) – absolute value tolerance to make values smaller than zero.  Default is None</li>
+<li><strong>chunk</strong> (<em>int</em>) – number of elements to write in a single pass.  Default is None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.to_binary">
-<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em>, <em>droptol=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_binary" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_binary</code><span class="sig-paren">(</span><em>filename</em>, <em>droptol=None</em>, <em>chunk=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a PEST-compatible binary file.  The format is the same
 as the format used to storage a PEST Jacobian matrix</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -745,6 +800,7 @@ as the format used to storage a PEST Jacobian matrix</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filename</strong> (<em>str</em>) – filename to save binary file</li>
 <li><strong>droptol</strong> (<em>float</em>) – absolute value tolerance to make values smaller than zero.  Default is None</li>
+<li><strong>chunk</strong> (<em>int</em>) – number of elements to write in a single pass.  Default is None</li>
 </ul>
 </td>
 </tr>
@@ -770,6 +826,11 @@ Matrix instance</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyemu.mat.mat_handler.Matrix.read_binary">
+<em class="property">static </em><code class="descname">read_binary</code><span class="sig-paren">(</span><em>filename</em>, <em>sparse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.read_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.read_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="classmethod">
 <dt id="pyemu.mat.mat_handler.Matrix.from_fortranfile">
@@ -824,6 +885,11 @@ Matrix instance</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyemu.mat.mat_handler.Matrix.read_ascii">
+<em class="property">static </em><code class="descname">read_ascii</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.read_ascii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.read_ascii" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.df">
@@ -903,7 +969,7 @@ Default is False</li>
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.to_sparse">
 <code class="descname">to_sparse</code><span class="sig-paren">(</span><em>trunc=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_sparse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_sparse" title="Permalink to this definition">¶</a></dt>
-<dd><p>get the CSR sparse Matrix representation of the Matrix</p>
+<dd><p>get the COO sparse Matrix representation of the Matrix</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1367,6 +1433,61 @@ instance is not a Cov</td>
 </tbody>
 </table>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyemu.mat.mat_handler.SparseMatrix">
+<em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">SparseMatrix</code><span class="sig-paren">(</span><em>x</em>, <em>row_names</em>, <em>col_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Note: less rigid about references since this class is for big matrices and
+don’t want to be making copies</p>
+<dl class="attribute">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.shape">
+<code class="descname">shape</code><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.from_binary">
+<em class="property">classmethod </em><code class="descname">from_binary</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.from_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.from_binary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.to_coo">
+<code class="descname">to_coo</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.to_coo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.to_coo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.from_coo">
+<em class="property">classmethod </em><code class="descname">from_coo</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.from_coo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.from_coo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.to_matrix">
+<code class="descname">to_matrix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.to_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.to_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.from_matrix">
+<em class="property">classmethod </em><code class="descname">from_matrix</code><span class="sig-paren">(</span><em>matrix</em>, <em>droptol=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.from_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.from_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.block_extend_ip">
+<code class="descname">block_extend_ip</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.block_extend_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.block_extend_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>designed for combining dense martrices into a sparse block diagonal matrix.
+other must not have any rows or columns in common with self</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.get_matrix">
+<code class="descname">get_matrix</code><span class="sig-paren">(</span><em>row_names</em>, <em>col_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.get_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.get_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyemu.mat.mat_handler.SparseMatrix.get_sparse_matrix">
+<code class="descname">get_sparse_matrix</code><span class="sig-paren">(</span><em>row_names</em>, <em>col_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix.get_sparse_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix.get_sparse_matrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
