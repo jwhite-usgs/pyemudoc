@@ -47,13 +47,9 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
-<span class="kn">import</span> <span class="nn">subprocess</span> <span class="k">as</span> <span class="nn">sp</span>
-<span class="kn">import</span> <span class="nn">platform</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -67,10 +63,22 @@
     <span class="k">pass</span>
 
 <span class="kn">import</span> <span class="nn">pyemu</span>
+<span class="kn">from</span> <span class="nn">pyemu.utils.os_utils</span> <span class="k">import</span> <span class="n">run</span><span class="p">,</span> <span class="n">start_slaves</span>
 
 <div class="viewcode-block" id="remove_readonly"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.remove_readonly">[docs]</a><span class="k">def</span> <span class="nf">remove_readonly</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">excinfo</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;remove readonly dirs, apparently only a windows issue</span>
-<span class="sd">    add to all rmtree calls: shutil.rmtree(**,onerror=remove_readonly), wk&quot;&quot;&quot;</span>
+<span class="sd">    add to all rmtree calls: shutil.rmtree(*,onerror=remove_readonly), wk</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        func : object</span>
+<span class="sd">            func</span>
+<span class="sd">        path : str</span>
+<span class="sd">            path</span>
+<span class="sd">        excinfo : object</span>
+<span class="sd">            info</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="c1">#stat.S_IWRITE==128==normal</span>
     <span class="n">func</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
@@ -101,40 +109,8 @@
 <span class="sd">    ``&gt;&gt;&gt;pyemu.helpers.run(&quot;pestpp pest.pst&quot;)``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">bwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">exe_name</span> <span class="o">=</span> <span class="n">cmd_str</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;window&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">exe_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;exe&quot;</span><span class="p">):</span>
-                <span class="n">raw</span> <span class="o">=</span> <span class="n">cmd_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">exe_name</span> <span class="o">+</span> <span class="s2">&quot;.exe&quot;</span>
-                <span class="n">cmd_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">exe_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;exe&#39;</span><span class="p">):</span>
-                <span class="n">raw</span> <span class="o">=</span> <span class="n">cmd_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">exe_name</span> <span class="o">=</span> <span class="n">exe_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.exe&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-                <span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">exe_name</span>
-                <span class="n">cmd_str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">raw</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">exe_name</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">exe_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
-                <span class="n">cmd_str</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">cmd_str</span>
-
-
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bwd</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;run() raised :</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;run():</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd_str</span><span class="p">))</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">ret_val</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd_str</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bwd</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;run() raised :</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">bwd</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;window&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">ret_val</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;run() returned non-zero&quot;</span><span class="p">)</span></div>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;run() has moved to pyemu.os_utils&quot;</span><span class="p">)</span>
+    <span class="n">pyemu</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_str</span><span class="o">=</span><span class="n">cmd_str</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="pilotpoint_prior_builder"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.pilotpoint_prior_builder">[docs]</a><span class="k">def</span> <span class="nf">pilotpoint_prior_builder</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span> <span class="n">struct_dict</span><span class="p">,</span><span class="n">sigma_range</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
@@ -771,11 +747,67 @@
     <span class="k">if</span> <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">==</span> <span class="s2">&quot;estimation&quot;</span><span class="p">:</span>
         <span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span> <span class="o">=</span> <span class="s2">&quot;regularization&quot;</span></div>
 
+<div class="viewcode-block" id="simple_tpl_from_pars"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.simple_tpl_from_pars">[docs]</a><span class="k">def</span> <span class="nf">simple_tpl_from_pars</span><span class="p">(</span><span class="n">parnames</span><span class="p">,</span> <span class="n">tplfilename</span><span class="o">=</span><span class="s1">&#39;model.input.tpl&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a template file just assuming a list of parameter names the values of which should be</span>
+<span class="sd">    listed in order in a model input file</span>
+<span class="sd">    Args:</span>
+<span class="sd">        parnames: list of names from which to make a template file</span>
+<span class="sd">        tplfilename: filename for TPL file (default: model.input.tpl)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        writes a file &lt;tplfilename&gt; with each parameter name on a line</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tplfilename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ofp</span><span class="p">:</span>
+        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;ptf ~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;~</span><span class="si">{0:^12}</span><span class="s1">~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cname</span><span class="p">))</span> <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">parnames</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="simple_ins_from_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.simple_ins_from_obs">[docs]</a><span class="k">def</span> <span class="nf">simple_ins_from_obs</span><span class="p">(</span><span class="n">obsnames</span><span class="p">,</span> <span class="n">insfilename</span><span class="o">=</span><span class="s1">&#39;model.output.ins&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    writes an instruction file that assumes wanting to read the values names in obsnames in order</span>
+<span class="sd">    one per line from a model output file</span>
+<span class="sd">    Args:</span>
+<span class="sd">        obsnames: list of obsnames to read in</span>
+<span class="sd">        insfilename: filename for INS file (default: model.output.ins)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        writes a file &lt;insfilename&gt; with each observation read off a line</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">insfilename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ofp</span><span class="p">:</span>
+        <span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;pif ~</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">ofp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;!</span><span class="si">{0}</span><span class="s1">!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cob</span><span class="p">))</span> <span class="k">for</span> <span class="n">cob</span> <span class="ow">in</span> <span class="n">obsnames</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="pst_from_parnames_obsnames"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.pst_from_parnames_obsnames">[docs]</a><span class="k">def</span> <span class="nf">pst_from_parnames_obsnames</span><span class="p">(</span><span class="n">parnames</span><span class="p">,</span> <span class="n">obsnames</span><span class="p">,</span>
+                               <span class="n">tplfilename</span><span class="o">=</span><span class="s1">&#39;model.input.tpl&#39;</span><span class="p">,</span> <span class="n">insfilename</span><span class="o">=</span><span class="s1">&#39;model.output.ins&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a Pst object from a list of parameter names and a list of observation names.</span>
+<span class="sd">    Default values are provided for the TPL and INS</span>
+<span class="sd">    Args:</span>
+<span class="sd">        parnames: list of names from which to make a template file</span>
+<span class="sd">        obsnames: list of obsnames to read in</span>
+<span class="sd">        tplfilename: filename for TPL file (default: model.input.tpl)</span>
+<span class="sd">        insfilename: filename for INS file (default: model.output.ins)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Pst object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">simple_tpl_from_pars</span><span class="p">(</span><span class="n">parnames</span><span class="p">,</span> <span class="n">tplfilename</span><span class="p">)</span>
+    <span class="n">simple_ins_from_obs</span><span class="p">(</span><span class="n">obsnames</span><span class="p">,</span> <span class="n">insfilename</span><span class="p">)</span>
+
+    <span class="n">modelinputfilename</span> <span class="o">=</span> <span class="n">tplfilename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.tpl&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">modeloutputfilename</span> <span class="o">=</span> <span class="n">insfilename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.ins&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="o">.</span><span class="n">from_io_files</span><span class="p">(</span><span class="n">tplfilename</span><span class="p">,</span> <span class="n">modelinputfilename</span><span class="p">,</span> <span class="n">insfilename</span><span class="p">,</span> <span class="n">modeloutputfilename</span><span class="p">)</span></div>
+
 
 
 <div class="viewcode-block" id="start_slaves"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.start_slaves">[docs]</a><span class="k">def</span> <span class="nf">start_slaves</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">slave_root</span><span class="o">=</span><span class="s2">&quot;..&quot;</span><span class="p">,</span>
                  <span class="n">port</span><span class="o">=</span><span class="mi">4004</span><span class="p">,</span><span class="n">rel_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">local</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">master_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">silent_master</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; start a group of pest(++) slaves on the local machine</span>
 
 <span class="sd">    Parameters</span>
@@ -820,143 +852,11 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">slave_root</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">num_slaves</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">num_slaves</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">num_slaves</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num_slaves</span><span class="p">)</span>
-    <span class="c1">#assert os.path.exists(os.path.join(slave_dir,rel_path,exe_rel_path))</span>
-    <span class="n">exe_verf</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">if</span> <span class="n">rel_path</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">rel_path</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">)):</span>
-            <span class="c1">#print(&quot;warning: exe_rel_path not verified...hopefully exe is in the PATH var&quot;)</span>
-            <span class="n">exe_verf</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">)):</span>
-            <span class="c1">#print(&quot;warning: exe_rel_path not verified...hopefully exe is in the PATH var&quot;)</span>
-            <span class="n">exe_verf</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="n">rel_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">rel_path</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">local</span><span class="p">:</span>
-        <span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">hostname</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
-
-    <span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-    <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="s2">&quot;window&quot;</span> <span class="ow">in</span> <span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">exe_rel_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;exe&quot;</span><span class="p">):</span>
-                <span class="n">exe_rel_path</span> <span class="o">=</span> <span class="n">exe_rel_path</span> <span class="o">+</span> <span class="s2">&quot;.exe&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">exe_rel_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
-                <span class="n">exe_rel_path</span> <span class="o">=</span> <span class="s2">&quot;./&quot;</span> <span class="o">+</span> <span class="n">exe_rel_path</span>
-
-    <span class="k">if</span> <span class="n">master_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">master_dir</span> <span class="o">!=</span> <span class="s1">&#39;.&#39;</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">master_dir</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">master_dir</span><span class="p">,</span><span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span><span class="c1">#, onerror=del_rw)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to remove existing master dir:&quot;</span> <span class="o">+</span> \
-                                <span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">master_dir</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="n">master_dir</span> <span class="o">!=</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">master_dir</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to copy files from base slave dir: &quot;</span> <span class="o">+</span> \
-                                <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> to master dir: </span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                                <span class="nb">format</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">master_dir</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">exe_rel_path</span><span class="p">,</span> <span class="n">pst_rel_path</span><span class="p">,</span> <span class="s2">&quot;/h&quot;</span><span class="p">,</span> <span class="s2">&quot;:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="n">rel_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">master_dir</span><span class="p">,</span><span class="n">rel_path</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">cwd</span> <span class="o">=</span> <span class="n">master_dir</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;master:</span><span class="si">{0}</span><span class="s2"> in </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="n">cwd</span><span class="p">))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
-            <span class="n">master_p</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="c1">#,stdout=sp.PIPE,stderr=sp.PIPE)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error starting master instance: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span>\
-                            <span class="nb">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span> <span class="c1"># a few cycles to let the master get ready</span>
-
-
-    <span class="n">tcp_arg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hostname</span><span class="p">,</span><span class="n">port</span><span class="p">)</span>
-    <span class="n">procs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">slave_dirs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_slaves</span><span class="p">):</span>
-        <span class="n">new_slave_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slave_root</span><span class="p">,</span><span class="s2">&quot;slave_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">new_slave_dir</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">new_slave_dir</span><span class="p">,</span><span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span><span class="c1">#, onerror=del_rw)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to remove existing slave dir:&quot;</span> <span class="o">+</span> \
-                                <span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\n</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_slave_dir</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">new_slave_dir</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to copy files from slave dir: &quot;</span> <span class="o">+</span> \
-                            <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> to new slave dir: </span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">new_slave_dir</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">exe_verf</span><span class="p">:</span>
-                <span class="c1"># if rel_path is not None:</span>
-                <span class="c1">#     exe_path = os.path.join(rel_path,exe_rel_path)</span>
-                <span class="c1"># else:</span>
-                <span class="n">exe_path</span> <span class="o">=</span> <span class="n">exe_rel_path</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">exe_path</span> <span class="o">=</span> <span class="n">exe_rel_path</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">exe_path</span><span class="p">,</span> <span class="n">pst_rel_path</span><span class="p">,</span> <span class="s2">&quot;/h&quot;</span><span class="p">,</span> <span class="n">tcp_arg</span><span class="p">]</span>
-            <span class="c1">#print(&quot;starting slave in {0} with args: {1}&quot;.format(new_slave_dir,args))</span>
-            <span class="k">if</span> <span class="n">rel_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_slave_dir</span><span class="p">,</span><span class="n">rel_path</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">cwd</span> <span class="o">=</span> <span class="n">new_slave_dir</span>
-
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;slave:</span><span class="si">{0}</span><span class="s2"> in </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="n">cwd</span><span class="p">))</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="n">stdout</span><span class="o">=</span><span class="n">f</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">procs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error starting slave: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-        <span class="n">slave_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_slave_dir</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">master_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># while True:</span>
-        <span class="c1">#     line = master_p.stdout.readline()</span>
-        <span class="c1">#     if line != &#39;&#39;:</span>
-        <span class="c1">#         print(str(line.strip())+&#39;\r&#39;,end=&#39;&#39;)</span>
-        <span class="c1">#     if master_p.poll() is not None:</span>
-        <span class="c1">#         print(master_p.stdout.readlines())</span>
-        <span class="c1">#         break</span>
-        <span class="n">master_p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span> <span class="c1"># a few cycles to let the slaves end gracefully</span>
-        <span class="c1"># kill any remaining slaves</span>
-        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">procs</span><span class="p">:</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
-    <span class="c1"># this waits for sweep to finish, but pre/post/model (sub)subprocs may take longer</span>
-    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">procs</span><span class="p">:</span>
-        <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">cleanup</span><span class="p">:</span>
-        <span class="n">cleanit</span><span class="o">=</span><span class="mi">0</span>
-        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">slave_dirs</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">cleanit</span><span class="o">&lt;</span><span class="mi">100000</span><span class="p">:</span> <span class="c1"># arbitrary 100000 limit</span>
-            <span class="n">cleanit</span><span class="o">=</span><span class="n">cleanit</span><span class="o">+</span><span class="mi">1</span>
-            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">slave_dirs</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">onerror</span><span class="o">=</span><span class="n">remove_readonly</span><span class="p">)</span>
-                    <span class="n">slave_dirs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">slave_dirs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="c1">#if successfully removed</span>
-                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;unable to remove slavr dir</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span></div>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;start_slaves has moved to pyemu.os_utils&quot;</span><span class="p">)</span>
+    <span class="n">pyemu</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">start_slaves</span><span class="p">(</span><span class="n">slave_dir</span><span class="o">=</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="o">=</span><span class="n">exe_rel_path</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="o">=</span><span class="n">pst_rel_path</span>
+                      <span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="n">num_slaves</span><span class="p">,</span><span class="n">slave_root</span><span class="o">=</span><span class="n">slave_root</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span><span class="n">rel_path</span><span class="o">=</span><span class="n">rel_path</span><span class="p">,</span>
+                      <span class="n">local</span><span class="o">=</span><span class="n">local</span><span class="p">,</span><span class="n">cleanup</span><span class="o">=</span><span class="n">cleanup</span><span class="p">,</span><span class="n">master_dir</span><span class="o">=</span><span class="n">master_dir</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                      <span class="n">silent_master</span><span class="o">=</span><span class="n">silent_master</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="read_pestpp_runstorage"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.helpers.read_pestpp_runstorage">[docs]</a><span class="k">def</span> <span class="nf">read_pestpp_runstorage</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">irun</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -1169,10 +1069,10 @@
 <span class="sd">        multiplier parameters for well flux for stress periods 1,2 and 3 and</span>
 <span class="sd">        would setup one single river conductance multipler parameter that is applied</span>
 <span class="sd">        to all stress periods</span>
-<span class="sd">    spatial_bc_priops : list</span>
+<span class="sd">    spatial_bc_props : list</span>
 <span class="sd">        boundary condition spatial multiplier parameters.</span>
 <span class="sd">        A nested list of boundary condition elements to parameterize using</span>
-<span class="sd">        names (e.g. [&quot;riv.cond&quot;,&quot;wel.flux&quot;].  Setups up cell-based parameters for</span>
+<span class="sd">        names (e.g. [[&quot;riv.cond&quot;,0],[&quot;wel.flux&quot;,1] to setup up cell-based parameters for</span>
 <span class="sd">        each boundary condition element listed.  These multipler parameters are applied across</span>
 <span class="sd">        all stress periods.  For this to work, there must be the same number of entries</span>
 <span class="sd">        for all stress periods.  If more than one BC of the same type is in a single</span>
@@ -2997,11 +2897,14 @@
             <span class="n">pak_name</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">pak_name</span> <span class="ow">in</span> <span class="n">sp_mlts</span><span class="p">:</span>
                 <span class="n">mlt_df</span> <span class="o">=</span> <span class="n">sp_mlts</span><span class="p">[</span><span class="n">pak_name</span><span class="p">]</span>
+                <span class="n">mlt_df_ri</span> <span class="o">=</span> <span class="n">mlt_df</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">df_list</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_list</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="s2">&quot;i&quot;</span><span class="p">,</span><span class="s2">&quot;j&quot;</span><span class="p">,</span><span class="s2">&quot;inode&quot;</span><span class="p">]:</span>
                         <span class="k">continue</span>
                     <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">mlt_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                        <span class="n">df_list</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mlt_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">col</span><span class="p">]</span> <span class="o">*=</span> <span class="n">mlt_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span>
+                       <span class="c1"># print(mlt_df.loc[mlt_df.index.duplicated(),:])</span>
+                       <span class="c1"># print(df_list.loc[df_list.index.duplicated(),:])</span>
+                        <span class="n">df_list</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">*=</span> <span class="n">mlt_df_ri</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
             <span class="k">if</span> <span class="n">temp_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">temp_df</span><span class="o">.</span><span class="n">split_filename</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
                 <span class="n">temp_df_fname</span> <span class="o">=</span> <span class="n">temp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp_df</span><span class="o">.</span><span class="n">split_filename</span> <span class="o">==</span> <span class="n">fname</span><span class="p">,</span> <span class="p">:]</span>
@@ -3013,11 +2916,11 @@
                 <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span><span class="s2">&quot;j&quot;</span><span class="p">,</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="s2">&quot;inode&quot;</span><span class="p">]:</span>
                     <span class="c1">#fmts[name] = pyemu.pst_utils.IFMT</span>
                     <span class="c1">#fmts[name] = lambda x: &quot; {0:&gt;9.0f}&quot;.format(x)</span>
-                    <span class="n">fmts</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%10d</span><span class="s2">&quot;</span>
+                    <span class="n">fmts</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%9d</span><span class="s2">&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1">#fmts[name] = pyemu.pst_utils.FFMT</span>
                     <span class="c1">#fmts[name] = lambda x: &quot; {0:&gt;9G}&quot;.format(x)</span>
-                    <span class="n">fmts</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%10G</span><span class="s2">&quot;</span>
+                    <span class="n">fmts</span> <span class="o">+=</span> <span class="s2">&quot; </span><span class="si">%9G</span><span class="s2">&quot;</span>
 
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ext_path</span><span class="p">,</span><span class="n">fname</span><span class="p">),</span><span class="n">df_list</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">names</span><span class="p">]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">(),</span><span class="n">fmt</span><span class="o">=</span><span class="n">fmts</span><span class="p">)</span></div>
         <span class="c1">#with open(os.path.join(model_ext_path,fname),&#39;w&#39;) as f:</span>
@@ -3347,7 +3250,8 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        the index of the dataframe is par name and the parval used.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
@@ -3359,15 +3263,14 @@
     <span class="n">par</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span>
     <span class="k">if</span> <span class="n">par_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">par_names</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span>
-    <span class="n">total_runs</span> <span class="o">=</span> <span class="n">num_steps</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">par_names</span><span class="p">)</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">total_runs</span> <span class="o">=</span> <span class="n">num_steps</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">par_names</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">par_name</span> <span class="ow">in</span> <span class="n">par_names</span><span class="p">:</span>
         <span class="n">idx</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par_name</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">)])</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">idx</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
-    <span class="n">irow</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">li</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
-    <span class="n">lbnd</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parlbnd</span>
-    <span class="n">ubnd</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parubnd</span>
+    <span class="n">lbnd</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parlbnd</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">ubnd</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parubnd</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">lbnd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">lbnd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
     <span class="n">ubnd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">ubnd</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
     <span class="n">lbnd</span> <span class="o">=</span> <span class="n">lbnd</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -3380,9 +3283,11 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">sign</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
 
-
-
-    <span class="k">for</span> <span class="n">jcol</span><span class="p">,</span><span class="n">par_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">par_names</span><span class="p">):</span>
+    <span class="c1"># base case goes in as first row, no perturbations</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">,</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">irow</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">full_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">jcol</span><span class="p">,</span> <span class="n">par_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">par_names</span><span class="p">):</span>
         <span class="n">org_val</span> <span class="o">=</span> <span class="n">org_vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_name</span><span class="p">]</span>
         <span class="n">last_val</span> <span class="o">=</span> <span class="n">org_val</span>
         <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
@@ -3407,8 +3312,11 @@
             <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
             <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span>
             <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="n">irow</span><span class="p">],</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span>
+            <span class="n">full_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1:&lt;15.6E}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par_name</span><span class="p">,</span><span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_name</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
             <span class="n">irow</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">last_val</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">full_names</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 

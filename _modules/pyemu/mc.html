@@ -199,17 +199,30 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;generating </span><span class="si">{0:d}</span><span class="s2"> parameter realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="n">how</span><span class="p">,</span>
-                              <span class="n">enforce_bounds</span><span class="o">=</span><span class="n">enforce_bounds</span><span class="p">)</span>
-        <span class="c1">#if enforce_bounds:</span>
-        <span class="c1">#    self.parensemble.enforce()</span>
+
+        <span class="k">if</span> <span class="n">how</span> <span class="o">==</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_gaussian_draw</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span>
+                                                                    <span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">,</span>
+                                                                    <span class="n">use_homegrown</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">how</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_uniform_draw</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;MonteCarlo.draw(): unrecognized &#39;how&#39; arg: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">how</span><span class="p">))</span>
+
+        <span class="c1">#self.parensemble = ParameterEnsemble(pst=self.pst)</span>
+        <span class="c1">#self.obsensemble = ObservationEnsemble(pst=self.pst)</span>
+        <span class="c1">#self.parensemble.draw(cov,num_reals=num_reals, how=how,</span>
+        <span class="c1">#                      enforce_bounds=enforce_bounds)</span>
+        <span class="k">if</span> <span class="n">enforce_bounds</span> <span class="ow">is</span> <span class="ow">not</span>  <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parensemble</span><span class="o">.</span><span class="n">enforce</span><span class="p">(</span><span class="n">enforce_bounds</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;generating </span><span class="si">{0:d}</span><span class="s2"> parameter realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
+
         <span class="k">if</span> <span class="n">obs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;generating </span><span class="si">{0:d}</span><span class="s2"> observation realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obscov</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obsensemble</span> <span class="o">=</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_id_gaussian_draw</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;generating </span><span class="si">{0:d}</span><span class="s2"> observation realizations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_reals</span><span class="p">))</span></div>
 
 

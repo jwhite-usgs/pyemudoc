@@ -1160,18 +1160,26 @@ range(0,min(nnz_obs,nadj_par) + 1)</td>
 
 <dl class="method">
 <dt id="pyemu.ev.ErrVar.get_identifiability_dataframe">
-<code class="descname">get_identifiability_dataframe</code><span class="sig-paren">(</span><em>singular_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar.get_identifiability_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ev.ErrVar.get_identifiability_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_identifiability_dataframe</code><span class="sig-paren">(</span><em>singular_value=None</em>, <em>precondition=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar.get_identifiability_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ev.ErrVar.get_identifiability_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>get the parameter identifiability as a pandas dataframe</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>singular_value</strong> (<em>int</em>) – the singular spectrum truncation point</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>singular_value</strong> (<em>int</em>) – the singular spectrum truncation point. Defaults to minimum of
+non-zero-weighted observations and adjustable parameters</li>
+<li><strong>precondition</strong> (<em>bool</em>) – flag to use the preconditioned hessian (xtqt + sigma_theta^-1).
+Default is False</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong> – A pandas dataframe of the V_1**2 Matrix with the
-identifiability in the column labeled “ident”</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pandas.DataFrame</strong> – A pandas dataframe of the V_1**2 Matrix with the
+identifiability in the column labeled “ident”</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1406,7 +1414,7 @@ error variance dataframe</dd>
 all other pyemu analysis objects (Schur, ErrVar, MonteCarlo, and EnsembleSmoother).</p>
 <dl class="class">
 <dt id="pyemu.la.LinearAnalysis">
-<em class="property">class </em><code class="descclassname">pyemu.la.</code><code class="descname">LinearAnalysis</code><span class="sig-paren">(</span><em>jco=None</em>, <em>pst=None</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>predictions=None</em>, <em>ref_var=1.0</em>, <em>verbose=False</em>, <em>resfile=False</em>, <em>forecasts=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.la.</code><code class="descname">LinearAnalysis</code><span class="sig-paren">(</span><em>jco=None</em>, <em>pst=None</em>, <em>parcov=None</em>, <em>obscov=None</em>, <em>predictions=None</em>, <em>ref_var=1.0</em>, <em>verbose=False</em>, <em>resfile=False</em>, <em>forecasts=None</em>, <em>sigma_range=4.0</em>, <em>scale_offset=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/la.html#LinearAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.la.LinearAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The super class for linear analysis.  Can be used directly, but
 for prior uncertainty analyses only.  The derived types
@@ -1444,6 +1452,15 @@ of pyemu.Matrix or numpy.ndarray.</li>
 <dd>and log file is written to verbose</dd>
 </dl>
 </li>
+<li><strong>sigma_range</strong> (<em>float</em>) – defines range of upper bound - lower bound in terms of standard
+deviation (sigma). For example, if sigma_range = 4, the bounds
+represent 4 * sigma.  Default is 4.0, representing approximately
+95% confidence of implied normal distribution.  This arg is only
+used if constructing parcov from parameter bounds.</li>
+<li><strong>scale_offset</strong> (<em>True</em>) – flag to apply parameter scale and offset to parameter bounds
+when calculating prior parameter covariance matrix from
+bounds.  This arg is onlyused if constructing parcov
+from parameter bounds.Default is True.</li>
 </ul>
 </td>
 </tr>

@@ -1308,7 +1308,7 @@ a PEST control file.  Calls Cov.from_observation_data()</p>
 
 <dl class="classmethod">
 <dt id="pyemu.mat.mat_handler.Cov.from_parbounds">
-<em class="property">classmethod </em><code class="descname">from_parbounds</code><span class="sig-paren">(</span><em>pst_file</em>, <em>sigma_range=4.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.from_parbounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov.from_parbounds" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_parbounds</code><span class="sig-paren">(</span><em>pst_file</em>, <em>sigma_range=4.0</em>, <em>scale_offset=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.from_parbounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov.from_parbounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiates a  Cov from a pest control file parameter data section.
 Calls Cov.from_parameter_data()</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1321,6 +1321,8 @@ Calls Cov.from_parameter_data()</p>
 deviation (sigma). For example, if sigma_range = 4, the bounds
 represent 4 * sigma.  Default is 4.0, representing approximately
 95% confidence of implied normal distribution</li>
+<li><strong>scale_offset</strong> (<em>bool</em>) – flag to apply scale and offset to parameter upper and lower
+bounds before calculating varaince.  Default is True</li>
 </ul>
 </td>
 </tr>
@@ -1336,7 +1338,7 @@ represent 4 * sigma.  Default is 4.0, representing approximately
 
 <dl class="classmethod">
 <dt id="pyemu.mat.mat_handler.Cov.from_parameter_data">
-<em class="property">classmethod </em><code class="descname">from_parameter_data</code><span class="sig-paren">(</span><em>pst</em>, <em>sigma_range=4.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.from_parameter_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov.from_parameter_data" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">from_parameter_data</code><span class="sig-paren">(</span><em>pst</em>, <em>sigma_range=4.0</em>, <em>scale_offset=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.from_parameter_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov.from_parameter_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>load Covariances from a pandas dataframe of
 pyemu.Pst.parameter_data</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1349,6 +1351,8 @@ pyemu.Pst.parameter_data</p>
 deviation (sigma). For example, if sigma_range = 4, the bounds
 represent 4 * sigma.  Default is 4.0, representing approximately
 95% confidence of implied normal distribution</li>
+<li><strong>scale_offset</strong> (<em>bool</em>) – flag to apply scale and offset to parameter upper and lower
+bounds before calculating varaince.  Default is True</li>
 </ul>
 </td>
 </tr>

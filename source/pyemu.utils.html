@@ -1617,7 +1617,20 @@ perform complex tasks</p>
 <dt id="pyemu.utils.helpers.remove_readonly">
 <code class="descclassname">pyemu.utils.helpers.</code><code class="descname">remove_readonly</code><span class="sig-paren">(</span><em>func</em>, <em>path</em>, <em>excinfo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#remove_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.remove_readonly" title="Permalink to this definition">¶</a></dt>
 <dd><p>remove readonly dirs, apparently only a windows issue
-add to all rmtree calls: shutil.rmtree(<a href="#id1"><span class="problematic" id="id2">**</span></a>,onerror=remove_readonly), wk</p>
+add to all rmtree calls: shutil.rmtree(<a href="#id1"><span class="problematic" id="id2">*</span></a>,onerror=remove_readonly), wk</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>func</strong> (<em>object</em>) – func</li>
+<li><strong>path</strong> (<em>str</em>) – path</li>
+<li><strong>excinfo</strong> (<em>object</em>) – info</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -1896,8 +1909,61 @@ equation will not be included in the control file</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.helpers.simple_tpl_from_pars">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">simple_tpl_from_pars</code><span class="sig-paren">(</span><em>parnames</em>, <em>tplfilename='model.input.tpl'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#simple_tpl_from_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.simple_tpl_from_pars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a template file just assuming a list of parameter names the values of which should be
+listed in order in a model input file
+:param parnames: list of names from which to make a template file
+:param tplfilename: filename for TPL file (default: model.input.tpl)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">writes a file &lt;tplfilename&gt; with each parameter name on a line</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.simple_ins_from_obs">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">simple_ins_from_obs</code><span class="sig-paren">(</span><em>obsnames</em>, <em>insfilename='model.output.ins'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#simple_ins_from_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.simple_ins_from_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>writes an instruction file that assumes wanting to read the values names in obsnames in order
+one per line from a model output file
+:param obsnames: list of obsnames to read in
+:param insfilename: filename for INS file (default: model.output.ins)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">writes a file &lt;insfilename&gt; with each observation read off a line</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.pst_from_parnames_obsnames">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">pst_from_parnames_obsnames</code><span class="sig-paren">(</span><em>parnames</em>, <em>obsnames</em>, <em>tplfilename='model.input.tpl'</em>, <em>insfilename='model.output.ins'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#pst_from_parnames_obsnames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.pst_from_parnames_obsnames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Pst object from a list of parameter names and a list of observation names.
+Default values are provided for the TPL and INS
+:param parnames: list of names from which to make a template file
+:param obsnames: list of obsnames to read in
+:param tplfilename: filename for TPL file (default: model.input.tpl)
+:param insfilename: filename for INS file (default: model.output.ins)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Pst object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.helpers.start_slaves">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">start_slaves</code><span class="sig-paren">(</span><em>slave_dir</em>, <em>exe_rel_path</em>, <em>pst_rel_path</em>, <em>num_slaves=None</em>, <em>slave_root='..'</em>, <em>port=4004</em>, <em>rel_path=None</em>, <em>local=True</em>, <em>cleanup=True</em>, <em>master_dir=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#start_slaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.start_slaves" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">start_slaves</code><span class="sig-paren">(</span><em>slave_dir</em>, <em>exe_rel_path</em>, <em>pst_rel_path</em>, <em>num_slaves=None</em>, <em>slave_root='..'</em>, <em>port=4004</em>, <em>rel_path=None</em>, <em>local=True</em>, <em>cleanup=True</em>, <em>master_dir=None</em>, <em>verbose=False</em>, <em>silent_master=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#start_slaves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.start_slaves" title="Permalink to this definition">¶</a></dt>
 <dd><p>start a group of pest(++) slaves on the local machine</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2073,9 +2139,9 @@ bc_props = [[“wel.flux”,[0,1,2]],[“riv.cond”,None]] would setup
 multiplier parameters for well flux for stress periods 1,2 and 3 and
 would setup one single river conductance multipler parameter that is applied
 to all stress periods</li>
-<li><strong>spatial_bc_priops</strong> (<em>list</em>) – boundary condition spatial multiplier parameters.
+<li><strong>spatial_bc_props</strong> (<em>list</em>) – boundary condition spatial multiplier parameters.
 A nested list of boundary condition elements to parameterize using
-names (e.g. [“riv.cond”,”wel.flux”].  Setups up cell-based parameters for
+names (e.g. [[“riv.cond”,0],[“wel.flux”,1] to setup up cell-based parameters for
 each boundary condition element listed.  These multipler parameters are applied across
 all stress periods.  For this to work, there must be the same number of entries
 for all stress periods.  If more than one BC of the same type is in a single
@@ -2727,7 +2793,7 @@ Default is None</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – the index of the dataframe is par name and the parval used.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>

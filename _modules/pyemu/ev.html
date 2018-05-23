@@ -359,13 +359,18 @@
                 <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">singular_values</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ErrVar.get_identifiability_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.get_identifiability_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_identifiability_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ErrVar.get_identifiability_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.get_identifiability_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_identifiability_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">precondition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the parameter identifiability as a pandas dataframe</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        singular_value : int</span>
-<span class="sd">            the singular spectrum truncation point</span>
+<span class="sd">            the singular spectrum truncation point. Defaults to minimum of</span>
+<span class="sd">            non-zero-weighted observations and adjustable parameters</span>
+<span class="sd">        precondition : bool</span>
+<span class="sd">            flag to use the preconditioned hessian (xtqt + sigma_theta^-1).</span>
+<span class="sd">            Default is False</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -374,8 +379,14 @@
 <span class="sd">            identifiability in the column labeled &quot;ident&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">singular_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">singular_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">npar_adj</span><span class="p">))</span>
         <span class="c1">#v1_df = self.qhalfx.v[:, :singular_value].to_dataframe() ** 2</span>
-        <span class="n">v1_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span><span class="o">.</span><span class="n">v</span><span class="p">[:,</span> <span class="p">:</span><span class="n">singular_value</span><span class="p">]</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">xtqx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span>
+        <span class="k">if</span> <span class="n">precondition</span><span class="p">:</span>
+            <span class="n">xtqx</span> <span class="o">=</span> <span class="n">xtqx</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov</span><span class="o">.</span><span class="n">inv</span>
+        <span class="c1">#v1_df = self.xtqx.v[:, :singular_value].to_dataframe() ** 2</span>
+        <span class="n">v1_df</span> <span class="o">=</span> <span class="n">xtqx</span><span class="o">.</span><span class="n">v</span><span class="p">[:,</span> <span class="p">:</span><span class="n">singular_value</span><span class="p">]</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span> <span class="o">**</span> <span class="mi">2</span>
         <span class="n">v1_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v1_df</span></div>
 

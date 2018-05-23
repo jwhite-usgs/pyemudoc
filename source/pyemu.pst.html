@@ -1115,6 +1115,23 @@ Default is None</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>exe_name='pestpp'</em>, <em>cwd=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>run a command related to the pst instance. If
+write() has been called, then the filename passed to write
+is in the command, otherwise the original constructor
+filename is used</p>
+<dl class="docutils">
+<dt>exe_name <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>the name of the executable to call.  Default is “pestpp”</dd>
+<dt>cwd <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>the directory to execute the command in.  If None,
+os.path.split(self.filename) is used to find
+cwd.  Default is None</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>

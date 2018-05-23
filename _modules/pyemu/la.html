@@ -93,7 +93,19 @@
 <span class="sd">    verbose : (either bool or string)</span>
 <span class="sd">        controls log file / screen output.  If str, a filename is assumed and</span>
 <span class="sd">            and log file is written to verbose</span>
-<span class="sd">    </span>
+<span class="sd">    sigma_range : float</span>
+<span class="sd">        defines range of upper bound - lower bound in terms of standard</span>
+<span class="sd">        deviation (sigma). For example, if sigma_range = 4, the bounds</span>
+<span class="sd">        represent 4 * sigma.  Default is 4.0, representing approximately</span>
+<span class="sd">        95% confidence of implied normal distribution.  This arg is only</span>
+<span class="sd">        used if constructing parcov from parameter bounds.</span>
+
+<span class="sd">    scale_offset : True</span>
+<span class="sd">        flag to apply parameter scale and offset to parameter bounds</span>
+<span class="sd">        when calculating prior parameter covariance matrix from</span>
+<span class="sd">        bounds.  This arg is onlyused if constructing parcov</span>
+<span class="sd">        from parameter bounds.Default is True.</span>
+
 <span class="sd">    Note</span>
 <span class="sd">    ----</span>
 <span class="sd">    the class makes heavy use of property decorator to encapsulate</span>
@@ -102,7 +114,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jco</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parcov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">obscov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">predictions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ref_var</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">resfile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">forecasts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                 <span class="n">resfile</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">forecasts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">sigma_range</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span>
+                 <span class="n">scale_offset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">jco_arg</span> <span class="o">=</span> <span class="n">jco</span>
@@ -124,6 +137,9 @@
         <span class="k">if</span> <span class="n">forecasts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">predictions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;can&#39;t pass both forecasts and predictions&quot;</span><span class="p">)</span>
 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sigma_range</span> <span class="o">=</span> <span class="n">sigma_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_offset</span> <span class="o">=</span> <span class="n">scale_offset</span>
 
         <span class="c1">#private attributes - access is through @decorated functions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pst</span> <span class="o">=</span> <span class="kc">None</span>
@@ -323,12 +339,16 @@
             <span class="c1"># if the arg is a string ending with &quot;pst&quot;</span>
             <span class="c1"># then load parcov from parbounds</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="n">Cov</span><span class="o">.</span><span class="n">from_parbounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="n">Cov</span><span class="o">.</span><span class="n">from_parbounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">,</span>
+                                                   <span class="n">sigma_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma_range</span><span class="p">,</span>
+                                                   <span class="n">scale_offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_offset</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fromfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="n">Cov</span><span class="p">)</span>
         <span class="c1"># if the arg is a pst object</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">,</span><span class="n">Pst</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="n">Cov</span><span class="o">.</span><span class="n">from_parameter_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="n">Cov</span><span class="o">.</span><span class="n">from_parameter_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span><span class="p">,</span>
+                                                    <span class="n">sigma_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sigma_range</span><span class="p">,</span>
+                                                    <span class="n">scale_offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_offset</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;linear_analysis.__load_parcov(): &quot;</span> <span class="o">+</span>
                             <span class="s2">&quot;parcov_arg must be a &quot;</span> <span class="o">+</span>
@@ -1064,6 +1084,7 @@
         <span class="n">jco</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span>
         <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">jco</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
         <span class="n">jco</span> <span class="o">=</span> <span class="p">(</span><span class="n">jco</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
         <span class="n">dss_sum</span> <span class="o">=</span> <span class="n">jco</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">)</span>
         <span class="n">css</span> <span class="o">=</span> <span class="p">(</span><span class="n">dss_sum</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nnz_obs</span><span class="p">))</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
         <span class="n">css</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pest_css&quot;</span><span class="p">]</span>

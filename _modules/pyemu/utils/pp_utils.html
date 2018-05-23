@@ -116,7 +116,11 @@
             <span class="n">ibound</span> <span class="o">=</span> <span class="n">ml</span><span class="o">.</span><span class="n">bas6</span><span class="o">.</span><span class="n">ibound</span><span class="o">.</span><span class="n">array</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">sr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span><span class="s2">&quot;if &#39;ml&#39; is not passed, &#39;sr&#39; must be passed&quot;</span>
-        <span class="k">assert</span> <span class="n">ibound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span><span class="s2">&quot;if &#39;ml&#39; is not pass, &#39;ibound&#39; must be passed&quot;</span>
+        <span class="k">if</span> <span class="n">ibound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ibound not passed, using array of ones&quot;</span><span class="p">)</span>
+            <span class="n">ibound</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">sr</span><span class="o">.</span><span class="n">nrow</span><span class="p">,</span><span class="n">sr</span><span class="o">.</span><span class="n">ncol</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">prefix_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+        <span class="c1">#assert ibound is not None,&quot;if &#39;ml&#39; is not pass, &#39;ibound&#39; must be passed&quot;</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">xcentergrid</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">xcentergrid</span>

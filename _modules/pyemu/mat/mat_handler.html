@@ -2469,7 +2469,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="n">onames</span><span class="p">,</span><span class="n">isdiagonal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Cov.from_parbounds"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parbounds">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_parbounds</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pst_file</span><span class="p">,</span> <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_parbounds</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pst_file</span><span class="p">,</span> <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">,</span><span class="n">scale_offset</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Instantiates a  Cov from a pest control file parameter data section.</span>
 <span class="sd">        Calls Cov.from_parameter_data()</span>
 
@@ -2482,6 +2482,9 @@
 <span class="sd">            deviation (sigma). For example, if sigma_range = 4, the bounds</span>
 <span class="sd">            represent 4 * sigma.  Default is 4.0, representing approximately</span>
 <span class="sd">            95% confidence of implied normal distribution</span>
+<span class="sd">        scale_offset : bool</span>
+<span class="sd">            flag to apply scale and offset to parameter upper and lower</span>
+<span class="sd">            bounds before calculating varaince.  Default is True</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -2494,7 +2497,7 @@
         <span class="k">return</span> <span class="n">Cov</span><span class="o">.</span><span class="n">from_parameter_data</span><span class="p">(</span><span class="n">new_pst</span><span class="p">,</span> <span class="n">sigma_range</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Cov.from_parameter_data"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.from_parameter_data">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_parameter_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pst</span><span class="p">,</span> <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">from_parameter_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pst</span><span class="p">,</span> <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">scale_offset</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;load Covariances from a pandas dataframe of</span>
 <span class="sd">        pyemu.Pst.parameter_data</span>
 
@@ -2506,6 +2509,9 @@
 <span class="sd">            deviation (sigma). For example, if sigma_range = 4, the bounds</span>
 <span class="sd">            represent 4 * sigma.  Default is 4.0, representing approximately</span>
 <span class="sd">            95% confidence of implied normal distribution</span>
+<span class="sd">        scale_offset : bool</span>
+<span class="sd">            flag to apply scale and offset to parameter upper and lower</span>
+<span class="sd">            bounds before calculating varaince.  Default is True</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -2520,8 +2526,12 @@
             <span class="n">t</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span> <span class="s2">&quot;tied&quot;</span><span class="p">]:</span>
                 <span class="k">continue</span>
-            <span class="n">lb</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parlbnd</span> <span class="o">*</span> <span class="n">row</span><span class="o">.</span><span class="n">scale</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">offset</span>
-            <span class="n">ub</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parubnd</span> <span class="o">*</span> <span class="n">row</span><span class="o">.</span><span class="n">scale</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">offset</span>
+            <span class="k">if</span> <span class="n">scale_offset</span><span class="p">:</span>
+                <span class="n">lb</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parlbnd</span> <span class="o">*</span> <span class="n">row</span><span class="o">.</span><span class="n">scale</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">offset</span>
+                <span class="n">ub</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parubnd</span> <span class="o">*</span> <span class="n">row</span><span class="o">.</span><span class="n">scale</span> <span class="o">+</span> <span class="n">row</span><span class="o">.</span><span class="n">offset</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lb</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parlbnd</span>
+                <span class="n">ub</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">parubnd</span>
 
             <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span><span class="p">:</span>
                 <span class="n">var</span> <span class="o">=</span> <span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ub</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lb</span><span class="p">)))</span> <span class="o">/</span> <span class="n">sigma_range</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>

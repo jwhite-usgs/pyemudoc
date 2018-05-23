@@ -57,8 +57,7 @@
 <span class="c1">#                                         &quot;created via a new attribute name - see&quot;+\</span>
 <span class="c1">#                                         &quot;https://pandas.pydata.org/pandas-docs/&quot;+\</span>
 <span class="c1">#                                         &quot;stable/indexing.html#attribute-access&quot;)</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
-
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span><span class="n">module</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
 <span class="n">SEED</span> <span class="o">=</span> <span class="mi">358183147</span> <span class="c1">#from random.org on 5 Dec 2016</span>
 <span class="c1">#print(&quot;setting random seed&quot;)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
@@ -840,10 +839,10 @@
         <span class="c1">#ub = pe.ubnd</span>
         <span class="c1">#lb = pe.lbnd</span>
         <span class="n">li</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
-        <span class="n">ub</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parubnd</span>
+        <span class="n">ub</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parubnd</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">ub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
         <span class="n">ub</span> <span class="o">=</span> <span class="n">ub</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-        <span class="n">lb</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parlbnd</span>
+        <span class="n">lb</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parlbnd</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">lb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span> <span class="o">=</span> <span class="n">lb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">li</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">)</span>
         <span class="n">lb</span> <span class="o">=</span> <span class="n">lb</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 
@@ -853,6 +852,7 @@
         <span class="n">real_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
         <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">num_reals</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">ub</span><span class="p">)))</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">pname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">pname</span><span class="p">,</span><span class="n">lb</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span><span class="n">ub</span><span class="p">[</span><span class="n">pname</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">:</span>
                 <span class="n">arr</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">lb</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span>
                                                       <span class="n">ub</span><span class="p">[</span><span class="n">pname</span><span class="p">],</span>
@@ -1145,7 +1145,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;handling fixed pars&quot;</span><span class="p">)</span>
         <span class="c1">#pe.pst.parameter_data.index = pe.pst.parameter_data.parnme</span>
         <span class="n">par</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span>
-        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">partrans</span><span class="o">==</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
+        <span class="n">fixed_vals</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span><span class="s2">&quot;tied&quot;</span><span class="p">]),</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">fname</span><span class="p">,</span><span class="n">fval</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">fixed_vals</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
             <span class="c1">#print(fname)</span>
             <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">fname</span><span class="p">]</span> <span class="o">=</span> <span class="n">fval</span>
@@ -1446,20 +1446,22 @@
 <span class="sd">            the par file prefix</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">pfile_count</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="n">parfile_names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">pfile_name</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span><span class="s2">&quot;</span><span class="si">{0:d}</span><span class="s2">.par&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pfile_count</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pfile_name</span><span class="p">):</span>
-                <span class="k">break</span>
-            <span class="n">parfile_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pfile_name</span><span class="p">)</span>
-            <span class="n">pfile_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble.read_parfiles_prefix() is deprecated.  Use ParameterEnsemble.from_parfiles()&quot;</span><span class="p">)</span></div>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parfile_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble.read_parfiles_prefix() error: &quot;</span> <span class="o">+</span> \
-                            <span class="s2">&quot;no parfiles found with prefix </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read_parfiles</span><span class="p">(</span><span class="n">parfile_names</span><span class="p">)</span></div>
+        <span class="c1"># pfile_count = 1</span>
+        <span class="c1"># parfile_names = []</span>
+        <span class="c1"># while True:</span>
+        <span class="c1">#     pfile_name = prefix +&quot;{0:d}.par&quot;.format(pfile_count)</span>
+        <span class="c1">#     if not os.path.exists(pfile_name):</span>
+        <span class="c1">#         break</span>
+        <span class="c1">#     parfile_names.append(pfile_name)</span>
+        <span class="c1">#     pfile_count += 1</span>
+        <span class="c1">#</span>
+        <span class="c1"># if len(parfile_names) == 0:</span>
+        <span class="c1">#     raise Exception(&quot;ParameterEnsemble.read_parfiles_prefix() error: &quot; + \</span>
+        <span class="c1">#                     &quot;no parfiles found with prefix {0}&quot;.format(prefix))</span>
+        <span class="c1">#</span>
+        <span class="c1"># return self.read_parfiles(parfile_names)</span>
 
 
 <div class="viewcode-block" id="ParameterEnsemble.read_parfiles"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.read_parfiles">[docs]</a>    <span class="k">def</span> <span class="nf">read_parfiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parfile_names</span><span class="p">):</span>
@@ -1477,12 +1479,13 @@
 <span class="sd">        self.__istransformed</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">pfile</span> <span class="ow">in</span> <span class="n">parfile_names</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pfile</span><span class="p">),</span><span class="s2">&quot;ParameterEnsemble.read_parfiles() error: &quot;</span> <span class="o">+</span>\
-                                         <span class="s2">&quot;file: </span><span class="si">{0}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">read_parfile</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pfile</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;parval1&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble.read_parfiles() is deprecated.  Use ParameterEnsemble.from_parfiles()&quot;</span><span class="p">)</span></div>
+        <span class="c1"># for pfile in parfile_names:</span>
+        <span class="c1">#     assert os.path.exists(pfile),&quot;ParameterEnsemble.read_parfiles() error: &quot; +\</span>
+        <span class="c1">#                                  &quot;file: {0} not found&quot;.format(pfile)</span>
+        <span class="c1">#     df = read_parfile(pfile)</span>
+        <span class="c1">#     self.loc[pfile] = df.loc[:,&#39;parval1&#39;]</span>
+        <span class="c1"># self.loc[:,:] = self.loc[:,:].astype(np.float64)</span>
 
 <div class="viewcode-block" id="ParameterEnsemble.from_parfiles"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_parfiles">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_parfiles</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">parfile_names</span><span class="p">,</span><span class="n">real_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1521,7 +1524,7 @@
             <span class="n">diff</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">scale</span> <span class="o">-</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">scale</span>
             <span class="k">if</span> <span class="n">diff</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;differences in scale detected, applying scale in par file&quot;</span><span class="p">)</span>
-                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">df</span><span class="o">.</span><span class="n">scale</span>
+                <span class="c1">#df.loc[:,&quot;parval1&quot;] *= df.scale</span>
 
             <span class="n">dfs</span><span class="p">[</span><span class="n">rname</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">values</span>
 
