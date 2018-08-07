@@ -46,13 +46,14 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">100</span>
 
 <span class="kn">import</span> <span class="nn">pyemu</span>
-
+<span class="kn">from</span> <span class="nn">..pyemu_warnings</span> <span class="k">import</span> <span class="n">PyemuWarning</span>
 <span class="c1">#formatters</span>
 <span class="c1">#SFMT = lambda x: &quot;{0:&gt;20s}&quot;.format(str(x.decode()))</span>
 <div class="viewcode-block" id="SFMT"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.SFMT">[docs]</a><span class="k">def</span> <span class="nf">SFMT</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
@@ -570,9 +571,9 @@
 <span class="sd">    new_pst : pyemu.Pst</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">warnings</span>
+
     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;pst_from_io_files has moved to pyemu.helpers and is also &quot;</span><span class="o">+</span>\
-                  <span class="s2">&quot;now avaiable as a Pst class method (Pst.from_io_files())&quot;</span><span class="p">)</span>
+                  <span class="s2">&quot;now avaiable as a Pst class method (Pst.from_io_files())&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">pyemu</span> <span class="k">import</span> <span class="n">helpers</span>
     <span class="k">return</span> <span class="n">helpers</span><span class="o">.</span><span class="n">pst_from_io_files</span><span class="p">(</span><span class="n">tpl_files</span><span class="o">=</span><span class="n">tpl_files</span><span class="p">,</span><span class="n">in_files</span><span class="o">=</span><span class="n">in_files</span><span class="p">,</span>
                               <span class="n">ins_files</span><span class="o">=</span><span class="n">ins_files</span><span class="p">,</span><span class="n">out_files</span><span class="o">=</span><span class="n">out_files</span><span class="p">,</span>
@@ -595,11 +596,76 @@
             <span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;obsval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsval</span></div>
 
 
+<div class="viewcode-block" id="try_process_ins_file"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.try_process_ins_file">[docs]</a><span class="k">def</span> <span class="nf">try_process_ins_file</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ins_file</span><span class="p">),</span><span class="s2">&quot;instruction file </span><span class="si">{0}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">obs_names</span> <span class="o">=</span> <span class="n">parse_ins_file</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error parsing ins file </span><span class="si">{0}</span><span class="s2"> for obs names: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+
+    <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">out_file</span> <span class="o">=</span> <span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_file</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;out file </span><span class="si">{0}</span><span class="s2"> not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">out_file</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;obsnme&quot;</span><span class="p">:</span><span class="n">obs_names</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;obsnme&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">f_ins</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="n">f_ins</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;pif&quot;</span>
+        <span class="n">marker</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">icount</span><span class="p">,</span><span class="n">ocount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span>
+        <span class="n">obsnme</span><span class="p">,</span><span class="n">obsval</span> <span class="o">=</span> <span class="p">[],[]</span>
+        <span class="k">for</span> <span class="n">iline</span> <span class="ow">in</span> <span class="n">f_ins</span><span class="p">:</span>
+            <span class="n">iraw</span> <span class="o">=</span> <span class="n">iline</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">iraw</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;not support instruction:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iraw</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">num_lines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">iraw</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_lines</span><span class="p">):</span>
+                <span class="n">oline</span> <span class="o">=</span> <span class="n">f_out</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">ocount</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="s1">&#39;(&#39;</span> <span class="ow">in</span> <span class="n">oline</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;semi-fixed obs index instructions not supported&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s1">&#39;[&#39;</span> <span class="ow">in</span> <span class="n">oline</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;fixed obs index instructions not supported&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">marker</span> <span class="ow">in</span> <span class="n">oline</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;marker-based file seeking not supported&quot;</span><span class="p">)</span>
+            <span class="n">oraw</span> <span class="o">=</span> <span class="n">oline</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">oline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;   &#39;</span><span class="p">]:</span>
+                <span class="n">oraw</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">oc</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">ir</span> <span class="ow">in</span> <span class="n">iraw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="k">if</span> <span class="n">ir</span> <span class="o">==</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+                    <span class="n">oc</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">oc</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">oraw</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;out file line </span><span class="si">{0}</span><span class="s2"> too short&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ocount</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="s1">&#39;!&#39;</span> <span class="ow">in</span> <span class="n">ir</span><span class="p">:</span>
+                    <span class="n">n</span> <span class="o">=</span> <span class="n">ir</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;!&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">oraw</span><span class="p">[</span><span class="n">oc</span><span class="p">])</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error processing ins </span><span class="si">{0}</span><span class="s2"> for obs </span><span class="si">{1}</span><span class="s2">, string: </span><span class="si">{2}</span><span class="s2"> on line </span><span class="si">{3}</span><span class="s2"> (ins line </span><span class="si">{4}</span><span class="s2">):</span><span class="si">{5}</span><span class="s2">&quot;</span><span class="o">.</span>
+                                        <span class="nb">format</span><span class="p">(</span><span class="n">ir</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">oline</span><span class="p">,</span><span class="n">ocount</span><span class="p">,</span><span class="n">icount</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+                    <span class="n">obsnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+                    <span class="n">obsval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="n">oc</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">f_ins</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;obsnme&quot;</span><span class="p">:</span><span class="n">obsnme</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">:</span><span class="n">obsval</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="n">obsnme</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error processing ins file </span><span class="si">{0}</span><span class="s2">: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;obsnme&quot;</span><span class="p">:</span><span class="n">obs_names</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="n">obs_names</span><span class="p">)</span></div>
+
+
+
 <span class="k">def</span> <span class="nf">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">):</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># os.system(&quot;inschek {0} {1}&quot;.format(ins_file,out_file))</span>
-        <span class="n">pyemu</span><span class="o">.</span><span class="n">helpers</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;inschek </span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">))</span>
+        <span class="n">pyemu</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;inschek </span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">))</span>
         <span class="n">obf_file</span> <span class="o">=</span> <span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span> <span class="s2">&quot;.obf&quot;</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">obf_file</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                          <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;obsval&quot;</span><span class="p">])</span>
@@ -830,8 +896,8 @@
 <div class="viewcode-block" id="start_slaves"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.start_slaves">[docs]</a><span class="k">def</span> <span class="nf">start_slaves</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">slave_root</span><span class="o">=</span><span class="s2">&quot;..&quot;</span><span class="p">,</span>
                  <span class="n">port</span><span class="o">=</span><span class="mi">4004</span><span class="p">,</span><span class="n">rel_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-    <span class="kn">import</span> <span class="nn">warnings</span>
-    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;deprecation warning:start_slaves() has moved to the utils.helpers module&quot;</span><span class="p">)</span>
+
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;deprecation warning:start_slaves() has moved to the utils.helpers module&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
     <span class="kn">from</span> <span class="nn">pyemu.utils</span> <span class="k">import</span> <span class="n">start_slaves</span>
     <span class="n">start_slaves</span><span class="p">(</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">exe_rel_path</span><span class="p">,</span><span class="n">pst_rel_path</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="n">num_slaves</span><span class="p">,</span><span class="n">slave_root</span><span class="o">=</span><span class="n">slave_root</span><span class="p">,</span>
                  <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span><span class="n">rel_path</span><span class="o">=</span><span class="n">rel_path</span><span class="p">)</span></div>

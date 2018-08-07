@@ -233,6 +233,42 @@ with the control file base name is sought.  Default is None</li>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.parameter_data">
+<code class="descname">parameter_data</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.parameter_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pandas.DataFrame</em> – parameter data loaded from pst control file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.observation_data">
+<code class="descname">observation_data</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.observation_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pandas.DataFrame</em> – observation data loaded from pst control file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.prior_information">
+<code class="descname">prior_information</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.prior_information" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pandas.DataFrame</em> – prior_information data loaded from pst control file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.control_data">
+<code class="descname">control_data</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.control_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pyemu.pst.pst_controldata.ControlData</em> – control data object loaded from pst control file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.svd_data">
+<code class="descname">svd_data</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.svd_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pyemu.pst.pst_controldata.SvdData</em> – singular value decomposition (SVD) object loaded from pst control file</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.reg_data">
+<code class="descname">reg_data</code><em class="property"> = None</em><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.reg_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pyemu.pst.pst_controldata.RegData</em> – regularization data object loaded from pst control file</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="pyemu.pst.pst_handler.Pst.from_par_obs_names">
 <em class="property">classmethod </em><code class="descname">from_par_obs_names</code><span class="sig-paren">(</span><em>par_names=['par1'], obs_names=['obs1']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.from_par_obs_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.from_par_obs_names" title="Permalink to this definition">¶</a></dt>
@@ -415,6 +451,20 @@ this call loads the res dataframe from a file</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>npar</strong> – the number of parameters</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.pars_in_groups">
+<code class="descname">pars_in_groups</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.pars_in_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a dictionary of  parameter names in each parameter group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary</td>
 </tr>
 </tbody>
 </table>
@@ -683,6 +733,11 @@ Default is {}</li>
 parameter_data dataframe.  Equations that list fixed, tied or missing parameters
 are removed. This method is called during Pst.write()</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.sanity_checks">
+<code class="descname">sanity_checks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.sanity_checks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.sanity_checks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.write">
@@ -1063,7 +1118,7 @@ and sim vs res), ‘obs_v_sim’ (time series using datetime suffix), ‘phi_pie
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.write_par_summary_table">
-<code class="descname">write_par_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em>, <em>sigma_range=4.0</em>, <em>caption=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_par_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_par_summary_table" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write_par_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em>, <em>sigma_range=4.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_par_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_par_summary_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a stand alone parameter summary latex table</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1075,7 +1130,6 @@ and sim vs res), ‘obs_v_sim’ (time series using datetime suffix), ‘phi_pie
 Default is None</li>
 <li><strong>sigma_range</strong> (<em>float</em>) – number of standard deviations represented by parameter bounds.  Default
 is 4.0, implying 95% confidence bounds</li>
-<li><strong>caption</strong> (<em>str</em>) – table caption.  Default is None</li>
 </ul>
 </td>
 </tr>
@@ -1091,7 +1145,7 @@ is 4.0, implying 95% confidence bounds</li>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.write_obs_summary_table">
-<code class="descname">write_obs_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em>, <em>caption=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_obs_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_obs_summary_table" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write_obs_summary_table</code><span class="sig-paren">(</span><em>filename=None</em>, <em>group_names=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write_obs_summary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write_obs_summary_table" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a stand alone observation summary latex table</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1101,7 +1155,6 @@ is 4.0, implying 95% confidence bounds</li>
 <li><strong>filename</strong> (<em>str</em>) – latex filename. If None, use &lt;case&gt;.par.tex. Default is None</li>
 <li><strong>group_names</strong> (<em>dict</em>) – par group names : table names for example {“w0”:”well stress period 1”}.
 Default is None</li>
-<li><strong>caption</strong> (<em>str</em>) – table caption. Default is None</li>
 </ul>
 </td>
 </tr>
@@ -1430,6 +1483,11 @@ file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="function">
+<dt id="pyemu.pst.pst_utils.try_process_ins_file">
+<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">try_process_ins_file</code><span class="sig-paren">(</span><em>ins_file</em>, <em>out_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#try_process_ins_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.try_process_ins_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="pyemu.pst.pst_utils.get_phi_comps_from_recfile">

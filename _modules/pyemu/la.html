@@ -188,7 +188,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">prior_information</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;unable to access self.pst: can&#39;t tell if &quot;</span> <span class="o">+</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;unable to access self.pst: can&#39;t tell if &quot;</span> <span class="o">+</span>
                              <span class="s2">&quot; any prior information needs to be dropped.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">pi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">drop_prior_information</span><span class="p">()</span>
@@ -200,7 +200,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">adjust_obscov_resfile</span><span class="p">(</span><span class="n">resfile</span><span class="o">=</span><span class="n">resfile</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;unable to a find a residuals file for &quot;</span> <span class="o">+</span>\
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;unable to a find a residuals file for &quot;</span> <span class="o">+</span>\
                                 <span class="s2">&quot; scaling obscov&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="kc">None</span>
@@ -433,13 +433,14 @@
                 <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">vecs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">assert</span> <span class="n">arg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>\
-                    <span class="s2">&quot;linear_analysis.__load_predictions(): &quot;</span> <span class="o">+</span>\
-                    <span class="s2">&quot;multi-prediction matrix(npar,npred) not aligned &quot;</span> <span class="o">+</span>\
-                    <span class="s2">&quot;with jco(nobs,npar): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span>\
-                    <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-                    <span class="c1">#for pred_name in arg.row_names:</span>
-                    <span class="c1">#    vecs.append(arg.extract(row_names=pred_name).T)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="n">arg</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>\
+                        <span class="s2">&quot;linear_analysis.__load_predictions(): &quot;</span> <span class="o">+</span>\
+                        <span class="s2">&quot;multi-prediction matrix(npar,npred) not aligned &quot;</span> <span class="o">+</span>\
+                        <span class="s2">&quot;with jco(nobs,npar): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span>\
+                        <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                        <span class="c1">#for pred_name in arg.row_names:</span>
+                        <span class="c1">#    vecs.append(arg.extract(row_names=pred_name).T)</span>
                     <span class="n">mat</span> <span class="o">=</span> <span class="n">arg</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">row_names</span><span class="p">:</span>
@@ -896,7 +897,7 @@
         <span class="sd">&quot;&quot;&quot;drop regularization and prior information observation from the jco</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst_arg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;linear_analysis.clean(): not pst object&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;linear_analysis.clean(): not pst object&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">estimation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nprior</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">drop_prior_information</span><span class="p">()</span></div>
@@ -910,7 +911,7 @@
 <span class="sd">            the value to assign to the pst attribute</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting pst&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;resetting pst&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__pst</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pst_arg</span> <span class="o">=</span> <span class="n">arg</span></div>
 
@@ -923,7 +924,7 @@
 <span class="sd">            the value to assign to the parcov attribute.  If None,</span>
 <span class="sd">            the private __parcov attribute is cleared but not reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting parcov&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;resetting parcov&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__parcov</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parcov_arg</span> <span class="o">=</span> <span class="n">arg</span></div>
@@ -938,7 +939,7 @@
 <span class="sd">            the value to assign to the obscov attribute.  If None,</span>
 <span class="sd">            the private __obscov attribute is cleared but not reset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;resetting obscov&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;resetting obscov&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__obscov</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">obscov_arg</span> <span class="o">=</span> <span class="n">arg</span></div>
@@ -948,7 +949,7 @@
         <span class="sd">&quot;&quot;&quot;drop the prior information from the jco and pst attributes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;can&#39;t drop prior info, LinearAnalysis.jco is None&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;can&#39;t drop prior info, LinearAnalysis.jco is None&quot;</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="n">nprior_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">nprior</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;removing &quot;</span> <span class="o">+</span> <span class="n">nprior_str</span> <span class="o">+</span> <span class="s2">&quot; prior info from jco, pst, and &quot;</span> <span class="o">+</span>

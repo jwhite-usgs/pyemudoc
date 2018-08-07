@@ -53,6 +53,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="kn">import</span> <span class="nn">pyemu</span>
+<span class="kn">from</span> <span class="nn">..pyemu_warnings</span> <span class="k">import</span> <span class="n">PyemuWarning</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst.pst_controldata</span> <span class="k">import</span> <span class="n">ControlData</span><span class="p">,</span> <span class="n">SvdData</span><span class="p">,</span> <span class="n">RegData</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst</span> <span class="k">import</span> <span class="n">pst_utils</span>
 <span class="kn">from</span> <span class="nn">pyemu.plot</span> <span class="k">import</span> <span class="n">plot_utils</span>
@@ -80,7 +81,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">flex</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  parameter data loaded from pst control file&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  observation data loaded from pst control file&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  prior_information data loaded from pst control file&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="n">resfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="kc">None</span>
@@ -93,8 +99,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
         <span class="c1">#self.tied = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span> <span class="o">=</span> <span class="n">ControlData</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;pyemu.pst.pst_controldata.ControlData:  control data object loaded from pst control file&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">svd_data</span> <span class="o">=</span> <span class="n">SvdData</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;pyemu.pst.pst_controldata.SvdData: singular value decomposition (SVD) object loaded from pst control file&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reg_data</span> <span class="o">=</span> <span class="n">RegData</span><span class="p">()</span>
+        <span class="sd">&quot;&quot;&quot;pyemu.pst.pst_controldata.RegData: regularization data object loaded from pst control file&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">load</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>\
                 <span class="s2">&quot;pst file not found:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -339,6 +348,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npar</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pars_in_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return a dictionary of  parameter names in each parameter group.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pargp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_groups</span>
+        <span class="n">allpars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">cpg</span> <span class="ow">in</span> <span class="n">pargp</span><span class="p">:</span>
+            <span class="n">allpars</span><span class="p">[</span><span class="n">cpg</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">pargp</span> <span class="o">==</span> <span class="n">cpg</span><span class="p">,</span> <span class="s1">&#39;parnme&#39;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">allpars</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">forecast_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1017,7 +1039,7 @@
             <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pst.load() warning: duplicate pest++ option found:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pst.load() warning: duplicate pest++ option found:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span><span class="n">PyemuWarning</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="k">def</span> <span class="nf">_update_control_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1206,6 +1228,27 @@
                                                   <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                                                   <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
+<div class="viewcode-block" id="Pst.sanity_checks"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.sanity_checks">[docs]</a>    <span class="k">def</span> <span class="nf">sanity_checks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">dups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+        <span class="n">dups</span> <span class="o">=</span> <span class="n">dups</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dups</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dups</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;duplicate parameter names: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dups</span><span class="o">.</span><span class="n">index</span><span class="p">))),</span><span class="n">PyemuWarning</span><span class="p">)</span>
+        <span class="n">dups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+        <span class="n">dups</span> <span class="o">=</span> <span class="n">dups</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dups</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dups</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;duplicate observation names: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dups</span><span class="o">.</span><span class="n">index</span><span class="p">))),</span><span class="n">PyemuWarning</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">npar_adj</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no adjustable pars&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no non-zero weight obs&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;noptmax: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">noptmax</span><span class="p">))</span></div>
+
+
+
 <div class="viewcode-block" id="Pst.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a pest control file</span>
 
@@ -1223,6 +1266,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rectify_pgroups</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rectify_pi</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_control_section</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sanity_checks</span><span class="p">()</span>
 
         <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">new_filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_comments</span><span class="p">:</span>
@@ -1247,7 +1291,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_df</span><span class="p">(</span><span class="s2">&quot;* parameter groups&quot;</span><span class="p">,</span> <span class="n">f_out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="p">,</span>
                        <span class="bp">self</span><span class="o">.</span><span class="n">pargp_format</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pargp_fieldnames</span><span class="p">)</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pargpnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pargpnme</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_df</span><span class="p">(</span><span class="s2">&quot;* parameter data&quot;</span><span class="p">,</span><span class="n">f_out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="p">,</span>
                        <span class="bp">self</span><span class="o">.</span><span class="n">par_format</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_fieldnames</span><span class="p">)</span>
@@ -1285,7 +1329,8 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nprior</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: NaNs in prior_information dataframe&quot;</span><span class="p">)</span>
+                <span class="c1">#print(&quot;WARNING: NaNs in prior_information dataframe&quot;)</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;NaNs in prior_information dataframe&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
             <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* prior information</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="c1">#self.prior_information.index = self.prior_information.pop(&quot;pilbl&quot;)</span>
             <span class="n">max_eq_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">equation</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
@@ -1401,8 +1446,8 @@
         <span class="n">new_pst</span><span class="o">.</span><span class="n">output_files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tied</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pst.get() warning: not checking for tied parameter &quot;</span> <span class="o">+</span>
-                  <span class="s2">&quot;compatibility in new Pst instance&quot;</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Pst.get() not checking for tied parameter &quot;</span> <span class="o">+</span>
+                  <span class="s2">&quot;compatibility in new Pst instance&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
             <span class="c1">#new_pst.tied = self.tied.copy()</span>
         <span class="n">new_pst</span><span class="o">.</span><span class="n">other_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_lines</span>
         <span class="n">new_pst</span><span class="o">.</span><span class="n">pestpp_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span>
@@ -1568,7 +1613,7 @@
                 <span class="n">weight_mult</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">target_phis</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">/</span> <span class="n">actual_phi</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">obs_idxs</span><span class="p">[</span><span class="n">item</span><span class="p">],</span> <span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">weight_mult</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pst.__reset_weights() warning: phi group </span><span class="si">{0}</span><span class="s2"> has zero phi, skipping...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+                <span class="p">(</span><span class="s2">&quot;Pst.__reset_weights() warning: phi group </span><span class="si">{0}</span><span class="s2"> has zero phi, skipping...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
 
 <div class="viewcode-block" id="Pst.adjust_weights_by_list"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_by_list">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_by_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obslist</span><span class="p">,</span><span class="n">weight</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;reset the weight for a list of observation names.  Supports the</span>
@@ -1846,7 +1891,7 @@
         <span class="n">new_parnme</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parnme</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_parnme</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no new parameters found in template file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_file</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no new parameters found in template file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">template_file</span><span class="p">),</span><span class="n">PyemuWarning</span><span class="p">)</span>
             <span class="n">new_par_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># extend pa</span>
@@ -2050,7 +2095,7 @@
 
 
 <div class="viewcode-block" id="Pst.write_par_summary_table"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_par_summary_table">[docs]</a>    <span class="k">def</span> <span class="nf">write_par_summary_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">group_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">,</span><span class="n">caption</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                                <span class="n">sigma_range</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a stand alone parameter summary latex table</span>
 
 
@@ -2064,8 +2109,6 @@
 <span class="sd">        sigma_range : float</span>
 <span class="sd">            number of standard deviations represented by parameter bounds.  Default</span>
 <span class="sd">            is 4.0, implying 95% confidence bounds</span>
-<span class="sd">        caption : str</span>
-<span class="sd">            table caption.  Default is None</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -2120,23 +2163,21 @@
 
         <span class="n">preamble</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">documentclass</span><span class="si">{article}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span> \
                     <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{pdflscape}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{longtable}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
-                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{center}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span>\
-                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">begin</span><span class="si">{table}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{nopageno}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">&#39;</span>
 
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.par.tex&quot;</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">preamble</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">caption{&quot;</span><span class="o">+</span><span class="n">caption</span><span class="o">+</span><span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">Parameter Summary</span><span class="se">\n\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="se">\n\\</span><span class="s2">begin</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">pargp_df</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">longtable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{table}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pst.write_obs_summary_table"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_obs_summary_table">[docs]</a>    <span class="k">def</span> <span class="nf">write_obs_summary_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">group_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                               <span class="n">caption</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.write_obs_summary_table"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_obs_summary_table">[docs]</a>    <span class="k">def</span> <span class="nf">write_obs_summary_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">group_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a stand alone observation summary latex table</span>
 
 
@@ -2147,8 +2188,6 @@
 <span class="sd">                group_names: dict</span>
 <span class="sd">                    par group names : table names for example {&quot;w0&quot;:&quot;well stress period 1&quot;}.</span>
 <span class="sd">                    Default is None</span>
-<span class="sd">                caption : str</span>
-<span class="sd">                    table caption. Default is None</span>
 
 <span class="sd">                Returns</span>
 <span class="sd">                -------</span>
@@ -2198,8 +2237,7 @@
 
         <span class="n">preamble</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">documentclass</span><span class="si">{article}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{pdflscape}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{longtable}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
-                   <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{center}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
-                   <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">begin</span><span class="si">{table}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                   <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{nopageno}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">&#39;</span>
 
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.obs.tex&quot;</span><span class="p">)</span>
@@ -2207,11 +2245,12 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">preamble</span><span class="p">)</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">Observation Summary</span><span class="se">\n\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="se">\n\\</span><span class="s2">begin</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">setlength{</span><span class="se">\\</span><span class="s2">LTleft}{-4.0cm}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">caption</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">caption{&quot;</span><span class="o">+</span><span class="n">caption</span><span class="o">+</span><span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">obsg_df</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">longtable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{table}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
