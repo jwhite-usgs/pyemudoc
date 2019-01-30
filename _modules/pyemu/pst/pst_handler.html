@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.pst.pst_handler &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for pyemu.pst.pst_handler</h1><div class="highlight"><pre>
@@ -413,6 +406,23 @@
                 <span class="n">og</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">og</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">adj_par_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the parameter groups with atleast one adjustable parameter</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        adj_par_groups : list</span>
+<span class="sd">            a list of parameter groups with  at least one adjustable parameter</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">adj_pargp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pargp</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_groups</span><span class="p">:</span>
+            <span class="n">ptrans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">pargp</span><span class="o">==</span><span class="n">pargp</span><span class="p">,</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="k">if</span> <span class="s2">&quot;log&quot;</span> <span class="ow">in</span> <span class="n">ptrans</span> <span class="ow">or</span> <span class="s2">&quot;none&quot;</span> <span class="ow">in</span> <span class="n">ptrans</span><span class="p">:</span>
+                <span class="n">adj_pargp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pargp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">adj_pargp</span>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">par_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -601,11 +611,12 @@
         <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
             <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">names</span>
-
+        <span class="n">isnull</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">defaults</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
                 <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)):</span>
+
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;NANs found&quot;</span><span class="p">)</span>
         <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">seek_point</span><span class="p">)</span>
         <span class="n">extras</span> <span class="o">=</span> <span class="p">[]</span>
@@ -949,8 +960,8 @@
                                                       <span class="bp">self</span><span class="o">.</span><span class="n">obs_fieldnames</span><span class="p">,</span>
                                                       <span class="bp">self</span><span class="o">.</span><span class="n">obs_converters</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error reading observation data&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error reading observation data: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;nobs == 0&quot;</span><span class="p">)</span>
         <span class="c1">#model command line</span>
@@ -1107,7 +1118,8 @@
         <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">eqs</span><span class="p">):</span>
             <span class="n">raw</span> <span class="o">=</span> <span class="n">eqs</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
             <span class="n">rhs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">raw</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[+,-]&#39;</span><span class="p">,</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[###]&#39;</span><span class="p">,</span>
+                    <span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; + &#39;</span><span class="p">,</span><span class="s1">&#39;###&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; - &#39;</span><span class="p">,</span><span class="s1">&#39;###&#39;</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
             <span class="c1"># in case of a leading &#39;-&#39; or &#39;+&#39;</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -1494,7 +1506,7 @@
 
 
 
-<div class="viewcode-block" id="Pst.adjust_weights_recfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_recfile">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_recfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.adjust_weights_recfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_recfile">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_recfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">original_ceiling</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;adjusts the weights by group of the observations based on the phi components</span>
 <span class="sd">        in a pest record file so that total phi is equal to the number of</span>
 <span class="sd">        non-zero weighted observations</span>
@@ -1504,6 +1516,9 @@
 <span class="sd">        recfile : str</span>
 <span class="sd">            record file name.  If None, try to use a record file</span>
 <span class="sd">            with the Pst case name.  Default is None</span>
+<span class="sd">        original_ceiling : bool</span>
+<span class="sd">            flag to keep weights from increasing - this is generally a good idea.</span>
+<span class="sd">            Default is True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">recfile</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1530,9 +1545,9 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.pwtadj2(): no complete phi component&quot;</span> <span class="o">+</span>
                             <span class="s2">&quot; records found in recfile&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_weights_by_phi_components</span><span class="p">(</span>
-            <span class="n">iter_components</span><span class="p">[</span><span class="n">last_complete_iter</span><span class="p">])</span></div>
+            <span class="n">iter_components</span><span class="p">[</span><span class="n">last_complete_iter</span><span class="p">],</span><span class="n">original_ceiling</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Pst.adjust_weights_resfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_resfile">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_resfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.adjust_weights_resfile"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_resfile">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_resfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">original_ceiling</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;adjusts the weights by group of the observations based on the phi components</span>
 <span class="sd">        in a pest residual file so that total phi is equal to the number of</span>
 <span class="sd">        non-zero weighted observations</span>
@@ -1542,15 +1557,66 @@
 <span class="sd">        resfile : str</span>
 <span class="sd">            residual file name.  If None, try to use a residual file</span>
 <span class="sd">            with the Pst case name.  Default is None</span>
+<span class="sd">        original_ceiling : bool</span>
+<span class="sd">            flag to keep weights from increasing - this is generally a good idea.</span>
+<span class="sd">            Default is True</span>
+
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">resfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="n">resfile</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">phi_comps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi_components</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_weights_by_phi_components</span><span class="p">(</span><span class="n">phi_comps</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_adjust_weights_by_phi_components</span><span class="p">(</span><span class="n">phi_comps</span><span class="p">,</span><span class="n">original_ceiling</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_adjust_weights_by_phi_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.adjust_weights_discrepancy"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_discrepancy">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_discrepancy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">original_ceiling</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;adjusts the weights of each non-zero weight observation based</span>
+<span class="sd">        on the residual in the pest residual file so each observations contribution</span>
+<span class="sd">        to phi is 1.0</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        resfile : str</span>
+<span class="sd">            residual file name.  If None, try to use a residual file</span>
+<span class="sd">            with the Pst case name.  Default is None</span>
+<span class="sd">        original_ceiling : bool</span>
+<span class="sd">            flag to keep weights from increasing - this is generally a good idea.</span>
+<span class="sd">            Default is True</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">resfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="n">resfile</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">,:]</span>
+        <span class="n">swr</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">,:]</span><span class="o">.</span><span class="n">residual</span> <span class="o">*</span> <span class="n">obs</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">factors</span> <span class="o">=</span>  <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">swr</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">original_ceiling</span><span class="p">:</span>
+            <span class="n">factors</span> <span class="o">=</span> <span class="n">factors</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">1.0</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs_names</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">factors</span></div>
+
+
+        <span class="c1"># nz_groups = obs.groupby(obs[&quot;weight&quot;].map(lambda x: x == 0)).groups</span>
+        <span class="c1"># ogroups = obs.groupby(&quot;obgnme&quot;).groups</span>
+        <span class="c1"># for ogroup, idxs in ogroups.items():</span>
+        <span class="c1">#     if self.control_data.pestmode.startswith(&quot;regul&quot;) \</span>
+        <span class="c1">#             and &quot;regul&quot; in ogroup.lower():</span>
+        <span class="c1">#         continue</span>
+        <span class="c1">#     og_phi = components[ogroup]</span>
+        <span class="c1">#     nz_groups = obs.loc[idxs, :].groupby(obs.loc[idxs, &quot;weight&quot;]. \</span>
+        <span class="c1">#                                          map(lambda x: x == 0)).groups</span>
+        <span class="c1">#     og_nzobs = 0</span>
+        <span class="c1">#     if False in nz_groups.keys():</span>
+        <span class="c1">#         og_nzobs = len(nz_groups[False])</span>
+        <span class="c1">#     if og_nzobs == 0 and og_phi &gt; 0:</span>
+        <span class="c1">#         raise Exception(&quot;Pst.adjust_weights_by_phi_components():&quot;</span>
+        <span class="c1">#                         &quot; no obs with nonzero weight,&quot; +</span>
+        <span class="c1">#                         &quot; but phi &gt; 0 for group:&quot; + str(ogroup))</span>
+        <span class="c1">#     if og_phi &gt; 0:</span>
+        <span class="c1">#         factor = np.sqrt(float(og_nzobs) / float(og_phi))</span>
+        <span class="c1">#         obs.loc[idxs, &quot;weight&quot;] = obs.weight[idxs] * factor</span>
+        <span class="c1"># self.observation_data = obs</span>
+
+    <span class="k">def</span> <span class="nf">_adjust_weights_by_phi_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span><span class="n">original_ceiling</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;resets the weights of observations by group to account for</span>
 <span class="sd">        residual phi components.</span>
 
@@ -1558,6 +1624,8 @@
 <span class="sd">        ----------</span>
 <span class="sd">        components : dict</span>
 <span class="sd">            a dictionary of obs group:phi contribution pairs</span>
+<span class="sd">        original_ceiling : bool</span>
+<span class="sd">            flag to keep weights from increasing</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
@@ -1579,6 +1647,8 @@
                                 <span class="s2">&quot; but phi &gt; 0 for group:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ogroup</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">og_phi</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">og_nzobs</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">og_phi</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">original_ceiling</span><span class="p">:</span>
+                    <span class="n">factor</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span><span class="mf">1.0</span><span class="p">)</span>
                 <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">idxs</span><span class="p">]</span> <span class="o">*</span> <span class="n">factor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="n">obs</span>
 
@@ -1680,8 +1750,10 @@
                 <span class="k">if</span> <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">oname</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
                     <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">oname</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
 
-            <span class="n">res_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
-            <span class="n">obs_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;obsnme&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+            <span class="c1">#res_groups = self.res.groupby(&quot;name&quot;).groups</span>
+            <span class="n">res_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
+            <span class="c1">#obs_groups = self.observation_data.groupby(&quot;obsnme&quot;).groups</span>
+            <span class="n">obs_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__reset_weights</span><span class="p">(</span><span class="n">obs_dict</span><span class="p">,</span> <span class="n">res_groups</span><span class="p">,</span> <span class="n">obs_groups</span><span class="p">)</span></div>
 
 
@@ -1797,7 +1869,7 @@
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;parval1&quot;</span><span class="p">,</span><span class="s2">&quot;parlbnd&quot;</span><span class="p">,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">,</span><span class="s2">&quot;increment&quot;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_trans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parval1</span> <span class="o">*</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="o">+</span><span class="s2">&quot;_trans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">*</span>
                                                           <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">+</span>\
                                                          <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">offset</span>
             <span class="c1">#isnotfixed = self.parameter_data.partrans != &quot;fixed&quot;</span>
@@ -1912,7 +1984,7 @@
         <span class="k">return</span> <span class="n">new_par_data</span></div>
 
 
-<div class="viewcode-block" id="Pst.add_observations"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_observations">[docs]</a>    <span class="k">def</span> <span class="nf">add_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">,</span><span class="n">pst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">inschek</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Pst.add_observations"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.add_observations">[docs]</a>    <span class="k">def</span> <span class="nf">add_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">pst_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">inschek</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; add new parameters to a control file</span>
 
 <span class="sd">        Parameters</span>
@@ -1920,7 +1992,7 @@
 <span class="sd">            ins_file : str</span>
 <span class="sd">                instruction file</span>
 <span class="sd">            out_file : str</span>
-<span class="sd">                model output file</span>
+<span class="sd">                model output file.  If None, then ins_file.replace(&quot;.ins&quot;,&quot;&quot;) is used.  Default is None</span>
 <span class="sd">            pst_path : str(optional)</span>
 <span class="sd">                the path to append to the instruction file and out file in the control file.  If</span>
 <span class="sd">                not None, then any existing path in front of the template or in file is split off</span>
@@ -1939,6 +2011,8 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ins_file</span><span class="p">),</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span><span class="n">ins_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">out_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">out_file</span> <span class="o">=</span> <span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">ins_file</span> <span class="o">!=</span> <span class="n">out_file</span><span class="p">,</span> <span class="s2">&quot;doh!&quot;</span>
 
         <span class="c1"># get the parameter names in the template file</span>
@@ -1964,15 +2038,16 @@
         <span class="n">new_obs_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">new_obsnme</span><span class="p">,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obsnme</span>
         <span class="n">new_obs_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">new_obsnme</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_obs_data</span><span class="p">)</span>
-
+        <span class="n">cwd</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
         <span class="k">if</span> <span class="n">pst_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">ins_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">out_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pst_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">out_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ins_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_file</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">inschek</span><span class="p">:</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1">#print(self.observation_data.index,df.index)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">obsval</span>
@@ -2279,14 +2354,117 @@
             <span class="k">if</span> <span class="n">cwd</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
                 <span class="n">cwd</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;executing </span><span class="si">{0}</span><span class="s2"> in dir </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span> <span class="n">cwd</span><span class="p">))</span>
-        <span class="n">pyemu</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div></div>
+        <span class="n">pyemu</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_is_less_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">constraint_tags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;l_&quot;</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">constraint_tags</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">c</span><span class="p">)]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">less_than_obs_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the names of the observations that</span>
+<span class="sd">        are listed as less than inequality constraints.  Zero-</span>
+<span class="sd">        weighted obs are skipped</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.Series : obsnme of obseravtions that are non-zero weighted</span>
+<span class="sd">                        less than constraints</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
+        <span class="n">lt_obs</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_less_const</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">obgnme</span><span class="p">)</span> \
+                                             <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">lt_obs</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">less_than_pi_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the names of the prior information eqs that</span>
+<span class="sd">        are listed as less than inequality constraints.  Zero-</span>
+<span class="sd">        weighted pi are skipped</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.Series : pilbl of prior information that are non-zero weighted</span>
+<span class="sd">                        less than constraints</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span>
+        <span class="n">lt_pi</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pi</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_less_const</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">obgnme</span><span class="p">)</span> \
+                                             <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;pilbl&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">lt_pi</span>
+
+
+    <span class="k">def</span> <span class="nf">_is_greater_const</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">constraint_tags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;g_&quot;</span><span class="p">,</span> <span class="s2">&quot;greater&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">constraint_tags</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">c</span><span class="p">)]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">greater_than_obs_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the names of the observations that</span>
+<span class="sd">        are listed as greater than inequality constraints.  Zero-</span>
+<span class="sd">        weighted obs are skipped</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.Series : obsnme of obseravtions that are non-zero weighted</span>
+<span class="sd">                        greater than constraints</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
+        <span class="n">gt_obs</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_greater_const</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">obgnme</span><span class="p">)</span> \
+                                             <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">gt_obs</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">greater_than_pi_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the names of the prior information eqs that</span>
+<span class="sd">        are listed as greater than inequality constraints.  Zero-</span>
+<span class="sd">        weighted pi are skipped</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.Series : pilbl of prior information that are non-zero weighted</span>
+<span class="sd">                        greater than constraints</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span>
+        <span class="n">gt_pi</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pi</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_greater_const</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">obgnme</span><span class="p">)</span> \
+                                          <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;pilbl&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">gt_pi</span></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
@@ -2297,12 +2475,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -2313,8 +2493,8 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

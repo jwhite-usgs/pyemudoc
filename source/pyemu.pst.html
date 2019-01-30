@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.pst package &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="pyemu-pst-package">
@@ -73,7 +66,7 @@ users shouldn’t need to deal with these classes explicitly</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_controldata.RegData">
 <em class="property">class </em><code class="descclassname">pyemu.pst.pst_controldata.</code><code class="descname">RegData</code><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#RegData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.RegData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>an object that encapsulates the regularization section
 of the PEST control file</p>
 <dl class="method">
@@ -96,7 +89,7 @@ file handle</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_controldata.SvdData">
 <em class="property">class </em><code class="descclassname">pyemu.pst.pst_controldata.</code><code class="descname">SvdData</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#SvdData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.SvdData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>an object that encapsulates the singular value decomposition
 section of the PEST control file</p>
 <dl class="method">
@@ -132,7 +125,7 @@ section of the PEST control file</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_controldata.ControlData">
 <em class="property">class </em><code class="descclassname">pyemu.pst.pst_controldata.</code><code class="descname">ControlData</code><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#ControlData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.ControlData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>an object that encapsulates the control data section
 of the PEST control file</p>
 <dl class="staticmethod">
@@ -210,7 +203,7 @@ is the primary mechanism for dealing with PEST control files</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_handler.Pst">
 <em class="property">class </em><code class="descclassname">pyemu.pst.pst_handler.</code><code class="descname">Pst</code><span class="sig-paren">(</span><em>filename</em>, <em>load=True</em>, <em>resfile=None</em>, <em>flex=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>basic class for handling pest control files to support linear analysis
 as well as replicate some of the functionality of the pest utilities</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -524,6 +517,22 @@ least one non-zero weighted observation</td>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.adj_par_groups">
+<code class="descname">adj_par_groups</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adj_par_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the parameter groups with atleast one adjustable parameter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>adj_par_groups</strong> – a list of parameter groups with  at least one adjustable parameter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="pyemu.pst.pst_handler.Pst.par_groups">
 <code class="descname">par_groups</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.par_groups" title="Permalink to this definition">¶</a></dt>
 <dd><p>get the parameter groups</p>
@@ -818,7 +827,7 @@ par file, which may cause slight bound violations</li>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.adjust_weights_recfile">
-<code class="descname">adjust_weights_recfile</code><span class="sig-paren">(</span><em>recfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_recfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_recfile" title="Permalink to this definition">¶</a></dt>
+<code class="descname">adjust_weights_recfile</code><span class="sig-paren">(</span><em>recfile=None</em>, <em>original_ceiling=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_recfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_recfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>adjusts the weights by group of the observations based on the phi components
 in a pest record file so that total phi is equal to the number of
 non-zero weighted observations</p>
@@ -826,8 +835,13 @@ non-zero weighted observations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>recfile</strong> (<em>str</em>) – record file name.  If None, try to use a record file
-with the Pst case name.  Default is None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>recfile</strong> (<em>str</em>) – record file name.  If None, try to use a record file
+with the Pst case name.  Default is None</li>
+<li><strong>original_ceiling</strong> (<em>bool</em>) – flag to keep weights from increasing - this is generally a good idea.
+Default is True</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -835,7 +849,7 @@ with the Pst case name.  Default is None</td>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.adjust_weights_resfile">
-<code class="descname">adjust_weights_resfile</code><span class="sig-paren">(</span><em>resfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_resfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_resfile" title="Permalink to this definition">¶</a></dt>
+<code class="descname">adjust_weights_resfile</code><span class="sig-paren">(</span><em>resfile=None</em>, <em>original_ceiling=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_resfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_resfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>adjusts the weights by group of the observations based on the phi components
 in a pest residual file so that total phi is equal to the number of
 non-zero weighted observations</p>
@@ -843,8 +857,35 @@ non-zero weighted observations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> (<em>str</em>) – residual file name.  If None, try to use a residual file
-with the Pst case name.  Default is None</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>resfile</strong> (<em>str</em>) – residual file name.  If None, try to use a residual file
+with the Pst case name.  Default is None</li>
+<li><strong>original_ceiling</strong> (<em>bool</em>) – flag to keep weights from increasing - this is generally a good idea.
+Default is True</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.adjust_weights_discrepancy">
+<code class="descname">adjust_weights_discrepancy</code><span class="sig-paren">(</span><em>resfile=None</em>, <em>original_ceiling=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_discrepancy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_discrepancy" title="Permalink to this definition">¶</a></dt>
+<dd><p>adjusts the weights of each non-zero weight observation based
+on the residual in the pest residual file so each observations contribution
+to phi is 1.0</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>resfile</strong> (<em>str</em>) – residual file name.  If None, try to use a residual file
+with the Pst case name.  Default is None</li>
+<li><strong>original_ceiling</strong> (<em>bool</em>) – flag to keep weights from increasing - this is generally a good idea.
+Default is True</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1020,7 +1061,7 @@ new template file, returns None</p>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.add_observations">
-<code class="descname">add_observations</code><span class="sig-paren">(</span><em>ins_file</em>, <em>out_file</em>, <em>pst_path=None</em>, <em>inschek=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_observations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_observations</code><span class="sig-paren">(</span><em>ins_file</em>, <em>out_file=None</em>, <em>pst_path=None</em>, <em>inschek=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.add_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.add_observations" title="Permalink to this definition">¶</a></dt>
 <dd><p>add new parameters to a control file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1028,7 +1069,7 @@ new template file, returns None</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>ins_file</strong> (<em>str</em>) – instruction file</li>
-<li><strong>out_file</strong> (<em>str</em>) – model output file</li>
+<li><strong>out_file</strong> (<em>str</em>) – model output file.  If None, then ins_file.replace(“.ins”,”“) is used.  Default is None</li>
 <li><strong>pst_path</strong> (<em>str</em><em>(</em><em>optional</em><em>)</em>) – the path to append to the instruction file and out file in the control file.  If
 not None, then any existing path in front of the template or in file is split off
 and pst_path is prepended.  Default is None</li>
@@ -1183,6 +1224,78 @@ filename is used</p>
 os.path.split(self.filename) is used to find
 cwd.  Default is None</dd>
 </dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.less_than_obs_constraints">
+<code class="descname">less_than_obs_constraints</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.less_than_obs_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the names of the observations that
+are listed as less than inequality constraints.  Zero-
+weighted obs are skipped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Series</strong> – less than constraints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">obsnme of obseravtions that are non-zero weighted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.less_than_pi_constraints">
+<code class="descname">less_than_pi_constraints</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.less_than_pi_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the names of the prior information eqs that
+are listed as less than inequality constraints.  Zero-
+weighted pi are skipped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Series</strong> – less than constraints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pilbl of prior information that are non-zero weighted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.greater_than_obs_constraints">
+<code class="descname">greater_than_obs_constraints</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.greater_than_obs_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the names of the observations that
+are listed as greater than inequality constraints.  Zero-
+weighted obs are skipped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Series</strong> – greater than constraints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">obsnme of obseravtions that are non-zero weighted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyemu.pst.pst_handler.Pst.greater_than_pi_constraints">
+<code class="descname">greater_than_pi_constraints</code><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.greater_than_pi_constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the names of the prior information eqs that
+are listed as greater than inequality constraints.  Zero-
+weighted pi are skipped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.Series</strong> – greater than constraints</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pilbl of prior information that are non-zero weighted</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -1508,107 +1621,6 @@ file pair in a pyemu.Pst.  If the run is successful, the INSCHEK written
 </dd></dl>
 
 <dl class="function">
-<dt id="pyemu.pst.pst_utils.smp_to_ins">
-<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">smp_to_ins</code><span class="sig-paren">(</span><em>smp_filename</em>, <em>ins_filename=None</em>, <em>use_generic_names=False</em>, <em>gwutils_compliant=False</em>, <em>datetime_format=None</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#smp_to_ins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.smp_to_ins" title="Permalink to this definition">¶</a></dt>
-<dd><p>create an instruction file for an smp file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>smp_filename</strong> (<em>str</em>) – existing smp file</li>
-<li><strong>ins_filename</strong> (<em>str</em>) – instruction file to create.  If None, create
-an instruction file using the smp filename
-with the “.ins” suffix</li>
-<li><strong>use_generic_names</strong> (<em>bool</em>) – flag to force observations names to use a generic
-int counter instead of trying to use a datetime str</li>
-<li><strong>gwutils_compliant</strong> (<em>bool</em>) – flag to use instruction set that is compliant with the
-pest gw utils (fixed format instructions).  If false,
-use free format (with whitespace) instruction set</li>
-<li><strong>datetime_format</strong> (<em>str</em>) – str to pass to datetime.strptime in the smp_to_dataframe() function</li>
-<li><strong>prefix</strong> (<em>str</em>) – a prefix to add to the front of the obsnmes.  Default is ‘’</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – dataframe instance of the smp file with the observation names and
-instruction lines as additional columns</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyemu.pst.pst_utils.dataframe_to_smp">
-<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">dataframe_to_smp</code><span class="sig-paren">(</span><em>dataframe</em>, <em>smp_filename</em>, <em>name_col='name'</em>, <em>datetime_col='datetime'</em>, <em>value_col='value'</em>, <em>datetime_format='dd/mm/yyyy'</em>, <em>value_format='{0:15.6E}'</em>, <em>max_name_len=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#dataframe_to_smp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.dataframe_to_smp" title="Permalink to this definition">¶</a></dt>
-<dd><p>write a dataframe as an smp file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dataframe</strong> (<em>pandas.DataFrame</em>) – </li>
-<li><strong>smp_filename</strong> (<em>str</em>) – smp file to write</li>
-<li><strong>name_col</strong> (<em>str</em>) – the column in the dataframe the marks the site namne</li>
-<li><strong>datetime_col</strong> (<em>str</em>) – the column in the dataframe that is a datetime instance</li>
-<li><strong>value_col</strong> (<em>str</em>) – the column in the dataframe that is the values</li>
-<li><strong>datetime_format</strong> (<em>str</em>) – either ‘dd/mm/yyyy’ or ‘mm/dd/yyy’</li>
-<li><strong>value_format</strong> (<em>str</em>) – a python float-compatible format</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyemu.pst.pst_utils.date_parser">
-<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">date_parser</code><span class="sig-paren">(</span><em>items</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#date_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.date_parser" title="Permalink to this definition">¶</a></dt>
-<dd><p>datetime parser to help load smp files</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>items</strong> (<em>iterable</em>) – something or somethings to try to parse into datetimes</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dt</strong> – the cast datetime things</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">iterable</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyemu.pst.pst_utils.smp_to_dataframe">
-<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">smp_to_dataframe</code><span class="sig-paren">(</span><em>smp_filename</em>, <em>datetime_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#smp_to_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.smp_to_dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>load an smp file into a pandas dataframe (stacked in wide format)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>smp_filename</strong> (<em>str</em>) – smp filename to load</li>
-<li><strong>datetime_format</strong> (<em>str</em>) – should be either “%m/%d/%Y %H:%M:%S” or “%d/%m/%Y %H:%M:%S”
-If None, then we will try to deduce the format for you, which
-always dangerous</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="pyemu.pst.pst_utils.del_rw">
 <code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">del_rw</code><span class="sig-paren">(</span><em>action</em>, <em>name</em>, <em>exc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#del_rw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.del_rw" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1662,6 +1674,11 @@ written a floating point format without the ‘e’ - like 1.0-3, really?!</p>
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyemu.pst.pst_utils.csv_to_ins_file">
+<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">csv_to_ins_file</code><span class="sig-paren">(</span><em>csv_filename</em>, <em>ins_filename=None</em>, <em>only_cols=None</em>, <em>only_rows=None</em>, <em>marker='~'</em>, <em>includes_header=True</em>, <em>includes_index=True</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#csv_to_ins_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.csv_to_ins_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-pyemu.pst">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyemu.pst" title="Permalink to this headline">¶</a></h2>
@@ -1673,21 +1690,27 @@ all sections of the control file.  The primary object is the Pst…start there.<
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyemu.pst package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pyemu.pst.pst_controldata">pyemu.pst.pst_controldata module</a></li>
-<li><a class="reference internal" href="#module-pyemu.pst.pst_handler">pyemu.pst.pst_handler module</a></li>
-<li><a class="reference internal" href="#module-pyemu.pst.pst_utils">pyemu.pst.pst_utils module</a></li>
-<li><a class="reference internal" href="#module-pyemu.pst">Module contents</a></li>
+<h1 class="logo"><a href="../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
-</li>
-</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -1695,21 +1718,16 @@ all sections of the control file.  The primary object is the Pst…start there.<
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/source/pyemu.pst.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1720,8 +1738,8 @@ all sections of the control file.  The primary object is the Pst…start there.<
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/source/pyemu.pst.rst.txt"

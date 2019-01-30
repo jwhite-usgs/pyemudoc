@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.pst.pst_utils &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for pyemu.pst.pst_utils</h1><div class="highlight"><pre>
@@ -662,11 +655,11 @@
 
 
 
-<span class="k">def</span> <span class="nf">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_try_run_inschek</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span><span class="n">out_file</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">pyemu</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;inschek </span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">))</span>
-        <span class="n">obf_file</span> <span class="o">=</span> <span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span> <span class="s2">&quot;.obf&quot;</span><span class="p">)</span>
+        <span class="n">pyemu</span><span class="o">.</span><span class="n">os_utils</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;inschek </span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ins_file</span><span class="p">,</span> <span class="n">out_file</span><span class="p">),</span><span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+        <span class="n">obf_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span><span class="n">ins_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.ins&quot;</span><span class="p">,</span> <span class="s2">&quot;.obf&quot;</span><span class="p">))</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">obf_file</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                          <span class="n">skiprows</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;obsval&quot;</span><span class="p">])</span>
         <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
@@ -717,177 +710,6 @@
                 <span class="n">contributions</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
     <span class="k">return</span> <span class="n">iters</span></div>
 
-<div class="viewcode-block" id="smp_to_ins"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.smp_to_ins">[docs]</a><span class="k">def</span> <span class="nf">smp_to_ins</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">ins_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">use_generic_names</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-               <span class="n">gwutils_compliant</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; create an instruction file for an smp file</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    smp_filename : str</span>
-<span class="sd">        existing smp file</span>
-<span class="sd">    ins_filename: str</span>
-<span class="sd">        instruction file to create.  If None, create</span>
-<span class="sd">        an instruction file using the smp filename</span>
-<span class="sd">        with the &quot;.ins&quot; suffix</span>
-<span class="sd">    use_generic_names : bool</span>
-<span class="sd">        flag to force observations names to use a generic</span>
-<span class="sd">        int counter instead of trying to use a datetime str</span>
-<span class="sd">    gwutils_compliant : bool</span>
-<span class="sd">        flag to use instruction set that is compliant with the</span>
-<span class="sd">        pest gw utils (fixed format instructions).  If false,</span>
-<span class="sd">        use free format (with whitespace) instruction set</span>
-<span class="sd">    datetime_format : str</span>
-<span class="sd">        str to pass to datetime.strptime in the smp_to_dataframe() function</span>
-<span class="sd">    prefix : str</span>
-<span class="sd">         a prefix to add to the front of the obsnmes.  Default is &#39;&#39;</span>
-
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    df : pandas.DataFrame</span>
-<span class="sd">        dataframe instance of the smp file with the observation names and</span>
-<span class="sd">        instruction lines as additional columns</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">ins_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ins_filename</span> <span class="o">=</span> <span class="n">smp_filename</span><span class="o">+</span><span class="s2">&quot;.ins&quot;</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">smp_to_dataframe</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">datetime_format</span><span class="o">=</span><span class="n">datetime_format</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;ins_strings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;observation_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">name_groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">idxs</span> <span class="ow">in</span> <span class="n">name_groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_generic_names</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">11</span><span class="p">:</span>
-            <span class="n">onames</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span><span class="s2">&quot;datetime&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">prefix</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">%m%Y&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">values</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">onames</span> <span class="o">=</span> <span class="p">[</span><span class="n">prefix</span><span class="o">+</span><span class="n">name</span><span class="o">+</span><span class="s2">&quot;_</span><span class="si">{0:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idxs</span><span class="p">))]</span>
-        <span class="k">if</span> <span class="kc">False</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">,</span><span class="n">onames</span><span class="p">)):</span>
-            <span class="n">long_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">oname</span> <span class="k">for</span> <span class="n">oname</span> <span class="ow">in</span> <span class="n">onames</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">oname</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">]</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;observation names longer than 20 chars:</span><span class="se">\n</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">long_names</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="n">gwutils_compliant</span><span class="p">:</span>
-            <span class="n">ins_strs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;l1  (</span><span class="si">{0:s}</span><span class="s2">)39:46&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">on</span><span class="p">)</span> <span class="k">for</span> <span class="n">on</span> <span class="ow">in</span> <span class="n">onames</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">ins_strs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;l1 w w w  !</span><span class="si">{0:s}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">on</span><span class="p">)</span> <span class="k">for</span> <span class="n">on</span> <span class="ow">in</span> <span class="n">onames</span><span class="p">]</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span><span class="s2">&quot;observation_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">onames</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idxs</span><span class="p">,</span><span class="s2">&quot;ins_strings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ins_strs</span>
-
-    <span class="n">counts</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">observation_names</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-    <span class="n">dup_sites</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">index</span> <span class="k">if</span> <span class="n">counts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dup_sites</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;duplicate observation names found:</span><span class="si">{0}</span><span class="s2">&quot;</span>\
-                        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dup_sites</span><span class="p">)))</span>
-
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pif ~</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ins_str</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ins_str</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;ins_strings&quot;</span><span class="p">]]</span>
-    <span class="k">return</span> <span class="n">df</span></div>
-
-
-<div class="viewcode-block" id="dataframe_to_smp"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.dataframe_to_smp">[docs]</a><span class="k">def</span> <span class="nf">dataframe_to_smp</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">name_col</span><span class="o">=</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
-                     <span class="n">datetime_col</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span><span class="n">value_col</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span>
-                     <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;dd/mm/yyyy&quot;</span><span class="p">,</span>
-                     <span class="n">value_format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{0:15.6E}</span><span class="s2">&quot;</span><span class="p">,</span>
-                     <span class="n">max_name_len</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; write a dataframe as an smp file</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    dataframe : pandas.DataFrame</span>
-<span class="sd">    smp_filename : str</span>
-<span class="sd">        smp file to write</span>
-<span class="sd">    name_col: str</span>
-<span class="sd">        the column in the dataframe the marks the site namne</span>
-<span class="sd">    datetime_col: str</span>
-<span class="sd">        the column in the dataframe that is a datetime instance</span>
-<span class="sd">    value_col: str</span>
-<span class="sd">        the column in the dataframe that is the values</span>
-<span class="sd">    datetime_format: str</span>
-<span class="sd">        either &#39;dd/mm/yyyy&#39; or &#39;mm/dd/yyy&#39;</span>
-<span class="sd">    value_format: str</span>
-<span class="sd">        a python float-compatible format</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">formatters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;</span><span class="si">{0:&lt;20s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[:</span><span class="n">max_name_len</span><span class="p">]),</span>
-                  <span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">value_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)}</span>
-    <span class="k">if</span> <span class="n">datetime_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">):</span>
-        <span class="n">dt_fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y    %H:%M:%S&quot;</span>
-    <span class="k">elif</span> <span class="n">datetime_format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">):</span>
-        <span class="n">dt_fmt</span> <span class="o">=</span> <span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y    %H:%M:%S&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unrecognized datetime_format: &quot;</span> <span class="o">+</span>\
-                        <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">datetime_format</span><span class="p">)))</span>
-
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="n">name_col</span><span class="p">,</span><span class="n">datetime_col</span><span class="p">,</span><span class="n">value_col</span><span class="p">]:</span>
-        <span class="k">assert</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span>
-
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;datetime_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;datetime&quot;</span><span class="p">]</span><span class="o">.</span>\
-        <span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">dt_fmt</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
-        <span class="n">smp_filename</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-        <span class="c1"># need this to remove the leading space that pandas puts in front</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="n">name_col</span><span class="p">,</span><span class="s2">&quot;datetime_str&quot;</span><span class="p">,</span><span class="n">value_col</span><span class="p">]]</span><span class="o">.</span>\
-                <span class="n">to_string</span><span class="p">(</span><span class="n">col_space</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                          <span class="n">formatters</span><span class="o">=</span><span class="n">formatters</span><span class="p">,</span>
-                          <span class="n">justify</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                          <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                          <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">ss</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
-            <span class="n">smp_filename</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:&lt;s}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;datetime_str&quot;</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="date_parser"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.date_parser">[docs]</a><span class="k">def</span> <span class="nf">date_parser</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; datetime parser to help load smp files</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    items : iterable</span>
-<span class="sd">        something or somethings to try to parse into datetimes</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    dt : iterable</span>
-<span class="sd">        the cast datetime things</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">items</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y %H:%M:%S&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">items</span><span class="p">,</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y %H:%M:%S&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ee</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error parsing datetime string&quot;</span> <span class="o">+</span>\
-                            <span class="s2">&quot; </span><span class="si">{0}</span><span class="s2">: </span><span class="se">\n</span><span class="si">{1}</span><span class="se">\n</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">items</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="n">ee</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">dt</span></div>
-
-
-<div class="viewcode-block" id="smp_to_dataframe"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.smp_to_dataframe">[docs]</a><span class="k">def</span> <span class="nf">smp_to_dataframe</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span><span class="n">datetime_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; load an smp file into a pandas dataframe (stacked in wide format)</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    smp_filename : str</span>
-<span class="sd">        smp filename to load</span>
-<span class="sd">    datetime_format : str</span>
-<span class="sd">        should be either &quot;%m/%d/%Y %H:%M:%S&quot; or &quot;%d/%m/%Y %H:%M:%S&quot;</span>
-<span class="sd">        If None, then we will try to deduce the format for you, which</span>
-<span class="sd">        always dangerous</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    df : pandas.DataFrame</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">datetime_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">date_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">datetime_format</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">date_func</span> <span class="o">=</span> <span class="n">date_parser</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">smp_filename</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                     <span class="n">parse_dates</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;datetime&quot;</span><span class="p">:[</span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="s2">&quot;time&quot;</span><span class="p">]},</span>
-                     <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="s2">&quot;date&quot;</span><span class="p">,</span><span class="s2">&quot;time&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">],</span>
-                     <span class="n">dtype</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="nb">object</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">},</span>
-                     <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dry&quot;</span><span class="p">],</span>
-                     <span class="n">date_parser</span><span class="o">=</span><span class="n">date_func</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span></div>
 
 <div class="viewcode-block" id="del_rw"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.del_rw">[docs]</a><span class="k">def</span> <span class="nf">del_rw</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
     <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_IWRITE</span><span class="p">)</span>
@@ -958,6 +780,99 @@
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="csv_to_ins_file"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_utils.csv_to_ins_file">[docs]</a><span class="k">def</span> <span class="nf">csv_to_ins_file</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">,</span><span class="n">ins_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">only_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">only_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;~&#39;</span><span class="p">,</span><span class="n">includes_header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">includes_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+
+    <span class="c1"># process the csv_filename in case it is a dataframe</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">csv_filename</span>
+
+    <span class="c1"># process only_cols</span>
+    <span class="k">if</span> <span class="n">only_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">only_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">only_cols</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span> <span class="c1"># incase it is a single name</span>
+            <span class="n">only_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">only_cols</span><span class="p">]</span>
+        <span class="n">only_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">only_cols</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">only_rows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">only_rows</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">only_rows</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span> <span class="c1"># incase it is a single name</span>
+            <span class="n">only_rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">only_rows</span><span class="p">]</span>
+        <span class="n">only_rows</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">only_rows</span><span class="p">)</span>
+
+    <span class="c1"># process the row labels, handling duplicates</span>
+    <span class="n">rlabels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">row_visit</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">only_rlabels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">rname</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">rname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rname</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">rname</span> <span class="ow">in</span> <span class="n">row_visit</span><span class="p">:</span>
+            <span class="n">rsuffix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">row_visit</span><span class="p">[</span><span class="n">rname</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">row_visit</span><span class="p">[</span><span class="n">rname</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">row_visit</span><span class="p">[</span><span class="n">rname</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">rsuffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">rlabel</span> <span class="o">=</span> <span class="n">rname</span> <span class="o">+</span> <span class="n">rsuffix</span>
+        <span class="n">rlabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rlabel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rname</span> <span class="ow">in</span> <span class="n">only_rows</span><span class="p">:</span>
+            <span class="n">only_rlabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rlabel</span><span class="p">)</span>
+    <span class="n">only_rlabels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">only_rlabels</span><span class="p">)</span>
+
+    <span class="c1">#process the col labels, handling duplicates</span>
+    <span class="n">clabels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">col_visit</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">only_clabels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">cname</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cname</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">col_visit</span><span class="p">:</span>
+            <span class="n">csuffix</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">col_visit</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">col_visit</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">col_visit</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">csuffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">clabel</span> <span class="o">=</span> <span class="n">cname</span> <span class="o">+</span> <span class="n">csuffix</span>
+        <span class="n">clabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clabel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">only_cols</span><span class="p">:</span>
+            <span class="n">only_clabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clabel</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ins_filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">csv_filename</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ins_filename is None but csv_filename is not string&quot;</span><span class="p">)</span>
+        <span class="n">ins_filename</span> <span class="o">=</span> <span class="n">csv_filename</span> <span class="o">+</span> <span class="s2">&quot;.ins&quot;</span>
+    <span class="n">row_visit</span><span class="p">,</span> <span class="n">col_visit</span> <span class="o">=</span> <span class="p">{},{}</span>
+    <span class="n">onames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ovals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ins_filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pif ~</span><span class="se">\n</span><span class="s2">l1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">rlabel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rlabels</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">includes_header</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;l1 &quot;</span><span class="p">)</span> <span class="c1">#skip the row (index) label</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">clabel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">clabels</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">rlabel</span> <span class="ow">in</span> <span class="n">only_rlabels</span> <span class="ow">and</span> <span class="n">clabel</span> <span class="ow">in</span> <span class="n">only_clabels</span><span class="p">:</span>
+                    <span class="n">oname</span> <span class="o">=</span> <span class="n">prefix</span><span class="o">+</span><span class="n">rlabel</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">clabel</span>
+                    <span class="n">onames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oname</span><span class="p">)</span>
+                    <span class="n">ovals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">oname</span> <span class="o">=</span> <span class="s2">&quot;dum&quot;</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">includes_index</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; </span><span class="si">{0}</span><span class="s2">,</span><span class="si">{0}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">marker</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; </span><span class="si">{0}</span><span class="s2">,</span><span class="si">{0}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">marker</span><span class="p">))</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; !</span><span class="si">{0}</span><span class="s2">! &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oname</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">odf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;obsnme&quot;</span><span class="p">:</span><span class="n">onames</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">:</span><span class="n">ovals</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="n">onames</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">odf</span></div>
+
+
+
 
 
 
@@ -971,10 +886,28 @@
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../source/glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
@@ -985,12 +918,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1001,8 +936,8 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

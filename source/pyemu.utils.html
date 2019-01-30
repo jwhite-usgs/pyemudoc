@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.utils package &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="pyemu-utils-package">
@@ -53,7 +46,7 @@ Also support for reading GSLIB and SGEMS files</p>
 <dl class="class">
 <dt id="pyemu.utils.geostats.GeoStruct">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">GeoStruct</code><span class="sig-paren">(</span><em>nugget=0.0</em>, <em>variograms=[]</em>, <em>name='struct1'</em>, <em>transform='none'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#GeoStruct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.GeoStruct" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>a geostatistical structure object.  The object contains
 variograms and (optionally) nugget information.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -93,9 +86,9 @@ Default is “none</li>
 
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
 </div>
 <dl class="method">
 <dt id="pyemu.utils.geostats.GeoStruct.to_struct_file">
@@ -136,8 +129,8 @@ Default is “none</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
 </div>
 </dd></dl>
 
@@ -175,8 +168,8 @@ must equal len(x) and len(y).</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">gs.covariance_matrix(pp_df.x,pp_df.y,pp_df.name)</span></code></p>
 </div>
 </dd></dl>
 
@@ -281,7 +274,7 @@ are passed to matplotlib.pyplot.plot()</p>
 <dl class="class">
 <dt id="pyemu.utils.geostats.OrdinaryKrige">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">OrdinaryKrige</code><span class="sig-paren">(</span><em>geostruct</em>, <em>point_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#OrdinaryKrige"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.OrdinaryKrige" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Ordinary Kriging using Pandas and Numpy.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -305,11 +298,11 @@ point_data must also contain a “zone” column</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
 </div>
 <dl class="method">
 <dt id="pyemu.utils.geostats.OrdinaryKrige.check_point_data_dist">
@@ -386,16 +379,16 @@ process for each grid node</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">var_filename=&quot;ok_var.dat&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GeoStruct(variograms=v,nugget=0.5)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pp_df</span> <span class="pre">=</span> <span class="pre">pyemu.pp_utils.pp_file_to_dataframe(&quot;hkpp.dat&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;ok</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.OrdinaryKrige(gs,pp_df)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">ok.calc_factors_grid(m.sr,zone_array=m.bas6.ibound[0].array,</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">var_filename=&quot;ok_var.dat&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;ok.to_grid_factor_file(&quot;factors.dat&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -474,7 +467,7 @@ Not used by fac2real() method.  Default is “zone.junk”</li>
 <dl class="class">
 <dt id="pyemu.utils.geostats.Vario2d">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">Vario2d</code><span class="sig-paren">(</span><em>contribution</em>, <em>a</em>, <em>anisotropy=1.0</em>, <em>bearing=0.0</em>, <em>name='var1'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#Vario2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.Vario2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>base class for 2-D variograms.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -710,7 +703,7 @@ Vario2d.</p>
 <dl class="class">
 <dt id="pyemu.utils.geostats.ExpVario">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">ExpVario</code><span class="sig-paren">(</span><em>contribution</em>, <em>a</em>, <em>anisotropy=1.0</em>, <em>bearing=0.0</em>, <em>name='var1'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#ExpVario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.ExpVario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
 <p>Exponetial variogram derived type</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -736,15 +729,15 @@ Default is 0.0</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.ExpVario(a=1000,contribution=1.0)</span></code></p>
 </div>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyemu.utils.geostats.GauVario">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">GauVario</code><span class="sig-paren">(</span><em>contribution</em>, <em>a</em>, <em>anisotropy=1.0</em>, <em>bearing=0.0</em>, <em>name='var1'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#GauVario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.GauVario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
 <p>Gaussian variogram derived type</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -774,15 +767,15 @@ Default is 0.0</li>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GauVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.GauVario(a=1000,contribution=1.0)</span></code></p>
 </div>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyemu.utils.geostats.SphVario">
 <em class="property">class </em><code class="descclassname">pyemu.utils.geostats.</code><code class="descname">SphVario</code><span class="sig-paren">(</span><em>contribution</em>, <em>a</em>, <em>anisotropy=1.0</em>, <em>bearing=0.0</em>, <em>name='var1'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/geostats.html#SphVario"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.geostats.SphVario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pyemu.utils.geostats.Vario2d" title="pyemu.utils.geostats.Vario2d"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyemu.utils.geostats.Vario2d</span></code></a></p>
 <p>Spherical variogram derived type</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -808,8 +801,8 @@ Default is 0.0</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.SphVario(a=1000,contribution=1.0)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;v</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.SphVario(a=1000,contribution=1.0)</span></code></p>
 </div>
 </dd></dl>
 
@@ -842,8 +835,8 @@ is GeoStruct.  Otherwise, return type is a list of GeoStruct</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.reads_struct_file(&quot;struct.dat&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.reads_struct_file(&quot;struct.dat&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -872,8 +865,8 @@ a GeoStruct</p>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.read_sgems_variogram_xml(&quot;sgems.xml&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;gs</span> <span class="pre">=</span> <span class="pre">pyemu.utils.geostats.read_sgems_variogram_xml(&quot;sgems.xml&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -913,8 +906,8 @@ Default is 1 (second column)</li>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">pyemu.utiils.geostats.gslib_2_dataframe(&quot;prop.gslib&quot;,attr_name=&quot;hk&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;df</span> <span class="pre">=</span> <span class="pre">pyemu.utiils.geostats.gslib_2_dataframe(&quot;prop.gslib&quot;,attr_name=&quot;hk&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -971,8 +964,8 @@ are set to fill_value</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.utils.geostats.fac2real(&quot;hkpp.dat&quot;,out_file=&quot;hk_layer_1.ref&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.utils.geostats.fac2real(&quot;hkpp.dat&quot;,out_file=&quot;hk_layer_1.ref&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -1325,7 +1318,7 @@ observations a meaningful name</li>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_hds_timeseries">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_hds_timeseries</code><span class="sig-paren">(</span><em>hds_file</em>, <em>kij_dict</em>, <em>prefix=None</em>, <em>include_path=False</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_timeseries" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_hds_timeseries</code><span class="sig-paren">(</span><em>hds_file</em>, <em>kij_dict</em>, <em>prefix=None</em>, <em>include_path=False</em>, <em>model=None</em>, <em>postprocess_inact=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_timeseries" title="Permalink to this definition">¶</a></dt>
 <dd><p>a function to setup extracting time-series from a binary modflow
 head save (or equivalent format - ucn, sub, etc).  Writes
 an instruction file and a _set_ csv</p>
@@ -1342,6 +1335,7 @@ process in separate directory for where python is running.</li>
 <li><strong>model</strong> (<em>flopy.mbase</em>) – a flopy model.  If passed, the observation names will have the datetime of the
 observation appended to them.  If None, the observation names will have the
 stress period appended to them. Default is None.</li>
+<li><strong>postprocess_inact</strong> (<em>float</em>) – Inactive flag in heads/ucn file e.g. mt.btn.cinit</li>
 </ul>
 </td>
 </tr>
@@ -1357,7 +1351,7 @@ dir where apply_hds_timeseries() is called during the forward run</p>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.apply_hds_timeseries">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_hds_timeseries</code><span class="sig-paren">(</span><em>config_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_hds_timeseries" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_hds_timeseries</code><span class="sig-paren">(</span><em>config_file=None</em>, <em>postprocess_inact=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_hds_timeseries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_hds_timeseries" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1572,7 +1566,7 @@ from within model_ws at runtime.</p>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.apply_sfr_seg_parameters">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_seg_parameters</code><span class="sig-paren">(</span><em>reach_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_seg_parameters</code><span class="sig-paren">(</span><em>seg_pars=True</em>, <em>reach_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>apply the SFR segement multiplier parameters.  Expected to be run in the same dir
 as the model exists</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1596,7 +1590,7 @@ expects &lt;nam_file&gt;+”_backup_.sfr” to exist</p>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.apply_sfr_parameters">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_parameters</code><span class="sig-paren">(</span><em>reach_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_parameters</code><span class="sig-paren">(</span><em>seg_pars=True</em>, <em>reach_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_parameters" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1659,9 +1653,9 @@ requires sfr_obs.config.  Writes &lt;sfr_out_file&gt;.processed, where
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.load_sfr_out">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">load_sfr_out</code><span class="sig-paren">(</span><em>sfr_out_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#load_sfr_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.load_sfr_out" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">load_sfr_out</code><span class="sig-paren">(</span><em>sfr_out_file</em>, <em>selection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#load_sfr_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.load_sfr_out" title="Permalink to this definition">¶</a></dt>
 <dd><p>load an ASCII SFR output file into a dictionary of kper: dataframes.  aggregates
-segments and only returns flow to aquifer and flow out.</p>
+flow to aquifer for segments and returns and flow out at downstream end of segment.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1671,6 +1665,63 @@ segments and only returns flow to aquifer and flow out.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>sfr_dict</strong> – dictionary of {kper:dataframe}</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.setup_sfr_reach_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sfr_reach_obs</code><span class="sig-paren">(</span><em>sfr_out_file</em>, <em>seg_reach=None</em>, <em>ins_file=None</em>, <em>model=None</em>, <em>include_path=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sfr_reach_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sfr_reach_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup observations using the sfr ASCII output file.  Setups
+sfr point observations using segment and reach numbers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>sft_out_file</strong> (<em>str</em>) – the existing SFR output file</li>
+<li><strong>seg_reach</strong> (<em>dict</em><em>, </em><em>list</em><em> or </em><em>pandas.DataFrame</em>) – a dict, or list of SFR [segment,reach] pairs identifying observation locations.
+If dict the key value in the dict is the base observation name.
+If None, all reaches are used as individual observations. Default is None - THIS MAY SET UP A LOT OF OBS!</li>
+<li><strong>model</strong> (<em>flopy.mbase</em>) – a flopy model.  If passed, the observation names will have the datetime of the
+observation appended to them.  If None, the observation names will have the
+stress period appended to them. Default is None.</li>
+<li><strong>include_path</strong> (<em>bool</em>) – flag to prepend sfr_out_file path to sfr_obs.config.  Useful for setting up
+process in separate directory for where python is running.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – dataframe of obsnme, obsval and obgnme if inschek run was successful.  Else None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pd.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function writes “sfr_reach_obs.config” which must be kept in the dir where
+“apply_sfr_reach_obs()” is being called during the forward run</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.gw_utils.apply_sfr_reach_obs">
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">apply_sfr_reach_obs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#apply_sfr_reach_obs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.apply_sfr_reach_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>apply the sfr reach observation process - pairs with setup_sfr_reach_obs().
+requires sfr_reach_obs.config.  Writes &lt;sfr_out_file&gt;.processed, where
+&lt;sfr_out_file&gt; is defined in “sfr_reach_obs.config”</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>df</strong> – a dataframe of sfr aquifer and outflow ad segment,reach locations</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pd.DataFrame</td>
 </tr>
 </tbody>
 </table>
@@ -1798,26 +1849,6 @@ and the name of the template file</td>
 <p>module with high-level functions to help
 perform complex tasks</p>
 <dl class="function">
-<dt id="pyemu.utils.helpers.remove_readonly">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">remove_readonly</code><span class="sig-paren">(</span><em>func</em>, <em>path</em>, <em>excinfo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#remove_readonly"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.remove_readonly" title="Permalink to this definition">¶</a></dt>
-<dd><p>remove readonly dirs, apparently only a windows issue
-add to all rmtree calls: shutil.rmtree(&lt;tree&gt;,onerror=remove_readonly), wk</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>func</strong> (<em>object</em>) – func</li>
-<li><strong>path</strong> (<em>str</em>) – path</li>
-<li><strong>excinfo</strong> (<em>object</em>) – info</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="pyemu.utils.helpers.run">
 <code class="descclassname">pyemu.utils.helpers.</code><code class="descname">run</code><span class="sig-paren">(</span><em>cmd_str</em>, <em>cwd='.'</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>an OS agnostic function to execute command</p>
@@ -1841,8 +1872,40 @@ add to all rmtree calls: shutil.rmtree(&lt;tree&gt;,onerror=remove_readonly), wk
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.run(&quot;pestpp</span> <span class="pre">pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.run(&quot;pestpp</span> <span class="pre">pest.pst&quot;)</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.run_fieldgen">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">run_fieldgen</code><span class="sig-paren">(</span><em>m</em>, <em>num_reals</em>, <em>struct_dict</em>, <em>cwd=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#run_fieldgen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.run_fieldgen" title="Permalink to this definition">¶</a></dt>
+<dd><p>run fieldgen and return a dataframe with the realizations</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>m</strong> (<em>flopy.mbase</em>) – a floy model instance</li>
+<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to generate</li>
+<li><strong>struct_dict</strong> (<em>dict</em>) – key-value pairs of pyemu.GeoStruct instances and lists of prefix strings.  Example: {gs1:[‘hk’,’ss’]}</li>
+<li><strong>cwd</strong> (<em>str</em>) – working director where to execute fieldgen.  If None, m.model_ws is used.  Default is None</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – a dataframe of realizations.  Columns are named to include structure, prefix and realization number.  Index
+includes i-j position</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">only Ordinary kriging is supported
+only a single zone is supported</p>
 </div>
 </dd></dl>
 
@@ -1879,11 +1942,11 @@ Default is 4.0, which implies 95% confidence parameter bounds.</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pe</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.geostatistical_draws(pst,struct_dict=sd,num_reals=100)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pe.to_csv(&quot;par_ensemble.csv&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pe</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.geostatistical_draws(pst,struct_dict=sd,num_reals=100)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pe.to_csv(&quot;par_ensemble.csv&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -1928,11 +1991,11 @@ file.</p>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.sparse_geostatistical_prior_builder(pst,struct_dict=sd)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov.to_coo(&quot;prior.jcb&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.sparse_geostatistical_prior_builder(pst,struct_dict=sd)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov.to_coo(&quot;prior.jcb&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -1974,11 +2037,11 @@ file.</p>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.geostatistical_prior_builder(pst,struct_dict=sd)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov.to_ascii(&quot;prior.cov&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;sd</span> <span class="pre">=</span> <span class="pre">{&quot;struct.dat&quot;:[&quot;hkpp.dat.tpl&quot;,&quot;vka.dat.tpl&quot;]}</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.geostatistical_prior_builder(pst,struct_dict=sd)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov.to_ascii(&quot;prior.cov&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -2030,11 +2093,11 @@ arrays.</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;a_dict</span> <span class="pre">=</span> <span class="pre">{&quot;hk&quot;:m.lpf.hk[0].array}</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;ba_dict</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.kl_setup(10,m.sr,&quot;struct.dat&quot;,a_dict)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modflow.load(&quot;mymodel.nam&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;a_dict</span> <span class="pre">=</span> <span class="pre">{&quot;hk&quot;:m.lpf.hk[0].array}</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;ba_dict</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.kl_setup(10,m.sr,&quot;struct.dat&quot;,a_dict)</span></code></p>
 </div>
 </dd></dl>
 
@@ -2069,8 +2132,8 @@ the following columns: name, new_val, org_val</li>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.kl_apply(&quot;kl.dat&quot;,&quot;basis.dat&quot;,{&quot;hk&quot;:&quot;hk_layer_1.dat&quot;,(100,100))</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.kl_apply(&quot;kl.dat&quot;,&quot;basis.dat&quot;,{&quot;hk&quot;:&quot;hk_layer_1.dat&quot;,(100,100))</span></code></p>
 </div>
 </dd></dl>
 
@@ -2098,9 +2161,9 @@ instance.  Default is True</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.zero_order_tikhonov(pst)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.zero_order_tikhonov(pst)</span></code></p>
 </div>
 </dd></dl>
 
@@ -2145,10 +2208,10 @@ equation will not be included in the control file</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.Cov.from_ascii(&quot;prior.cov&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.first_order_pearson_tikhonov(pst,cov,abs_drop_tol=0.25)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.Pst(&quot;pest.pst&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;cov</span> <span class="pre">=</span> <span class="pre">pyemu.Cov.from_ascii(&quot;prior.cov&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.first_order_pearson_tikhonov(pst,cov,abs_drop_tol=0.25)</span></code></p>
 </div>
 </dd></dl>
 
@@ -2239,10 +2302,10 @@ dirs will be removed unless cleanup is false</p>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
 <p>start 10 slaves using the directory “template” as the base case and
 also start a master instance in a directory “master”.</p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.start_slaves(&quot;template&quot;,&quot;pestpp&quot;,&quot;pest.pst&quot;,10,master_dir=&quot;master&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.start_slaves(&quot;template&quot;,&quot;pestpp&quot;,&quot;pest.pst&quot;,10,master_dir=&quot;master&quot;)</span></code></p>
 </div>
 </dd></dl>
 
@@ -2366,18 +2429,18 @@ control file is not written.  Default is None</li>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
 <p>this will construct a new Pst instance from template and instruction files
 found in the current directory, assuming that the naming convention follows
 that listed in parse_dir_for_io_files()</p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.pst_from_io_files(*pyemu.helpers.parse_dir_for_io_files('.'))</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pst</span> <span class="pre">=</span> <span class="pre">pyemu.helpers.pst_from_io_files(*pyemu.helpers.parse_dir_for_io_files('.'))</span></code></p>
 </div>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel">
 <em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>temporal_bc_props=[]</em>, <em>temporal_list_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>temporal_list_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>redirect_forward_output=True</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>spatial_bc_props=[]</em>, <em>spatial_list_props=[]</em>, <em>spatial_list_geostruct=None</em>, <em>hfb_pars=False</em>, <em>kl_props=None</em>, <em>kl_num_eig=100</em>, <em>kl_geostruct=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="docutils">
 <dt>a monster helper class to setup multiplier parameters for an</dt>
 <dd>existing MODFLOW model.  does all kinds of coolness like building a
@@ -2479,9 +2542,12 @@ is 10 times the max cell size.  Default is None.</li>
 <li><strong>remove_existing</strong> (<em>bool</em>) – a flag to remove an existing new_model_ws directory.  If False and
 new_model_ws exists, an exception is raised.  If True and new_model_ws
 exists, the directory is destroyed - user beware! Default is False.</li>
-<li><strong>k_zone_dict</strong> (<em>dict</em>) – a dictionary of zero-based layer index, zone array pairs.  Used to
+<li><strong>k_zone_dict</strong> (<em>dict</em>) – a dictionary of zero-based layer index, zone array pairs. e.g. {lay: np.2darray}  Used to
 override using ibound zones for zone-based parameterization.  If None,
-use ibound values greater than zero as zones.</li>
+use ibound values greater than zero as zones. Alternatively a dictionary of dictionaries
+can be passed to allow different zones to be defined for different parameters.
+e.g. {“upw.hk” {lay: np.2darray}, “extra.rc11” {lay: np.2darray}}
+or {“hk” {lay: np.2darray}, “rc11” {lay: np.2darray}}</li>
 <li><strong>use_pp_zones</strong> (<em>bool</em>) – a flag to use ibound zones (or k_zone_dict, see above) as pilot
 point zones.  If False, ibound values greater than zero are treated as
 a single zone for pilot points.  Default is False</li>
@@ -2666,33 +2732,6 @@ Util2D filename</p>
 <li><strong>name</strong> (<em>str</em>) – the base parameter name</li>
 <li><strong>tpl_file</strong> (<em>str</em>) – the template file to write</li>
 <li><strong>zn_array</strong> (<em>numpy.ndarray</em>) – an array used to skip inactive cells</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – a dataframe with parameter information</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="pyemu.utils.helpers.PstFromFlopyModel.write_zone_tpl">
-<em class="property">static </em><code class="descname">write_zone_tpl</code><span class="sig-paren">(</span><em>model</em>, <em>name</em>, <em>tpl_file</em>, <em>zn_array</em>, <em>zn_suffix</em>, <em>logger=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.write_zone_tpl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.write_zone_tpl" title="Permalink to this definition">¶</a></dt>
-<dd><p>write a template file a for zone-based multiplier parameters</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> (<em>flopy model object</em>) – model from which to obtain workspace information, nrow, and ncol</li>
-<li><strong>name</strong> (<em>str</em>) – the base parameter name</li>
-<li><strong>tpl_file</strong> (<em>str</em>) – the template file to write</li>
-<li><strong>zn_array</strong> (<em>numpy.ndarray</em>) – an array used to skip inactive cells</li>
-<li><strong>logger</strong> (<em>a logger object</em>) – optional - a logger object to document errors, etc.</li>
 </ul>
 </td>
 </tr>
@@ -3031,38 +3070,77 @@ the parameterization constructed by write_hfb_zone_multipliers_template()</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyemu.utils.helpers.plot_flopy_par_ensemble">
-<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">plot_flopy_par_ensemble</code><span class="sig-paren">(</span><em>pst</em>, <em>pe</em>, <em>num_reals=None</em>, <em>model=None</em>, <em>fig_axes_generator=None</em>, <em>pcolormesh_transform=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#plot_flopy_par_ensemble"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.plot_flopy_par_ensemble" title="Permalink to this definition">¶</a></dt>
-<dd><p>function to plot ensemble of parameter values for a flopy/modflow model.  Assumes
-the FlopytoPst helper was used to setup the model and the forward run.</p>
+<dt id="pyemu.utils.helpers.write_const_tpl">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">write_const_tpl</code><span class="sig-paren">(</span><em>name</em>, <em>tpl_file</em>, <em>suffix</em>, <em>zn_array=None</em>, <em>shape=None</em>, <em>spatial_reference=None</em>, <em>longnames=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#write_const_tpl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.write_const_tpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a constant (uniform) template file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pst</strong> (<em>Pst instance</em>) – </li>
-<li><strong>pe</strong> (<em>ParameterEnsemble instance</em>) – </li>
-<li><strong>num_reals</strong> (<em>int</em>) – number of realizations to process.  If None, all realizations are processed.
-default is None</li>
-<li><strong>model</strong> (<em>flopy.mbase</em>) – model instance used for masking inactive areas and also geo-locating plots.  If None,
-generic plots are made.  Default is None.</li>
-<li><strong>fig_axes_generator</strong> (<em>function</em>) – a function that returns a pyplot.figure and list of pyplot.axes instances for plots.
-If None, a generic 8.5inX11in figure with 3 rows and 2 cols is used.</li>
-<li><strong>pcolormesh_transform</strong> (<em>cartopy.csr.CRS</em>) – transform to map pcolormesh plot into correct location.  Requires model arg</li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) – the base parameter name</li>
+<li><strong>tpl_file</strong> (<em>str</em>) – the template file to write - include path</li>
+<li><strong>zn_array</strong> (<em>numpy.ndarray</em>) – an array used to skip inactive cells</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – a dataframe with parameter information</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Needs “arr_pars.csv” to run</p>
-</div>
-<div class="admonition-todo admonition" id="index-1">
-<p class="first admonition-title">Todo</p>
-<p class="last">add better support for log vs nonlog- currently just logging everything
-add support for cartopy basemap and stamen tiles</p>
-</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.write_grid_tpl">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">write_grid_tpl</code><span class="sig-paren">(</span><em>name</em>, <em>tpl_file</em>, <em>suffix</em>, <em>zn_array=None</em>, <em>shape=None</em>, <em>spatial_reference=None</em>, <em>longnames=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#write_grid_tpl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.write_grid_tpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a grid-based template file
+:param name: the base parameter name
+:type name: str
+:param tpl_file: the template file to write - include path
+:type tpl_file: str
+:param zn_array: an array used to skip inactive cells
+:type zn_array: numpy.ndarray</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>df</strong> – a dataframe with parameter information</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.utils.helpers.write_zone_tpl">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">write_zone_tpl</code><span class="sig-paren">(</span><em>name</em>, <em>tpl_file</em>, <em>suffix</em>, <em>zn_array=None</em>, <em>shape=None</em>, <em>spatial_reference=None</em>, <em>longnames=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#write_zone_tpl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.write_zone_tpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>write a zone template file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<em>flopy model object</em>) – model from which to obtain workspace information, nrow, and ncol</li>
+<li><strong>name</strong> (<em>str</em>) – the base parameter name</li>
+<li><strong>tpl_file</strong> (<em>str</em>) – the template file to write</li>
+<li><strong>zn_array</strong> (<em>numpy.ndarray</em>) – an array used to skip inactive cells</li>
+<li><strong>logger</strong> (<em>a logger object</em>) – optional - a logger object to document errors, etc.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>df</strong> – a dataframe with parameter information</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pandas.DataFrame</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -3104,10 +3182,10 @@ are used and a single prior and posterior is plotted on each</li>
 </div>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;pyemu.helpers.plot_summary_distributions(&quot;pest.par.usum.csv&quot;)</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">pyemu</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;pyemu.helpers.plot_summary_distributions(&quot;pest.par.usum.csv&quot;)</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;plt.show()</span></code></p>
 </div>
 </dd></dl>
 
@@ -3198,6 +3276,29 @@ file handle before df.to_csv() and you pass mode=’a’ to to_csv()</p>
 </div>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyemu.utils.helpers.setup_fake_forward_run">
+<code class="descclassname">pyemu.utils.helpers.</code><code class="descname">setup_fake_forward_run</code><span class="sig-paren">(</span><em>pst</em>, <em>new_pst_name</em>, <em>org_cwd='.'</em>, <em>bak_suffix='._bak'</em>, <em>new_cwd='.'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#setup_fake_forward_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.setup_fake_forward_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup a fake forward run for a pst.  The fake
+forward run simply copies existing backup versions of
+model output files to the outfiles pest(pp) is looking
+for.  This is really a development option for debugging</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pst</strong> (<em>pyemu.Pst</em>) – </li>
+<li><strong>new_pst_name</strong> (<em>str</em>) – </li>
+<li><strong>org_cwd</strong> (<em>str</em>) – existing working dir</li>
+<li><strong>new_cwd</strong> (<em>str</em>) – new working dir</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyemu.utils.optimization">
 <span id="pyemu-utils-optimization-module"></span><h2>pyemu.utils.optimization module<a class="headerlink" href="#module-pyemu.utils.optimization" title="Permalink to this headline">¶</a></h2>
@@ -3213,8 +3314,8 @@ file handle before df.to_csv() and you pass mode=’a’ to to_csv()</p>
 <dt id="pyemu.utils.pp_utils.setup_pilotpoints_grid">
 <code class="descclassname">pyemu.utils.pp_utils.</code><code class="descname">setup_pilotpoints_grid</code><span class="sig-paren">(</span><em>ml=None</em>, <em>sr=None</em>, <em>ibound=None</em>, <em>prefix_dict=None</em>, <em>every_n_cell=4</em>, <em>use_ibound_zones=False</em>, <em>pp_dir='.'</em>, <em>tpl_dir='.'</em>, <em>shapename='pp.shp'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/pp_utils.html#setup_pilotpoints_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.pp_utils.setup_pilotpoints_grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup grid-based pilot points.  Uses the ibound to determine
-where to set pilot points. pilot points are given generic <code class="docutils literal"><span class="pre">pp_</span></code>
-names unless <code class="docutils literal"><span class="pre">prefix_dict</span></code> is passed.  Write template files and a
+where to set pilot points. pilot points are given generic <code class="docutils literal notranslate"><span class="pre">pp_</span></code>
+names unless <code class="docutils literal notranslate"><span class="pre">prefix_dict</span></code> is passed.  Write template files and a
 shapefile as well…hopefully this is useful to someone…</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3228,8 +3329,8 @@ ml must not be None.  Default is None</li>
 If None and ml is None, then pilot points are set in all rows and columns according to
 every_n_cell.  Default is None.</li>
 <li><strong>prefix_dict</strong> (<em>dict</em>) – a dictionary of layer index, pilot point parameter prefixes.
-Example : <code class="docutils literal"><span class="pre">{0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]}</span></code> would setup pilot points with
-the prefix <code class="docutils literal"><span class="pre">&quot;hk&quot;</span></code> for model layers 1 and <code class="docutils literal"><span class="pre">&quot;vka&quot;</span></code> for model layer 2 (zero based).
+Example : <code class="docutils literal notranslate"><span class="pre">{0:[&quot;hk_&quot;],1:[&quot;vka_&quot;]}</span></code> would setup pilot points with
+the prefix <code class="docutils literal notranslate"><span class="pre">&quot;hk&quot;</span></code> for model layers 1 and <code class="docutils literal notranslate"><span class="pre">&quot;vka&quot;</span></code> for model layer 2 (zero based).
 If None, a generic set of pilot points with the “pp” prefix are setup
 for a generic nrowXncol grid. Default is None.</li>
 <li><strong>use_ibound_zones</strong> (<em>bool</em>) – a flag to use the greater-than-zero values in the ibound as pilot point zones.  If False,ibound
@@ -3251,11 +3352,11 @@ written to shapename</p>
 </table>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;from</span> <span class="pre">pyemu.utils</span> <span class="pre">import</span> <span class="pre">setup_pilotpoints_grid</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modfow.load(&quot;mymodel.nam&quot;)</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;&gt;&gt;setup_pilotpoints_grid(m,prefix_dict={0:['hk_'],1:['vka_']},</span></code></p>
-<p class="last"><code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">every_n_cell=3,shapename='layer1_pp.shp')</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;import</span> <span class="pre">flopy</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;from</span> <span class="pre">pyemu.utils</span> <span class="pre">import</span> <span class="pre">setup_pilotpoints_grid</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;m</span> <span class="pre">=</span> <span class="pre">flopy.modflow.Modfow.load(&quot;mymodel.nam&quot;)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;setup_pilotpoints_grid(m,prefix_dict={0:['hk_'],1:['vka_']},</span></code></p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">every_n_cell=3,shapename='layer1_pp.shp')</span></code></p>
 </div>
 </dd></dl>
 
@@ -3350,7 +3451,7 @@ is saved as &lt;pp_df&gt;.shp</li>
 <li><strong>tpl_file</strong> (<em>str</em>) – template file name to write.  If None, append “.tpl” to
 the pp_file arg. Default is None</li>
 <li><strong>name_prefix</strong> (<em>str</em>) – name to prepend to parameter names for each pilot point.  For example,
-if <code class="docutils literal"><span class="pre">name_prefix</span> <span class="pre">=</span> <span class="pre">&quot;hk_&quot;</span></code>, then each pilot point parameter will be named
+if <code class="docutils literal notranslate"><span class="pre">name_prefix</span> <span class="pre">=</span> <span class="pre">&quot;hk_&quot;</span></code>, then each pilot point parameter will be named
 “hk_0001”,”hk_0002”, etc.  If None, parameter names from pp_df.name
 are used.  Default is None.</li>
 </ul>
@@ -3385,23 +3486,27 @@ the PEST(++) model independent framework</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyemu.utils package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils.geostats">pyemu.utils.geostats module</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils.gw_utils">pyemu.utils.gw_utils module</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils.helpers">pyemu.utils.helpers module</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils.optimization">pyemu.utils.optimization module</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils.pp_utils">pyemu.utils.pp_utils module</a></li>
-<li><a class="reference internal" href="#module-pyemu.utils">Module contents</a></li>
+<h1 class="logo"><a href="../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
-</li>
-</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -3409,21 +3514,16 @@ the PEST(++) model independent framework</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/source/pyemu.utils.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -3434,8 +3534,8 @@ the PEST(++) model independent framework</p>
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/source/pyemu.utils.rst.txt"

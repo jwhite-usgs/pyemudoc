@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.mat package &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="pyemu-mat-package">
@@ -119,7 +112,7 @@ the read with Matrix.from_binary().</p>
 <dl class="class">
 <dt id="pyemu.mat.mat_handler.Matrix">
 <em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">Matrix</code><span class="sig-paren">(</span><em>x=None</em>, <em>row_names=[]</em>, <em>col_names=[]</em>, <em>isdiagonal=False</em>, <em>autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>a class for easy linear algebra</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -173,19 +166,19 @@ private attributes</p>
 <dl class="attribute">
 <dt id="pyemu.mat.mat_handler.Matrix.integer">
 <code class="descname">integer</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.integer" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">int32</span></code></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.int32</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyemu.mat.mat_handler.Matrix.double">
 <code class="descname">double</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.double" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">float64</span></code></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.float64</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyemu.mat.mat_handler.Matrix.char">
 <code class="descname">char</code><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.char" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">uint8</span></code></p>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.uint8</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -215,12 +208,12 @@ private attributes</p>
 
 <dl class="attribute">
 <dt id="pyemu.mat.mat_handler.Matrix.new_par_length">
-<code class="descname">new_par_length</code><em class="property"> = 100</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.new_par_length" title="Permalink to this definition">¶</a></dt>
+<code class="descname">new_par_length</code><em class="property"> = 200</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.new_par_length" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyemu.mat.mat_handler.Matrix.new_obs_length">
-<code class="descname">new_obs_length</code><em class="property"> = 100</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.new_obs_length" title="Permalink to this definition">¶</a></dt>
+<code class="descname">new_obs_length</code><em class="property"> = 200</em><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.new_obs_length" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -458,8 +451,8 @@ value ratio greater than or equal to eigthresh</p>
 
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.pseudo_inv_components">
-<code class="descname">pseudo_inv_components</code><span class="sig-paren">(</span><em>maxsing=None</em>, <em>eigthresh=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.pseudo_inv_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.pseudo_inv_components" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the truncated SVD components</p>
+<code class="descname">pseudo_inv_components</code><span class="sig-paren">(</span><em>maxsing=None</em>, <em>eigthresh=1e-05</em>, <em>truncate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.pseudo_inv_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.pseudo_inv_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the (optionally) truncated SVD components</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -469,13 +462,15 @@ value ratio greater than or equal to eigthresh</p>
 maxsing is calculated using Matrix.get_maxsing() and eigthresh</li>
 <li><strong>eigthresh</strong> (<em>float</em>) – the ratio of largest to smallest singular components to use
 for truncation.  Ignored if maxsing is not None</li>
+<li><strong>truncate</strong> (<em>bool</em>) – flag to truncate components. If False, U, s, and V will be zeroed out instead of truncated.
+Default is True</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li><strong>u</strong> (<em>Matrix</em>) – truncated left singular vectors</li>
-<li><strong>s</strong> (<em>Matrix</em>) – truncated singular value matrix</li>
-<li><strong>v</strong> (<em>Matrix</em>) – truncated right singular vectors</li>
+<li><strong>u</strong> (<em>Matrix</em>) – (optionally) truncated left singular vectors</li>
+<li><strong>s</strong> (<em>Matrix</em>) – (optionally) truncated singular value matrix</li>
+<li><strong>v</strong> (<em>Matrix</em>) – (optionally) truncated right singular vectors</li>
 </ul>
 </p>
 </td>
@@ -780,7 +775,7 @@ the name of the column in the new Matrix</td>
 <dl class="method">
 <dt id="pyemu.mat.mat_handler.Matrix.to_coo">
 <code class="descname">to_coo</code><span class="sig-paren">(</span><em>filename</em>, <em>droptol=None</em>, <em>chunk=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Matrix.to_coo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Matrix.to_coo" title="Permalink to this definition">¶</a></dt>
-<dd><p>write a PEST-compatible binary file.  The data format is
+<dd><p>write a new format binary file.  The data format is
 [int,int,float] for i,j,value.  It is autodetected during
 the read with Matrix.from_binary().</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1021,7 +1016,7 @@ Default is False</li>
 <dl class="class">
 <dt id="pyemu.mat.mat_handler.Jco">
 <em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">Jco</code><span class="sig-paren">(</span><em>x=None</em>, <em>row_names=[]</em>, <em>col_names=[]</em>, <em>isdiagonal=False</em>, <em>autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Jco"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Jco" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><code class="xref py py-class docutils literal"><span class="pre">pyemu.mat.mat_handler.Matrix</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyemu.mat.mat_handler.Matrix</span></code></a></p>
 <p>a thin wrapper class to get more intuitive attribute names.  Functions
 exactly like Matrix</p>
 <dl class="attribute">
@@ -1141,7 +1136,7 @@ Default is False</li>
 <dl class="class">
 <dt id="pyemu.mat.mat_handler.Cov">
 <em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">Cov</code><span class="sig-paren">(</span><em>x=None</em>, <em>names=[]</em>, <em>row_names=[]</em>, <em>col_names=[]</em>, <em>isdiagonal=False</em>, <em>autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.Cov" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><code class="xref py py-class docutils literal"><span class="pre">pyemu.mat.mat_handler.Matrix</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#pyemu.mat.mat_handler.Matrix" title="pyemu.mat.mat_handler.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyemu.mat.mat_handler.Matrix</span></code></a></p>
 <p>a subclass of Matrix for handling diagonal or dense Covariance matrices
 todo:block diagonal</p>
 <dl class="attribute">
@@ -1453,7 +1448,7 @@ instance is not a Cov</td>
 <dl class="class">
 <dt id="pyemu.mat.mat_handler.SparseMatrix">
 <em class="property">class </em><code class="descclassname">pyemu.mat.mat_handler.</code><code class="descname">SparseMatrix</code><span class="sig-paren">(</span><em>x</em>, <em>row_names</em>, <em>col_names</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#SparseMatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.mat.mat_handler.SparseMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Note: less rigid about references since this class is for big matrices and
 don’t want to be making copies</p>
 <dl class="attribute">
@@ -1516,19 +1511,27 @@ operators to autoalign the elements based on row and column names.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyemu.mat package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-pyemu.mat.mat_handler">pyemu.mat.mat_handler module</a></li>
-<li><a class="reference internal" href="#module-pyemu.mat">Module contents</a></li>
+<h1 class="logo"><a href="../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 </ul>
-</li>
-</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -1536,21 +1539,16 @@ operators to autoalign the elements based on row and column names.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/source/pyemu.mat.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1561,8 +1559,8 @@ operators to autoalign the elements based on row and column names.</p>
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="../_sources/source/pyemu.mat.rst.txt"

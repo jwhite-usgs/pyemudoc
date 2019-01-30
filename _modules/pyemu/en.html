@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>pyemu.en &#8212; pyEMU 0.3 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -30,13 +22,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for pyemu.en</h1><div class="highlight"><pre>
@@ -54,6 +47,7 @@
 <span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">get_common_elements</span><span class="p">,</span><span class="n">Matrix</span><span class="p">,</span><span class="n">Cov</span><span class="p">,</span><span class="n">SparseMatrix</span>
 <span class="kn">from</span> <span class="nn">pyemu.pst.pst_utils</span> <span class="k">import</span> <span class="n">write_parfile</span><span class="p">,</span><span class="n">read_parfile</span>
 <span class="kn">from</span> <span class="nn">pyemu.plot.plot_utils</span> <span class="k">import</span> <span class="n">ensemble_helper</span>
+<span class="kn">from</span> <span class="nn">.utils.os_utils</span> <span class="k">import</span> <span class="n">run_sweep</span>
 
 <span class="c1">#warnings.filterwarnings(&quot;ignore&quot;,message=&quot;Pandas doesn&#39;t allow columns to be &quot;+\</span>
 <span class="c1">#                                         &quot;created via a new attribute name - see&quot;+\</span>
@@ -331,7 +325,25 @@
             <span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">delta</span>
             <span class="k">return</span> <span class="n">delta</span><span class="o">.</span><span class="n">hadamard_product</span><span class="p">(</span><span class="n">localizer</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">delta</span></div></div>
+        <span class="k">return</span> <span class="n">delta</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">delta</span></div>
+
+
+<div class="viewcode-block" id="Ensemble.get_deviations"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.get_deviations">[docs]</a>    <span class="k">def</span> <span class="nf">get_deviations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the deviations of the ensemble value from the mean vector</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            en : pyemu.Ensemble</span>
+<span class="sd">                Ensemble of deviations from the mean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">mean_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">-=</span> <span class="n">mean_vec</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div></div>
+
 
 
 
@@ -494,7 +506,7 @@
 <span class="sd">        The ensemble is transposed in the binary file</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">to_coo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ObservationEnsemble.from_binary"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ObservationEnsemble.from_binary">[docs]</a>    <span class="nd">@classmethod</span>
@@ -514,7 +526,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">from_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
@@ -1237,7 +1249,7 @@
 
 <div class="viewcode-block" id="ParameterEnsemble.from_mixed_draws"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.from_mixed_draws">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_mixed_draws</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">pst</span><span class="p">,</span><span class="n">how_dict</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">cov</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">sigma_range</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
-                         <span class="n">enforce_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                         <span class="n">enforce_bounds</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">partial</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;instaniate a parameter ensemble from stochastic draws using a mixture of</span>
 <span class="sd">        distributions.  Available distributions include (log) &quot;uniform&quot;, (log) &quot;triangular&quot;,</span>
 <span class="sd">        and (log) &quot;gaussian&quot;. log transformation is respected.</span>
@@ -1263,6 +1275,8 @@
 <span class="sd">        enforce_bounds : boolean</span>
 <span class="sd">            flag to enforce parameter bounds in resulting ParameterEnsemble.</span>
 <span class="sd">            Only matters if &quot;gaussian&quot; is in values of how_dict.  Default is True.</span>
+<span class="sd">        partial : bool</span>
+<span class="sd">            flag to allow a partial ensemble (not all pars included). Default is False</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1270,12 +1284,12 @@
         <span class="n">accept</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="s2">&quot;triangular&quot;</span><span class="p">,</span> <span class="s2">&quot;gaussian&quot;</span><span class="p">}</span>
         <span class="k">assert</span> <span class="n">default</span> <span class="ow">in</span> <span class="n">accept</span><span class="p">,</span><span class="s2">&quot;ParameterEnsemble.from_mixed_draw() error: &#39;default&#39; must be in </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accept</span><span class="p">)</span>
         <span class="n">par_org</span> <span class="o">=</span> <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">pset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">par_names</span><span class="p">)</span>
+        <span class="n">pset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pst</span><span class="o">.</span><span class="n">adj_par_names</span><span class="p">)</span>
         <span class="n">hset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">how_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="n">missing</span> <span class="o">=</span> <span class="n">pset</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">hset</span><span class="p">)</span>
         <span class="c1">#assert len(missing) == 0,&quot;ParameterEnsemble.from_mixed_draws() error: the following par names are not in &quot; +\</span>
         <span class="c1">#    &quot; in how_dict: {0}&quot;.format(&#39;,&#39;.join(missing))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">partial</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> par names missing in how_dict, these parameters will be sampled using </span><span class="si">{1}</span><span class="s2"> (the &#39;default&#39;)&quot;</span><span class="o">.</span>\
                   <span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">missing</span><span class="p">),</span><span class="n">default</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">missing</span><span class="p">:</span>
@@ -1303,6 +1317,8 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;gaussian&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">gset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;gaussian&quot;</span><span class="p">])</span>
             <span class="n">par_gaussian</span> <span class="o">=</span> <span class="n">par_org</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">gset</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="c1">#par_gaussian.sort_values(by=&quot;parnme&quot;, inplace=True)</span>
+            <span class="n">par_gaussian</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="n">par_gaussian</span>
 
             <span class="k">if</span> <span class="n">cov</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1321,26 +1337,34 @@
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;uniform&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">par_uniform</span> <span class="o">=</span> <span class="n">par_org</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;uniform&quot;</span><span class="p">],:]</span>
+            <span class="c1">#par_uniform.sort_values(by=&quot;parnme&quot;,inplace=True)</span>
+            <span class="n">par_uniform</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="n">par_uniform</span>
             <span class="n">pe_uniform</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_uniform_draw</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
             <span class="n">pes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pe_uniform</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;triangular&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">par_tri</span> <span class="o">=</span> <span class="n">par_org</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">how_groups</span><span class="p">[</span><span class="s2">&quot;triangular&quot;</span><span class="p">],:]</span>
+            <span class="c1">#par_tri.sort_values(by=&quot;parnme&quot;, inplace=True)</span>
+            <span class="n">par_tri</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="n">par_tri</span>
             <span class="n">pe_tri</span> <span class="o">=</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_triangular_draw</span><span class="p">(</span><span class="n">pst</span><span class="p">,</span><span class="n">num_reals</span><span class="o">=</span><span class="n">num_reals</span><span class="p">)</span>
             <span class="n">pes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pe_tri</span><span class="p">)</span>
 
 
-
-
-
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_reals</span><span class="p">),</span><span class="n">columns</span><span class="o">=</span><span class="n">par_org</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+        <span class="n">fixed_tied</span> <span class="o">=</span> <span class="n">par_org</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par_org</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;fixed&quot;</span><span class="p">,</span><span class="s2">&quot;tied&quot;</span><span class="p">]),</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">fixed_tied</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
         <span class="k">for</span> <span class="n">pe</span> <span class="ow">in</span> <span class="n">pes</span><span class="p">:</span>
             <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pe</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">pe</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">pe</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble.from_mixed_draws() error: NaNs in final parameter ensemble&quot;</span><span class="p">)</span>
         <span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="n">par_org</span>
         <span class="k">return</span> <span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span></div>
@@ -1430,7 +1454,8 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble already transformed&quot;</span><span class="p">)</span>
+            <span class="c1">#raise Exception(&quot;ParameterEnsemble already transformed&quot;)</span>
+            <span class="k">return</span>
 
         <span class="n">istransformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;log&quot;</span>
         <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
@@ -1804,7 +1829,7 @@
             <span class="n">retrans</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;NaN in par ensemble&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">as_pyemu_matrix</span><span class="p">()</span><span class="o">.</span><span class="n">to_coo</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">retrans</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -1844,15 +1869,38 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;base&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&#39;base&#39; already in index&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span></div></div>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;base&quot;</span><span class="p">,:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;parval1&quot;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ParameterEnsemble.run"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">slave_dir</span><span class="p">,</span> <span class="n">num_slaves</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">run_sweep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">slave_dir</span><span class="o">=</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="n">num_slaves</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div></div>
+
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pyEMU</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../source/Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/oop.html">Notes on Object-Oriented Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/glossary.html">Glossary</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
@@ -1863,12 +1911,14 @@
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1879,8 +1929,8 @@
       &copy;2017, Jeremy White, Mike Fienen, John Doherty.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 
