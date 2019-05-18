@@ -72,7 +72,7 @@
 <span class="sd">        a control file object</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">flex</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">resfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  parameter data loaded from pst control file&quot;&quot;&quot;</span>
@@ -80,6 +80,7 @@
         <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  observation data loaded from pst control file&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="sd">&quot;&quot;&quot;pandas.DataFrame:  prior_information data loaded from pst control file&quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="n">resfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__res</span> <span class="o">=</span> <span class="kc">None</span>
@@ -97,13 +98,12 @@
         <span class="sd">&quot;&quot;&quot;pyemu.pst.pst_controldata.SvdData: singular value decomposition (SVD) object loaded from pst control file&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reg_data</span> <span class="o">=</span> <span class="n">RegData</span><span class="p">()</span>
         <span class="sd">&quot;&quot;&quot;pyemu.pst.pst_controldata.RegData: regularization data object loaded from pst control file&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">load</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span>\
                 <span class="s2">&quot;pst file not found:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">flex</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">flex_load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;model_command&quot;</span><span class="p">:</span>
@@ -245,14 +245,17 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.res&quot;</span><span class="p">,</span> <span class="s2">&quot;.rei&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.res&quot;</span><span class="p">)</span>
-                            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.res&quot;</span><span class="p">,</span><span class="s2">&quot;rei&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.rei&quot;</span><span class="p">,</span> <span class="s2">&quot;.base.rei&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.res&quot;</span><span class="p">)</span>
                                 <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
-                                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.res: &quot;</span> <span class="o">+</span>
-                                                    <span class="s2">&quot;could not residual file case.res&quot;</span> <span class="o">+</span>
-                                                    <span class="s2">&quot; or case.rei&quot;</span><span class="p">)</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.res&quot;</span><span class="p">,</span><span class="s2">&quot;rei&quot;</span><span class="p">)</span>
+                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">):</span>
+                                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.res: &quot;</span> <span class="o">+</span>
+                                                        <span class="s2">&quot;could not residual file case.res&quot;</span> <span class="o">+</span>
+                                                        <span class="s2">&quot; or case.rei&quot;</span> <span class="o">+</span> <span class="s2">&quot; or case.base.rei&quot;</span> <span class="o">+</span>
+                                                        <span class="s2">&quot; or case.obs.csv&quot;</span><span class="p">)</span>
 
 
             <span class="n">res</span> <span class="o">=</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">read_resfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resfile</span><span class="p">)</span>
@@ -602,33 +605,52 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">seek_point</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-                         <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                         <span class="n">converters</span><span class="o">=</span><span class="n">converters</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                         <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
-
-        <span class="c1"># in case there was some extra junk at the end of the lines</span>
-        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
-            <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">names</span>
-        <span class="n">isnull</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">defaults</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;external&quot;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;Pst._read_df() error: external file &#39;</span><span class="si">{0}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-                <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;Pst._read_df() error: name&quot;</span> <span class="o">+</span>\
+                <span class="s2">&quot;&#39;</span><span class="si">{0}</span><span class="s2">&#39; not in external file &#39;</span><span class="si">{1}</span><span class="s2">&#39; columns&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">converters</span><span class="p">:</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">converters</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">defaults</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">nrows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst._read_df() error: non-external sections require nrows&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">seek_point</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
+                             <span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                             <span class="n">converters</span><span class="o">=</span><span class="n">converters</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                             <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
 
-        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;NANs found&quot;</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">seek_point</span><span class="p">)</span>
-        <span class="n">extras</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-            <span class="n">extra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
-            <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
-                <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39; # &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-            <span class="n">extras</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+            <span class="c1"># in case there was some extra junk at the end of the lines</span>
+            <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)]</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">names</span>
+            <span class="n">isnull</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">defaults</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
 
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extras</span>
+            <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;NANs found&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">seek_point</span><span class="p">)</span>
+            <span class="n">extras</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                <span class="n">extra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+                <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                    <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39; # &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+                <span class="n">extras</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extras</span>
 
         <span class="k">return</span> <span class="n">df</span>
 
@@ -666,20 +688,41 @@
 
 
     <span class="k">def</span> <span class="nf">_cast_df_from_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">lines</span><span class="p">,</span> <span class="n">fieldnames</span><span class="p">,</span> <span class="n">converters</span><span class="p">,</span> <span class="n">defaults</span><span class="p">):</span>
-        <span class="n">extra</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">raw</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;external&quot;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1">#check for other items</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">[</span><span class="mi">2</span><span class="p">:]:</span>
+                    <span class="k">if</span> <span class="s2">&quot;header&quot;</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                        <span class="n">rraw</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+                        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">rraw</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+                        <span class="k">if</span> <span class="n">rraw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;non-header external files not support&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">PyemuWarning</span><span class="p">(</span><span class="s2">&quot;unsupported external file option found: &#39;</span><span class="si">{0}</span><span class="s2">&#39;, ignoring&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
 
-            <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">er</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
-                <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">er</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="n">er</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
-            <span class="n">raw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="n">found_fieldnames</span> <span class="o">=</span> <span class="n">fieldnames</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">found_fieldnames</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;Pst._cast_df_from_lines() error: external file &#39;</span><span class="si">{0}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">extra</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+
+                <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">er</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">er</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">er</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">r</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
+                <span class="n">raw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="n">found_fieldnames</span> <span class="o">=</span> <span class="n">fieldnames</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">found_fieldnames</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">fieldnames</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
@@ -688,161 +731,212 @@
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">converters</span><span class="p">:</span>
 
                 <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">converters</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra</span>
+
         <span class="k">return</span> <span class="n">df</span>
 
 
     <span class="k">def</span> <span class="nf">_cast_prior_df_from_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lines</span><span class="p">):</span>
-        <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
-        <span class="n">extra</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">er</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
-                <span class="n">raw</span> <span class="o">=</span> <span class="n">er</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">er</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
-                <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-            <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-            <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]))</span>
-            <span class="n">eq</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-            <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;external&quot;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;Pst._cast_prior_df_from_lines() error: external file&quot;</span> <span class="o">+</span>\
+                                            <span class="s2">&quot;&#39;</span><span class="si">{0}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">pst_utils</span><span class="o">.</span><span class="n">pst_config</span><span class="p">[</span><span class="s2">&quot;prior_fieldnames&quot;</span><span class="p">]:</span>
+                <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;Pst._cast_prior_df_from_lines() error: external file&quot;</span> <span class="o">+</span>\
+                                            <span class="s2">&quot;&#39;</span><span class="si">{0}</span><span class="s2">&#39; missing required field &#39;</span><span class="si">{1}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">field</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">pilbl</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span>
-                                               <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
-                                               <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span>
-                                               <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">pilbl</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra</span>
 
-<div class="viewcode-block" id="Pst.flex_load"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.flex_load">[docs]</a>    <span class="k">def</span> <span class="nf">flex_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pilbl</span><span class="p">,</span> <span class="n">obgnme</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">equation</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="n">extra</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="n">er</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+                    <span class="n">raw</span> <span class="o">=</span> <span class="n">er</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">er</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">extra</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
+                    <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">pilbl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                <span class="n">obgnme</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                <span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]))</span>
+                <span class="n">eq</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">equation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eq</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pilbl&quot;</span><span class="p">:</span> <span class="n">pilbl</span><span class="p">,</span>
+                                                   <span class="s2">&quot;equation&quot;</span><span class="p">:</span> <span class="n">equation</span><span class="p">,</span>
+                                                   <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="n">weight</span><span class="p">,</span>
+                                                   <span class="s2">&quot;obgnme&quot;</span><span class="p">:</span> <span class="n">obgnme</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">pilbl</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra</span>
+
+
+    <span class="k">def</span> <span class="nf">_load_version2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load a version 2 control file</span>
+
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lcount</span>  <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">null_prior</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;couldn&#39;t find control file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-
-        <span class="c1"># this should be the pcf line</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;initial&quot;</span>
-        <span class="n">line</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_line_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
-
-        <span class="k">assert</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;pcf&quot;</span><span class="p">)</span>
-
-        <span class="n">line</span><span class="p">,</span> <span class="n">pcf_comments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_line_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
-
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* control data&quot;</span>
-        <span class="k">assert</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">line</span><span class="p">,</span> \
-            <span class="s2">&quot;Pst.load() error: looking for </span><span class="si">{0}</span><span class="s2">, found: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
-
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">parse_values_from_lines</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span>
-
-        <span class="c1"># read anything until the SVD section</span>
+        <span class="n">last_section</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">req_sections</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;* parameter data&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;* observation data&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="s2">&quot;* model command line&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span><span class="s2">&quot;* model input&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;* model output&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">}</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">next_section</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;* singular value&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">next_section</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;* parameter groups&quot;</span><span class="p">):</span>
+
+            <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="n">comments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+
+            <span class="k">if</span> <span class="s2">&quot;* control data&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">iskeyword</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">if</span> <span class="s2">&quot;keyword&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">iskeyword</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">parse_values_from_lines</span><span class="p">(</span><span class="n">section_lines</span><span class="p">,</span> <span class="n">iskeyword</span><span class="o">=</span><span class="n">iskeyword</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ppo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span>
+                    <span class="n">svd_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;svdmode&quot;</span><span class="p">,</span><span class="s2">&quot;eigthresh&quot;</span><span class="p">,</span><span class="s2">&quot;maxsing&quot;</span><span class="p">,</span><span class="s2">&quot;eigwrite&quot;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">svd_opt</span> <span class="ow">in</span> <span class="n">svd_opts</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">svd_opt</span> <span class="ow">in</span> <span class="n">ppo</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">svd_data</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">svd_opt</span><span class="p">,</span> <span class="n">ppo</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">svd_opt</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">reg_opt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_data</span><span class="o">.</span><span class="n">should_write</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">reg_opt</span> <span class="ow">in</span> <span class="n">ppo</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">reg_data</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">reg_opt</span><span class="p">,</span> <span class="n">ppo</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">reg_opt</span><span class="p">))</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* parameter groups&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pargp_fieldnames</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">pargp_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pargp_defaults</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">pargpnme</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* parameter data&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_fieldnames</span><span class="p">,</span>
+                                                               <span class="bp">self</span><span class="o">.</span><span class="n">par_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_defaults</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* observation data&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_fieldnames</span><span class="p">,</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">obs_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_defaults</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* model command line&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">section_lines</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model_command</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* model input&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">section_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;external&quot;</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">section_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span><span class="s2">&quot;Pst.flex_load() external template data file &#39;</span><span class="si">{0}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="k">assert</span> <span class="s2">&quot;pest_file&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="s2">&quot;Pst.flex_load() external template data file must have &#39;pest_file&#39; in columns&quot;</span>
+                    <span class="k">assert</span> <span class="s2">&quot;model_file&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;Pst.flex_load() external template data file must have &#39;model_file&#39; in columns&quot;</span>
+                    <span class="k">for</span> <span class="n">pfile</span><span class="p">,</span><span class="n">mfile</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">pest_file</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">model_file</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mfile</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">iline</span><span class="p">,</span><span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">section_lines</span><span class="p">):</span>
+                        <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* model output&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">section_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;external&quot;</span><span class="p">:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="n">section_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;Pst.flex_load() external instruction data file &#39;</span><span class="si">{0}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">filename</span><span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                    <span class="k">assert</span> <span class="s2">&quot;pest_file&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;Pst.flex_load() external instruction data file must have &#39;pest_file&#39; in columns&quot;</span>
+                    <span class="k">assert</span> <span class="s2">&quot;model_file&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;Pst.flex_load() external instruction data file must have &#39;model_file&#39; in columns&quot;</span>
+                    <span class="k">for</span> <span class="n">pfile</span><span class="p">,</span> <span class="n">mfile</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">pest_file</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">model_file</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mfile</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">iline</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">section_lines</span><span class="p">):</span>
+                        <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">elif</span> <span class="s2">&quot;* prior information&quot;</span> <span class="ow">in</span> <span class="n">last_section</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                <span class="n">req_sections</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cast_prior_df_from_lines</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">last_section</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pst._load_version2() warning: unrecognized section: &quot;</span><span class="p">,</span> <span class="n">last_section</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">last_section</span><span class="p">]</span> <span class="o">=</span> <span class="n">section_lines</span>
+
+            <span class="n">last_section</span> <span class="o">=</span> <span class="n">next_section</span>
+            <span class="k">if</span> <span class="n">next_section</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="c1"># SVD</span>
-        <span class="k">if</span> <span class="n">next_section</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;* singular value&quot;</span><span class="p">):</span>
-            <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* singular value decomposition&quot;</span>
-            <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">svd_data</span><span class="o">.</span><span class="n">parse_values_from_lines</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span>
+        <span class="n">not_found</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">section</span><span class="p">,</span><span class="n">found</span> <span class="ow">in</span> <span class="n">req_sections</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                <span class="n">not_found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">not_found</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst._load_version2() error: the following required sections were&quot;</span><span class="o">+</span>\
+                    <span class="s2">&quot;not found:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">not_found</span><span class="p">)))</span>
 
-        <span class="c1"># read anything until par groups</span>
+
+
+
+<div class="viewcode-block" id="Pst.load"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; entry point load the pest control file.  sniffs the first non-comment line to detect the version (if present)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            pst filename</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">            lots of exceptions for incorrect format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;couldn&#39;t find control file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">next_section</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;* parameter groups&quot;</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error: EOF when trying to find first line - #sad&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;pcf&quot;</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;pcf&quot;</span><span class="p">),</span> <span class="s2">&quot;Pst.load() error: first noncomment line must start with &#39;pcf&#39;, not &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 
-        <span class="c1"># parameter groups</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* parameter groups&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span><span class="n">section_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">pargp_fieldnames</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">pargp_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pargp_defaults</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">pargpnme</span>
-
-        <span class="c1"># parameter data</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* parameter data&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_fieldnames</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">par_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">par_defaults</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">parnme</span>
-
-        <span class="c1"># # oh the tied parameter bullshit, how do I hate thee</span>
-        <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">partrans</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s2">&quot;tied&quot;</span> <span class="ow">in</span> <span class="n">counts</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-            <span class="c1">#the tied lines got cast into the parameter data lines</span>
-            <span class="n">ntied</span> <span class="o">=</span> <span class="n">counts</span><span class="p">[</span><span class="s2">&quot;tied&quot;</span><span class="p">]</span>
-            <span class="c1"># self.tied = self.parameter_data.iloc[-ntied:,:2]</span>
-            <span class="c1"># self.tied.columns = self.tied_fieldnames</span>
-            <span class="c1"># self.tied.index = self.tied.parnme</span>
-            <span class="n">tied</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="n">ntied</span><span class="p">:,:</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">tied</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tied_fieldnames</span>
-            <span class="n">tied</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">tied</span><span class="o">.</span><span class="n">parnme</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="n">ntied</span><span class="p">,:]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s1">&#39;partied&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tied</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;partied&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tied</span><span class="o">.</span><span class="n">partied</span>
-
-        <span class="c1"># observation groups</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* observation groups&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-
-        <span class="c1"># observation data</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* observation data&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cast_df_from_lines</span><span class="p">(</span><span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_fieldnames</span><span class="p">,</span>
-                                                        <span class="bp">self</span><span class="o">.</span><span class="n">obs_converters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_defaults</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
-        <span class="c1"># model commands</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* model command line&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-
-        <span class="c1"># model io</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* model input/output&quot;</span>
-        <span class="k">assert</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span>
-        <span class="n">next_section</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">ntpl</span><span class="p">,</span><span class="n">nins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">ntplfle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">ninsfle</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span> <span class="o">==</span> <span class="n">ntpl</span> <span class="o">+</span> <span class="n">nins</span>
-        <span class="k">for</span> <span class="n">iline</span><span class="p">,</span><span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">section_lines</span><span class="p">):</span>
-            <span class="n">raw</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">iline</span> <span class="o">&lt;</span> <span class="n">ntpl</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="s2">&quot;version&quot;</span> <span class="ow">in</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">raw</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_version1</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load_version2</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error: version must be 1 or 2, not &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">))</span></div>
 
 
-        <span class="c1"># prior info</span>
-        <span class="n">section</span> <span class="o">=</span> <span class="s2">&quot;* prior information&quot;</span>
-        <span class="k">if</span> <span class="n">next_section</span> <span class="o">==</span> <span class="n">section</span><span class="p">:</span>
-            <span class="n">next_line</span><span class="p">,</span> <span class="n">section_lines</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_section_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_cast_prior_df_from_lines</span><span class="p">(</span><span class="n">section_lines</span><span class="p">)</span>
-
-        <span class="c1"># any additional sections</span>
-        <span class="n">final_comments</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># TODO: catch a regul section</span>
-            <span class="n">next_line</span><span class="p">,</span> <span class="n">comments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_line_comments</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">next_line</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">other_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_line</span><span class="p">)</span>
-            <span class="c1">#next_line,comments = self._read_line_comments(f,True)</span>
-            <span class="n">final_comments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">comments</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="p">[</span><span class="s2">&quot;final&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_comments</span></div>
 
 
-<div class="viewcode-block" id="Pst.load"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;load the pest control file information</span>
+
+    <span class="k">def</span> <span class="nf">_load_version1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load a version 1 pest control file information</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -860,9 +954,13 @@
 
         <span class="c1">#control section</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+
         <span class="k">assert</span> <span class="s2">&quot;* control data&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">,</span>\
             <span class="s2">&quot;Pst.load() error: looking for control&quot;</span> <span class="o">+</span>\
             <span class="s2">&quot; data section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
+        <span class="n">iskeyword</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="s2">&quot;keyword&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+            <span class="n">iskeyword</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">control_lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
@@ -872,7 +970,7 @@
             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
                 <span class="k">break</span>
             <span class="n">control_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">parse_values_from_lines</span><span class="p">(</span><span class="n">control_lines</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">parse_values_from_lines</span><span class="p">(</span><span class="n">control_lines</span><span class="p">,</span><span class="n">iskeyword</span><span class="p">)</span>
 
 
         <span class="c1">#anything between control data and SVD</span>
@@ -906,14 +1004,14 @@
         <span class="k">assert</span> <span class="s2">&quot;* parameter groups&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>\
             <span class="s2">&quot;Pst.load() error: looking for parameter&quot;</span> <span class="o">+</span>\
             <span class="s2">&quot; group section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npargp</span><span class="p">,</span>
-                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pargp_fieldnames</span><span class="p">,</span>
-                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pargp_converters</span><span class="p">,</span>
-                                                  <span class="bp">self</span><span class="o">.</span><span class="n">pargp_defaults</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">pargpnme</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error reading parameter groups: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="c1">#try:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">npargp</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">pargp_fieldnames</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">pargp_converters</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">pargp_defaults</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">pargpnme</span>
+        <span class="c1">#except Exception as e:</span>
+        <span class="c1">#    raise Exception(&quot;Pst.load() error reading parameter groups: {0}&quot;.format(str(e)))</span>
 
         <span class="c1">#parameter data</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
@@ -943,27 +1041,38 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">tied</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="s2">&quot;partied&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tied</span><span class="o">.</span><span class="n">partied</span>
 
         <span class="c1"># obs groups - just read past for now</span>
-        <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="s2">&quot;* observation groups&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>\
-            <span class="s2">&quot;Pst.load() error: looking for obs&quot;</span> <span class="o">+</span>\
-            <span class="s2">&quot; group section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
-        <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobsgp</span><span class="p">)]</span>
 
-        <span class="c1"># observation data</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="s2">&quot;* observation data&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>\
-            <span class="s2">&quot;Pst.load() error: looking for observation&quot;</span> <span class="o">+</span>\
-            <span class="s2">&quot; data section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span><span class="p">,</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">obs_fieldnames</span><span class="p">,</span>
-                                                      <span class="bp">self</span><span class="o">.</span><span class="n">obs_converters</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error reading observation data: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="c1"># assert &quot;* observation groups&quot; in line.lower(),\</span>
+        <span class="c1">#     &quot;Pst.load() error: looking for obs&quot; +\</span>
+        <span class="c1">#     &quot; group section, found:&quot; + line</span>
+        <span class="c1"># [f.readline() for _ in range(self.control_data.nobsgp)]</span>
+        <span class="k">if</span> <span class="s2">&quot;* observation groups&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">seekpoint</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error: EOF when searching for &#39;* observation data&#39;&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">seekpoint</span><span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="s2">&quot;* observation data&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> \
+                <span class="s2">&quot;Pst.load() error: looking for observation&quot;</span> <span class="o">+</span> \
+                <span class="s2">&quot; data section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;nobs == 0&quot;</span><span class="p">)</span>
+
+            <span class="k">assert</span> <span class="s2">&quot;* observation data&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>\
+                <span class="s2">&quot;Pst.load() error: looking for observation&quot;</span> <span class="o">+</span>\
+                <span class="s2">&quot; data section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_df</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">nobs</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">obs_fieldnames</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">obs_converters</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.load() error reading observation data: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
         <span class="c1">#model command line</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">assert</span> <span class="s2">&quot;* model command line&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>\
@@ -977,6 +1086,7 @@
         <span class="k">assert</span> <span class="s2">&quot;* model input/output&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> \
             <span class="s2">&quot;Pst.load() error; looking for model &quot;</span> <span class="o">+</span>\
             <span class="s2">&quot; i/o section, found:&quot;</span> <span class="o">+</span> <span class="n">line</span>
+
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">ntplfle</span><span class="p">):</span>
             <span class="n">raw</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -1035,7 +1145,7 @@
             <span class="k">if</span> <span class="s2">&quot;extra&quot;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="ow">and</span> <span class="n">df</span><span class="o">.</span><span class="n">extra</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">with_comments</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">break</span>
-        <span class="k">return</span></div>
+        <span class="k">return</span>
 
 
     <span class="k">def</span> <span class="nf">_parse_pestpp_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">line</span><span class="p">):</span>
@@ -1255,14 +1365,113 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no adjustable pars&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no non-zero weight obs&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;no non-zero weight obs&quot;</span><span class="p">,</span><span class="n">PyemuWarning</span><span class="p">)</span></div>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;noptmax: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">noptmax</span><span class="p">))</span></div>
+        <span class="c1">#print(&quot;noptmax: {0}&quot;.format(self.control_data.noptmax))</span>
 
 
 
-<div class="viewcode-block" id="Pst.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;write a pest control file</span>
+    <span class="k">def</span> <span class="nf">_write_version2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">external</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_filename</span> <span class="o">=</span> <span class="n">new_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rectify_pgroups</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rectify_pi</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_control_section</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sanity_checks</span><span class="p">()</span>
+
+        <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">new_filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_comments</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;initial&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+                <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;pcf version=2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">write_keyword</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_comments</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;* singular value decompisition&quot;</span><span class="p">,[]):</span>
+                <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svd_data</span><span class="o">.</span><span class="n">write_keyword</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">pestmode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reg_data</span><span class="o">.</span><span class="n">write_keyword</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pestpp_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0:30}</span><span class="s2"> </span><span class="si">{1:&gt;10}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* parameter groups</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">pargp_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.pargrp_data.csv&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_groups</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">pargp_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pargp_filename</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* parameter data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">par_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.par_data.csv&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">par_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par_filename</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* observation data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">obs_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.obs_data.csv&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">obs_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_filename</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* model command line</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_command</span><span class="p">:</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mc</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* model input</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">io_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.tplfile_data.csv&quot;</span><span class="p">)</span>
+        <span class="n">pfiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_files</span>
+        <span class="c1">#pfiles.extend(self.instruction_files)</span>
+        <span class="n">mfiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_files</span>
+        <span class="c1">#mfiles.extend(self.output_files)</span>
+        <span class="n">io_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pest_file&quot;</span><span class="p">:</span><span class="n">pfiles</span><span class="p">,</span><span class="s2">&quot;model_file&quot;</span><span class="p">:</span><span class="n">mfiles</span><span class="p">})</span>
+        <span class="n">io_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">io_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">io_filename</span><span class="p">))</span>
+
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* model output</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">io_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.insfile_data.csv&quot;</span><span class="p">)</span>
+        <span class="n">pfiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instruction_files</span>
+        <span class="n">mfiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_files</span>
+        <span class="n">io_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;pest_file&quot;</span><span class="p">:</span> <span class="n">pfiles</span><span class="p">,</span> <span class="s2">&quot;model_file&quot;</span><span class="p">:</span> <span class="n">mfiles</span><span class="p">})</span>
+        <span class="n">io_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">io_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">io_filename</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;* prior information</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">pi_filename</span> <span class="o">=</span> <span class="n">new_filename</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.pi_data.csv&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">pi_filename</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;external </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pi_filename</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="Pst.write"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;main entry point to write a pest control file.</span>
+
+<span class="sd">         Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        new_filename : str</span>
+<span class="sd">            name of the new pest control file</span>
+<span class="sd">        update_regul : (boolean)</span>
+<span class="sd">            flag to update zero-order Tikhonov prior information</span>
+<span class="sd">            equations to prefer the current parameter values</span>
+<span class="sd">        version : int</span>
+<span class="sd">            flag for which version of control file to write (must be 1 or 2).</span>
+<span class="sd">            if None, uses Pst._version, which set in the constructor and modified</span>
+<span class="sd">            during the load</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">version</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">version</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_version</span>
+
+        <span class="n">vstring</span> <span class="o">=</span> <span class="s2">&quot;noptmax:</span><span class="si">{0}</span><span class="s2">, npar_adj:</span><span class="si">{1}</span><span class="s2">, nnz_obs:</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">noptmax</span><span class="p">,</span>
+                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">npar_adj</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">nnz_obs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">vstring</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_version1</span><span class="p">(</span><span class="n">new_filename</span><span class="o">=</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="n">update_regul</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_version2</span><span class="p">(</span><span class="n">new_filename</span><span class="o">=</span><span class="n">new_filename</span><span class="p">,</span> <span class="n">update_regul</span><span class="o">=</span><span class="n">update_regul</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Pst.write() error: version must be 1 or 2, not &#39;</span><span class="si">{0}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_write_version1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_filename</span><span class="p">,</span><span class="n">update_regul</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;write a version 1 pest control file</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -1391,7 +1600,7 @@
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;final&quot;</span><span class="p">,[]):</span>
                 <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-        <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="Pst.get"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">obs_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1685,30 +1894,30 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="p">(</span><span class="s2">&quot;Pst.__reset_weights() warning: phi group </span><span class="si">{0}</span><span class="s2"> has zero phi, skipping...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
 
-<div class="viewcode-block" id="Pst.adjust_weights_by_list"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights_by_list">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights_by_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obslist</span><span class="p">,</span><span class="n">weight</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;reset the weight for a list of observation names.  Supports the</span>
-<span class="sd">        data worth analyses in pyemu.Schur class</span>
 
+    <span class="k">def</span> <span class="nf">_adjust_weights_by_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obslist</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;a private method to reset the weight for a list of observation names.  Supports the</span>
+<span class="sd">        data worth analyses in pyemu.Schur class.  This method only adjusts</span>
+<span class="sd">        observation weights in the current weight is nonzero.  User beware!</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        obslist : list</span>
 <span class="sd">            list of observation names</span>
 <span class="sd">        weight : (float)</span>
 <span class="sd">            new weight to assign</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation_data</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="n">obslist</span> <span class="o">=</span> <span class="p">[</span><span class="n">obslist</span><span class="p">]</span>
         <span class="n">obslist</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">obslist</span><span class="p">])</span>
-        <span class="c1">#groups = obs.groupby([lambda x:x in obslist,</span>
+        <span class="c1"># groups = obs.groupby([lambda x:x in obslist,</span>
         <span class="c1">#                     obs.weight.apply(lambda x:x==0.0)]).groups</span>
-        <span class="c1">#if (True,True) in groups:</span>
+        <span class="c1"># if (True,True) in groups:</span>
         <span class="c1">#    obs.loc[groups[True,True],&quot;weight&quot;] = weight</span>
-        <span class="n">reset_names</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">obsnme</span> <span class="ow">in</span> <span class="n">obslist</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span>
+        <span class="n">reset_names</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">obs</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">obsnme</span> <span class="ow">in</span> <span class="n">obslist</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;obsnme&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">reset_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reset_names</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight</span></div>
+            <span class="n">obs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">reset_names</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight</span>
 
 <div class="viewcode-block" id="Pst.adjust_weights"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.adjust_weights">[docs]</a>    <span class="k">def</span> <span class="nf">adjust_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">obs_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                               <span class="n">obsgrp_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -2240,6 +2449,8 @@
                     <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{pdflscape}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{longtable}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
                     <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{nopageno}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">&#39;</span>
 
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pargp_df</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span><span class="s2">&quot;.par.tex&quot;</span><span class="p">)</span>
 
@@ -2250,7 +2461,8 @@
             <span class="n">pargp_df</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">longtable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pargp_df</span></div>
 
 <div class="viewcode-block" id="Pst.write_obs_summary_table"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.write_obs_summary_table">[docs]</a>    <span class="k">def</span> <span class="nf">write_obs_summary_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">group_names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a stand alone observation summary latex table</span>
@@ -2314,6 +2526,10 @@
                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{pdflscape}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{longtable}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> \
                    <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">usepackage</span><span class="si">{booktabs}</span><span class="se">\n\\</span><span class="s1">usepackage</span><span class="si">{nopageno}</span><span class="se">\n\\</span><span class="s1">begin</span><span class="si">{document}</span><span class="se">\n</span><span class="s1">&#39;</span>
 
+
+        <span class="k">if</span> <span class="n">filename</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obsg_df</span>
+
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.pst&quot;</span><span class="p">,</span> <span class="s2">&quot;.obs.tex&quot;</span><span class="p">)</span>
 
@@ -2327,8 +2543,9 @@
             <span class="n">obsg_df</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">longtable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{landscape}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{document}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
+        <span class="k">return</span> <span class="n">obsg_df</span></div>
 
 <div class="viewcode-block" id="Pst.run"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">exe_name</span><span class="o">=</span><span class="s2">&quot;pestpp&quot;</span><span class="p">,</span><span class="n">cwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;run a command related to the pst instance. If</span>
@@ -2439,7 +2656,73 @@
         <span class="n">pi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_information</span>
         <span class="n">gt_pi</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pi</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_greater_const</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">obgnme</span><span class="p">)</span> \
                                           <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">weight</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;pilbl&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">gt_pi</span></div>
+        <span class="k">return</span> <span class="n">gt_pi</span>
+
+
+
+<div class="viewcode-block" id="Pst.get_par_change_limits"><a class="viewcode-back" href="../../../source/pyemu.pst.html#pyemu.pst.pst_handler.Pst.get_par_change_limits">[docs]</a>    <span class="k">def</span> <span class="nf">get_par_change_limits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;  calculate the various parameter change limits used in pest.</span>
+<span class="sd">        Works in control file values space (not log transformed space).  Also</span>
+<span class="sd">        adds columns for effective upper and lower which account for par bounds and the</span>
+<span class="sd">        value of parchglim</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            df : pandas.DataFrame</span>
+<span class="sd">                a copy of self.parameter_data with columns for relative and factor change limits</span>
+<span class="sd">        Note</span>
+<span class="sd">        ----</span>
+<span class="sd">            does not yet support absolute parameter change limits!</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_data</span>
+        <span class="n">fpars</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">parchglim</span><span class="o">==</span><span class="s2">&quot;factor&quot;</span><span class="p">,</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+        <span class="n">rpars</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">parchglim</span> <span class="o">==</span> <span class="s2">&quot;relative&quot;</span><span class="p">,</span> <span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+        <span class="n">apars</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">parchglim</span> <span class="o">==</span> <span class="s2">&quot;absolute&quot;</span><span class="p">,</span> <span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+
+        <span class="n">change_df</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">fpm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">facparmax</span>
+        <span class="n">rpm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">relparmax</span>
+        <span class="n">facorig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">facorig</span>
+        <span class="n">base_vals</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">parval1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># apply zero value correction</span>
+        <span class="n">base_vals</span><span class="p">[</span><span class="n">base_vals</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">base_vals</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">4.0</span>
+
+        <span class="c1"># apply facorig</span>
+        <span class="n">replace_pars</span> <span class="o">=</span> <span class="n">base_vals</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="s2">&quot;partrans&quot;</span><span class="p">]</span><span class="o">!=</span><span class="s2">&quot;log&quot;</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">base_vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">facorig</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">base_vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">x</span><span class="p">]))</span>
+        <span class="c1">#print(facorig,replace_pars)</span>
+        <span class="n">base_vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">replace_pars</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">replace_pars</span><span class="p">]</span> <span class="o">*</span> <span class="n">facorig</span>
+
+        <span class="c1"># negative fac pars</span>
+        <span class="n">nfpars</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">base_vals</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nfpars</span><span class="p">,</span> <span class="s2">&quot;fac_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">/</span> <span class="n">fpm</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">nfpars</span><span class="p">,</span> <span class="s2">&quot;fac_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">*</span> <span class="n">fpm</span>
+
+        <span class="c1"># postive fac pars</span>
+        <span class="n">pfpars</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">base_vals</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pfpars</span><span class="p">,</span> <span class="s2">&quot;fac_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">*</span> <span class="n">fpm</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pfpars</span><span class="p">,</span> <span class="s2">&quot;fac_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">/</span> <span class="n">fpm</span>
+
+        <span class="c1"># relative</span>
+
+        <span class="n">rdelta</span> <span class="o">=</span> <span class="n">base_vals</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">)</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;rel_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">+</span> <span class="n">rdelta</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;rel_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_vals</span> <span class="o">-</span> <span class="n">rdelta</span>
+
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;chg_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fpars</span><span class="p">,</span><span class="s2">&quot;chg_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">fac_upper</span><span class="p">[</span><span class="n">fpars</span><span class="p">]</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">rpars</span><span class="p">,</span> <span class="s2">&quot;chg_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">rel_upper</span><span class="p">[</span><span class="n">rpars</span><span class="p">]</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;chg_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">fpars</span><span class="p">,</span> <span class="s2">&quot;chg_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">fac_lower</span><span class="p">[</span><span class="n">fpars</span><span class="p">]</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">rpars</span><span class="p">,</span> <span class="s2">&quot;chg_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">rel_lower</span><span class="p">[</span><span class="n">rpars</span><span class="p">]</span>
+
+        <span class="c1"># effective limits</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;eff_upper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,[</span><span class="s2">&quot;parubnd&quot;</span><span class="p">,</span><span class="s2">&quot;chg_upper&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;eff_lower&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">change_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s2">&quot;parlbnd&quot;</span><span class="p">,</span> <span class="s2">&quot;chg_lower&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">change_df</span></div></div>
 </pre></div>
 
           </div>

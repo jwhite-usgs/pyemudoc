@@ -86,7 +86,6 @@
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">Ensemble</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
         <span class="k">if</span> <span class="n">mean_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Ensemble requires &#39;mean_values&#39; kwarg&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mean_values</span> <span class="o">=</span> <span class="n">mean_values</span>
@@ -169,7 +168,6 @@
                                         <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span><span class="p">)</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_values</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">names</span><span class="p">]</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
-            <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean_values</span>
             <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
@@ -270,9 +268,11 @@
         <span class="n">df</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;df&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span>
         <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;mean_values&quot;</span><span class="p">,</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="n">e</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
                 <span class="n">mean_values</span><span class="o">=</span><span class="n">mean_values</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">e</span></div>
 
 <div class="viewcode-block" id="Ensemble.reseed"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.Ensemble.reseed">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -1096,7 +1096,6 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ParameterEnsemble::from_gaussian_draw() error: cov and pst share no common names&quot;</span><span class="p">)</span>
             <span class="n">vals</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">common_names</span><span class="p">]</span>
             <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">common_names</span><span class="p">)</span>
-            <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">common_names</span> <span class="o">=</span> <span class="n">cov</span><span class="o">.</span><span class="n">row_names</span>
 
@@ -1874,8 +1873,28 @@
 
 <div class="viewcode-block" id="ParameterEnsemble.run"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">slave_dir</span><span class="p">,</span> <span class="n">num_slaves</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">run_sweep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">slave_dir</span><span class="o">=</span><span class="n">slave_dir</span><span class="p">,</span><span class="n">num_slaves</span><span class="o">=</span><span class="n">num_slaves</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ObservationEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ParameterEnsemble.get_deviations"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.en.ParameterEnsemble.get_deviations">[docs]</a>    <span class="k">def</span> <span class="nf">get_deviations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the deviations of the ensemble value from the mean vector</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            en : pyemu.Ensemble</span>
+<span class="sd">                Ensemble of deviations from the mean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bt</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">istransformed</span><span class="p">:</span>
+            <span class="n">bt</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transform</span><span class="p">()</span>
+        <span class="n">mean_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">col</span><span class="p">]</span> <span class="o">-=</span> <span class="n">mean_vec</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">bt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_back_transform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

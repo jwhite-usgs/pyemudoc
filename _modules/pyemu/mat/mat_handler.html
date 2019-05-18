@@ -36,6 +36,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Matrix, Jco and Cov classes for easy linear algebra</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -1493,7 +1494,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">__x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="p">,</span> <span class="n">idxs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">keep_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">col_names</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
             <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">keep_names</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;shape-name mismatch:&quot;</span><span class="o">+</span>\
-                   <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keep_names</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                   <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">:</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keep_names</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">__x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">col_names</span> <span class="o">=</span> <span class="n">keep_names</span>
             <span class="c1"># idxs = np.sort(idxs)</span>
             <span class="c1"># for idx in idxs[::-1]:</span>
@@ -1632,6 +1633,9 @@
 <span class="sd">            number of elements to write in a single pass.  Default is None</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#print(self.x)</span>
+        <span class="c1">#print(type(self.x))</span>
+
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Matrix.to_binary(): nans found&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isdiagonal</span><span class="p">:</span>
@@ -1691,6 +1695,7 @@
                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_length</span><span class="p">):</span>
                     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span>
+
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
@@ -1778,6 +1783,7 @@
                                       <span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
                 <span class="n">col_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrow</span><span class="p">):</span>
+
                 <span class="n">name</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Matrix</span><span class="o">.</span><span class="n">obs_length</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span>
                                      <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">Matrix</span><span class="o">.</span><span class="n">obs_length</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>\
                                       <span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
@@ -2441,7 +2447,7 @@
         <span class="c1">#self.reset_x(self_x)</span>
         <span class="c1">#self.isdiagonal = False</span>
 
-<div class="viewcode-block" id="Cov.to_uncfile"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.to_uncfile">[docs]</a>    <span class="k">def</span> <span class="nf">to_uncfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unc_file</span><span class="p">,</span> <span class="n">covmat_file</span><span class="o">=</span><span class="s2">&quot;Cov.mat&quot;</span><span class="p">,</span> <span class="n">var_mult</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="Cov.to_uncfile"><a class="viewcode-back" href="../../../source/pyemu.mat.html#pyemu.mat.mat_handler.Cov.to_uncfile">[docs]</a>    <span class="k">def</span> <span class="nf">to_uncfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unc_file</span><span class="p">,</span> <span class="n">covmat_file</span><span class="o">=</span><span class="s2">&quot;Cov.mat&quot;</span><span class="p">,</span> <span class="n">var_mult</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">include_path</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;write a PEST-compatible uncertainty file</span>
 
 <span class="sd">        Parameters</span>
@@ -2461,7 +2467,10 @@
         <span class="k">if</span> <span class="n">covmat_file</span><span class="p">:</span>
             <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">unc_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;START COVARIANCE_MATRIX</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; file &quot;</span> <span class="o">+</span> <span class="n">covmat_file</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">include_path</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; file &quot;</span> <span class="o">+</span> <span class="n">covmat_file</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; file &quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">covmat_file</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; variance_multiplier </span><span class="si">{0:15.6E}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var_mult</span><span class="p">))</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;END COVARIANCE_MATRIX</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>

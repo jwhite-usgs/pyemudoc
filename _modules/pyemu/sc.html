@@ -650,7 +650,7 @@
         <span class="k">if</span> <span class="n">base_obslist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">reset</span><span class="p">:</span>
             <span class="c1"># check for zero</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in base_obslist&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">base_obslist</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">_adjust_weights_by_list</span><span class="p">(</span><span class="n">base_obslist</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in base_obslist&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">base_obslist</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -673,7 +673,7 @@
                                     <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">inboth</span><span class="p">))</span>
                 <span class="n">z_obs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">obslist</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in obslist_dict&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">z_obs</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">_adjust_weights_by_list</span><span class="p">(</span><span class="n">z_obs</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting zero weight obs in obslist_dict&quot;</span><span class="p">)</span>
 
         <span class="c1"># for a comprehensive obslist_dict</span>
@@ -818,7 +818,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">observation_data</span><span class="o">.</span><span class="n">obsnme</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">obslist</span> <span class="ow">in</span> <span class="n">obslist_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting weights in obs in group </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">adjust_weights_by_list</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pst</span><span class="o">.</span><span class="n">_adjust_weights_by_list</span><span class="p">(</span><span class="n">obslist</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;resetting weights in obs in group </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">case</span><span class="p">,</span><span class="n">obslist</span> <span class="ow">in</span> <span class="n">obslist_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -1060,6 +1060,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">reset_parcov</span><span class="p">(</span><span class="n">org_parcov</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iter_results</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">iter_names</span><span class="p">)</span></div></div>
+
+
 
 </pre></div>
 

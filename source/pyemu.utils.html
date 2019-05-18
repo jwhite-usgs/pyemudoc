@@ -1493,7 +1493,7 @@ If inschek was not successfully run, then returns None</p>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_sfr_seg_parameters">
-<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sfr_seg_parameters</code><span class="sig-paren">(</span><em>nam_file, model_ws='.', par_cols=['flow', 'runoff', 'hcond1', 'hcond2', 'pptsw'], tie_hcond=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyemu.utils.gw_utils.</code><code class="descname">setup_sfr_seg_parameters</code><span class="sig-paren">(</span><em>nam_file, model_ws='.', par_cols=['flow', 'runoff', 'hcond1', 'pptsw'], tie_hcond=True, include_temporal_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/gw_utils.html#setup_sfr_seg_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.gw_utils.setup_sfr_seg_parameters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup multiplier parameters for SFR segment data.  Just handles the
 standard input case, not all the cryptic SFR options.  Loads the dis, bas, and sfr files
 with flopy using model_ws.  However, expects that apply_sfr_seg_parameters() will be called
@@ -1508,7 +1508,8 @@ from within model_ws at runtime.</p>
 <li><strong>OR</strong> – </li>
 <li><strong>nam_file</strong> – flopy modflow model object</li>
 <li><strong>par_cols</strong> (<em>list</em><em>(</em><em>str</em><em>)</em>) – segment data entires to parameterize</li>
-<li><strong>tie_hcond</strong> (<em>flag to use same mult par for hcond1 and hcond2 for a given segment.  Default is True</em>) – </li>
+<li><strong>tie_hcond</strong> (<em>bool</em>) – flag to use same mult par for hcond1 and hcond2 for a given segment.  Default is True</li>
+<li><strong>include_temporal_pars</strong> (<em>bool</em>) – flag to include spatially-global multipliers for each par_col for each stress period.  Default is False</li>
 </ul>
 </td>
 </tr>
@@ -2439,7 +2440,7 @@ that listed in parse_dir_for_io_files()</p>
 
 <dl class="class">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel">
-<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>temporal_bc_props=[]</em>, <em>temporal_list_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>temporal_list_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>redirect_forward_output=True</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>spatial_bc_props=[]</em>, <em>spatial_list_props=[]</em>, <em>spatial_list_geostruct=None</em>, <em>hfb_pars=False</em>, <em>kl_props=None</em>, <em>kl_num_eig=100</em>, <em>kl_geostruct=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.utils.helpers.</code><code class="descname">PstFromFlopyModel</code><span class="sig-paren">(</span><em>model</em>, <em>new_model_ws</em>, <em>org_model_ws=None</em>, <em>pp_props=[]</em>, <em>const_props=[]</em>, <em>temporal_bc_props=[]</em>, <em>temporal_list_props=[]</em>, <em>grid_props=[]</em>, <em>grid_geostruct=None</em>, <em>pp_space=None</em>, <em>zone_props=[]</em>, <em>pp_geostruct=None</em>, <em>par_bounds_dict=None</em>, <em>sfr_pars=False</em>, <em>temporal_sfr_pars=False</em>, <em>temporal_list_geostruct=None</em>, <em>remove_existing=False</em>, <em>k_zone_dict=None</em>, <em>mflist_waterbudget=True</em>, <em>mfhyd=True</em>, <em>hds_kperk=[]</em>, <em>use_pp_zones=False</em>, <em>obssim_smp_pairs=None</em>, <em>external_tpl_in_pairs=None</em>, <em>external_ins_out_pairs=None</em>, <em>extra_pre_cmds=None</em>, <em>extra_model_cmds=None</em>, <em>extra_post_cmds=None</em>, <em>redirect_forward_output=True</em>, <em>tmp_files=None</em>, <em>model_exe_name=None</em>, <em>build_prior=True</em>, <em>sfr_obs=False</em>, <em>spatial_bc_props=[]</em>, <em>spatial_list_props=[]</em>, <em>spatial_list_geostruct=None</em>, <em>hfb_pars=False</em>, <em>kl_props=None</em>, <em>kl_num_eig=100</em>, <em>kl_geostruct=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="docutils">
 <dt>a monster helper class to setup multiplier parameters for an</dt>
@@ -2503,6 +2504,8 @@ would setup grid-based multiplier parameters in every active model cell
 for recharge for stress period 1,5,11,and 16.</li>
 <li><strong>sfr_pars</strong> (<em>bool</em><em> or </em><em>list</em>) – setup parameters for the stream flow routing modflow package.
 If list is passed it defiend the parameters to set up.</li>
+<li><strong>sfr_temporal_pars</strong> (<em>bool</em>) – flag to include stress-period level spatially-global multipler parameters in addition to
+the spatially-discrete <cite>sfr_pars</cite>.  Requires <cite>sfr_pars</cite> to be passed.  Default is False</li>
 <li><strong>grid_geostruct</strong> (<em>pyemu.geostats.GeoStruct</em>) – the geostatistical structure to build the prior parameter covariance matrix
 elements for grid-based parameters.  If None, a generic GeoStruct is created
 using an “a” parameter that is 10 times the max cell size.  Default is None</li>
@@ -2607,7 +2610,7 @@ system path variable</p>
 
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars">
-<code class="descname">setup_sfr_pars</code><span class="sig-paren">(</span><em>par_cols=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_sfr_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setup_sfr_pars</code><span class="sig-paren">(</span><em>par_cols=None</em>, <em>include_temporal_pars=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/utils/helpers.html#PstFromFlopyModel.setup_sfr_pars"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.setup_sfr_pars" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup multiplier parameters for sfr segment data
 Adding support for reachinput (and isfropt = 1)</p>
 </dd></dl>

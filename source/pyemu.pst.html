@@ -84,6 +84,11 @@ file handle</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="pyemu.pst.pst_controldata.RegData.write_keyword">
+<code class="descname">write_keyword</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#RegData.write_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.RegData.write_keyword" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -92,6 +97,11 @@ file handle</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>an object that encapsulates the singular value decomposition
 section of the PEST control file</p>
+<dl class="method">
+<dt id="pyemu.pst.pst_controldata.SvdData.write_keyword">
+<code class="descname">write_keyword</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#SvdData.write_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.SvdData.write_keyword" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="pyemu.pst.pst_controldata.SvdData.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#SvdData.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.SvdData.write" title="Permalink to this definition">¶</a></dt>
@@ -146,7 +156,7 @@ of the PEST control file</p>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_controldata.ControlData.parse_values_from_lines">
-<code class="descname">parse_values_from_lines</code><span class="sig-paren">(</span><em>lines</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#ControlData.parse_values_from_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.ControlData.parse_values_from_lines" title="Permalink to this definition">¶</a></dt>
+<code class="descname">parse_values_from_lines</code><span class="sig-paren">(</span><em>lines</em>, <em>iskeyword=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#ControlData.parse_values_from_lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.ControlData.parse_values_from_lines" title="Permalink to this definition">¶</a></dt>
 <dd><p>cast the string lines for a pest control file into actual inputs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -180,6 +190,11 @@ of the PEST control file</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.pst.pst_controldata.ControlData.write_keyword">
+<code class="descname">write_keyword</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#ControlData.write_keyword"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.ControlData.write_keyword" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="pyemu.pst.pst_controldata.ControlData.write">
 <code class="descname">write</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_controldata.html#ControlData.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_controldata.ControlData.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>write control data section to a file</p>
@@ -202,7 +217,7 @@ of the PEST control file</p>
 is the primary mechanism for dealing with PEST control files</p>
 <dl class="class">
 <dt id="pyemu.pst.pst_handler.Pst">
-<em class="property">class </em><code class="descclassname">pyemu.pst.pst_handler.</code><code class="descname">Pst</code><span class="sig-paren">(</span><em>filename</em>, <em>load=True</em>, <em>resfile=None</em>, <em>flex=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyemu.pst.pst_handler.</code><code class="descname">Pst</code><span class="sig-paren">(</span><em>filename</em>, <em>load=True</em>, <em>resfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>basic class for handling pest control files to support linear analysis
 as well as replicate some of the functionality of the pest utilities</p>
@@ -682,14 +697,9 @@ least one non-zero weighted observation</td>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pyemu.pst.pst_handler.Pst.flex_load">
-<code class="descname">flex_load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.flex_load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.flex_load" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.load">
 <code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>load the pest control file information</p>
+<dd><p>entry point load the pest control file.  sniffs the first non-comment line to detect the version (if present)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -750,21 +760,21 @@ are removed. This method is called during Pst.write()</p>
 
 <dl class="method">
 <dt id="pyemu.pst.pst_handler.Pst.write">
-<code class="descname">write</code><span class="sig-paren">(</span><em>new_filename</em>, <em>update_regul=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write" title="Permalink to this definition">¶</a></dt>
-<dd><p>write a pest control file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>new_filename</strong> (<em>str</em>) – name of the new pest control file</li>
-<li><strong>update_regul</strong> (<em>(</em><em>boolean</em><em>)</em>) – flag to update zero-order Tikhonov prior information
-equations to prefer the current parameter values</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<code class="descname">write</code><span class="sig-paren">(</span><em>new_filename</em>, <em>update_regul=True</em>, <em>version=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>main entry point to write a pest control file.</p>
+<blockquote>
+<div>Parameters</div></blockquote>
+<dl class="docutils">
+<dt>new_filename <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>name of the new pest control file</dd>
+<dt>update_regul <span class="classifier-delimiter">:</span> <span class="classifier">(boolean)</span></dt>
+<dd>flag to update zero-order Tikhonov prior information
+equations to prefer the current parameter values</dd>
+<dt>version <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>flag for which version of control file to write (must be 1 or 2).
+if None, uses Pst._version, which set in the constructor and modified
+during the load</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -884,25 +894,6 @@ to phi is 1.0</p>
 with the Pst case name.  Default is None</li>
 <li><strong>original_ceiling</strong> (<em>bool</em>) – flag to keep weights from increasing - this is generally a good idea.
 Default is True</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyemu.pst.pst_handler.Pst.adjust_weights_by_list">
-<code class="descname">adjust_weights_by_list</code><span class="sig-paren">(</span><em>obslist</em>, <em>weight</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.adjust_weights_by_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.adjust_weights_by_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>reset the weight for a list of observation names.  Supports the
-data worth analyses in pyemu.Schur class</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>obslist</strong> (<em>list</em>) – list of observation names</li>
-<li><strong>weight</strong> (<em>(</em><em>float</em><em>)</em>) – new weight to assign</li>
 </ul>
 </td>
 </tr>
@@ -1298,6 +1289,29 @@ weighted pi are skipped</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="pyemu.pst.pst_handler.Pst.get_par_change_limits">
+<code class="descname">get_par_change_limits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.get_par_change_limits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_handler.Pst.get_par_change_limits" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculate the various parameter change limits used in pest.
+Works in control file values space (not log transformed space).  Also
+adds columns for effective upper and lower which account for par bounds and the
+value of parchglim</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>df</strong> – a copy of self.parameter_data with columns for relative and factor change limits</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">does not yet support absolute parameter change limits!</p>
+</div>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1339,6 +1353,24 @@ the pyemu.Pst object.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resfile</strong> (<em>str</em>) – residual file name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyemu.pst.pst_utils.res_from_en">
+<code class="descclassname">pyemu.pst.pst_utils.</code><code class="descname">res_from_en</code><span class="sig-paren">(</span><em>pst</em>, <em>enfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_utils.html#res_from_en"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.pst.pst_utils.res_from_en" title="Permalink to this definition">¶</a></dt>
+<dd><p>load ensemble file for residual into a pandas.DataFrame</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>enfile</strong> (<em>str</em>) – ensemble file name</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pandas.DataFrame</strong></td>
 </tr>

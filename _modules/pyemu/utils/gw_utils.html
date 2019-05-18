@@ -108,6 +108,7 @@
     <span class="n">hob_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">hob_file</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                          <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;simval&quot;</span><span class="p">,</span><span class="s2">&quot;obsval&quot;</span><span class="p">,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">])</span>
 
+    <span class="n">hob_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;obsnme&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hob_df</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
     <span class="n">hob_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;ins_line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hob_df</span><span class="o">.</span><span class="n">obsnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s2">&quot;l1 !</span><span class="si">{0:s}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="n">hob_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;ins_line&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hob_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;ins_line&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span><span class="s1">&#39;l2&#39;</span><span class="p">)</span>
 
@@ -1148,6 +1149,7 @@
         <span class="n">data</span> <span class="o">=</span> <span class="n">hds</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">kstpkper</span><span class="o">=</span><span class="p">(</span><span class="n">kstp</span><span class="p">,</span><span class="n">kper</span><span class="p">))</span>
         <span class="c1">#jwhite 15jan2018 fix for really large values that are getting some</span>
         <span class="c1">#trash added to them...</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">&gt;</span><span class="mf">1.0e+20</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0e+20</span>
         <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">&lt;-</span><span class="mf">1.0e+20</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0e+20</span>
         <span class="n">df_kper</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">kper</span><span class="o">==</span><span class="n">kper</span><span class="p">,:]</span>
@@ -1252,26 +1254,38 @@
 
 
 <div class="viewcode-block" id="apply_sft_obs"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.apply_sft_obs">[docs]</a><span class="k">def</span> <span class="nf">apply_sft_obs</span><span class="p">():</span>
+    <span class="c1"># this is for dealing with the missing &#39;e&#39; problem</span>
+    <span class="k">def</span> <span class="nf">try_cast</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+
     <span class="n">times</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sft_obs.config&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">sft_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sft_file</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sft_file</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1">#,nrows=10000000)</span>
     <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">times</span><span class="p">),</span> <span class="p">:]</span>
+    <span class="c1">#print(df.dtypes)</span>
     <span class="c1">#normalize</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="c1">#print(c)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="s2">&quot;node&quot;</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">try_cast</span><span class="p">)</span>
+        <span class="c1">#print(df.loc[df.loc[:,c].apply(lambda x : type(x) == str),:])</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&lt;</span><span class="mf">1e-30</span><span class="p">),</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e+30</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0e+30</span>
     <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;sfr_node&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sfr_node</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">times</span><span class="p">),:]</span>
+
     <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sft_file</span><span class="o">+</span><span class="s2">&quot;.processed&quot;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="setup_sfr_seg_parameters"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_seg_parameters">[docs]</a><span class="k">def</span> <span class="nf">setup_sfr_seg_parameters</span><span class="p">(</span><span class="n">nam_file</span><span class="p">,</span> <span class="n">model_ws</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">par_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;runoff&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond1&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond2&quot;</span><span class="p">,</span> <span class="s2">&quot;pptsw&quot;</span><span class="p">],</span>
-                             <span class="n">tie_hcond</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="setup_sfr_seg_parameters"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_seg_parameters">[docs]</a><span class="k">def</span> <span class="nf">setup_sfr_seg_parameters</span><span class="p">(</span><span class="n">nam_file</span><span class="p">,</span> <span class="n">model_ws</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">par_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;runoff&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond1&quot;</span><span class="p">,</span> <span class="s2">&quot;pptsw&quot;</span><span class="p">],</span>
+                             <span class="n">tie_hcond</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">include_temporal_pars</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Setup multiplier parameters for SFR segment data.  Just handles the</span>
 <span class="sd">    standard input case, not all the cryptic SFR options.  Loads the dis, bas, and sfr files</span>
 <span class="sd">    with flopy using model_ws.  However, expects that apply_sfr_seg_parameters() will be called</span>
@@ -1288,7 +1302,10 @@
 <span class="sd">            flopy modflow model object</span>
 <span class="sd">        par_cols : list(str)</span>
 <span class="sd">            segment data entires to parameterize</span>
-<span class="sd">        tie_hcond : flag to use same mult par for hcond1 and hcond2 for a given segment.  Default is True</span>
+<span class="sd">        tie_hcond : bool</span>
+<span class="sd">            flag to use same mult par for hcond1 and hcond2 for a given segment.  Default is True</span>
+<span class="sd">        include_temporal_pars : bool</span>
+<span class="sd">            flag to include spatially-global multipliers for each par_col for each stress period.  Default is False</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -1309,7 +1326,7 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">par_cols</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">par_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;runoff&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond1&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond2&quot;</span><span class="p">,</span> <span class="s2">&quot;pptsw&quot;</span><span class="p">]</span>
+        <span class="n">par_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;flow&quot;</span><span class="p">,</span> <span class="s2">&quot;runoff&quot;</span><span class="p">,</span> <span class="s2">&quot;hcond1&quot;</span><span class="p">,</span> <span class="s2">&quot;pptsw&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">tie_hcond</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;hcond1&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">par_cols</span> <span class="ow">or</span> <span class="s2">&quot;hcond2&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">par_cols</span><span class="p">:</span>
             <span class="n">tie_hcond</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1388,32 +1405,67 @@
     <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No sfr segment parameters have been set up, either none of </span><span class="si">{0}</span><span class="s2"> were found or all were zero.&quot;</span><span class="o">.</span>
                       <span class="nb">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par_cols</span><span class="p">)),</span> <span class="n">PyemuWarning</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># set not par cols to 1.0</span>
-        <span class="n">seg_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">notpar_cols</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
+        <span class="k">return</span> <span class="n">df</span>
 
-        <span class="c1">#write the template file</span>
-        <span class="n">write_df_tpl</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_pars.dat.tpl&quot;</span><span class="p">),</span> <span class="n">seg_data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1"># set not par cols to 1.0</span>
+    <span class="n">seg_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">notpar_cols</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
 
-        <span class="c1">#write the config file used by apply_sfr_pars()</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_pars.config&quot;</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;nam_file </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nam_file</span><span class="p">))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;model_ws </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_ws</span><span class="p">))</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;mult_file sfr_seg_pars.dat</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;sfr_filename </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sfr</span><span class="o">.</span><span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="c1">#write the template file</span>
+    <span class="n">write_df_tpl</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_pars.dat.tpl&quot;</span><span class="p">),</span> <span class="n">seg_data</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
-        <span class="c1">#make sure the tpl file exists and has the same num of pars</span>
-        <span class="n">parnme</span> <span class="o">=</span> <span class="n">parse_tpl_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_pars.dat.tpl&quot;</span><span class="p">))</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">parnme</span><span class="p">)</span> <span class="o">==</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="c1">#set some useful par info</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
-        <span class="n">hpars</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">pargp</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;hcond&quot;</span><span class="p">)),</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">100.0</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span> <span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+    <span class="c1">#make sure the tpl file exists and has the same num of pars</span>
+    <span class="n">parnme</span> <span class="o">=</span> <span class="n">parse_tpl_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_pars.dat.tpl&quot;</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">parnme</span><span class="p">)</span> <span class="o">==</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1">#set some useful par info</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;pargp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+    <span class="n">hpars</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">pargp</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;hcond&quot;</span><span class="p">)),</span><span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span><span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span> <span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+    <span class="k">if</span> <span class="n">include_temporal_pars</span><span class="p">:</span>
+        <span class="c1"># include only stress periods that are explicitly listed in segment data</span>
+        <span class="n">pnames</span><span class="p">,</span><span class="n">tpl_str</span> <span class="o">=</span> <span class="p">[],[]</span>
+        <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="n">c</span><span class="p">:</span><span class="mf">1.0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sfr</span><span class="o">.</span><span class="n">segment_data</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="n">tmp_df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">tmp_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_temporal_pars.dat&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">par_col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">par_col</span><span class="p">)</span>
+            <span class="n">parnme</span> <span class="o">=</span> <span class="n">tmp_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">_</span><span class="si">{1:04d}</span><span class="s2">_tmp&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par_col</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+            <span class="n">tmp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">par_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">parnme</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;~   </span><span class="si">{0}</span><span class="s2">  ~&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">tpl_str</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">tmp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">par_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+            <span class="n">pnames</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">parnme</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">write_df_tpl</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span><span class="s2">&quot;sfr_seg_temporal_pars.dat.tpl&quot;</span><span class="p">),</span><span class="n">df</span><span class="o">=</span><span class="n">tmp_df</span><span class="p">)</span>
+        <span class="n">pargp</span> <span class="o">=</span> <span class="p">[</span><span class="n">pname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot;_tmp&quot;</span> <span class="k">for</span> <span class="n">pname</span> <span class="ow">in</span> <span class="n">pnames</span><span class="p">]</span>
+        <span class="n">tmp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parnme&quot;</span><span class="p">:</span><span class="n">pnames</span><span class="p">,</span><span class="s2">&quot;pargp&quot;</span><span class="p">:</span><span class="n">pargp</span><span class="p">},</span><span class="n">index</span><span class="o">=</span><span class="n">pnames</span><span class="p">)</span>
+        <span class="n">tmp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;org_value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">tmp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;tpl_str&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tpl_str</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp_df</span><span class="p">)</span>
+
+    <span class="c1"># write the config file used by apply_sfr_pars()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_ws</span><span class="p">,</span> <span class="s2">&quot;sfr_seg_pars.config&quot;</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;nam_file </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nam_file</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;model_ws </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model_ws</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;mult_file sfr_seg_pars.dat</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;sfr_filename </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sfr</span><span class="o">.</span><span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">include_temporal_pars</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;time_mult_file sfr_seg_temporal_pars.dat</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+    <span class="c1"># set some useful par info</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;pargp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">parnme</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.25</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+    <span class="n">hpars</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">pargp</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;hcond&quot;</span><span class="p">)),</span> <span class="s2">&quot;parnme&quot;</span><span class="p">]</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span> <span class="s2">&quot;parubnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">hpars</span><span class="p">,</span> <span class="s2">&quot;parlbnd&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+
     <span class="k">return</span> <span class="n">df</span></div>
+
 
 <div class="viewcode-block" id="setup_sfr_reach_parameters"><a class="viewcode-back" href="../../../source/pyemu.utils.html#pyemu.utils.gw_utils.setup_sfr_reach_parameters">[docs]</a><span class="k">def</span> <span class="nf">setup_sfr_reach_parameters</span><span class="p">(</span><span class="n">nam_file</span><span class="p">,</span><span class="n">model_ws</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">par_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;strhc1&#39;</span><span class="p">]):</span>
     <span class="sd">&quot;&quot;&quot;Setup multiplier paramters for reach data, when reachinput option is specififed in sfr.</span>
@@ -1551,8 +1603,64 @@
 
 
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">seg_pars</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">reach_pars</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;gw_utils.apply_sfr_pars() error: both seg_pars and reach_pars are False&quot;</span><span class="p">)</span>
+    <span class="c1">#if seg_pars and reach_pars:</span>
+    <span class="c1">#    raise Exception(&quot;gw_utils.apply_sfr_pars() error: both seg_pars and reach_pars are True&quot;)</span>
+
     <span class="kn">import</span> <span class="nn">flopy</span>
-    <span class="n">bak_sfr_file</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">bak_sfr_file</span><span class="p">,</span><span class="n">pars</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="kc">None</span>
+
+    <span class="c1"># if seg_pars:</span>
+    <span class="c1">#     config_file = &quot;sfr_seg_pars.config&quot;</span>
+    <span class="c1">#     idx_cols = [&#39;nseg&#39;, &#39;icalc&#39;, &#39;outseg&#39;, &#39;iupseg&#39;, &#39;iprior&#39;, &#39;nstrpts&#39;]</span>
+    <span class="c1"># else:</span>
+    <span class="c1">#     config_file = &quot;sfr_reach_pars.config&quot;</span>
+    <span class="c1">#     idx_cols = [&quot;node&quot;, &quot;k&quot;, &quot;i&quot;, &quot;j&quot;, &quot;iseg&quot;, &quot;ireach&quot;, &quot;reachID&quot;, &quot;outreach&quot;]</span>
+    <span class="c1">#</span>
+    <span class="c1"># assert os.path.exists(config_file),&quot;gw_utils.apply_sfr_pars() error: config file {0} missing&quot;.format(config_file)</span>
+    <span class="c1"># with open(config_file, &#39;r&#39;) as f:</span>
+    <span class="c1">#     pars = {}</span>
+    <span class="c1">#     for line in f:</span>
+    <span class="c1">#         line = line.strip().split()</span>
+    <span class="c1">#         pars[line[0]] = line[1]</span>
+    <span class="c1">#</span>
+    <span class="c1"># m = flopy.modflow.Modflow.load(pars[&quot;nam_file&quot;], load_only=[], check=False)</span>
+    <span class="c1"># bak_sfr_file = pars[&quot;nam_file&quot;] + &quot;_backup_.sfr&quot;</span>
+    <span class="c1"># sfr = flopy.modflow.ModflowSfr2.load(os.path.join(bak_sfr_file), m)</span>
+    <span class="c1"># sfrfile = pars[&quot;sfr_filename&quot;]</span>
+    <span class="c1">#</span>
+    <span class="c1">#</span>
+    <span class="c1"># mlt_df = pd.read_csv(pars[&quot;mult_file&quot;], delim_whitespace=False, index_col=0)</span>
+    <span class="c1"># present_cols = [c for c in idx_cols if c in mlt_df.columns]</span>
+    <span class="c1"># mlt_cols = mlt_df.columns.drop(present_cols)</span>
+    <span class="c1">#</span>
+    <span class="c1"># if seg_pars:</span>
+    <span class="c1">#     for key, val in m.sfr.segment_data.items():</span>
+    <span class="c1">#         df = pd.DataFrame.from_records(val)</span>
+    <span class="c1">#         df.loc[:, mlt_cols] *= mlt_df.loc[:, mlt_cols]</span>
+    <span class="c1">#         val = df.to_records(index=False)</span>
+    <span class="c1">#         sfr.segment_data[key] = val</span>
+    <span class="c1"># else:</span>
+    <span class="c1">#     df = pd.DataFrame.from_records(m.sfr.reach_data)</span>
+    <span class="c1">#     df.loc[:, mlt_cols] *= mlt_df.loc[:, mlt_cols]</span>
+    <span class="c1">#     sfr.reach_data = df.to_records(index=False)</span>
+    <span class="c1">#</span>
+    <span class="c1">#</span>
+    <span class="c1"># if &quot;time_mult_file&quot; in pars:</span>
+    <span class="c1">#     time_mult_file = pars[&quot;time_mult_file&quot;]</span>
+    <span class="c1">#     time_mlt_df = pd.read_csv(pars[&quot;time_mult_file&quot;], delim_whitespace=False, index_col=0)</span>
+    <span class="c1">#     for kper,sdata in m.sfr.segment_data.items():</span>
+    <span class="c1">#         assert kper in time_mlt_df.index,&quot;gw_utils.apply_sfr_seg_parameters() error: kper &quot;+\</span>
+    <span class="c1">#                                          &quot;{0} not in time_mlt_df index&quot;.format(kper)</span>
+    <span class="c1">#         for col in time_mlt_df.columns:</span>
+    <span class="c1">#             sdata[col] *= time_mlt_df.loc[kper,col]</span>
+    <span class="c1">#</span>
+    <span class="c1">#</span>
+    <span class="c1"># sfr.write_file(filename=sfrfile)</span>
+    <span class="c1"># return sfr</span>
+
     <span class="k">if</span> <span class="n">seg_pars</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;sfr_seg_pars.config&quot;</span><span class="p">)</span>
 
@@ -1567,6 +1675,10 @@
         <span class="n">sfr</span> <span class="o">=</span> <span class="n">flopy</span><span class="o">.</span><span class="n">modflow</span><span class="o">.</span><span class="n">ModflowSfr2</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bak_sfr_file</span><span class="p">),</span> <span class="n">m</span><span class="p">)</span>
         <span class="n">sfrfile</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="s2">&quot;sfr_filename&quot;</span><span class="p">]</span>
         <span class="n">mlt_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pars</span><span class="p">[</span><span class="s2">&quot;mult_file&quot;</span><span class="p">],</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">time_mlt_df</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s2">&quot;time_mult_file&quot;</span> <span class="ow">in</span> <span class="n">pars</span><span class="p">:</span>
+            <span class="n">time_mult_file</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="s2">&quot;time_mult_file&quot;</span><span class="p">]</span>
+            <span class="n">time_mlt_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pars</span><span class="p">[</span><span class="s2">&quot;time_mult_file&quot;</span><span class="p">],</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="n">idx_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nseg&#39;</span><span class="p">,</span> <span class="s1">&#39;icalc&#39;</span><span class="p">,</span> <span class="s1">&#39;outseg&#39;</span><span class="p">,</span> <span class="s1">&#39;iupseg&#39;</span><span class="p">,</span> <span class="s1">&#39;iprior&#39;</span><span class="p">,</span> <span class="s1">&#39;nstrpts&#39;</span><span class="p">]</span>
         <span class="n">present_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">idx_cols</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">mlt_df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
@@ -1595,7 +1707,18 @@
         <span class="n">r_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_records</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sfr</span><span class="o">.</span><span class="n">reach_data</span><span class="p">)</span>
         <span class="n">r_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">r_mlt_cols</span><span class="p">]</span> <span class="o">*=</span> <span class="n">r_mlt_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">r_mlt_cols</span><span class="p">]</span>
         <span class="n">sfr</span><span class="o">.</span><span class="n">reach_data</span> <span class="o">=</span> <span class="n">r_df</span><span class="o">.</span><span class="n">to_records</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
     <span class="c1">#m.remove_package(&quot;sfr&quot;)</span>
+    <span class="k">if</span> <span class="n">pars</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;time_mult_file&quot;</span> <span class="ow">in</span> <span class="n">pars</span><span class="p">:</span>
+        <span class="n">time_mult_file</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="s2">&quot;time_mult_file&quot;</span><span class="p">]</span>
+        <span class="n">time_mlt_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">time_mult_file</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">kper</span><span class="p">,</span> <span class="n">sdata</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">sfr</span><span class="o">.</span><span class="n">segment_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">assert</span> <span class="n">kper</span> <span class="ow">in</span> <span class="n">time_mlt_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;gw_utils.apply_sfr_seg_parameters() error: kper &quot;</span> <span class="o">+</span> \
+                                              <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> not in time_mlt_df index&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">kper</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">time_mlt_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">sdata</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">*=</span> <span class="n">time_mlt_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">kper</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+
     <span class="n">sfr</span><span class="o">.</span><span class="n">write_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">sfrfile</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">sfr</span></div>
 
@@ -2304,7 +2427,7 @@
 
     <span class="k">assert</span> <span class="n">m</span><span class="o">.</span><span class="n">hfb6</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
     <span class="n">hfb_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">model_ws</span><span class="p">,</span><span class="n">m</span><span class="o">.</span><span class="n">hfb6</span><span class="o">.</span><span class="n">file_name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">hfb_file</span><span class="p">),</span><span class="s2">&quot;couldn&#39;t find hfb_file&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hfb_file</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">hfb_file</span><span class="p">),</span><span class="s2">&quot;couldn&#39;t find hfb_file </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hfb_file</span><span class="p">)</span>
     <span class="n">f_in</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">hfb_file</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">tpl_file</span> <span class="o">=</span> <span class="n">hfb_file</span><span class="o">+</span><span class="s2">&quot;.tpl&quot;</span>
     <span class="n">f_tpl</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">tpl_file</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
