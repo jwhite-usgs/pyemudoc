@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemu.Pst &mdash; pyEMU 0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyEMU
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Matrix.html">pyemu.Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Cov.html">pyemu.Cov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Schur.html">pyemu.Schur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ErrVar.html">pyemu.ErrVar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.helpers.html">pyemu.helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.geostats.html">pyemu.geostats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.gw_utils.html">pyemu.gw_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pp_utils.html">pyemu.pp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.smp_utils.html">pyemu.smp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.plot_utils.html">pyemu.plot_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEMU</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>pyemu.Pst</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autosummary/pyemu.Pst.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyemu-pst">
+<h1>pyemu.Pst<a class="headerlink" href="#pyemu-pst" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyemu.Pst">
+<em class="property">class </em><code class="sig-prename descclassname">pyemu.</code><code class="sig-name descname">Pst</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">load=True</em>, <em class="sig-param">resfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Pst" title="Permalink to this definition">¶</a></dt>
+<dd><p>All things PEST(++) control file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<cite>str</cite>) – the name of the control file</p></li>
+<li><p><strong>load</strong> (<cite>bool</cite>, optional) – flag to load the control file. Default is True</p></li>
+<li><p><strong>resfile</strong> (<cite>str</cite>, optional) – corresponding residual file.  If <cite>None</cite>, a residual file
+with the control file base name is sought.  Default is <cite>None</cite></p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is the primary mechanism for dealing with PEST control files.  Support is provided
+for constructing new control files as well as manipulating existing control files.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pst</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">(</span><span class="s2">&quot;my.pst&quot;</span><span class="p">)</span>
+<span class="n">pst</span><span class="o">.</span><span class="n">control_data</span><span class="o">.</span><span class="n">noptmax</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">pst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;my_new.pst&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="pyemu.Pst.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">load=True</em>, <em class="sig-param">resfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/pst/pst_handler.html#Pst.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Pst.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyemu.Pst.__init__" title="pyemu.Pst.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(filename[, load, resfile])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_observations</span></code>(ins_file[, out_file, …])</p></td>
+<td><p>add new obsevations to a control file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_parameters</span></code>(template_file[, in_file, …])</p></td>
+<td><p>add new parameters to an existing control file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pi_equation</span></code>(par_names[, pilbl, rhs, …])</p></td>
+<td><p>a helper to construct a new prior information equation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_transform_columns</span></code>()</p></td>
+<td><p>add transformed values to the <cite>Pst.parameter_data</cite> attribute</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust_weights</span></code>([obs_dict, obsgrp_dict])</p></td>
+<td><p>reset the weights of observations or observation groups to contribute a specified amount to the composite objective function</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust_weights_discrepancy</span></code>([resfile, …])</p></td>
+<td><p>adjusts the weights of each non-zero weight observation based on the residual in the pest residual file so each observations contribution to phi is 1.0 (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_increments</span></code>()</p></td>
+<td><p>experimental method to calculate parameter increments for use in the finite difference pertubation calculations</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_pertubations</span></code>()</p></td>
+<td><p>experimental method to calculate finite difference parameter pertubations.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">enforce_bounds</span></code>()</p></td>
+<td><p>enforce bounds violation</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_io_files</span></code>(tpl_files, in_files, …[, …])</p></td>
+<td><p>create a Pst instance from model interface files.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_par_obs_names</span></code>([par_names, obs_names])</p></td>
+<td><p>construct a shell <cite>Pst</cite> instance from parameter and observation names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>([par_names, obs_names])</p></td>
+<td><p>get a new pst object with subset of parameters and/or observations</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_par_change_limits</span></code>()</p></td>
+<td><p>calculate the various parameter change limits used in pest.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_res_stats</span></code>([nonzero])</p></td>
+<td><p>get some common residual stats by observation group.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code>(filename)</p></td>
+<td><p>entry point load the pest control file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parrep</span></code>([parfile, enforce_bounds])</p></td>
+<td><p>replicates the pest parrep util. replaces the parval1 field in the</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code>([kind])</p></td>
+<td><p>method to plot various parts of the control.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_output_files</span></code>([pst_path])</p></td>
+<td><p>processing the model output files using the instruction files and existing model output files.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">proportional_weights</span></code>([fraction_stdev, wmax, …])</p></td>
+<td><p>setup  weights inversely proportional to the observation value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pgroups</span></code>()</p></td>
+<td><p>synchronize parameter groups section with the parameter data section</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pi</span></code>()</p></td>
+<td><p>rectify the prior information equation with the current state of the parameter_data dataframe.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sanity_checks</span></code>()</p></td>
+<td><p>some basic check for strangeness</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_res</span></code>(res)</p></td>
+<td><p>reset the private <cite>Pst.res</cite> attribute.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code>(new_filename[, update_regul, version])</p></td>
+<td><p>main entry point to write a pest control file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_input_files</span></code>()</p></td>
+<td><p>writes model input files using template files and current <cite>parval1</cite> values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_obs_summary_table</span></code>([filename, group_names])</p></td>
+<td><p>write a stand alone observation summary latex table</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_par_summary_table</span></code>([filename, …])</p></td>
+<td><p>write a stand alone parameter summary latex table</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adj_par_groups</span></code></p></td>
+<td><p>get the parameter groups with atleast one adjustable parameter</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adj_par_names</span></code></p></td>
+<td><p>get the adjustable (not fixed or tied) parameter names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">estimation</span></code></p></td>
+<td><p>check if the control_data.pestmode is set to estimation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">forecast_names</span></code></p></td>
+<td><p>get the forecast names from the pestpp options (if any).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">greater_than_obs_constraints</span></code></p></td>
+<td><p>get the names of the observations that are listed as active greater than inequality constraints.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">greater_than_pi_constraints</span></code></p></td>
+<td><p>get the names of the prior information eqs that are listed as active greater than inequality constraints.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">less_than_obs_constraints</span></code></p></td>
+<td><p>get the names of the observations that are listed as active less than inequality constraints.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">less_than_pi_constraints</span></code></p></td>
+<td><p>get the names of the prior information eqs that are listed as active less than inequality constraints.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnz_obs</span></code></p></td>
+<td><p>get the number of non-zero weighted observations</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnz_obs_groups</span></code></p></td>
+<td><p>get the observation groups that contain at least one non-zero weighted</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnz_obs_names</span></code></p></td>
+<td><p>get the non-zero weight observation names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nobs</span></code></p></td>
+<td><p>get the number of observations</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">npar</span></code></p></td>
+<td><p>get number of parameters</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">npar_adj</span></code></p></td>
+<td><p>get the number of adjustable parameters (not fixed or tied)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nprior</span></code></p></td>
+<td><p>number of prior information equations</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obs_groups</span></code></p></td>
+<td><p>get the observation groups</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obs_names</span></code></p></td>
+<td><p>get the observation names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">par_groups</span></code></p></td>
+<td><p>get the parameter groups</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">par_names</span></code></p></td>
+<td><p>get the parameter names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">phi</span></code></p></td>
+<td><p>get the weighted total objective function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">phi_components</span></code></p></td>
+<td><p>get the individual components of the total objective function</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">phi_components_normalized</span></code></p></td>
+<td><p>get the individual components of the total objective function</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prior_groups</span></code></p></td>
+<td><p>get the prior info groups</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prior_names</span></code></p></td>
+<td><p>get the prior information names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">res</span></code></p></td>
+<td><p>get the residuals dataframe attribute</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tied</span></code></p></td>
+<td><p>list of tied parameter names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero_weight_obs_names</span></code></p></td>
+<td><p>get the zero-weighted observation names</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, pyEMU development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

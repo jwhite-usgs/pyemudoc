@@ -1,0 +1,73 @@
+pyemu.Schur
+===========
+
+.. currentmodule:: pyemu
+
+.. autoclass:: Schur
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Schur.__init__
+      ~Schur.adjust_obscov_resfile
+      ~Schur.apply_karhunen_loeve_scaling
+      ~Schur.clean
+      ~Schur.drop_prior_information
+      ~Schur.get
+      ~Schur.get_added_obs_group_importance
+      ~Schur.get_added_obs_importance
+      ~Schur.get_conditional_instance
+      ~Schur.get_cso_dataframe
+      ~Schur.get_forecast_summary
+      ~Schur.get_obs_competition_dataframe
+      ~Schur.get_obs_group_dict
+      ~Schur.get_par_contribution
+      ~Schur.get_par_css_dataframe
+      ~Schur.get_par_group_contribution
+      ~Schur.get_parameter_summary
+      ~Schur.get_removed_obs_group_importance
+      ~Schur.get_removed_obs_importance
+      ~Schur.next_most_important_added_obs
+      ~Schur.next_most_par_contribution
+      ~Schur.reset_obscov
+      ~Schur.reset_parcov
+      ~Schur.reset_pst
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Schur.adj_par_names
+      ~Schur.fehalf
+      ~Schur.forecast_names
+      ~Schur.forecasts
+      ~Schur.forecasts_iter
+      ~Schur.jco
+      ~Schur.mle_covariance
+      ~Schur.mle_parameter_estimate
+      ~Schur.nnz_obs_names
+      ~Schur.obscov
+      ~Schur.parcov
+      ~Schur.posterior_forecast
+      ~Schur.posterior_parameter
+      ~Schur.posterior_prediction
+      ~Schur.predictions
+      ~Schur.predictions_iter
+      ~Schur.prior_forecast
+      ~Schur.prior_parameter
+      ~Schur.prior_prediction
+      ~Schur.pst
+      ~Schur.qhalf
+      ~Schur.qhalfx
+      ~Schur.xtqx
+   
+   

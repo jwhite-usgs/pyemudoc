@@ -1,0 +1,16 @@
+pyemu.mat
+=========
+
+.. automodule:: pyemu.mat
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

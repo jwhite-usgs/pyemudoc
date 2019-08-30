@@ -1,0 +1,24 @@
+pyemu.smp\_utils
+================
+
+.. automodule:: pyemu.smp_utils
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      dataframe_to_smp
+      smp_to_dataframe
+      smp_to_ins
+   
+   
+
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,51 @@
+pyemu.gw\_utils
+===============
+
+.. automodule:: pyemu.gw_utils
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      apply_gage_obs
+      apply_hds_obs
+      apply_hds_timeseries
+      apply_hfb_pars
+      apply_mflist_budget_obs
+      apply_mtlist_budget_obs
+      apply_sfr_obs
+      apply_sfr_parameters
+      apply_sfr_reach_obs
+      apply_sfr_seg_parameters
+      apply_sft_obs
+      last_kstp_from_kper
+      load_sfr_out
+      modflow_hob_to_instruction_file
+      modflow_hydmod_to_instruction_file
+      modflow_pval_to_template_file
+      modflow_read_hydmod_file
+      modflow_sfr_gag_to_instruction_file
+      setup_gage_obs
+      setup_hds_obs
+      setup_hds_timeseries
+      setup_mflist_budget_obs
+      setup_mtlist_budget_obs
+      setup_sfr_obs
+      setup_sfr_reach_obs
+      setup_sfr_reach_parameters
+      setup_sfr_seg_parameters
+      setup_sft_obs
+      write_hfb_template
+      write_hfb_zone_multipliers_template
+   
+   
+
+   
+   
+   
+
+   
+   
+   

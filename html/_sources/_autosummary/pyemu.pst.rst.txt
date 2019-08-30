@@ -1,0 +1,81 @@
+pyemu.Pst
+=========
+
+.. currentmodule:: pyemu
+
+.. autoclass:: Pst
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Pst.__init__
+      ~Pst.add_observations
+      ~Pst.add_parameters
+      ~Pst.add_pi_equation
+      ~Pst.add_transform_columns
+      ~Pst.adjust_weights
+      ~Pst.adjust_weights_discrepancy
+      ~Pst.build_increments
+      ~Pst.calculate_pertubations
+      ~Pst.enforce_bounds
+      ~Pst.from_io_files
+      ~Pst.from_par_obs_names
+      ~Pst.get
+      ~Pst.get_par_change_limits
+      ~Pst.get_res_stats
+      ~Pst.load
+      ~Pst.parrep
+      ~Pst.plot
+      ~Pst.process_output_files
+      ~Pst.proportional_weights
+      ~Pst.rectify_pgroups
+      ~Pst.rectify_pi
+      ~Pst.sanity_checks
+      ~Pst.set_res
+      ~Pst.write
+      ~Pst.write_input_files
+      ~Pst.write_obs_summary_table
+      ~Pst.write_par_summary_table
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Pst.adj_par_groups
+      ~Pst.adj_par_names
+      ~Pst.estimation
+      ~Pst.forecast_names
+      ~Pst.greater_than_obs_constraints
+      ~Pst.greater_than_pi_constraints
+      ~Pst.less_than_obs_constraints
+      ~Pst.less_than_pi_constraints
+      ~Pst.nnz_obs
+      ~Pst.nnz_obs_groups
+      ~Pst.nnz_obs_names
+      ~Pst.nobs
+      ~Pst.npar
+      ~Pst.npar_adj
+      ~Pst.nprior
+      ~Pst.obs_groups
+      ~Pst.obs_names
+      ~Pst.par_groups
+      ~Pst.par_names
+      ~Pst.phi
+      ~Pst.phi_components
+      ~Pst.phi_components_normalized
+      ~Pst.prior_groups
+      ~Pst.prior_names
+      ~Pst.res
+      ~Pst.tied
+      ~Pst.zero_weight_obs_names
+   
+   

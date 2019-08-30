@@ -1,0 +1,38 @@
+pyemu.geostats
+==============
+
+.. automodule:: pyemu.geostats
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      fac2real
+      gslib_2_dataframe
+      load_sgems_exp_var
+      read_sgems_variogram_xml
+      read_struct_file
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ExpVario
+      GauVario
+      GeoStruct
+      OrdinaryKrige
+      SpecSim2d
+      SphVario
+      Vario2d
+   
+   
+
+   
+   
+   

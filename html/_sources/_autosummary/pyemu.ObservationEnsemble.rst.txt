@@ -1,0 +1,46 @@
+pyemu.ObservationEnsemble
+=========================
+
+.. currentmodule:: pyemu
+
+.. autoclass:: ObservationEnsemble
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ObservationEnsemble.__init__
+      ~ObservationEnsemble.add_base
+      ~ObservationEnsemble.as_pyemu_matrix
+      ~ObservationEnsemble.back_transform
+      ~ObservationEnsemble.copy
+      ~ObservationEnsemble.covariance_matrix
+      ~ObservationEnsemble.dropna
+      ~ObservationEnsemble.from_binary
+      ~ObservationEnsemble.from_csv
+      ~ObservationEnsemble.from_dataframe
+      ~ObservationEnsemble.from_gaussian_draw
+      ~ObservationEnsemble.get_deviations
+      ~ObservationEnsemble.plot
+      ~ObservationEnsemble.reseed
+      ~ObservationEnsemble.to_binary
+      ~ObservationEnsemble.to_csv
+      ~ObservationEnsemble.transform
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ObservationEnsemble.istransformed
+      ~ObservationEnsemble.nonzero
+      ~ObservationEnsemble.phi_vector
+   
+   

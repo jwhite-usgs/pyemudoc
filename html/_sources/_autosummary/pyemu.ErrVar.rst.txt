@@ -1,0 +1,77 @@
+pyemu.ErrVar
+============
+
+.. currentmodule:: pyemu
+
+.. autoclass:: ErrVar
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ErrVar.G
+      ~ErrVar.I_minus_R
+      ~ErrVar.R
+      ~ErrVar.__init__
+      ~ErrVar.adjust_obscov_resfile
+      ~ErrVar.apply_karhunen_loeve_scaling
+      ~ErrVar.clean
+      ~ErrVar.drop_prior_information
+      ~ErrVar.first_forecast
+      ~ErrVar.first_parameter
+      ~ErrVar.first_prediction
+      ~ErrVar.get
+      ~ErrVar.get_cso_dataframe
+      ~ErrVar.get_errvar_dataframe
+      ~ErrVar.get_identifiability_dataframe
+      ~ErrVar.get_null_proj
+      ~ErrVar.get_obs_competition_dataframe
+      ~ErrVar.get_par_css_dataframe
+      ~ErrVar.reset_obscov
+      ~ErrVar.reset_parcov
+      ~ErrVar.reset_pst
+      ~ErrVar.second_forecast
+      ~ErrVar.second_parameter
+      ~ErrVar.second_prediction
+      ~ErrVar.third_forecast
+      ~ErrVar.third_parameter
+      ~ErrVar.third_prediction
+      ~ErrVar.variance_at
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ErrVar.adj_par_names
+      ~ErrVar.fehalf
+      ~ErrVar.forecast_names
+      ~ErrVar.forecasts
+      ~ErrVar.forecasts_iter
+      ~ErrVar.jco
+      ~ErrVar.mle_covariance
+      ~ErrVar.mle_parameter_estimate
+      ~ErrVar.nnz_obs_names
+      ~ErrVar.obscov
+      ~ErrVar.omitted_jco
+      ~ErrVar.omitted_parcov
+      ~ErrVar.omitted_predictions
+      ~ErrVar.parcov
+      ~ErrVar.predictions
+      ~ErrVar.predictions_iter
+      ~ErrVar.prior_forecast
+      ~ErrVar.prior_parameter
+      ~ErrVar.prior_prediction
+      ~ErrVar.pst
+      ~ErrVar.qhalf
+      ~ErrVar.qhalfx
+      ~ErrVar.xtqx
+   
+   

@@ -1,0 +1,79 @@
+pyemu.Matrix
+============
+
+.. currentmodule:: pyemu
+
+.. autoclass:: Matrix
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Matrix.__init__
+      ~Matrix.align
+      ~Matrix.copy
+      ~Matrix.df
+      ~Matrix.drop
+      ~Matrix.element_isaligned
+      ~Matrix.extend
+      ~Matrix.extract
+      ~Matrix.find_rowcol_indices
+      ~Matrix.from_ascii
+      ~Matrix.from_binary
+      ~Matrix.from_dataframe
+      ~Matrix.from_fortranfile
+      ~Matrix.from_names
+      ~Matrix.get
+      ~Matrix.get_diagonal_vector
+      ~Matrix.get_maxsing
+      ~Matrix.get_maxsing_from_s
+      ~Matrix.hadamard_product
+      ~Matrix.indices
+      ~Matrix.mult_isaligned
+      ~Matrix.pseudo_inv
+      ~Matrix.pseudo_inv_components
+      ~Matrix.read_ascii
+      ~Matrix.read_binary
+      ~Matrix.reset_x
+      ~Matrix.to_2d
+      ~Matrix.to_ascii
+      ~Matrix.to_binary
+      ~Matrix.to_coo
+      ~Matrix.to_dataframe
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Matrix.T
+      ~Matrix.as_2d
+      ~Matrix.binary_header_dt
+      ~Matrix.binary_rec_dt
+      ~Matrix.coo_rec_dt
+      ~Matrix.full_s
+      ~Matrix.inv
+      ~Matrix.ncol
+      ~Matrix.new_obs_length
+      ~Matrix.new_par_length
+      ~Matrix.newx
+      ~Matrix.nrow
+      ~Matrix.obs_length
+      ~Matrix.par_length
+      ~Matrix.s
+      ~Matrix.shape
+      ~Matrix.sqrt
+      ~Matrix.transpose
+      ~Matrix.u
+      ~Matrix.v
+      ~Matrix.x
+      ~Matrix.zero2d
+   
+   

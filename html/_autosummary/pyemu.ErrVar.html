@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemu.ErrVar &mdash; pyEMU 0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyemu.ObservationEnsemble" href="pyemu.ObservationEnsemble.html" />
+    <link rel="prev" title="pyemu.Schur" href="pyemu.Schur.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyEMU
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Matrix.html">pyemu.Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Cov.html">pyemu.Cov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Schur.html">pyemu.Schur</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyemu.ErrVar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.helpers.html">pyemu.helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.geostats.html">pyemu.geostats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.gw_utils.html">pyemu.gw_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pp_utils.html">pyemu.pp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.smp_utils.html">pyemu.smp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.plot_utils.html">pyemu.plot_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEMU</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>pyemu.ErrVar</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autosummary/pyemu.ErrVar.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyemu-errvar">
+<h1>pyemu.ErrVar<a class="headerlink" href="#pyemu-errvar" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyemu.ErrVar">
+<em class="property">class </em><code class="sig-prename descclassname">pyemu.</code><code class="sig-name descname">ErrVar</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ErrVar" title="Permalink to this definition">¶</a></dt>
+<dd><p>FOSM-based error variance analysis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jco</strong> (<em>varies</em><em>, </em><em>optional</em>) – something that can be cast or loaded into a <cite>pyemu.Jco</cite>.  Can be a
+str for a filename or <cite>pyemu.Matrix</cite>/<cite>pyemu.Jco</cite> object.</p></li>
+<li><p><strong>pst</strong> (<em>varies</em><em>, </em><em>optional</em>) – something that can be cast into a <cite>pyemu.Pst</cite>.  Can be an <cite>str</cite> for a
+filename or an existing <cite>pyemu.Pst</cite>.  If <cite>None</cite>, a pst filename is sought
+with the same base name as the jco argument (if passed)</p></li>
+<li><p><strong>parcov</strong> (<em>varies</em><em>, </em><em>optional</em>) – prior parameter covariance matrix.  If <cite>str</cite>, a filename is assumed and
+the prior parameter covariance matrix is loaded from a file using
+the file extension (“.jcb”/”.jco” for binary, “.cov”/”.mat” for PEST-style ASCII matrix,
+or “.unc” for uncertainty files).  If <cite>None</cite>, the prior parameter covariance matrix is
+constructed from the parameter bounds in <cite>LinearAnalysis.pst</cite>.  Can also be a <cite>pyemu.Cov</cite> instance</p></li>
+<li><p><strong>obscov</strong> (<em>varies</em><em>, </em><em>optional</em>) – observation noise covariance matrix.  If <cite>str</cite>, a filename is assumed and
+the noise covariance matrix is loaded from a file using
+the file extension (“.jcb”/”.jco” for binary, “.cov”/”.mat” for PEST-style ASCII matrix,
+or “.unc” for uncertainty files).  If <cite>None</cite>, the noise covariance matrix is
+constructed from the obsevation weights in <cite>LinearAnalysis.pst</cite>.  Can also be a <cite>pyemu.Cov</cite> instance</p></li>
+<li><p><strong>forecasts</strong> (<em>varies</em><em>, </em><em>optional</em>) – forecast sensitivity vectors.  If <cite>str</cite>, first an observation name is assumed (a row
+in <cite>LinearAnalysis.jco</cite>).  If that is not found, a filename is assumed and predictions are
+loaded from a file using the file extension.  If [<cite>str</cite>], a list of observation names is assumed.
+Can also be a <cite>pyemu.Matrix</cite> instance, a <cite>numpy.ndarray</cite> or a collection.  Note if the PEST++ option
+“++forecasts()” is set in the pest control file (under the <cite>pyemu.Pst.pestpp_options</cite> dictionary),
+then there is no need to pass this argument (unless you want to analyze different forecasts)
+of <cite>pyemu.Matrix</cite> or <cite>numpy.ndarray</cite>.</p></li>
+<li><p><strong>ref_var</strong> (<em>float</em><em>, </em><em>optional</em>) – reference variance.  Default is 1.0</p></li>
+<li><p><strong>verbose</strong> (<cite>bool</cite>) – controls screen output.  If <cite>str</cite>, a filename is assumed and
+and log file is written.</p></li>
+<li><p><strong>sigma_range</strong> (<cite>float</cite>, optional) – defines range of upper bound - lower bound in terms of standard
+deviation (sigma). For example, if sigma_range = 4, the bounds represent 4 * sigma.
+Default is 4.0, representing approximately 95% confidence of implied normal distribution.
+This arg is only used if constructing parcov from parameter bounds.</p></li>
+<li><p><strong>scale_offset</strong> (<cite>bool</cite>, optional) – flag to apply parameter scale and offset to parameter bounds
+when calculating prior parameter covariance matrix from bounds.  This arg is onlyused if
+constructing parcov from parameter bounds.Default is True.</p></li>
+<li><p><strong>omitted_parameters</strong> ([<cite>str</cite>]) – list of parameters to treat as “omitted”.  Passing this argument
+activates 3-term error variance analysis.</p></li>
+<li><p><strong>omitted_parcov</strong> (<em>varies</em>) – an argument that can be cast to a parcov for the omitted parameters.
+If None, omitted_parcov will be formed by extracting a sub-matrix from the <cite>LinearAnalsis.parcov</cite>
+attribute.</p></li>
+<li><p><strong>omitted_predictions</strong> (<em>varies</em>) – an argument that can be cast to a “predictions” (e.g. “forecasts”)
+attribute to form prediction sensitivity vectors with respec to the omitted parameters.  If None,
+these vectors will be extracted from the <cite>pyemu.LinearAnalysis.predictions</cite> attribute</p></li>
+<li><p><strong>kl</strong> (<cite>bool</cite>, optional) – flag to perform Karhunen-Loeve scaling on the jacobian before error variance
+calculations. If <cite>True</cite>, the <cite>pyemu.ErrVar.jco</cite> and <cite>pyemu.ErrVar.parcov</cite> are altered in place.
+Default is <cite>False</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ev</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">ErrVar</span><span class="p">(</span><span class="n">jco</span><span class="o">=</span><span class="s2">&quot;my.jco&quot;</span><span class="p">,</span><span class="n">omitted_parameters</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wel1&quot;</span><span class="p">,</span><span class="s2">&quot;wel2&quot;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">get_errvar_dataframe</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="pyemu.ErrVar.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/ev.html#ErrVar.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.ErrVar.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">G</span></code>(singular_value)</p></td>
+<td><p>get the parameter solution Matrix at a given singular value</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">I_minus_R</span></code>(singular_value)</p></td>
+<td><p>get I - R at a given singular value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code>(singular_value)</p></td>
+<td><p>get resolution Matrix (V_1 * V_1^T) at a given singular value</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyemu.ErrVar.__init__" title="pyemu.ErrVar.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(jco, **kwargs)</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjust_obscov_resfile</span></code>([resfile])</p></td>
+<td><p>reset the elements of obscov by scaling the implied weights based on the phi components in res_file so that the total phi is equal to the number of non-zero weights.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_karhunen_loeve_scaling</span></code>()</p></td>
+<td><p>apply karhuene-loeve scaling to the jacobian matrix.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean</span></code>()</p></td>
+<td><p>drop regularization and prior information observation from the jco</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_prior_information</span></code>()</p></td>
+<td><p>drop the prior information from the jco and pst attributes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_forecast</span></code>(singular_value)</p></td>
+<td><p>get the null space term (first term) contribution to forecast (e.g. prediction)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_parameter</span></code>(singular_value)</p></td>
+<td><p>get the null space term (first term) contribution to parameter error variance</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_prediction</span></code>(singular_value)</p></td>
+<td><p>get the null space term (first term) contribution to prediction error variance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>([par_names, obs_names, astype])</p></td>
+<td><p>method to get a new LinearAnalysis class using a subset of parameters and/or observations</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_cso_dataframe</span></code>()</p></td>
+<td><p>get a dataframe of composite observation sensitivity, as returned by PEST in the seo file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_errvar_dataframe</span></code>([singular_values])</p></td>
+<td><p>primary entry point for error variance analysis.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_identifiability_dataframe</span></code>([…])</p></td>
+<td><p>primary entry point for identifiability analysis</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_null_proj</span></code>([maxsing, eigthresh])</p></td>
+<td><p>get a null-space projection matrix of XTQX</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_obs_competition_dataframe</span></code>()</p></td>
+<td><p>get the observation competition stat a la PEST utility</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_par_css_dataframe</span></code>()</p></td>
+<td><p>get a dataframe of composite scaled sensitivities.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_obscov</span></code>([arg])</p></td>
+<td><p>reset the obscov attribute to None</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_parcov</span></code>([arg])</p></td>
+<td><p>reset the parcov attribute to None</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_pst</span></code>(arg)</p></td>
+<td><p>reset the LinearAnalysis.pst attribute</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">second_forecast</span></code>(singular_value)</p></td>
+<td><p>get the solution space contribution to forecast (e.g.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">second_parameter</span></code>(singular_value)</p></td>
+<td><p>get the solution space contribution to parameter error variance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">second_prediction</span></code>(singular_value)</p></td>
+<td><p>get the solution space contribution to predictive error variance at a given singular value</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">third_forecast</span></code>(singular_value)</p></td>
+<td><p>get the omitted parameter contribution to forecast (<cite>prediction</cite>) error variance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">third_parameter</span></code>(singular_value)</p></td>
+<td><p>get the omitted parameter contribution to parameter error variance</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">third_prediction</span></code>(singular_value)</p></td>
+<td><p>get the omitted parameter contribution to prediction error variance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">variance_at</span></code>(singular_value)</p></td>
+<td><p>get the error variance of all three error variance terms at a</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">adj_par_names</span></code></p></td>
+<td><p>adjustable parameter names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fehalf</span></code></p></td>
+<td><p>Karhunen-Loeve scaling matrix attribute.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">forecast_names</span></code></p></td>
+<td><p>get the forecast (aka prediction) names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">forecasts</span></code></p></td>
+<td><p>the forecast sentivity vectors attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">forecasts_iter</span></code></p></td>
+<td><p>forecast (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jco</span></code></p></td>
+<td><p>the jacobian matrix attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mle_covariance</span></code></p></td>
+<td><p>maximum likelihood parameter covariance matrix.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mle_parameter_estimate</span></code></p></td>
+<td><p>maximum likelihood parameter estimate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnz_obs_names</span></code></p></td>
+<td><p>non-zero-weighted observation names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obscov</span></code></p></td>
+<td><p>get the observation noise covariance matrix attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">omitted_jco</span></code></p></td>
+<td><p>the omitted-parameters jacobian matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">omitted_parcov</span></code></p></td>
+<td><p>the prior omitted-parameter covariance matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">omitted_predictions</span></code></p></td>
+<td><p>omitted prediction sensitivity vectors</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parcov</span></code></p></td>
+<td><p>get the prior parameter covariance matrix attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predictions</span></code></p></td>
+<td><p>the prediction (aka forecast) sentivity vectors attribute</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">predictions_iter</span></code></p></td>
+<td><p>prediction sensitivity vectors iterator</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prior_forecast</span></code></p></td>
+<td><p>prior forecast (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prior_parameter</span></code></p></td>
+<td><p>prior parameter covariance matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prior_prediction</span></code></p></td>
+<td><p>prior prediction (e.g.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pst</span></code></p></td>
+<td><p>the pst attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">qhalf</span></code></p></td>
+<td><p>square root of the cofactor matrix attribute.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">qhalfx</span></code></p></td>
+<td><p>half normal matrix attribute.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">xtqx</span></code></p></td>
+<td><p>normal matrix attribute.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyemu.ObservationEnsemble.html" class="btn btn-neutral float-right" title="pyemu.ObservationEnsemble" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyemu.Schur.html" class="btn btn-neutral float-left" title="pyemu.Schur" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, pyEMU development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

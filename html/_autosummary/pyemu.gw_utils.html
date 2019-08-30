@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemu.gw_utils &mdash; pyEMU 0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyemu.pp_utils" href="pyemu.pp_utils.html" />
+    <link rel="prev" title="pyemu.geostats" href="pyemu.geostats.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyEMU
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Matrix.html">pyemu.Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Cov.html">pyemu.Cov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Schur.html">pyemu.Schur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ErrVar.html">pyemu.ErrVar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.helpers.html">pyemu.helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.geostats.html">pyemu.geostats</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyemu.gw_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pp_utils.html">pyemu.pp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.smp_utils.html">pyemu.smp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.plot_utils.html">pyemu.plot_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEMU</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>pyemu.gw_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autosummary/pyemu.gw_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-pyemu.gw_utils">
+<span id="pyemu-gw-utils"></span><h1>pyemu.gw_utils<a class="headerlink" href="#module-pyemu.gw_utils" title="Permalink to this headline">¶</a></h1>
+<p>MODFLOW support utilities</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_gage_obs</span></code>([return_obs_file])</p></td>
+<td><p>apply the modflow gage obs post-processor</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_obs</span></code>(hds_file[, inact_abs_val])</p></td>
+<td><p>process a modflow head save file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_timeseries</span></code>([config_file, …])</p></td>
+<td><p>process a modflow headsave format binary file using a previously written configuration file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hfb_pars</span></code>([par_file])</p></td>
+<td><p>a function to apply HFB multiplier parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
+<td><p>process a MODFLOW list file to extract flux and volume water budget entries.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
+<td><p>process an MT3D-USGS list file to extract mass budget entries.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_obs</span></code>()</p></td>
+<td><p>apply the sfr observation process</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_parameters</span></code>([seg_pars, reach_pars])</p></td>
+<td><p>thin wrapper around <cite>gw_utils.apply_sfr_seg_parameters()</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_reach_obs</span></code>()</p></td>
+<td><p>apply the sfr reach observation process.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_seg_parameters</span></code>([seg_pars, reach_pars])</p></td>
+<td><p>apply the SFR segement multiplier parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sft_obs</span></code>()</p></td>
+<td><p>process an mt3d-usgs sft ASCII output file using a previous-written config file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">last_kstp_from_kper</span></code>(hds, kper)</p></td>
+<td><p>function to find the last time step (kstp) for a give stress period (kper) in a modflow head save file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sfr_out</span></code>(sfr_out_file[, selection])</p></td>
+<td><p>load an ASCII SFR output file into a dictionary of kper: dataframes.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hob_to_instruction_file</span></code>(hob_file[, …])</p></td>
+<td><p>write an instruction file for a modflow head observation file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hydmod_to_instruction_file</span></code>(hydmod_file)</p></td>
+<td><p>write an instruction file for a modflow hydmod file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_pval_to_template_file</span></code>(pval_file[, …])</p></td>
+<td><p>write a template file for a modflow parameter value file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_read_hydmod_file</span></code>(hydmod_file[, …])</p></td>
+<td><p>read a binary hydmod file and return a dataframe of the results</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_sfr_gag_to_instruction_file</span></code>(…[, …])</p></td>
+<td><p>writes an instruction file for an SFR gage output file to read Flow only at all times</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_gage_obs</span></code>(gage_file[, ins_file, …])</p></td>
+<td><p>setup a forward run post processor routine for the modflow gage file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_obs</span></code>(hds_file[, kperk_pairs, skip, …])</p></td>
+<td><p>a function to setup using all values from a layer-stress period pair for observations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_timeseries</span></code>(hds_file, kij_dict[, …])</p></td>
+<td><p>a function to setup a forward process to extract time-series style values from a binary modflow head save (or equivalent format - ucn, sub, etc).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
+<td><p>setup observations of budget volume and flux from modflow list file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
+<td><p>setup observations of gw (and optionally sw) mass budgets from mt3dusgs list file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_obs</span></code>(sfr_out_file[, …])</p></td>
+<td><p>setup observations using the sfr ASCII output file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_obs</span></code>(sfr_out_file[, …])</p></td>
+<td><p>setup observations using the sfr ASCII output file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_parameters</span></code>(nam_file[, …])</p></td>
+<td><p>Setup multiplier paramters for reach data, when reachinput option is specififed in sfr.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_seg_parameters</span></code>(nam_file[, …])</p></td>
+<td><p>Setup multiplier parameters for SFR segment data.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sft_obs</span></code>(sft_file[, ins_file, …])</p></td>
+<td><p>writes a post-processor and instruction file for a mt3d-usgs sft output file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_hfb_template</span></code>(m)</p></td>
+<td><p>write a template file for an hfb (yuck!)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_hfb_zone_multipliers_template</span></code>(m)</p></td>
+<td><p>write a template file for an hfb using multipliers per zone (double yuck!)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyemu.pp_utils.html" class="btn btn-neutral float-right" title="pyemu.pp_utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyemu.geostats.html" class="btn btn-neutral float-left" title="pyemu.geostats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, pyEMU development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

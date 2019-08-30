@@ -1,0 +1,92 @@
+pyemu.Cov
+=========
+
+.. currentmodule:: pyemu
+
+.. autoclass:: Cov
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~Cov.__init__
+      ~Cov.align
+      ~Cov.condition_on
+      ~Cov.copy
+      ~Cov.df
+      ~Cov.drop
+      ~Cov.element_isaligned
+      ~Cov.extend
+      ~Cov.extract
+      ~Cov.find_rowcol_indices
+      ~Cov.from_ascii
+      ~Cov.from_binary
+      ~Cov.from_dataframe
+      ~Cov.from_fortranfile
+      ~Cov.from_names
+      ~Cov.from_observation_data
+      ~Cov.from_obsweights
+      ~Cov.from_parameter_data
+      ~Cov.from_parbounds
+      ~Cov.from_uncfile
+      ~Cov.get
+      ~Cov.get_diagonal_vector
+      ~Cov.get_maxsing
+      ~Cov.get_maxsing_from_s
+      ~Cov.hadamard_product
+      ~Cov.identity_like
+      ~Cov.indices
+      ~Cov.mult_isaligned
+      ~Cov.pseudo_inv
+      ~Cov.pseudo_inv_components
+      ~Cov.read_ascii
+      ~Cov.read_binary
+      ~Cov.replace
+      ~Cov.reset_x
+      ~Cov.to_2d
+      ~Cov.to_ascii
+      ~Cov.to_binary
+      ~Cov.to_coo
+      ~Cov.to_dataframe
+      ~Cov.to_pearson
+      ~Cov.to_uncfile
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~Cov.T
+      ~Cov.as_2d
+      ~Cov.binary_header_dt
+      ~Cov.binary_rec_dt
+      ~Cov.coo_rec_dt
+      ~Cov.full_s
+      ~Cov.identity
+      ~Cov.inv
+      ~Cov.names
+      ~Cov.ncol
+      ~Cov.new_obs_length
+      ~Cov.new_par_length
+      ~Cov.newx
+      ~Cov.nrow
+      ~Cov.obs_length
+      ~Cov.par_length
+      ~Cov.s
+      ~Cov.shape
+      ~Cov.sqrt
+      ~Cov.transpose
+      ~Cov.u
+      ~Cov.v
+      ~Cov.x
+      ~Cov.zero
+      ~Cov.zero2d
+   
+   

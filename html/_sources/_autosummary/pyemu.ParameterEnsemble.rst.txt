@@ -1,0 +1,54 @@
+pyemu.ParameterEnsemble
+=======================
+
+.. currentmodule:: pyemu
+
+.. autoclass:: ParameterEnsemble
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~ParameterEnsemble.__init__
+      ~ParameterEnsemble.add_base
+      ~ParameterEnsemble.as_pyemu_matrix
+      ~ParameterEnsemble.back_transform
+      ~ParameterEnsemble.copy
+      ~ParameterEnsemble.covariance_matrix
+      ~ParameterEnsemble.dropna
+      ~ParameterEnsemble.enforce
+      ~ParameterEnsemble.from_binary
+      ~ParameterEnsemble.from_csv
+      ~ParameterEnsemble.from_dataframe
+      ~ParameterEnsemble.from_gaussian_draw
+      ~ParameterEnsemble.from_parfiles
+      ~ParameterEnsemble.from_triangular_draw
+      ~ParameterEnsemble.from_uniform_draw
+      ~ParameterEnsemble.get_deviations
+      ~ParameterEnsemble.plot
+      ~ParameterEnsemble.project
+      ~ParameterEnsemble.reseed
+      ~ParameterEnsemble.to_binary
+      ~ParameterEnsemble.to_csv
+      ~ParameterEnsemble.transform
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~ParameterEnsemble.adj_names
+      ~ParameterEnsemble.fixed_indexer
+      ~ParameterEnsemble.istransformed
+      ~ParameterEnsemble.lbnd
+      ~ParameterEnsemble.log_indexer
+      ~ParameterEnsemble.ubnd
+   
+   

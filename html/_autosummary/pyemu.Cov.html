@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemu.Cov &mdash; pyEMU 0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pyemu.Schur" href="pyemu.Schur.html" />
+    <link rel="prev" title="pyemu.Matrix" href="pyemu.Matrix.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyEMU
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Matrix.html">pyemu.Matrix</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pyemu.Cov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.Schur.html">pyemu.Schur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ErrVar.html">pyemu.ErrVar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.helpers.html">pyemu.helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.geostats.html">pyemu.geostats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.gw_utils.html">pyemu.gw_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pp_utils.html">pyemu.pp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.smp_utils.html">pyemu.smp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.plot_utils.html">pyemu.plot_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyEMU</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>pyemu.Cov</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autosummary/pyemu.Cov.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pyemu-cov">
+<h1>pyemu.Cov<a class="headerlink" href="#pyemu-cov" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyemu.Cov">
+<em class="property">class </em><code class="sig-prename descclassname">pyemu.</code><code class="sig-name descname">Cov</code><span class="sig-paren">(</span><em class="sig-param">x=None</em>, <em class="sig-param">names=[]</em>, <em class="sig-param">row_names=[]</em>, <em class="sig-param">col_names=[]</em>, <em class="sig-param">isdiagonal=False</em>, <em class="sig-param">autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Cov" title="Permalink to this definition">¶</a></dt>
+<dd><p>Diagonal and/or dense Covariance matrices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<cite>numpy.ndarray</cite>) – numeric values</p></li>
+<li><p><strong>names</strong> ([<cite>str</cite>]) – list of row and column names</p></li>
+<li><p><strong>isdigonal</strong> (<cite>bool</cite>) – flag if the Matrix is diagonal</p></li>
+<li><p><strong>autoalign</strong> (<cite>bool</cite>) – flag to control the autoalignment of Matrix during
+linear algebra operations</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;par_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">mat</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Cov</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+<span class="n">mat</span><span class="o">.</span><span class="n">to_binary</span><span class="p">(</span><span class="s2">&quot;mat.jco&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>row_names</cite> and <cite>col_names</cite> args are supported in the contructor
+so support inheritance.  However, users should only pass <cite>names</cite></p>
+</div>
+<dl class="method">
+<dt id="pyemu.Cov.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">x=None</em>, <em class="sig-param">names=[]</em>, <em class="sig-param">row_names=[]</em>, <em class="sig-param">col_names=[]</em>, <em class="sig-param">isdiagonal=False</em>, <em class="sig-param">autoalign=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/mat/mat_handler.html#Cov.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Cov.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyemu.Cov.__init__" title="pyemu.Cov.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([x, names, row_names, col_names, …])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">align</span></code>(names[, axis])</p></td>
+<td><p>reorder <cite>Matrix</cite> by names in place.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">condition_on</span></code>(conditioning_elements)</p></td>
+<td><p>get a new Covariance object that is conditional on knowing some elements.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
+<td><p>get a copy of <cite>Matrix</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">df</span></code>()</p></td>
+<td><p>wrapper of Matrix.to_dataframe()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop</span></code>(names, axis)</p></td>
+<td><p>drop elements from <cite>Matrix</cite> in place</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">element_isaligned</span></code>(other)</p></td>
+<td><p>check if matrices are aligned for element-wise operations</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extend</span></code>(other)</p></td>
+<td><p>extend <cite>Matrix</cite> with the elements of other.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract</span></code>([row_names, col_names])</p></td>
+<td><p>wrapper method that <cite>Matrix.gets()</cite> then <cite>Matrix.drops()</cite> elements.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_rowcol_indices</span></code>(names, row_names, col_names)</p></td>
+<td><p>fast(er) look of row and colum names indices</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_ascii</span></code>(filename)</p></td>
+<td><p>load a PEST-compatible ASCII matrix/vector file into a <cite>Matrix</cite> instance</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_binary</span></code>(filename)</p></td>
+<td><p>class method load from PEST-compatible binary file into a Matrix instance</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_dataframe</span></code>(df)</p></td>
+<td><p>class method to create a new <cite>Matrix</cite> instance from a</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_fortranfile</span></code>(filename)</p></td>
+<td><p>a binary load method to accommodate one of the many</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_names</span></code>(row_names, col_names[, …])</p></td>
+<td><p>class method to create a new Matrix instance from row names and column names, filled with trash</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_observation_data</span></code>(pst)</p></td>
+<td><p>instantiates a <cite>Cov</cite> from pyemu.Pst.observation_data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_obsweights</span></code>(pst_file)</p></td>
+<td><p>instantiates a <cite>Cov</cite> instance from observation weights in a PEST control file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_parameter_data</span></code>(pst[, sigma_range, …])</p></td>
+<td><p>Instantiates a <cite>Cov</cite> from a pest control file parameter data section using parameter bounds as a proxy for uncertainty.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_parbounds</span></code>(pst_file[, sigma_range, …])</p></td>
+<td><p>Instantiates a <cite>Cov</cite> from a pest control file parameter data section using parameter bounds as a proxy for uncertainty.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_uncfile</span></code>(filename)</p></td>
+<td><p>instaniates a <cite>Cov</cite> from a PEST-compatible uncertainty file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>([row_names, col_names, drop])</p></td>
+<td><p>get a new <cite>Matrix</cite> instance ordered on row_names or col_names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_diagonal_vector</span></code>([col_name])</p></td>
+<td><p>Get a new Matrix instance that is the diagonal of self.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_maxsing</span></code>([eigthresh])</p></td>
+<td><p>Get the number of singular components with a singular value ratio greater than or equal to eigthresh</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_maxsing_from_s</span></code>(s[, eigthresh])</p></td>
+<td><p>static method to work out the maxsing for a given singular spectrum</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">hadamard_product</span></code>(other)</p></td>
+<td><p>Overload of numpy.ndarray.__mult__(): element-wise multiplication.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity_like</span></code>(other)</p></td>
+<td><p>Get an identity matrix Cov instance like other <cite>Cov</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">indices</span></code>(names[, axis])</p></td>
+<td><p>get the row and col indices of names. If axis is None, two ndarrays</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mult_isaligned</span></code>(other)</p></td>
+<td><p>check if matrices are aligned for dot product multiplication</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudo_inv</span></code>([maxsing, eigthresh])</p></td>
+<td><p>The pseudo inverse of self.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudo_inv_components</span></code>([maxsing, eigthresh, …])</p></td>
+<td><p>Get the (optionally) truncated SVD components</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_ascii</span></code>(filename)</p></td>
+<td><p>read a PEST-compatible ASCII matrix/vector file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_binary</span></code>(filename)</p></td>
+<td><p>static method to read PEST-format binary files</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace</span></code>(other)</p></td>
+<td><p>replace elements in the covariance matrix with elements from other.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_x</span></code>(x[, copy])</p></td>
+<td><p>reset self.__x private attribute</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_2d</span></code>()</p></td>
+<td><p>get a 2D <cite>Matrix</cite> representation of <cite>Matrix</cite>.  If not <cite>Matrix.isdiagonal</cite>, simply</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ascii</span></code>(filename[, icode])</p></td>
+<td><p>write a PEST-compatible ASCII Matrix/vector file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_binary</span></code>(filename[, droptol, chunk])</p></td>
+<td><p>write a PEST-compatible binary file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_coo</span></code>(filename[, droptol, chunk])</p></td>
+<td><p>write an extended PEST-format binary file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_dataframe</span></code>()</p></td>
+<td><p>return a pandas.DataFrame representation of <cite>Matrix</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pearson</span></code>()</p></td>
+<td><p>Convert Cov instance to Pearson correlation coefficient matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_uncfile</span></code>(unc_file[, covmat_file, …])</p></td>
+<td><p>write a PEST-compatible uncertainty file</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code></p></td>
+<td><p>wrapper function for <cite>Matrix.transpose()</cite> method</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">as_2d</span></code></p></td>
+<td><p>get a 2D numeric representation of <cite>Matrix.x</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_header_dt</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">binary_rec_dt</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">coo_rec_dt</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">full_s</span></code></p></td>
+<td><p>Get the full singular value matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity</span></code></p></td>
+<td><p>get an identity <cite>Cov</cite> of the same shape</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inv</span></code></p></td>
+<td><p>inversion operation of <cite>Matrix</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">names</span></code></p></td>
+<td><p>wrapper for getting row_names.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ncol</span></code></p></td>
+<td><p>length of second dimension</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_obs_length</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">new_par_length</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">newx</span></code></p></td>
+<td><p>return a copy of <cite>Matrix.x</cite> attribute</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">nrow</span></code></p></td>
+<td><p>length of first dimension</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">obs_length</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">par_length</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">s</span></code></p></td>
+<td><p>the singular value (diagonal) Matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></p></td>
+<td><p>get the implied, 2D shape of <cite>Matrix</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sqrt</span></code></p></td>
+<td><p>element-wise square root operation</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transpose</span></code></p></td>
+<td><p>transpose operation of self</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">u</span></code></p></td>
+<td><p>the left singular vector Matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">v</span></code></p></td>
+<td><p>the right singular vector Matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">x</span></code></p></td>
+<td><p>return a reference to <cite>Matrix.x</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero</span></code></p></td>
+<td><p>get an instance of <cite>Cov</cite> with all zeros</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero2d</span></code></p></td>
+<td><p>get an 2D instance of self with all zeros</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyemu.Schur.html" class="btn btn-neutral float-right" title="pyemu.Schur" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyemu.Matrix.html" class="btn btn-neutral float-left" title="pyemu.Matrix" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, pyEMU development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
