@@ -1,82 +1,223 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>pyemu.ev &#8212; pyEMU 0.3 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyemu.ev &mdash; pyEMU 0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html" class="icon icon-home"> pyEMU
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.Matrix.html">pyemu.Matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.Cov.html">pyemu.Cov</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.Schur.html">pyemu.Schur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.ErrVar.html">pyemu.ErrVar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.helpers.html">pyemu.helpers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.geostats.html">pyemu.geostats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.gw_utils.html">pyemu.gw_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.pp_utils.html">pyemu.pp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.smp_utils.html">pyemu.smp_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.plot_utils.html">pyemu.plot_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_autosummary/pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyEMU</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyemu.ev</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for pyemu.ev</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;module for error variance analysis, using FOSM</span>
-<span class="sd">assumptions.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">pyemu.la</span> <span class="k">import</span> <span class="n">LinearAnalysis</span>
 <span class="kn">from</span> <span class="nn">pyemu.mat.mat_handler</span> <span class="k">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Jco</span><span class="p">,</span> <span class="n">Cov</span>
 
-<div class="viewcode-block" id="ErrVar"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar">[docs]</a><span class="k">class</span> <span class="nc">ErrVar</span><span class="p">(</span><span class="n">LinearAnalysis</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Derived class for error variance analysis.  Supports 2-term and</span>
-<span class="sd">    3-term error variance analysis.  Inherits from pyemu.LinearAnalysis.</span>
+<div class="viewcode-block" id="ErrVar"><a class="viewcode-back" href="../../_autosummary/pyemu.ErrVar.html#pyemu.ErrVar">[docs]</a><span class="k">class</span> <span class="nc">ErrVar</span><span class="p">(</span><span class="n">LinearAnalysis</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;FOSM-based error variance analysis</span>
 
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    **kwargs : dict</span>
-<span class="sd">        keyword args to pass to the LinearAnalysis base constructor.</span>
-<span class="sd">    omitted_parameters :  list</span>
-<span class="sd">        list of parameters to treat as &quot;omitted&quot;.  Passing this argument</span>
-<span class="sd">        activates 3-term error variance analysis.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        jco (varies, optional): something that can be cast or loaded into a `pyemu.Jco`.  Can be a</span>
+<span class="sd">            str for a filename or `pyemu.Matrix`/`pyemu.Jco` object.</span>
+<span class="sd">        pst (varies, optional): something that can be cast into a `pyemu.Pst`.  Can be an `str` for a</span>
+<span class="sd">            filename or an existing `pyemu.Pst`.  If `None`, a pst filename is sought</span>
+<span class="sd">            with the same base name as the jco argument (if passed)</span>
+<span class="sd">        parcov (varies, optional): prior parameter covariance matrix.  If `str`, a filename is assumed and</span>
+<span class="sd">            the prior parameter covariance matrix is loaded from a file using</span>
+<span class="sd">            the file extension (&quot;.jcb&quot;/&quot;.jco&quot; for binary, &quot;.cov&quot;/&quot;.mat&quot; for PEST-style ASCII matrix,</span>
+<span class="sd">            or &quot;.unc&quot; for uncertainty files).  If `None`, the prior parameter covariance matrix is</span>
+<span class="sd">            constructed from the parameter bounds in `LinearAnalysis.pst`.  Can also be a `pyemu.Cov` instance</span>
+<span class="sd">        obscov (varies, optional): observation noise covariance matrix.  If `str`, a filename is assumed and</span>
+<span class="sd">            the noise covariance matrix is loaded from a file using</span>
+<span class="sd">            the file extension (&quot;.jcb&quot;/&quot;.jco&quot; for binary, &quot;.cov&quot;/&quot;.mat&quot; for PEST-style ASCII matrix,</span>
+<span class="sd">            or &quot;.unc&quot; for uncertainty files).  If `None`, the noise covariance matrix is</span>
+<span class="sd">            constructed from the obsevation weights in `LinearAnalysis.pst`.  Can also be a `pyemu.Cov` instance</span>
+<span class="sd">        forecasts (varies, optional): forecast sensitivity vectors.  If `str`, first an observation name is assumed (a row</span>
+<span class="sd">            in `LinearAnalysis.jco`).  If that is not found, a filename is assumed and predictions are</span>
+<span class="sd">            loaded from a file using the file extension.  If [`str`], a list of observation names is assumed.</span>
+<span class="sd">            Can also be a `pyemu.Matrix` instance, a `numpy.ndarray` or a collection.  Note if the PEST++ option</span>
+<span class="sd">            &quot;++forecasts()&quot; is set in the pest control file (under the `pyemu.Pst.pestpp_options` dictionary),</span>
+<span class="sd">            then there is no need to pass this argument (unless you want to analyze different forecasts)</span>
+<span class="sd">            of `pyemu.Matrix` or `numpy.ndarray`.</span>
+<span class="sd">        ref_var (float, optional): reference variance.  Default is 1.0</span>
+<span class="sd">        verbose (`bool`): controls screen output.  If `str`, a filename is assumed and</span>
+<span class="sd">                and log file is written.</span>
+<span class="sd">        sigma_range (`float`, optional): defines range of upper bound - lower bound in terms of standard</span>
+<span class="sd">            deviation (sigma). For example, if sigma_range = 4, the bounds represent 4 * sigma.</span>
+<span class="sd">            Default is 4.0, representing approximately 95% confidence of implied normal distribution.</span>
+<span class="sd">            This arg is only used if constructing parcov from parameter bounds.</span>
+<span class="sd">        scale_offset (`bool`, optional): flag to apply parameter scale and offset to parameter bounds</span>
+<span class="sd">            when calculating prior parameter covariance matrix from bounds.  This arg is onlyused if</span>
+<span class="sd">            constructing parcov from parameter bounds.Default is True.</span>
+<span class="sd">        omitted_parameters ([`str`]): list of parameters to treat as &quot;omitted&quot;.  Passing this argument</span>
+<span class="sd">            activates 3-term error variance analysis.</span>
+<span class="sd">        omitted_parcov (varies): an argument that can be cast to a parcov for the omitted parameters.</span>
+<span class="sd">            If None, omitted_parcov will be formed by extracting a sub-matrix from the `LinearAnalsis.parcov`</span>
+<span class="sd">            attribute.</span>
+<span class="sd">        omitted_predictions (varies): an argument that can be cast to a &quot;predictions&quot; (e.g. &quot;forecasts&quot;)</span>
+<span class="sd">            attribute to form prediction sensitivity vectors with respec to the omitted parameters.  If None,</span>
+<span class="sd">            these vectors will be extracted from the `pyemu.LinearAnalysis.predictions` attribute</span>
+<span class="sd">        kl (`bool`, optional): flag to perform Karhunen-Loeve scaling on the jacobian before error variance</span>
+<span class="sd">            calculations. If `True`, the `pyemu.ErrVar.jco` and `pyemu.ErrVar.parcov` are altered in place.</span>
+<span class="sd">            Default is `False`.</span>
 
-<span class="sd">    omitted_parcov : varies</span>
-<span class="sd">        argument that can be cast to a parcov for the omitted parameters.</span>
-<span class="sd">        If None, omitted_parcov will be formed by extracting from the</span>
-<span class="sd">        LinearAnalsis.parcov attribute.</span>
-<span class="sd">    omitted_predictions : varies</span>
-<span class="sd">        argument that can be cast to a &quot;predictions&quot; attribute for</span>
-<span class="sd">        prediction sensitivity vectors WRT omitted parameters.  If None,</span>
-<span class="sd">        these vectors will be extracted from the LinearAnalysis.predictions</span>
-<span class="sd">        attribute</span>
-<span class="sd">    kl : bool</span>
-<span class="sd">        flag to perform KL scaling on the jacobian before error variance</span>
-<span class="sd">        calculations</span>
+<span class="sd">    Example::</span>
 
-<span class="sd">    Note</span>
-<span class="sd">    ----</span>
-<span class="sd">    There are some additional keyword args that can be passed to active</span>
-<span class="sd">    the 3-term error variance calculation</span>
-
+<span class="sd">        ev = pyemu.ErrVar(jco=&quot;my.jco&quot;,omitted_parameters=[&quot;wel1&quot;,&quot;wel2&quot;])</span>
+<span class="sd">        df = ev.get_errvar_dataframe()</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">jco</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.__init__"><a class="viewcode-back" href="../../_autosummary/pyemu.ErrVar.html#pyemu.ErrVar.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">jco</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">__need_omitted</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="s2">&quot;omitted_parameters&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -140,7 +281,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;applying KL scaling&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;null&quot;</span><span class="p">,</span><span class="s2">&quot;solution&quot;</span><span class="p">,</span> <span class="s2">&quot;omitted&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">valid_return_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;predictions&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_return_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;predictions&quot;</span><span class="p">]</span></div>
 
     <span class="k">def</span> <span class="nf">__load_omitted_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;private: set the omitted_predictions attribute</span>
@@ -254,21 +395,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">omitted_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; get the omitted prediction sensitivity vectors (stored as</span>
-<span class="sd">        a pyemu.Matrix)</span>
+        <span class="sd">&quot;&quot;&quot;omitted prediction sensitivity vectors</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        omitted_predictions : pyemu.Matrix</span>
-<span class="sd">            a matrix of prediction sensitivity vectors (column wise) to</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Matrix`: a matrix of prediction sensitivity vectors (column wise) to</span>
 <span class="sd">            omitted parameters</span>
-
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        returns a reference</span>
-<span class="sd">        </span>
-<span class="sd">        if ErrorVariance.__omitted_predictions is not set, then dynamically load the</span>
-<span class="sd">        attribute before returning</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__omitted_predictions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -279,19 +410,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">omitted_jco</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the omitted jco</span>
+        <span class="sd">&quot;&quot;&quot;the omitted-parameters jacobian matrix</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        omitted_jco : pyemu.Jco</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Jco`: the jacobian matrix instance of non-zero-weighted observations and</span>
+<span class="sd">            omitted parameters</span>
 
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        returns a reference</span>
-<span class="sd">        </span>
-<span class="sd">        if ErrorVariance.__omitted_jco is None,</span>
-<span class="sd">        then dynamically load the attribute before returning</span>
-<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__omitted_jco</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading omitted_jco&quot;</span><span class="p">)</span>
@@ -301,18 +425,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">omitted_parcov</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the omitted prior parameter covariance matrix</span>
+        <span class="sd">&quot;&quot;&quot;the prior omitted-parameter covariance matrix</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        omitted_parcov : pyemu.Cov</span>
-
-<span class="sd">        Note</span>
-<span class="sd">        ----</span>
-<span class="sd">        returns a reference</span>
-<span class="sd">        </span>
-<span class="sd">        If ErrorVariance.__omitted_parcov is None,</span>
-<span class="sd">        attribute is dynamically loaded</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Cov`: the prior parameter covariance matrix of the</span>
+<span class="sd">            omitted parameters</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__omitted_parcov</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -321,20 +438,23 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;loading omitted_parcov&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__omitted_parcov</span>
 
-<div class="viewcode-block" id="ErrVar.get_errvar_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.get_errvar_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_errvar_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get a pandas dataframe of error variance results indexed</span>
-<span class="sd">            on singular value and (prediction name,&lt;errvar term&gt;)</span>
+<div class="viewcode-block" id="ErrVar.get_errvar_dataframe"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.get_errvar_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_errvar_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;primary entry point for error variance analysis.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_values : list</span>
-<span class="sd">            singular values to test.  defaults to</span>
-<span class="sd">            range(0,min(nnz_obs,nadj_par) + 1)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_values ([`int`], optional): a list singular values to test. If `None`,</span>
+<span class="sd">                defaults to `range(0,min(nnz_obs,nadj_par) + 1)`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">            multi-indexed pandas dataframe</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pandas.DataFrame`: a multi-indexed pandas dataframe summarizing each of the</span>
+<span class="sd">            error variance terms for each nominated forecast. Rows are the singluar values</span>
+<span class="sd">            tested, columns are a multi-index of forecast name and error variance term number</span>
+<span class="sd">            (e.g. 1,2 or (optionally) 3).</span>
+
+<span class="sd">        Example::</span>
+
+<span class="sd">            ev = pyemu.ErrVar(jco=&quot;my.jco&quot;,omitted_parameters=[&quot;wel1&quot;,&quot;wel2&quot;])</span>
+<span class="sd">            df = ev.get_errvar_dataframe()</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">singular_values</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -353,23 +473,25 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">singular_values</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ErrVar.get_identifiability_dataframe"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.get_identifiability_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_identifiability_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">precondition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the parameter identifiability as a pandas dataframe</span>
+<div class="viewcode-block" id="ErrVar.get_identifiability_dataframe"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.get_identifiability_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">get_identifiability_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">precondition</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;primary entry point for identifiability analysis</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            the singular spectrum truncation point. Defaults to minimum of</span>
-<span class="sd">            non-zero-weighted observations and adjustable parameters</span>
-<span class="sd">        precondition : bool</span>
-<span class="sd">            flag to use the preconditioned hessian (xtqt + sigma_theta^-1).</span>
-<span class="sd">            Default is False</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): the singular spectrum truncation point. Defaults</span>
+<span class="sd">                to minimum of non-zero-weighted observations and adjustable parameters</span>
+<span class="sd">            precondition (`bool`): flag to use the preconditioned hessian with the prior</span>
+<span class="sd">                parameter covariance matrix (xtqt + sigma_theta^-1).  This should be used</span>
+<span class="sd">                KL scaling. Default is `False`.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        pandas.DataFrame : pandas.DataFrame</span>
-<span class="sd">            A pandas dataframe of the V_1**2 Matrix with the</span>
-<span class="sd">            identifiability in the column labeled &quot;ident&quot;</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pandas.DataFrame`: A pandas dataframe of the right solution-space singular</span>
+<span class="sd">            vectors and identifiability (identifiabiity is in the column labeled &quot;ident&quot;)</span>
+
+<span class="sd">        Examples::</span>
+
+<span class="sd">            ev = pyemu.ErrVar(jco=&quot;my.jco&quot;)</span>
+<span class="sd">            df = ev.get_identifiability_dataframe(singular_value=20)</span>
+<span class="sd">            df.ident.plot(kind=&quot;bar&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">singular_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -383,18 +505,15 @@
         <span class="n">v1_df</span><span class="p">[</span><span class="s2">&quot;ident&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">v1_df</span></div>
 
-<div class="viewcode-block" id="ErrVar.variance_at"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.variance_at">[docs]</a>    <span class="k">def</span> <span class="nf">variance_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the error variance of all three terms at a singluar value</span>
+<div class="viewcode-block" id="ErrVar.variance_at"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.variance_at">[docs]</a>    <span class="k">def</span> <span class="nf">variance_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the error variance of all three error variance terms at a</span>
+<span class="sd">         given singluar value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to test</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to test</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict : dict</span>
-<span class="sd">            dictionary of (err var term,prediction_name), standard_deviation pairs</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`: dictionary of (err var term,prediction_name), variance pairs</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
@@ -403,18 +522,15 @@
         <span class="n">results</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">third_prediction</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="ErrVar.R"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.R">[docs]</a>    <span class="k">def</span> <span class="nf">R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get resolution Matrix (V_1 * V_1^T) at a singular value</span>
+<div class="viewcode-block" id="ErrVar.R"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.R">[docs]</a>    <span class="k">def</span> <span class="nf">R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get resolution Matrix (V_1 * V_1^T) at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc R at</span>
+<span class="sd">        Args:</span>
+<span class="sd">        singular_value (`int`): singular value to calculate `R` at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        R : pyemu.Matrix</span>
-<span class="sd">            resolution matrix at singular_value</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Matrix`: resolution matrix at `singular_value`</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__R</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">singular_value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__R_sv</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__R</span>
@@ -431,18 +547,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc R @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__R</span></div>
 
-<div class="viewcode-block" id="ErrVar.I_minus_R"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.I_minus_R">[docs]</a>    <span class="k">def</span> <span class="nf">I_minus_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get I - R at singular value</span>
+<div class="viewcode-block" id="ErrVar.I_minus_R"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.I_minus_R">[docs]</a>    <span class="k">def</span> <span class="nf">I_minus_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get I - R at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc R at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calculate I - R at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        I - R : pyemu.Matrix</span>
-<span class="sd">            identity matrix minus resolution matrix at singular_value</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Matrix`: identity matrix minus resolution matrix at `singular_value`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__I_R</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">singular_value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__I_R_sv</span><span class="p">:</span>
@@ -457,19 +569,14 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">__I_R_sv</span> <span class="o">=</span> <span class="n">singular_value</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__I_R</span></div>
 
-<div class="viewcode-block" id="ErrVar.G"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.G">[docs]</a>    <span class="k">def</span> <span class="nf">G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;get the parameter solution Matrix at a singular value</span>
-<span class="sd">            V_1 * S_1^(_1) * U_1^T</span>
+<div class="viewcode-block" id="ErrVar.G"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.G">[docs]</a>    <span class="k">def</span> <span class="nf">G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the parameter solution Matrix at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc R at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc G at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        G : pyemu.Matrix</span>
-<span class="sd">            parameter solution matrix at singular value</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Matrix`: parameter solution matrix  (V_1 * S_1^(_1) * U_1^T) at `singular_value`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__G</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">singular_value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__G_sv</span><span class="p">:</span>
@@ -505,24 +612,37 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc G @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__G</span></div>
 
-<div class="viewcode-block" id="ErrVar.first_forecast"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.first_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">first_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;wrapper around ErrVar.first_forecast</span>
+<div class="viewcode-block" id="ErrVar.first_forecast"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.first_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">first_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the null space term (first term) contribution to forecast (e.g. prediction)</span>
+<span class="sd">         error variance at a given singular value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc first term at</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">             This method is used to construct the error variance dataframe</span>
+
+<span class="sd">             Just a wrapper around `ErrVar.first_forecast`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`: dictionary of (&quot;first&quot;,prediction_names),error variance pairs at `singular_value`</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_prediction</span><span class="p">(</span><span class="n">singular_value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ErrVar.first_prediction"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.first_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">first_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ErrVar.first_prediction"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.first_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">first_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the null space term (first term) contribution to prediction error variance</span>
-<span class="sd">            at a singular value.  used to construct error variance dataframe</span>
+<span class="sd">            at a given singular value.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc first term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc first term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict : dict</span>
-<span class="sd">            dictionary of (&quot;first&quot;,prediction_names),error variance pairs at singular_value</span>
+<span class="sd">        Note:</span>
+<span class="sd">             This method is used to construct the error variance dataframe</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`: dictionary of (&quot;first&quot;,prediction_names),error variance pairs at `singular_value`</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">:</span>
@@ -543,19 +663,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc first term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="ErrVar.first_parameter"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.first_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">first_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.first_parameter"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.first_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">first_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the null space term (first term) contribution to parameter error variance</span>
-<span class="sd">            at a singular value</span>
+<span class="sd">            at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc first term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc first term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        first_term : pyemu.Cov</span>
-<span class="sd">            first term contribution to parameter error variance</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Cov`: first term contribution to parameter error variance</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc first term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
@@ -564,25 +680,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc first term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">first_term</span></div>
 
-<div class="viewcode-block" id="ErrVar.second_forecast"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.second_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">second_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;wrapper around ErrVar.second_prediction</span>
+
+<div class="viewcode-block" id="ErrVar.second_forecast"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.second_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">second_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the solution space contribution to forecast (e.g. &quot;prediction&quot;) error variance</span>
+<span class="sd">        at a given singular value</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc second term at</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used to construct error variance dataframe</span>
+
+<span class="sd">            Just a thin wrapper around `ErrVar.second_prediction`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`:  dictionary of (&quot;second&quot;,prediction_names), error variance</span>
+<span class="sd">            arising from the solution space contribution (y^t * G * obscov * G^T * y)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">second_prediction</span><span class="p">(</span><span class="n">singular_value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ErrVar.second_prediction"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.second_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">second_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.second_prediction"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.second_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">second_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the solution space contribution to predictive error variance</span>
-<span class="sd">            at a singular value (y^t * G * obscov * G^T * y).  Used to construct</span>
-<span class="sd">            error variance dataframe</span>
+<span class="sd">        at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc second term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc second term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict : dict</span>
-<span class="sd">            dictionary of (&quot;second&quot;,prediction_names), error variance</span>
+<span class="sd">        Note:</span>
+<span class="sd">            This method is used to construct error variance dataframe</span>
+
+<span class="sd">        Returns:\</span>
+<span class="sd">            `dict`:  dictionary of (&quot;second&quot;,prediction_names), error variance</span>
+<span class="sd">            arising from the solution space contribution (y^t * G * obscov * G^T * y)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -610,19 +740,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc second term prediction @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="ErrVar.second_parameter"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.second_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">second_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.second_parameter"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.second_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">second_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the solution space contribution to parameter error variance</span>
-<span class="sd">             at a singular value (G * obscov * G^T)</span>
+<span class="sd">             at a given singular value (G * obscov * G^T)</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc second term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc second term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        second_parameter : pyemu.Cov</span>
-<span class="sd">            second term contribution to parameter error variance</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Cov`: the second term contribution to parameter error variance</span>
+<span class="sd">            (G * obscov * G^T)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc second term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
@@ -630,24 +757,35 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc second term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="ErrVar.third_forecast"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.third_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">third_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;wrapper around ErrVar.third_prediction</span>
+<div class="viewcode-block" id="ErrVar.third_forecast"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.third_forecast">[docs]</a>    <span class="k">def</span> <span class="nf">third_forecast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get the omitted parameter contribution to forecast (`prediction`) error variance</span>
+<span class="sd">         at a given singular value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc third term at</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">             used to construct error variance dataframe</span>
+<span class="sd">             just a thin wrapper around `ErrVar.third_prediction()`</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`: a dictionary of (&quot;third&quot;,prediction_names),error variance</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">third_prediction</span><span class="p">(</span><span class="n">singular_value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ErrVar.third_prediction"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.third_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">third_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.third_prediction"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.third_prediction">[docs]</a>    <span class="k">def</span> <span class="nf">third_prediction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the omitted parameter contribution to prediction error variance</span>
-<span class="sd">         at a singular value. used to construct error variance dataframe</span>
+<span class="sd">         at a given singular value.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc third term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc third term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        dict : dict</span>
-<span class="sd">            dictionary of (&quot;third&quot;,prediction_names),error variance</span>
+<span class="sd">        Note:</span>
+<span class="sd">             used to construct error variance dataframe</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `dict`: a dictionary of (&quot;third&quot;,prediction_names),error variance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;ErrVar.third(): not predictions are set&quot;</span><span class="p">)</span>
@@ -679,19 +817,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc third term prediction @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="ErrVar.third_parameter"><a class="viewcode-back" href="../../source/pyemu.html#pyemu.ev.ErrVar.third_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">third_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
+<div class="viewcode-block" id="ErrVar.third_parameter"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.third_parameter">[docs]</a>    <span class="k">def</span> <span class="nf">third_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">singular_value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;get the omitted parameter contribution to parameter error variance</span>
-<span class="sd">             at a singular value (G * omitted_jco * Sigma_(omitted_pars) * omitted_jco^T * G^T)</span>
+<span class="sd">             at a given singular value</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        singular_value : int</span>
-<span class="sd">            singular value to calc third term at</span>
+<span class="sd">        Args:</span>
+<span class="sd">            singular_value (`int`): singular value to calc third term at</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        third_parameter : pyemu.Cov</span>
-<span class="sd">            0.0 if need_omitted is False</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Cov`: the third term contribution to parameter error variance</span>
+<span class="sd">            calculated at `singular_value` (G * omitted_jco * Sigma_(omitted_pars) *</span>
+<span class="sd">            omitted_jco^T * G^T).  Returns 0.0 if third term calculations are not</span>
+<span class="sd">            being used.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__need_omitted</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
@@ -700,68 +837,104 @@
         <span class="n">GZo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="p">(</span><span class="n">singular_value</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omitted_jco</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">GZo</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">omitted_parcov</span> <span class="o">*</span> <span class="n">GZo</span><span class="o">.</span><span class="n">T</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;calc third term parameter @&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">singular_value</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span></div></div>
+        <span class="k">return</span> <span class="n">result</span></div>
 
+<div class="viewcode-block" id="ErrVar.get_null_proj"><a class="viewcode-back" href="../../index.html#pyemu.ErrVar.get_null_proj">[docs]</a>    <span class="k">def</span> <span class="nf">get_null_proj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maxsing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eigthresh</span><span class="o">=</span><span class="mf">1.0e-6</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; get a null-space projection matrix of XTQX</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            maxsing (`int`, optional): number of singular components</span>
+<span class="sd">                to use (the truncation point).  If None, `pyemu.Matrx.get_maxsing()</span>
+<span class="sd">                is used to determine the truncation point with `eigthresh`. Default</span>
+<span class="sd">                is None</span>
+<span class="sd">            eigthresh (`float`, optional): the ratio of smallest to largest singular</span>
+<span class="sd">                value to keep in the range (solution) space of XtQX.  Not used if</span>
+<span class="sd">                `maxsing` is not `None`.  Default is 1.0e-6</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            used for null-space monte carlo operations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `pyemu.Matrix` the null-space projection matrix (V2V2^T)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">maxsing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">maxsing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span><span class="o">.</span><span class="n">get_maxsing</span><span class="p">(</span><span class="n">eigthresh</span><span class="o">=</span><span class="n">eigthresh</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;using </span><span class="si">{0}</span><span class="s2"> singular components&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxsing</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;forming null space projection matrix with &quot;</span> <span class="o">+</span> \
+                 <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> of </span><span class="si">{1}</span><span class="s2"> singular components&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxsing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="n">v2_proj</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span><span class="o">.</span><span class="n">v</span><span class="p">[:,</span> <span class="n">maxsing</span><span class="p">:]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">xtqx</span><span class="o">.</span><span class="n">v</span><span class="p">[:,</span> <span class="n">maxsing</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;forming null space projection matrix with &quot;</span> <span class="o">+</span> \
+                 <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> of </span><span class="si">{1}</span><span class="s2"> singular components&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxsing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">jco</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">v2_proj</span></div></div>
+
+    <span class="c1"># def get_nsing(self, epsilon=1.0e-4):</span>
+    <span class="c1">#     &quot;&quot;&quot; get the number of solution space dimensions given</span>
+    <span class="c1">#     a ratio between the largest and smallest singular values</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Parameters</span>
+    <span class="c1">#     ----------</span>
+    <span class="c1">#     epsilon: float</span>
+    <span class="c1">#         singular value ratio</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Returns</span>
+    <span class="c1">#     -------</span>
+    <span class="c1">#     nsing : float</span>
+    <span class="c1">#         number of singular components above the epsilon ratio threshold</span>
+    <span class="c1">#</span>
+    <span class="c1">#     Note</span>
+    <span class="c1">#     -----</span>
+    <span class="c1">#         If nsing == nadj_par, then None is returned</span>
+    <span class="c1">#</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     mx = self.xtqx.shape[0]</span>
+    <span class="c1">#     nsing = mx - np.searchsorted(</span>
+    <span class="c1">#         np.sort((self.xtqx.s.x / self.xtqx.s.x.max())[:, 0]), epsilon)</span>
+    <span class="c1">#     if nsing == mx:</span>
+    <span class="c1">#         self.logger.warn(&quot;optimal nsing=npar&quot;)</span>
+    <span class="c1">#         nsing = None</span>
+    <span class="c1">#     return nsing</span>
 </pre></div>
 
+           </div>
+           
           </div>
-          
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, pyEMU development team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">pyEMU</a></h1>
+
+    </section>
+
+  </div>
+  
 
 
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
 
-
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../source/Monte_carlo_page.html">Run Monte Carlo Simulations from PEST Object</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/oop.html">Notes on Object-Oriented Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/glossary.html">Glossary</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2017, Jeremy White, Mike Fienen, John Doherty.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
-      
-    </div>
-
+  
+  
     
+   
 
-    
-  </body>
+</body>
 </html>
