@@ -80,20 +80,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.Pst.html">pyemu.Pst</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.Matrix.html">pyemu.Matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.Cov.html">pyemu.Cov</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.Schur.html">pyemu.Schur</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.ErrVar.html">pyemu.ErrVar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.ObservationEnsemble.html">pyemu.ObservationEnsemble</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.ParameterEnsemble.html">pyemu.ParameterEnsemble</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.helpers.html">pyemu.helpers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.geostats.html">pyemu.geostats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.gw_utils.html">pyemu.gw_utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.pp_utils.html">pyemu.pp_utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.smp_utils.html">pyemu.smp_utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.plot_utils.html">pyemu.plot_utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.pst_utils.html">pyemu.pst_utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/pyemu.html">pyemu</a></li>
 </ul>
 
             
@@ -158,6 +145,9 @@
             
   <h1>Source code for pyemu.utils.helpers</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;High-level functions to help perform complex tasks</span>
+
+
+<span class="sd">.. automodule:: helpers</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
@@ -321,7 +311,7 @@
                                                         <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">par_ens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">_df</span><span class="p">)</span>
     <span class="n">par_ens</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">par_ens</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">par_ens</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">ParameterEnsemble</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">par_ens</span><span class="p">,</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">)</span>
+    <span class="n">par_ens</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">ParameterEnsemble</span><span class="p">(</span><span class="n">pst</span><span class="o">=</span><span class="n">pst</span><span class="p">,</span><span class="n">df</span><span class="o">=</span><span class="n">par_ens</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">par_ens</span></div>
 
 
@@ -1998,7 +1988,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">statement</span><span class="p">(</span><span class="s2">&quot;saving krige factors file:</span><span class="si">{0}</span><span class="s2">&quot;</span>
                                           <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fac_file</span><span class="p">))</span>
                     <span class="n">ok_pp</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">geostats</span><span class="o">.</span><span class="n">OrdinaryKrige</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pp_geostruct</span><span class="p">,</span> <span class="n">pp_df_k</span><span class="p">)</span>
-                    <span class="n">ok_pp</span><span class="o">.</span><span class="n">calc_factors_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">sr</span><span class="p">,</span> <span class="n">var_filename</span><span class="o">=</span><span class="n">var_file</span><span class="p">,</span> <span class="n">zone_array</span><span class="o">=</span><span class="n">ib_k</span><span class="p">)</span>
+                    <span class="n">ok_pp</span><span class="o">.</span><span class="n">calc_factors_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="o">.</span><span class="n">sr</span><span class="p">,</span> <span class="n">var_filename</span><span class="o">=</span><span class="n">var_file</span><span class="p">,</span> <span class="n">zone_array</span><span class="o">=</span><span class="n">ib_k</span><span class="p">,</span><span class="n">num_threads</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
                     <span class="n">ok_pp</span><span class="o">.</span><span class="n">to_grid_factors_file</span><span class="p">(</span><span class="n">fac_file</span><span class="p">)</span>
                     <span class="n">pp_processed</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">kattr_id</span><span class="p">)</span>
                 <span class="n">fac_files</span><span class="p">[</span><span class="n">kp_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fac_file</span>

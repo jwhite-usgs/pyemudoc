@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyemu.gw_utils" href="pyemu.gw_utils.html" />
@@ -179,10 +178,13 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sgems_exp_var</span></code>(filename)</p></td>
 <td><p>read an SGEM experimental variogram into a sequence of pandas.DataFrames</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_sgems_variogram_xml</span></code>(xml_file[, return_type])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pp_file_to_dataframe</span></code>(pp_filename)</p></td>
+<td><p>read a pilot point file to a pandas Dataframe</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_sgems_variogram_xml</span></code>(xml_file[, return_type])</p></td>
 <td><p>function to read an SGEMS-type variogram XML file into a <cite>GeoStruct</cite></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_struct_file</span></code>(struct_file[, return_type])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_struct_file</span></code>(struct_file[, return_type])</p></td>
 <td><p>read an existing PEST-type structure file into a GeoStruct instance</p></td>
 </tr>
 </tbody>
@@ -194,26 +196,44 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpVario</span></code>(contribution, a[, anisotropy, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cov</span></code>([x, names, row_names, col_names, …])</p></td>
+<td><p>Diagonal and/or dense Covariance matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpVario</span></code>(contribution, a[, anisotropy, …])</p></td>
 <td><p>Gaussian variogram derived type</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GauVario</span></code>(contribution, a[, anisotropy, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GauVario</span></code>(contribution, a[, anisotropy, …])</p></td>
 <td><p>Gaussian variogram derived type</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeoStruct</span></code>([nugget, variograms, name, transform])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeoStruct</span></code>([nugget, variograms, name, transform])</p></td>
 <td><p>a geostatistical structure object that mimics the behavior of a PEST geostatistical structure.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrdinaryKrige</span></code>(geostruct, point_data)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrdinaryKrige</span></code>(geostruct, point_data)</p></td>
 <td><p>Ordinary Kriging using Pandas and Numpy.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpecSim2d</span></code>(delx, dely, geostruct)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpecSim2d</span></code>(delx, dely, geostruct)</p></td>
 <td><p>2-D unconditional spectral simulation for regular grids</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SphVario</span></code>(contribution, a[, anisotropy, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SphVario</span></code>(contribution, a[, anisotropy, …])</p></td>
 <td><p>Spherical variogram derived type</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vario2d</span></code>(contribution, a[, anisotropy, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vario2d</span></code>(contribution, a[, anisotropy, …])</p></td>
 <td><p>base class for 2-D variograms.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>(year, month, day[, hour[, minute[, …)</p></td>
+<td><p>The year, month and day arguments are required.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PyemuWarning</span></code></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>

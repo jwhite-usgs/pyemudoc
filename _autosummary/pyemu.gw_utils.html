@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyemu.pp_utils" href="pyemu.pp_utils.html" />
@@ -170,95 +169,137 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_gage_obs</span></code>([return_obs_file])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">FFMT</span></code>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">IFMT</span></code>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">SFMT</span></code>(item)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_gage_obs</span></code>([return_obs_file])</p></td>
 <td><p>apply the modflow gage obs post-processor</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_obs</span></code>(hds_file[, inact_abs_val])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_obs</span></code>(hds_file[, inact_abs_val])</p></td>
 <td><p>process a modflow head save file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_timeseries</span></code>([config_file, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hds_timeseries</span></code>([config_file, …])</p></td>
 <td><p>process a modflow binary file using a previously written configuration file</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hfb_pars</span></code>([par_file])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_hfb_pars</span></code>([par_file])</p></td>
 <td><p>a function to apply HFB multiplier parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
 <td><p>process a MODFLOW list file to extract flux and volume water budget entries.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
 <td><p>process an MT3D-USGS list file to extract mass budget entries.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_obs</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_obs</span></code>()</p></td>
 <td><p>apply the sfr observation process</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_parameters</span></code>([seg_pars, reach_pars])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_parameters</span></code>([seg_pars, reach_pars])</p></td>
 <td><p>thin wrapper around <cite>gw_utils.apply_sfr_seg_parameters()</cite></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_reach_obs</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_reach_obs</span></code>()</p></td>
 <td><p>apply the sfr reach observation process.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_seg_parameters</span></code>([seg_pars, reach_pars])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sfr_seg_parameters</span></code>([seg_pars, reach_pars])</p></td>
 <td><p>apply the SFR segement multiplier parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sft_obs</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_sft_obs</span></code>()</p></td>
 <td><p>process an mt3d-usgs sft ASCII output file using a previous-written config file</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">last_kstp_from_kper</span></code>(hds, kper)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">last_kstp_from_kper</span></code>(hds, kper)</p></td>
 <td><p>function to find the last time step (kstp) for a give stress period (kper) in a modflow head save file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sfr_out</span></code>(sfr_out_file[, selection])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_sfr_out</span></code>(sfr_out_file[, selection])</p></td>
 <td><p>load an ASCII SFR output file into a dictionary of kper: dataframes.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hob_to_instruction_file</span></code>(hob_file[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hob_to_instruction_file</span></code>(hob_file[, …])</p></td>
 <td><p>write an instruction file for a modflow head observation file</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hydmod_to_instruction_file</span></code>(hydmod_file)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_hydmod_to_instruction_file</span></code>(hydmod_file)</p></td>
 <td><p>write an instruction file for a modflow hydmod file</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_pval_to_template_file</span></code>(pval_file[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_pval_to_template_file</span></code>(pval_file[, …])</p></td>
 <td><p>write a template file for a modflow parameter value file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_read_hydmod_file</span></code>(hydmod_file[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_read_hydmod_file</span></code>(hydmod_file[, …])</p></td>
 <td><p>read a binary hydmod file and return a dataframe of the results</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_sfr_gag_to_instruction_file</span></code>(…[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modflow_sfr_gag_to_instruction_file</span></code>(…[, …])</p></td>
 <td><p>writes an instruction file for an SFR gage output file to read Flow only at all times</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_gage_obs</span></code>(gage_file[, ins_file, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_tpl_file</span></code>(tpl_file)</p></td>
+<td><p>parse a PEST-style template file to get the parameter names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code>(cmd_str[, cwd, verbose])</p></td>
+<td><p>an OS agnostic function to execute a command line</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_gage_obs</span></code>(gage_file[, ins_file, …])</p></td>
 <td><p>setup a forward run post processor routine for the modflow gage file</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_obs</span></code>(hds_file[, kperk_pairs, skip, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_obs</span></code>(hds_file[, kperk_pairs, skip, …])</p></td>
 <td><p>a function to setup using all values from a layer-stress period pair for observations.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_timeseries</span></code>(bin_file, kij_dict[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_hds_timeseries</span></code>(bin_file, kij_dict[, …])</p></td>
 <td><p>a function to setup a forward process to extract time-series style values from a binary modflow binary file (or equivalent format - hds, ucn, sub, cbb, etc).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mflist_budget_obs</span></code>(list_filename[, …])</p></td>
 <td><p>setup observations of budget volume and flux from modflow list file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_mtlist_budget_obs</span></code>(list_filename[, …])</p></td>
 <td><p>setup observations of gw (and optionally sw) mass budgets from mt3dusgs list file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_obs</span></code>(sfr_out_file[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_obs</span></code>(sfr_out_file[, …])</p></td>
 <td><p>setup observations using the sfr ASCII output file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_obs</span></code>(sfr_out_file[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_obs</span></code>(sfr_out_file[, …])</p></td>
 <td><p>setup observations using the sfr ASCII output file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_parameters</span></code>(nam_file[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_reach_parameters</span></code>(nam_file[, …])</p></td>
 <td><p>Setup multiplier paramters for reach data, when reachinput option is specififed in sfr.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_seg_parameters</span></code>(nam_file[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sfr_seg_parameters</span></code>(nam_file[, …])</p></td>
 <td><p>Setup multiplier parameters for SFR segment data.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sft_obs</span></code>(sft_file[, ins_file, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_sft_obs</span></code>(sft_file[, ins_file, …])</p></td>
 <td><p>writes a post-processor and instruction file for a mt3d-usgs sft output file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">try_process_output_file</span></code>(ins_file[, output_file])</p></td>
+<td><p>attempt to process a model output file using a PEST-style instruction file</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_hfb_template</span></code>(m)</p></td>
 <td><p>write a template file for an hfb (yuck!)</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_hfb_zone_multipliers_template</span></code>(m)</p></td>
 <td><p>write a template file for an hfb using multipliers per zone (double yuck!)</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>(year, month, day[, hour[, minute[, …)</p></td>
+<td><p>The year, month and day arguments are required.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PyemuWarning</span></code></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>

@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyemu.ErrVar" href="pyemu.ErrVar.html" />
@@ -164,7 +163,7 @@
 <h1>pyemu.Schur<a class="headerlink" href="#pyemu-schur" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyemu.Schur">
-<em class="property">class </em><code class="sig-prename descclassname">pyemu.</code><code class="sig-name descname">Schur</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Schur" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyemu.</code><code class="sig-name descname">Schur</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.Schur" title="Permalink to this definition">¶</a></dt>
 <dd><p>FOSM-based uncertainty and data-worth analysis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -210,7 +209,7 @@ constructing parcov from parameter bounds.Default is True.</p></li>
 dataworth analyses</p>
 <p>This class replicates and extends the behavior of the PEST PREDUNC utilities.</p>
 </div>
-<p>Examples:</p>
+<p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#assumes &quot;my.pst&quot; exists</span>
 <span class="n">sc</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Schur</span><span class="p">(</span><span class="n">jco</span><span class="o">=</span><span class="s2">&quot;my.jco&quot;</span><span class="p">,</span><span class="n">forecasts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;fore1&quot;</span><span class="p">,</span><span class="s2">&quot;fore2&quot;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">get_forecast_summary</span><span class="p">())</span>
@@ -219,7 +218,7 @@ dataworth analyses</p>
 </div>
 <dl class="method">
 <dt id="pyemu.Schur.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyemu/sc.html#Schur.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyemu.Schur.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">jco</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.Schur.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 

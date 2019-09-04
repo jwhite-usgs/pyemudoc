@@ -26,6 +26,15 @@ pyemu.plot\_utils
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GridSpec
+      Logger
+      PdfPages
+      datetime
+   
    
 
    

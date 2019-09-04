@@ -22,9 +22,11 @@ pyemu.helpers
       pst_from_io_files
       pst_from_parnames_obsnames
       read_pestpp_runstorage
+      run
       setup_fake_forward_run
       simple_ins_from_obs
       simple_tpl_from_pars
+      start_workers
       write_const_tpl
       write_grid_tpl
       write_zone_tpl
@@ -39,9 +41,16 @@ pyemu.helpers
    .. autosummary::
    
       PstFromFlopyModel
+      datetime
    
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    

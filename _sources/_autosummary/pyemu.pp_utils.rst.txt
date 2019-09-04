@@ -9,9 +9,13 @@ pyemu.pp\_utils
 
    .. autosummary::
    
+      FFMT
+      IFMT
+      SFMT
       pilot_points_to_tpl
       pp_file_to_dataframe
       pp_tpl_to_dataframe
+      run
       setup_pilotpoints_grid
       write_pp_file
       write_pp_shapfile
@@ -23,5 +27,11 @@ pyemu.pp\_utils
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    

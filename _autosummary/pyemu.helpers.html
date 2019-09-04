@@ -33,7 +33,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="pyemu.geostats" href="pyemu.geostats.html" />
@@ -209,14 +208,20 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_pestpp_runstorage</span></code>(filename[, irun, …])</p></td>
 <td><p>read pars and obs from a specific run in a pest++ serialized run storage file into dataframes.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_fake_forward_run</span></code>(pst, new_pst_name[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code>(cmd_str[, cwd, verbose])</p></td>
+<td><p>an OS agnostic function to execute a command line</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_fake_forward_run</span></code>(pst, new_pst_name[, …])</p></td>
 <td><p>setup a fake forward run for a pst.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">simple_ins_from_obs</span></code>(obsnames[, insfilename])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">simple_ins_from_obs</span></code>(obsnames[, insfilename])</p></td>
 <td><p>write a simple instruction file that reads the values named</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">simple_tpl_from_pars</span></code>(parnames[, tplfilename])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">simple_tpl_from_pars</span></code>(parnames[, tplfilename])</p></td>
 <td><p>Make a simple template file from a list of parameter names.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_workers</span></code>(worker_dir, exe_rel_path, …)</p></td>
+<td><p>start a group of pest(++) workers on the local machine</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_const_tpl</span></code>(name, tpl_file, suffix[, …])</p></td>
 <td><p>write a constant (uniform) template file for a 2-D array</p></td>
@@ -241,6 +246,21 @@
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PstFromFlopyModel</span></code>(model, new_model_ws[, …])</p></td>
 <td><p>a monster helper class to setup a complex PEST interface around an existing MODFLOW-2005-family model.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">datetime</span></code>(year, month, day[, hour[, minute[, …)</p></td>
+<td><p>The year, month and day arguments are required.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PyemuWarning</span></code></p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>

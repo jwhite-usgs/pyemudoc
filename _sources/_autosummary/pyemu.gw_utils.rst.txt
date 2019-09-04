@@ -9,6 +9,9 @@ pyemu.gw\_utils
 
    .. autosummary::
    
+      FFMT
+      IFMT
+      SFMT
       apply_gage_obs
       apply_hds_obs
       apply_hds_timeseries
@@ -27,6 +30,8 @@ pyemu.gw\_utils
       modflow_pval_to_template_file
       modflow_read_hydmod_file
       modflow_sfr_gag_to_instruction_file
+      parse_tpl_file
+      run
       setup_gage_obs
       setup_hds_obs
       setup_hds_timeseries
@@ -37,6 +42,7 @@ pyemu.gw\_utils
       setup_sfr_reach_parameters
       setup_sfr_seg_parameters
       setup_sft_obs
+      try_process_output_file
       write_hfb_template
       write_hfb_zone_multipliers_template
    
@@ -44,8 +50,20 @@ pyemu.gw\_utils
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      datetime
+   
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    

@@ -40,9 +40,16 @@ pyemu.pst\_utils
    .. autosummary::
    
       InstructionFile
+      datetime
    
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    

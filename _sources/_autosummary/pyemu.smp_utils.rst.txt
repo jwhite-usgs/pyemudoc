@@ -17,8 +17,20 @@ pyemu.smp\_utils
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      datetime
+   
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    

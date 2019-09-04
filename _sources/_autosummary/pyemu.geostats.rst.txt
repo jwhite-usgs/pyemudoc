@@ -12,6 +12,7 @@ pyemu.geostats
       fac2real
       gslib_2_dataframe
       load_sgems_exp_var
+      pp_file_to_dataframe
       read_sgems_variogram_xml
       read_struct_file
    
@@ -23,6 +24,7 @@ pyemu.geostats
 
    .. autosummary::
    
+      Cov
       ExpVario
       GauVario
       GeoStruct
@@ -30,9 +32,16 @@ pyemu.geostats
       SpecSim2d
       SphVario
       Vario2d
+      datetime
    
    
 
    
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
    
    
