@@ -250,7 +250,7 @@ for constructing new control files as well as manipulating existing control file
 <dl class="method">
 <dt id="pyemu.pst.Pst.add_observations">
 <code class="sig-name descname">add_observations</code><span class="sig-paren">(</span><em class="sig-param">ins_file</em>, <em class="sig-param">out_file=None</em>, <em class="sig-param">pst_path=None</em>, <em class="sig-param">inschek=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.add_observations" title="Permalink to this definition">¶</a></dt>
-<dd><p>add new obsevations to a control file</p>
+<dd><p>add new observations to a control file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -260,9 +260,9 @@ Default is None</p></li>
 <li><p><strong>pst_path</strong> (<cite>str</cite>) – the path to append to the instruction file and out file in the control file.  If
 not None, then any existing path in front of the template or in file is split off
 and pst_path is prepended.  If python is being run in a directory other than where the control
-file will reside, it is useful to pass <cite>pst_path</cite> as <cite>.</cite>.Default is None</p></li>
+file will reside, it is useful to pass <cite>pst_path</cite> as <cite>.</cite>. Default is None</p></li>
 <li><p><strong>inschek</strong> (<cite>bool</cite>) – flag to try to process the existing output file using the <cite>pyemu.InstructionFile</cite>
-class.  If successful, inscheck outputs are used as obsvals</p></li>
+class.  If successful, processed outputs are used as obsvals</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -5652,7 +5652,7 @@ operation</p></li>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_hds_timeseries">
-<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">setup_hds_timeseries</code><span class="sig-paren">(</span><em class="sig-param">bin_file</em>, <em class="sig-param">kij_dict</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">include_path=False</em>, <em class="sig-param">model=None</em>, <em class="sig-param">postprocess_inact=None</em>, <em class="sig-param">text=None</em>, <em class="sig-param">fill=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_timeseries" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">setup_hds_timeseries</code><span class="sig-paren">(</span><em class="sig-param">bin_file</em>, <em class="sig-param">kij_dict</em>, <em class="sig-param">prefix=None</em>, <em class="sig-param">include_path=False</em>, <em class="sig-param">model=None</em>, <em class="sig-param">postprocess_inact=None</em>, <em class="sig-param">text=None</em>, <em class="sig-param">fill=None</em>, <em class="sig-param">precision='single'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_timeseries" title="Permalink to this definition">¶</a></dt>
 <dd><p>a function to setup a forward process to extract time-series style values
 from a binary modflow binary file (or equivalent format - hds, ucn, sub, cbb, etc).</p>
 <dl class="field-list simple">
@@ -5676,6 +5676,8 @@ is assummed.  Default is None</p></li>
 <cite>None</cite>, no filling is done, which may yield model run failures as the resulting
 processed timeseries CSV file (produced at runtime) may have missing values and
 can’t be processed with the cooresponding instruction file.  Default is <cite>None</cite>.</p></li>
+<li><p><strong>precision</strong> (<cite>str</cite>) – the precision of the binary file.  Can be “single” or “double”.
+Default is “single”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
