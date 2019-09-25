@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to pyEMU’s documentation! &mdash; pyEMU 0.4 documentation</title>
+  <title>Welcome to pyEMU’s documentation! &mdash; pyEMU 0.9 documentation</title>
   
 
   
@@ -1301,8 +1301,14 @@ during the load</p></li>
 
 <dl class="method">
 <dt id="pyemu.pst.Pst.write_input_files">
-<code class="sig-name descname">write_input_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.write_input_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write_input_files</code><span class="sig-paren">(</span><em class="sig-param">pst_path='.'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.write_input_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>writes model input files using template files and current <cite>parval1</cite> values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pst_path</strong> (<cite>str</cite>) – the path to where control file and template files reside.
+Default is ‘.’</p>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>adds “parval1_trans” column to Pst.parameter_data that includes the
@@ -4650,7 +4656,7 @@ are in log space (if <cite>partrans</cite> is “log” in <cite>pst</cite>)</p>
 <dd><p>add the control file <cite>obsval</cite> values as a realization</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>adds the current <cite>ParameterEnsemble.pst.parameter_data.parval1</cite> values
+<p>replaces the last realization with the current <cite>ParameterEnsemble.pst.parameter_data.parval1</cite> values
 as a new realization named “base”</p>
 </div>
 </dd></dl>
@@ -5027,7 +5033,7 @@ are in log space.  Not used for <cite>ObservationEnsemble</cite></p></li>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <dl class="simple">
-<dt>adds the current <cite>ObservationEnsemble.pst.observation_data.obsval</cite> values</dt><dd><p>as a new realization named “base”</p>
+<dt>replaces the last realization with the current <cite>ObservationEnsemble.pst.observation_data.obsval</cite> values</dt><dd><p>as a new realization named “base”</p>
 </dd>
 </dl>
 </div>
@@ -6271,6 +6277,11 @@ This file is written by PstFromFlopy.</p>
 PstFromFlopyModel during a forward run</p>
 <p>This function should be added to the forward_run.py script but can
 be called on any correctly formatted csv</p>
+<p>This function using multiprocessing, spawning one process for each
+model input array (and optionally pp files).  This speeds up
+execution time considerably but means you need to make sure your
+forward run script uses the proper multiprocessing idioms for
+freeze support and main thread handling.</p>
 </div>
 </dd></dl>
 
@@ -7009,7 +7020,7 @@ if <cite>os.system</cite> returns non-zero, an exception is raised</p>
 
 <dl class="function">
 <dt id="pyemu.utils.os_utils.start_workers">
-<code class="sig-prename descclassname">pyemu.utils.os_utils.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param">worker_dir</em>, <em class="sig-param">exe_rel_path</em>, <em class="sig-param">pst_rel_path</em>, <em class="sig-param">num_workers=None</em>, <em class="sig-param">worker_root='..'</em>, <em class="sig-param">port=4004</em>, <em class="sig-param">rel_path=None</em>, <em class="sig-param">local=True</em>, <em class="sig-param">cleanup=True</em>, <em class="sig-param">master_dir=None</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">silent_master=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.os_utils.start_workers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.os_utils.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param">worker_dir</em>, <em class="sig-param">exe_rel_path</em>, <em class="sig-param">pst_rel_path</em>, <em class="sig-param">num_workers=None</em>, <em class="sig-param">worker_root='..'</em>, <em class="sig-param">port=4004</em>, <em class="sig-param">rel_path=None</em>, <em class="sig-param">local=True</em>, <em class="sig-param">cleanup=True</em>, <em class="sig-param">master_dir=None</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">silent_master=False</em>, <em class="sig-param">reuse_master=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.os_utils.start_workers" title="Permalink to this definition">¶</a></dt>
 <dd><p>start a group of pest(++) workers on the local machine</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -7042,6 +7053,9 @@ in this directory. Default is None</p></li>
 <li><p><strong>silent_master</strong> (<cite>bool</cite>, optional) – flag to pipe master output to devnull and instead print
 a simple message to stdout every few seconds.  This is only for
 pestpp Travis testing so that log file sizes dont explode. Default is False</p></li>
+<li><p><strong>reuse_master</strong> (<cite>bool</cite>) – flag to use an existing <cite>master_dir</cite> as is - this is an advanced user
+option for cases where you want to construct your own <cite>master_dir</cite> then have an async
+process started in it by this function.</p></li>
 </ul>
 </dd>
 </dl>
