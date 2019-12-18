@@ -530,7 +530,7 @@ Returns None if no forecasts are named</p>
 
 <dl class="method">
 <dt id="pyemu.pst.Pst.from_io_files">
-<em class="property">classmethod </em><code class="sig-name descname">from_io_files</code><span class="sig-paren">(</span><em class="sig-param">tpl_files</em>, <em class="sig-param">in_files</em>, <em class="sig-param">ins_files</em>, <em class="sig-param">out_files</em>, <em class="sig-param">pst_filename=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.from_io_files" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">from_io_files</code><span class="sig-paren">(</span><em class="sig-param">tpl_files</em>, <em class="sig-param">in_files</em>, <em class="sig-param">ins_files</em>, <em class="sig-param">out_files</em>, <em class="sig-param">pst_filename=None</em>, <em class="sig-param">pst_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.from_io_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>create a Pst instance from model interface files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -541,6 +541,9 @@ Returns None if no forecasts are named</p>
 <li><p><strong>out_files</strong> ([<cite>str</cite>]) – list of model output file names (pairs with instruction files)</p></li>
 <li><p><strong>pst_filename</strong> (<cite>str</cite>) – name of control file to write.  If None, no file is written.
 Default is None</p></li>
+<li><p><strong>pst_path</strong> (<em>'str'</em>) – the path from the control file to the IO files.  For example, if the
+control will be in the same directory as the IO files, then <cite>pst_path</cite> should be ‘.’.
+Default is None, which doesnt do any path manipulation on the I/O file names</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -622,6 +625,28 @@ is None</p></li>
 <p>passing <cite>par_names</cite> as <cite>None</cite> and <cite>obs_names</cite> as <cite>None</cite> effectively
 generates a copy of the current <cite>Pst</cite></p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyemu.pst.Pst.get_adj_pars_at_bounds">
+<code class="sig-name descname">get_adj_pars_at_bounds</code><span class="sig-paren">(</span><em class="sig-param">frac_tol=0.01</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.get_adj_pars_at_bounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>get list of adjustable parameter at/near bounds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frac_tol</strong> (<em>'float`</em>) – fractional tolerance of distance to bound.  For upper bound,
+the value <cite>parubnd * (1-frac_tol)</cite> is used, lower bound uses <cite>parlbnd * (1.0 + frac_tol)</cite></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>[`str`]</strong>: list of parameters at/near lower bound</p></li>
+<li><p><strong>[`str`]</strong>: list of parameters at/near upper bound</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple containing</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1277,14 +1302,12 @@ no tied parameters are found.</p>
 
 <dl class="method">
 <dt id="pyemu.pst.Pst.write">
-<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">new_filename</em>, <em class="sig-param">update_regul=True</em>, <em class="sig-param">version=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">new_filename</em>, <em class="sig-param">version=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.pst.Pst.write" title="Permalink to this definition">¶</a></dt>
 <dd><p>main entry point to write a pest control file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>new_filename</strong> (<cite>str</cite>) – name of the new pest control file</p></li>
-<li><p><strong>update_regul</strong> (<cite>bool</cite>) – flag to update zero-order Tikhonov prior information
-equations to prefer the current parameter values</p></li>
 <li><p><strong>version</strong> (<cite>int</cite>) – flag for which version of control file to write (must be 1 or 2).
 if None, uses Pst._version, which set in the constructor and modified
 during the load</p></li>
@@ -1294,7 +1317,7 @@ during the load</p></li>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pst</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">(</span><span class="s2">&quot;my.pst&quot;</span><span class="p">)</span>
 <span class="n">pst</span><span class="o">.</span><span class="n">parrep</span><span class="p">(</span><span class="s2">&quot;my.par&quot;</span><span class="p">)</span>
-<span class="n">pst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">my_new</span><span class="o">.</span><span class="n">pst</span><span class="s2">&quot;, update_regul=True)</span>
+<span class="n">pst</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">my_new</span><span class="o">.</span><span class="n">pst</span><span class="s2">&quot;)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -5736,7 +5759,7 @@ control file information</p></li>
 <p>This method writes instruction files and also a _setup_.csv to use when constructing a pest
 control file.  The instruction files are named &lt;flux_file&gt;.ins and &lt;vol_file&gt;.ins, respectively</p>
 <p>It is recommended to use the default values for flux_file and vol_file.</p>
-<p>This is the companion function of <cite>gw_utils.setup_mflist_budget_obs()</cite>.</p>
+<p>This is the companion function of <cite>gw_utils.apply_mflist_budget_obs()</cite>.</p>
 </div>
 </dd></dl>
 
@@ -6436,7 +6459,8 @@ file.</p>
 <p>The covariance of parameters associated with geostatistical structures is defined
 as a mixture of GeoStruct and bounds.  That is, the GeoStruct is used to construct a
 pyemu.Cov, then the entire pyemu.Cov is scaled by the uncertainty implied by the bounds and
-sigma_range. Sounds complicated…</p>
+sigma_range. Most users will want to sill of the geostruct to sum to 1.0 so that the resulting
+covariance matrices have variance proportional to the parameter bounds. Sounds complicated…</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pst</span> <span class="o">=</span> <span class="n">pyemu</span><span class="o">.</span><span class="n">Pst</span><span class="p">(</span><span class="s2">&quot;my.pst&quot;</span><span class="p">)</span>
@@ -6578,7 +6602,7 @@ are &lt;output_file&gt;.ins.</p>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.pst_from_io_files">
-<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">pst_from_io_files</code><span class="sig-paren">(</span><em class="sig-param">tpl_files</em>, <em class="sig-param">in_files</em>, <em class="sig-param">ins_files</em>, <em class="sig-param">out_files</em>, <em class="sig-param">pst_filename=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.pst_from_io_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">pst_from_io_files</code><span class="sig-paren">(</span><em class="sig-param">tpl_files</em>, <em class="sig-param">in_files</em>, <em class="sig-param">ins_files</em>, <em class="sig-param">out_files</em>, <em class="sig-param">pst_filename=None</em>, <em class="sig-param">pst_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.pst_from_io_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>create a Pst instance from model interface files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -6589,6 +6613,10 @@ are &lt;output_file&gt;.ins.</p>
 <li><p><strong>out_files</strong> ([<cite>str</cite>]) – list of model output file names (pairs with instruction files)</p></li>
 <li><p><strong>pst_filename</strong> (<cite>str</cite>) – name of control file to write.  If None, no file is written.
 Default is None</p></li>
+<li><p><strong>pst_path</strong> (<cite>str</cite>) – the path to append to the template_file and in_file in the control file.  If
+not None, then any existing path in front of the template or in file is split off
+and pst_path is prepended.  If python is being run in a directory other than where the control
+file will reside, it is useful to pass <cite>pst_path</cite> as <cite>.</cite>.  Default is None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -6930,9 +6958,9 @@ locate the model grid in space.  If None, <cite>ml</cite> must not be None.  Def
 <li><p><strong>ibound</strong> (<cite>numpy.ndarray</cite>, optional) – the modflow ibound integer array.  THis is used to
 set pilot points only in active areas. If None and ml is None, then pilot points
 are set in all rows and columns according to <cite>every_n_cell</cite>.  Default is None.</p></li>
-<li><p><strong>prefix_dict</strong> (<cite>dict</cite>) – a dictionary of pilot point parameter prefix, layer pairs.
-For example : <cite>{“hk”:[0,1,2,3]}</cite> would setup pilot points with the prefix “hk” for
-model layers 1 - 4 (zero based). If None, a generic set of pilot points with
+<li><p><strong>prefix_dict</strong> (<cite>dict</cite>) – a dictionary of layer index, pilot point parameter prefix(es) pairs.
+For example : <cite>{0:[“hk,”vk”]}</cite> would setup pilot points with the prefix “hk” and “vk” for
+model layer 1. If None, a generic set of pilot points with
 the “pp” prefix are setup for a generic nrow by ncol grid. Default is None</p></li>
 <li><p><strong>use_ibound_zones</strong> (<cite>bool</cite>) – a flag to use the greater-than-zero values in the
 ibound as pilot point zones.  If False ,ibound values greater than zero are
