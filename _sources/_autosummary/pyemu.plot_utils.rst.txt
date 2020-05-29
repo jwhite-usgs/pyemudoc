@@ -39,4 +39,10 @@ pyemu.plot\_utils
 
    
    
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      PyemuWarning
+   
    

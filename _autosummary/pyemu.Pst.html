@@ -238,49 +238,52 @@ for constructing new control files as well as manipulating existing control file
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>([par_names, obs_names])</p></td>
 <td><p>get a new pst object with subset of parameters and/or observations</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_par_change_limits</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_adj_pars_at_bounds</span></code>([frac_tol])</p></td>
+<td><p>get list of adjustable parameter at/near bounds</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_par_change_limits</span></code>()</p></td>
 <td><p>calculate the various parameter change limits used in pest.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_res_stats</span></code>([nonzero])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_res_stats</span></code>([nonzero])</p></td>
 <td><p>get some common residual stats by observation group.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code>(filename)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code>(filename)</p></td>
 <td><p>entry point load the pest control file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parrep</span></code>([parfile, enforce_bounds])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parrep</span></code>([parfile, enforce_bounds])</p></td>
 <td><p>replicates the pest parrep util. replaces the parval1 field in the</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code>([kind])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code>([kind])</p></td>
 <td><p>method to plot various parts of the control.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_output_files</span></code>([pst_path])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">process_output_files</span></code>([pst_path])</p></td>
 <td><p>processing the model output files using the instruction files and existing model output files.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">proportional_weights</span></code>([fraction_stdev, wmax, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">proportional_weights</span></code>([fraction_stdev, wmax, …])</p></td>
 <td><p>setup  weights inversely proportional to the observation value</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pgroups</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pgroups</span></code>()</p></td>
 <td><p>synchronize parameter groups section with the parameter data section</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pi</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rectify_pi</span></code>()</p></td>
 <td><p>rectify the prior information equation with the current state of the parameter_data dataframe.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sanity_checks</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sanity_checks</span></code>()</p></td>
 <td><p>some basic check for strangeness</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_res</span></code>(res)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_res</span></code>(res)</p></td>
 <td><p>reset the private <cite>Pst.res</cite> attribute.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code>(new_filename[, version])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code>(new_filename[, version])</p></td>
 <td><p>main entry point to write a pest control file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_input_files</span></code>([pst_path])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_input_files</span></code>([pst_path])</p></td>
 <td><p>writes model input files using template files and current <cite>parval1</cite> values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_obs_summary_table</span></code>([filename, group_names])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_obs_summary_table</span></code>([filename, group_names])</p></td>
 <td><p>write a stand alone observation summary latex table</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_par_summary_table</span></code>([filename, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_par_summary_table</span></code>([filename, …])</p></td>
 <td><p>write a stand alone parameter summary latex table</p></td>
 </tr>
 </tbody>

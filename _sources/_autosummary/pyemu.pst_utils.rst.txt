@@ -40,7 +40,6 @@ pyemu.pst\_utils
    .. autosummary::
    
       InstructionFile
-      datetime
    
    
 

@@ -11,6 +11,7 @@ pyemu.helpers
    
       apply_array_pars
       apply_list_pars
+      apply_temporal_diff_obs
       build_jac_test_csv
       first_order_pearson_tikhonov
       geostatistical_draws
@@ -24,6 +25,7 @@ pyemu.helpers
       read_pestpp_runstorage
       run
       setup_fake_forward_run
+      setup_temporal_diff_obs
       simple_ins_from_obs
       simple_tpl_from_pars
       start_workers

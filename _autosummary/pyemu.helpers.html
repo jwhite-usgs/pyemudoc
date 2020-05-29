@@ -175,44 +175,50 @@
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_list_pars</span></code>()</p></td>
 <td><p>a function to apply boundary condition multiplier parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_jac_test_csv</span></code>(pst, num_steps[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_temporal_diff_obs</span></code>(config_file)</p></td>
+<td><p>process an instruction-output file pair and formulate difference observations.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_jac_test_csv</span></code>(pst, num_steps[, …])</p></td>
 <td><p>build a dataframe of jactest inputs for use with sweep</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_order_pearson_tikhonov</span></code>(pst, cov[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">first_order_pearson_tikhonov</span></code>(pst, cov[, …])</p></td>
 <td><p>setup preferred-difference regularization from a covariance matrix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">geostatistical_draws</span></code>(pst, struct_dict[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">geostatistical_draws</span></code>(pst, struct_dict[, …])</p></td>
 <td><p>construct a parameter ensemble from a prior covariance matrix implied by geostatistical structure(s) and parameter bounds.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">geostatistical_prior_builder</span></code>(pst, struct_dict)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">geostatistical_prior_builder</span></code>(pst, struct_dict)</p></td>
 <td><p>construct a full prior covariance matrix using geostastical structures and parameter bounds information.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jco_from_pestpp_runstorage</span></code>(rnj_filename, …)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">jco_from_pestpp_runstorage</span></code>(rnj_filename, …)</p></td>
 <td><p>read pars and obs from a pest++ serialized run storage file (e.g., .rnj) and return jacobian matrix instance</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kl_apply</span></code>(par_file, basis_file, …)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kl_apply</span></code>(par_file, basis_file, …)</p></td>
 <td><p>Apply a KL parameterization transform from basis factors to model input arrays.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kl_setup</span></code>(num_eig, sr, struct, prefixes[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">kl_setup</span></code>(num_eig, sr, struct, prefixes[, …])</p></td>
 <td><p>setup a karhuenen-Loeve based parameterization for a given geostatistical structure.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_dir_for_io_files</span></code>(d)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_dir_for_io_files</span></code>(d[, prepend_path])</p></td>
 <td><p>find template/input file pairs and instruction file/output file pairs by extension.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pst_from_io_files</span></code>(tpl_files, in_files, …)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pst_from_io_files</span></code>(tpl_files, in_files, …)</p></td>
 <td><p>create a Pst instance from model interface files.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pst_from_parnames_obsnames</span></code>(parnames, obsnames)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pst_from_parnames_obsnames</span></code>(parnames, obsnames)</p></td>
 <td><p>Creates a Pst object from a list of parameter names and a list of observation names.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_pestpp_runstorage</span></code>(filename[, irun, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_pestpp_runstorage</span></code>(filename[, irun, …])</p></td>
 <td><p>read pars and obs from a specific run in a pest++ serialized run storage file into dataframes.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code>(cmd_str[, cwd, verbose])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code>(cmd_str[, cwd, verbose])</p></td>
 <td><p>an OS agnostic function to execute a command line</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_fake_forward_run</span></code>(pst, new_pst_name[, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_fake_forward_run</span></code>(pst, new_pst_name[, …])</p></td>
 <td><p>setup a fake forward run for a pst.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_temporal_diff_obs</span></code>(pst, ins_file[, …])</p></td>
+<td><p>a helper function to setup difference-in-time observations based on an existing set of observations in an instruction file using the observation grouping in the control file</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">simple_ins_from_obs</span></code>(obsnames[, insfilename])</p></td>
 <td><p>write a simple instruction file that reads the values named</p></td>
@@ -229,7 +235,7 @@
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_grid_tpl</span></code>(name, tpl_file, suffix[, …])</p></td>
 <td><p>write a grid-based template file for a 2-D array</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_zone_tpl</span></code>(name, tpl_file, suffix[, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_zone_tpl</span></code>(name, tpl_file[, suffix, …])</p></td>
 <td><p>write a zone-based template file for a 2-D array</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">zero_order_tikhonov</span></code>(pst[, parbounds, …])</p></td>

@@ -1697,7 +1697,7 @@ Matrix instance</p>
 
 <dl class="method">
 <dt id="pyemu.mat.Matrix.from_fortranfile">
-<em class="property">classmethod </em><code class="sig-name descname">from_fortranfile</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.mat.Matrix.from_fortranfile" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">from_fortranfile</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.mat.Matrix.from_fortranfile" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>a binary load method to accommodate one of the many</dt><dd><p>bizarre fortran binary writing formats</p>
 </dd>
@@ -1707,7 +1707,13 @@ Matrix instance</p>
 <dd class="field-odd"><p><strong>filename</strong> (<cite>str</cite>) – name of the binary matrix file</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><cite>Matrix</cite></p>
+<dd class="field-even"><p><p>tuple containing</p>
+<ul class="simple">
+<li><p><strong>numpy.ndarray</strong>: the numeric values in the file</p></li>
+<li><p><strong>[‘str’]</strong>: list of row names</p></li>
+<li><p><strong>[`str`]</strong>: list of col_names</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -5189,9 +5195,9 @@ observation file.  Default is <cite>False</cite>.</p>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.apply_hds_obs">
-<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">apply_hds_obs</code><span class="sig-paren">(</span><em class="sig-param">hds_file</em>, <em class="sig-param">inact_abs_val=1e+20</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.apply_hds_obs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">apply_hds_obs</code><span class="sig-paren">(</span><em class="sig-param">hds_file</em>, <em class="sig-param">inact_abs_val=1e+20</em>, <em class="sig-param">precision='single'</em>, <em class="sig-param">text='head'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.apply_hds_obs" title="Permalink to this definition">¶</a></dt>
 <dd><p>process a modflow head save file.  A companion function to
-<cite>gw_utils.setup_hds_obsI()</cite> that is called during the forward run process</p>
+<cite>gw_utils.setup_hds_obs()</cite> that is called during the forward run process</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -5640,7 +5646,7 @@ values in the gage file.</p></li>
 
 <dl class="function">
 <dt id="pyemu.utils.gw_utils.setup_hds_obs">
-<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">setup_hds_obs</code><span class="sig-paren">(</span><em class="sig-param">hds_file</em>, <em class="sig-param">kperk_pairs=None</em>, <em class="sig-param">skip=None</em>, <em class="sig-param">prefix='hds'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_obs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.gw_utils.</code><code class="sig-name descname">setup_hds_obs</code><span class="sig-paren">(</span><em class="sig-param">hds_file</em>, <em class="sig-param">kperk_pairs=None</em>, <em class="sig-param">skip=None</em>, <em class="sig-param">prefix='hds'</em>, <em class="sig-param">text='head'</em>, <em class="sig-param">precision='single'</em>, <em class="sig-param">include_path=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.gw_utils.setup_hds_obs" title="Permalink to this definition">¶</a></dt>
 <dd><p>a function to setup using all values from a layer-stress period
 pair for observations.</p>
 <dl class="field-list simple">
@@ -5660,6 +5666,10 @@ Observations are set up only for cells with Non-zero values in the array.
 If not np.ndarray or np.scalar(skip), then skip will be treated as a lambda function that
 returns np.NaN if the value should be skipped.</p></li>
 <li><p><strong>prefix</strong> (<cite>str</cite>) – the prefix to use for the observation names. default is “hds”.</p></li>
+<li><p><strong>text</strong> (<cite>str</cite>) – the text tag the flopy HeadFile instance.  Default is “head”</p></li>
+<li><p><strong>precison</strong> (<cite>str</cite>) – the precision string for the flopy HeadFile instance.  Default is “single”</p></li>
+<li><p><strong>include_path</strong> (<cite>bool</cite>, optional) – flag to setup the binary file processing in directory where the hds_file</p></li>
+<li><p><strong>located</strong> (<em>is</em>) – the process in separate directory for where python is running.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -6242,7 +6252,7 @@ is saved in the <cite>PstFromFlopy.m.model_ws</cite> directory.</p>
 
 <dl class="method">
 <dt id="pyemu.utils.helpers.PstFromFlopyModel.draw">
-<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">num_reals=100</em>, <em class="sig-param">sigma_range=6</em>, <em class="sig-param">use_specsim=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.draw" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param">num_reals=100</em>, <em class="sig-param">sigma_range=6</em>, <em class="sig-param">use_specsim=False</em>, <em class="sig-param">scale_offset=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.PstFromFlopyModel.draw" title="Permalink to this definition">¶</a></dt>
 <dd><p>draw from the geostatistically-implied parameter covariance matrix</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -6252,6 +6262,9 @@ is saved in the <cite>PstFromFlopy.m.model_ws</cite> directory.</p>
 the parameter bounds.  Default is 6.</p></li>
 <li><p><strong>use_specsim</strong> (<cite>bool</cite>) – flag to use spectral simulation for grid-based
 parameters.  Requires a regular grid but is wicked fast.  Default is False</p></li>
+<li><p><strong>scale_offset</strong> (<cite>bool</cite>, optional) – flag to apply scale and offset to parameter
+bounds when calculating variances - this is passed through to
+<cite>pyemu.Cov.from_parameter_data</cite>.  Default is True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -6322,6 +6335,29 @@ PstFromFlopyModel during a forward run</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.helpers.apply_temporal_diff_obs">
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">apply_temporal_diff_obs</code><span class="sig-paren">(</span><em class="sig-param">config_file</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.apply_temporal_diff_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>process an instruction-output file pair and formulate difference observations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_file</strong> (<cite>str</cite>) – configuration file written by <cite>pyemu.helpers.setup_temporal_diff_obs</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed difference observations</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>diff_df (<cite>pandas.DataFrame</cite>)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>writes <cite>config_file.replace(“.config”,”.processed”)</cite> output file that can be read
+with the instruction file that is created by <cite>pyemu.helpers.setup_temporal_diff_obs()</cite>.</p>
+<p>this is the companion function of <cite>helpers.setup_setup_temporal_diff_obs()</cite>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.helpers.build_jac_test_csv">
 <code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">build_jac_test_csv</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">num_steps</em>, <em class="sig-param">par_names=None</em>, <em class="sig-param">forward=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.build_jac_test_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>build a dataframe of jactest inputs for use with sweep</p>
@@ -6381,7 +6417,7 @@ correlation coefficients implied by covariance matrix.</p>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.geostatistical_draws">
-<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">geostatistical_draws</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">struct_dict</em>, <em class="sig-param">num_reals=100</em>, <em class="sig-param">sigma_range=4</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_draws" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">geostatistical_draws</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">struct_dict</em>, <em class="sig-param">num_reals=100</em>, <em class="sig-param">sigma_range=4</em>, <em class="sig-param">verbose=True</em>, <em class="sig-param">scale_offset=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_draws" title="Permalink to this definition">¶</a></dt>
 <dd><p>construct a parameter ensemble from a prior covariance matrix
 implied by geostatistical structure(s) and parameter bounds.</p>
 <dl class="field-list simple">
@@ -6400,6 +6436,9 @@ otherwise a pilot points file is loaded.</p></li>
 implied by parameter bounds. Default is 4.0, which implies 95% confidence parameter bounds.</p></li>
 <li><p><strong>verbose</strong> (<cite>bool</cite>, optional) – flag to control output to stdout.  Default is True.
 flag for stdout.</p></li>
+<li><p><strong>scale_offset</strong> (<cite>bool</cite>,optional) – flag to apply scale and offset to parameter bounds
+when calculating variances - this is passed through to <cite>pyemu.Cov.from_parameter_data()</cite>.
+Default is True.</p></li>
 </ul>
 </dd>
 </dl>
@@ -6425,7 +6464,7 @@ in <cite>struct_dict</cite> should be 1.0</p>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.geostatistical_prior_builder">
-<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">geostatistical_prior_builder</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">struct_dict</em>, <em class="sig-param">sigma_range=4</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_prior_builder" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">geostatistical_prior_builder</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">struct_dict</em>, <em class="sig-param">sigma_range=4</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">scale_offset=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.geostatistical_prior_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>construct a full prior covariance matrix using geostastical structures
 and parameter bounds information.</p>
 <dl class="field-list simple">
@@ -6444,6 +6483,9 @@ otherwise a pilot points file is loaded.</p>
 implied by parameter bounds. Default is 4.0, which implies 95% confidence parameter bounds.</p></li>
 <li><p><strong>verbose</strong> (<cite>bool</cite>, optional) – flag to control output to stdout.  Default is True.
 flag for stdout.</p></li>
+<li><p><strong>scale_offset</strong> (<cite>bool</cite>) – a flag to apply scale and offset to parameter upper and lower bounds
+before applying log transform.  Passed to pyemu.Cov.from_parameter_data().  Default
+is False</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -6571,12 +6613,16 @@ template files to.  Default is “.” (current directory).</p></li>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.parse_dir_for_io_files">
-<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">parse_dir_for_io_files</code><span class="sig-paren">(</span><em class="sig-param">d</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.parse_dir_for_io_files" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">parse_dir_for_io_files</code><span class="sig-paren">(</span><em class="sig-param">d</em>, <em class="sig-param">prepend_path=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.parse_dir_for_io_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>find template/input file pairs and instruction file/output file
 pairs by extension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>d</strong> (<cite>str</cite>) – directory to search for interface files</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> (<cite>str</cite>) – directory to search for interface files</p></li>
+<li><p><strong>prepend_path</strong> (<a href="#id4"><span class="problematic" id="id5">`</span></a>bool, optional) – flag to prepend <cite>d</cite> to each file name.
+Default is False</p></li>
+</ul>
 </dd>
 </dl>
 <div class="admonition note">
@@ -6720,6 +6766,50 @@ PEST++ issues.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyemu.utils.helpers.setup_temporal_diff_obs">
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">setup_temporal_diff_obs</code><span class="sig-paren">(</span><em class="sig-param">pst</em>, <em class="sig-param">ins_file</em>, <em class="sig-param">out_file=None</em>, <em class="sig-param">include_zero_weight=False</em>, <em class="sig-param">include_path=False</em>, <em class="sig-param">sort_by_name=True</em>, <em class="sig-param">long_names=True</em>, <em class="sig-param">prefix='dif'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.setup_temporal_diff_obs" title="Permalink to this definition">¶</a></dt>
+<dd><p>a helper function to setup difference-in-time observations based on an existing
+set of observations in an instruction file using the observation grouping in the
+control file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pst</strong> (<cite>pyemu.Pst</cite>) – existing control file</p></li>
+<li><p><strong>ins_file</strong> (<cite>str</cite>) – an existing instruction file</p></li>
+<li><p><strong>out_file</strong> (<cite>str</cite>, optional) – an existing model output file that corresponds to
+the instruction file.  If None, <cite>ins_file.replace(“.ins”,””)</cite> is used</p></li>
+<li><p><strong>include_zero_weight</strong> (<cite>bool</cite>, optional) – flag to include zero-weighted observations
+in the difference observation process.  Default is False so that only non-zero
+weighted observations are used.</p></li>
+<li><p><strong>include_path</strong> (<cite>bool</cite>, optional) – flag to setup the binary file processing in directory where the hds_file
+is located (if different from where python is running).  This is useful for setting up
+the process in separate directory for where python is running.</p></li>
+<li><p><strong>sort_by_name</strong> (<cite>bool</cite>,optional) – flag to sort observation names in each group prior to setting up
+the differencing.  The order of the observations matters for the differencing.  If False, then
+the control file order is used.  If observation names have a datetime suffix, make sure the format is
+year-month-day to use this sorting.  Default is True</p></li>
+<li><p><strong>long_names</strong> (<cite>bool</cite>, optional) – flag to use long, descriptive names by concating the two observation names
+that are being differenced.  This will produce names that are too long for tradtional PEST(_HP).
+Default is True.</p></li>
+<li><p><strong>prefix</strong> (<cite>str</cite>, optional) – prefix to prepend to observation names and group names.  Default is “dif”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>tuple containing</p>
+<ul class="simple">
+<li><p><strong>str</strong>: the forward run command to execute the binary file process during model runs.</p></li>
+<li><p><strong>pandas.DataFrame</strong>: a dataframe of observation information for use in the pest control file</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>this is the companion function of <cite>helpers.apply_temporal_diff_obs()</cite>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyemu.utils.helpers.simple_ins_from_obs">
 <code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">simple_ins_from_obs</code><span class="sig-paren">(</span><em class="sig-param">obsnames</em>, <em class="sig-param">insfilename='model.output.ins'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.simple_ins_from_obs" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
@@ -6820,19 +6910,22 @@ Default is False.</p></li>
 
 <dl class="function">
 <dt id="pyemu.utils.helpers.write_zone_tpl">
-<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">write_zone_tpl</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">tpl_file</em>, <em class="sig-param">suffix</em>, <em class="sig-param">zn_array=None</em>, <em class="sig-param">shape=None</em>, <em class="sig-param">longnames=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.write_zone_tpl" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyemu.utils.helpers.</code><code class="sig-name descname">write_zone_tpl</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">tpl_file</em>, <em class="sig-param">suffix=''</em>, <em class="sig-param">zn_array=None</em>, <em class="sig-param">shape=None</em>, <em class="sig-param">longnames=False</em>, <em class="sig-param">fill_value='1.0'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.helpers.write_zone_tpl" title="Permalink to this definition">¶</a></dt>
 <dd><p>write a zone-based template file for a 2-D array</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<cite>str</cite>) – the base parameter name</p></li>
 <li><p><strong>tpl_file</strong> (<cite>str</cite>) – the template file to write</p></li>
+<li><p><strong>suffix</strong> (<cite>str</cite>) – suffix to add to parameter names.  Only used if <cite>longnames=True</cite></p></li>
 <li><p><strong>zn_array</strong> (<cite>numpy.ndarray</cite>, optional) – an array used to skip inactive cells,
-and optionally get shape info.</p></li>
+and optionally get shape info.  zn_array values less than 1 are given <cite>fill_value</cite></p></li>
 <li><p><strong>shape</strong> (<cite>tuple</cite>) – tuple nrow and ncol.  Either <cite>zn_array</cite> or <cite>shape</cite>
 must be passed</p></li>
 <li><p><strong>longnames</strong> (<cite>bool</cite>) – flag to use longer names that exceed 12 chars in length.
 Default is False.</p></li>
+<li><p><strong>fill_value</strong> (<cite>str</cite>) – value to fill locations where <cite>zn_array</cite> is less than 1.0.
+Default is “1.0”.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -7583,8 +7676,81 @@ in arithmatic space</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyemu.utils.geostats.SpecSim2d.draw_conditional">
+<code class="sig-name descname">draw_conditional</code><span class="sig-paren">(</span><em class="sig-param">seed</em>, <em class="sig-param">obs_points</em>, <em class="sig-param">sg</em>, <em class="sig-param">base_values_file</em>, <em class="sig-param">local=True</em>, <em class="sig-param">factors_file=None</em>, <em class="sig-param">num_reals=1</em>, <em class="sig-param">mean_value=1.0</em>, <em class="sig-param">R_factor=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.geostats.SpecSim2d.draw_conditional" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Generate a conditional, correlated random field using the Spec2dSim</dt><dd><p>object, a set of observation points, and a factors file.</p>
+<p>The conditional field is made by generating an unconditional correlated random
+field that captures the covariance in the variogram and conditioning it by kriging
+a second surface using the value of the random field as observations.
+This second conditioning surface provides an estimate of uncertainty (kriging error)
+away from the observation points. At the observation points, the kriged surface is
+equal to (less nugget effects) the observation. The conditioned correlated field
+is then generated using:</p>
+<blockquote>
+<div><p>T(x) = Z(x) + [S(x) − S∗(x)]</p>
+</div></blockquote>
+<p>where T(x) is the conditioned simulation, Z(x) is a kriging estimator of the
+unknown field, S(x) is an unconditioned random field with the same covariance
+structure as the desired field, and S∗(x) is a kriging estimate of the unconditioned
+random field using its values at the observation points (pilot points).
+[S(x) − S∗(x)] is an estimate of the kriging error.</p>
+<p>This approach makes T(x) match the observed values at the observation points
+(x_a, y_z), T(a) = Z(a), and have a structure away from the observation points that
+follows the variogram used to generate Z, S, and S∗.</p>
+<dl class="simple">
+<dt>Chiles, J-P, and Delfiner, P., Geostatistics- Modeling Spatial Uncertainty: Wiley,</dt><dd><p>London, 695 p.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seed</strong> (<cite>int</cite>) – integer used for random seed.  If seed is used as a PEST parameter,
+then passing the same value for seed will yield the same
+conditioned random fields. This allows runs to be recreated
+given an ensemble of seeds.</p></li>
+<li><p><strong>obs_points</strong> (<cite>str</cite> or <cite>dataframe</cite>) – locations for observation points.  Either filename in pyemu
+pilot point file format: [“name”,”x”,”y”,”zone”,”parval1”] or
+a dataframe with these columns. Note that parval1 is not used.</p></li>
+<li><p><strong>base_values_file</strong> (<cite>str</cite>) – filename containing 2d array with the base parameter values
+from which the random field will depart (Z(x)) above.
+Values of Z(x) are used for conditioning, not parval1 in the
+observation point file.</p></li>
+<li><p><strong>factors_file</strong> (<cite>str</cite>) – name of the factors file generated using the locations of the
+observation points and the target grid.   If None this file will
+be generated and called conditional_factors.dat; but this is a slow
+step and should not generally be called for every simulation.</p></li>
+<li><p><strong>sg</strong> – flopy StructuredGrid object</p></li>
+<li><p><strong>local</strong> (<cite>boolean</cite>) – whether coordinates in obs_points are in local (model) or map coordinates</p></li>
+<li><p><strong>num_reals</strong> (<cite>int</cite>) – number of realizations to generate</p></li>
+<li><p><strong>mean_value</strong> (<cite>float</cite>) – the mean value of the realizations</p></li>
+<li><p><strong>R_factor</strong> (<cite>float</cite>) – a factor to scale the field, sometimes the variation from the
+geostruct parameters is larger or smaller than desired.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>a 3-D array of realizations.  Shape</dt><dd><p>is (num_reals, self.dely.shape[0], self.delx.shape[0])</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><cite>numpy.ndarray</cite></p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>log transformation is respected and the returned <cite>reals</cite> array is
+in arithmetic space</p>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyemu.utils.geostats.SpecSim2d.grid_is_regular">
-<em class="property">static </em><code class="sig-name descname">grid_is_regular</code><span class="sig-paren">(</span><em class="sig-param">delx</em>, <em class="sig-param">dely</em>, <em class="sig-param">tol=1e-06</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.geostats.SpecSim2d.grid_is_regular" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">grid_is_regular</code><span class="sig-paren">(</span><em class="sig-param">delx</em>, <em class="sig-param">dely</em>, <em class="sig-param">tol=0.0001</em><span class="sig-paren">)</span><a class="headerlink" href="#pyemu.utils.geostats.SpecSim2d.grid_is_regular" title="Permalink to this definition">¶</a></dt>
 <dd><p>check that a grid is regular using delx and dely vectors</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -7596,7 +7762,7 @@ distance between points is important</p></li>
 a 1-D array of y-dimension cell centers (or leading/trailing edges).  Only the
 distance between points is important</p></li>
 <li><p><strong>tol</strong> – <cite>float</cite> (optional)
-tolerance to determine grid regularity.  Default is 1.0e-6</p></li>
+tolerance to determine grid regularity.  Default is 1.0e-4</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

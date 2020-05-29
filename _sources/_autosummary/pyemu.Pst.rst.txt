@@ -26,6 +26,7 @@ pyemu.Pst
       ~Pst.from_io_files
       ~Pst.from_par_obs_names
       ~Pst.get
+      ~Pst.get_adj_pars_at_bounds
       ~Pst.get_par_change_limits
       ~Pst.get_res_stats
       ~Pst.load
